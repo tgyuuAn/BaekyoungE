@@ -3,10 +3,8 @@ package com.tgyuu.baekyoung_i
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
+import androidx.compose.foundation.layout.Box
 import androidx.compose.runtime.Composable
-import androidx.navigation.compose.NavHost
-import androidx.navigation.compose.composable
-import androidx.navigation.compose.rememberNavController
 import com.tgyuu.baekyoung_i.ui.theme.BaekyoungiTheme
 
 class MainActivity : ComponentActivity() {
@@ -16,5 +14,12 @@ class MainActivity : ComponentActivity() {
             BaekyoungiTheme {
             }
         }
+    }
+}
+
+@Composable
+fun AuthScreen() {
+    Box() {
+
     }
 }
