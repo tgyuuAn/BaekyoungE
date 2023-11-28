@@ -8,7 +8,7 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
-import com.tgyuu.designsystem.theme.BaekyoungiTheme
+import com.tgyuu.designsystem.theme.BaekyoungTheme
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -27,7 +27,7 @@ class MainActivity : ComponentActivity() {
                 Log.d("test", password)
             }
 
-            BaekyoungiTheme {
+            BaekyoungTheme {
                 AuthScreen(id, password, idChanged, passwordChanged)
             }
         }

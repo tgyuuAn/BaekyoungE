@@ -18,18 +18,15 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.TextStyle
-import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import com.tgyuu.designsystem.theme.BaekKyoungTypoGraphy
-import com.tgyuu.designsystem.theme.BaekKyoungTypogrphy
+import com.tgyuu.designsystem.theme.BaekyoungTheme
 import com.tgyuu.designsystem.theme.Blue00
 import com.tgyuu.designsystem.theme.Blue37
 
@@ -68,9 +65,8 @@ fun AuthScreen(
 
             Text(
                 text = stringResource(R.string.id),
-                fontSize = 20.sp,
-                fontWeight = FontWeight.Bold,
-                color = Blue37,
+                style = BaekyoungTheme.typography.contentBig,
+                color = BaekyoungTheme.colors.blue37,
                 modifier = Modifier.align(alignment = Alignment.Start)
             )
 
@@ -80,24 +76,23 @@ fun AuthScreen(
                 singleLine = true,
                 textStyle = TextStyle.Default.copy(fontSize = 16.sp),
                 colors = OutlinedTextFieldDefaults.colors(
-                    focusedBorderColor = Blue37,
-                    unfocusedBorderColor = Blue37,
+                    focusedBorderColor = BaekyoungTheme.colors.blue37,
+                    unfocusedBorderColor = BaekyoungTheme.colors.blue37,
                 ),
                 modifier = modifier,
                 leadingIcon = {
                     Icon(
                         painter = painterResource(id = R.drawable.ic_login),
-                        contentDescription = "",
-                        tint = Blue37
+                        contentDescription = stringResource(id = R.string.auth_id_description),
+                        tint = BaekyoungTheme.colors.blue37
                     )
                 },
             )
 
             Text(
                 text = stringResource(R.string.password),
-                fontSize = 20.sp,
-                fontWeight = FontWeight.Bold,
-                color = Blue37,
+                style = BaekyoungTheme.typography.contentBig,
+                color = BaekyoungTheme.colors.blue37,
                 modifier = Modifier
                     .padding(top = 10.dp)
                     .align(alignment = Alignment.Start)
@@ -110,14 +105,14 @@ fun AuthScreen(
                 textStyle = TextStyle.Default.copy(fontSize = 16.sp),
                 visualTransformation = PasswordVisualTransformation(),
                 colors = OutlinedTextFieldDefaults.colors(
-                    focusedBorderColor = Blue37,
-                    unfocusedBorderColor = Blue37,
+                    focusedBorderColor = BaekyoungTheme.colors.blue37,
+                    unfocusedBorderColor = BaekyoungTheme.colors.blue37,
                 ),
                 leadingIcon = {
                     Icon(
                         painter = painterResource(id = R.drawable.ic_password),
-                        contentDescription = "",
-                        tint = Blue37
+                        contentDescription = stringResource(id = R.string.auth_password_description),
+                        tint = BaekyoungTheme.colors.blue37
                     )
                 },
                 modifier = modifier.padding(top = 10.dp)
@@ -134,17 +129,16 @@ fun AuthScreen(
                 Text(
                     text = stringResource(R.string.login),
                     textAlign = TextAlign.Center,
-                    fontSize = 20.sp,
-                    fontWeight = FontWeight.Bold,
-                    color = Color.White,
+                    style = BaekyoungTheme.typography.contentBig,
+                    color = BaekyoungTheme.colors.white,
                     modifier = Modifier.align(Alignment.Center)
                 )
             }
 
             Text(
                 text = stringResource(R.string.sign_up),
-                color = Blue00.copy(alpha = 0.5F),
-                style = BaekKyoungTypoGraphy().gangwonBold,
+                color = BaekyoungTheme.colors.blue00.copy(alpha = 0.5F),
+                style = BaekyoungTheme.typography.contentNormal,
                 modifier = Modifier.padding(top = 20.dp),
             )
         }

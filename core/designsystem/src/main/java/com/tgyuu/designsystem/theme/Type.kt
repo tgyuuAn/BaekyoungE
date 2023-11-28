@@ -55,10 +55,11 @@ class BaekKyoungTypogrphy internal constructor(
     contentBig: TextStyle,
     titleNormal: TextStyle,
 ) {
-    var gangwonBold: TextStyle by mutableStateOf(gangwonBold)
+    var contentBig: TextStyle by mutableStateOf(contentBig)
         private set
-    var gangwonLight: TextStyle by mutableStateOf(gangwonLight)
+    var contentNormal: TextStyle by mutableStateOf(contentNormal)
         private set
+    var titleNormal: TextStyle by mutableStateOf(titleNormal)
 }
 
 @Composable
