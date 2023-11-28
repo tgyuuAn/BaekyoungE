@@ -10,14 +10,10 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.outlined.Person
-import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.OutlinedTextFieldDefaults
 import androidx.compose.material3.Text
-import androidx.compose.material3.TextFieldDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -25,17 +21,22 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.text.style.TextAlign
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import com.tgyuu.designsystem.theme.Blue00
 import com.tgyuu.designsystem.theme.Blue37
-import com.tgyuu.designsystem.theme.Blue60
 
-@OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun AuthScreen() {
+fun AuthScreen(
+    id: String,
+    password: String,
+    idChanged: (String) -> Unit,
+    passwordChanged: (String) -> Unit,
+) {
     Box(modifier = Modifier.fillMaxSize()) {
         Image(
             painter = painterResource(id = R.drawable.ic_auth_bbugong),
@@ -45,99 +46,7 @@ fun AuthScreen() {
         )
 
         Column(
-            modifier = Modifier
-                .align(Alignment.Center)
-                .padding(bottom = 85.dp, start = 40.dp, end = 40.dp)
-        ) {
-            val modifier = Modifier
-                .fillMaxWidth()
-                .border(
-                    width = 3.dp,
-                    color = Blue37,
-                    shape = RoundedCornerShape(7.dp)
-                )
-
-            Text(
-                text = "아이디",
-                fontSize = 20.sp,
-                fontWeight = FontWeight.Bold,
-                color =Blue37
-            )
-
-            OutlinedTextField(
-                value = "",
-                onValueChange = {},
-                colors = TextFieldDefaults.outlinedTextFieldColors(
-                    focusedBorderColor = Blue37,
-                    unfocusedBorderColor = Blue37
-                ),
-                modifier = modifier,
-                leadingIcon = {
-                    Icon(
-                        imageVector = Icons.Outlined.Person,
-                        contentDescription = "",
-                    )
-                }
-            )
-
-            Text(
-                text = "비밀번호",
-                fontSize = 20.sp,
-                fontWeight = FontWeight.Bold,
-                color = Blue37,
-                modifier = Modifier.padding(top = 10.dp)
-            )
-
-            OutlinedTextField(
-                value = "",
-                onValueChange = {},
-                colors = TextFieldDefaults.outlinedTextFieldColors(
-                    focusedBorderColor = Blue37,
-                    unfocusedBorderColor = Blue37,
-                ),
-                modifier = modifier.padding(top = 10.dp)
-            )
-
-            Box(
-                modifier = Modifier
-                    .padding(top = 50.dp)
-                    .fillMaxWidth()
-                    .height(70.dp)
-                    .clip(shape = RoundedCornerShape(8.dp))
-                    .background(Color(0xFF0038FF).copy(alpha = 0.6F))
-            ) {
-                Text(
-                    text = "로그인",
-                    textAlign = TextAlign.Center,
-                    fontSize = 20.sp,
-                    fontWeight = FontWeight.Bold,
-                    color = Color.White,
-                    modifier = Modifier.align(Alignment.Center)
-                )
-            }
-        }
-
-        Image(
-            painter = painterResource(id = R.drawable.ic_auth_baekyoung),
-            contentDescription = stringResource(id = R.string.bbugong_auth_conext_descriptioin),
-            modifier = Modifier.align(Alignment.BottomStart)
-        )
-    }
-}
-
-@OptIn(ExperimentalMaterial3Api::class)
-@Preview
-@Composable
-fun PreviewAuthScreen() {
-    Box(modifier = Modifier.fillMaxSize()) {
-        Image(
-            painter = painterResource(id = R.drawable.ic_auth_bbugong),
-            contentDescription = stringResource(id = R.string.bbugong_auth_conext_descriptioin),
-            modifier = Modifier
-                .align(Alignment.TopEnd)
-        )
-
-        Column(
+            horizontalAlignment = Alignment.CenterHorizontally,
             modifier = Modifier
                 .align(Alignment.Center)
                 .padding(
@@ -155,15 +64,18 @@ fun PreviewAuthScreen() {
                 )
 
             Text(
-                text = "아이디",
+                text = stringResource(R.string.id),
                 fontSize = 20.sp,
                 fontWeight = FontWeight.Bold,
                 color = Blue37,
+                modifier = Modifier.align(alignment = Alignment.Start)
             )
 
             OutlinedTextField(
-                value = "",
-                onValueChange = {},
+                value = id,
+                onValueChange = idChanged,
+                singleLine = true,
+                textStyle = TextStyle.Default.copy(fontSize = 16.sp),
                 colors = OutlinedTextFieldDefaults.colors(
                     focusedBorderColor = Blue37,
                     unfocusedBorderColor = Blue37,
@@ -179,17 +91,22 @@ fun PreviewAuthScreen() {
             )
 
             Text(
-                text = "비밀번호",
+                text = stringResource(R.string.password),
                 fontSize = 20.sp,
                 fontWeight = FontWeight.Bold,
                 color = Blue37,
-                modifier = Modifier.padding(top = 10.dp)
+                modifier = Modifier
+                    .padding(top = 10.dp)
+                    .align(alignment = Alignment.Start)
             )
 
             OutlinedTextField(
-                value = "",
-                onValueChange = {},
-                colors = TextFieldDefaults.outlinedTextFieldColors(
+                value = password,
+                onValueChange = passwordChanged,
+                singleLine = true,
+                textStyle = TextStyle.Default.copy(fontSize = 16.sp),
+                visualTransformation = PasswordVisualTransformation(),
+                colors = OutlinedTextFieldDefaults.colors(
                     focusedBorderColor = Blue37,
                     unfocusedBorderColor = Blue37,
                 ),
@@ -209,10 +126,10 @@ fun PreviewAuthScreen() {
                     .fillMaxWidth()
                     .height(70.dp)
                     .clip(shape = RoundedCornerShape(8.dp))
-                    .background(Blue60.copy(alpha = 0.6F))
+                    .background(Blue00.copy(alpha = 0.6F))
             ) {
                 Text(
-                    text = "로그인",
+                    text = stringResource(R.string.login),
                     textAlign = TextAlign.Center,
                     fontSize = 20.sp,
                     fontWeight = FontWeight.Bold,
@@ -220,6 +137,13 @@ fun PreviewAuthScreen() {
                     modifier = Modifier.align(Alignment.Center)
                 )
             }
+
+            Text(
+                text = stringResource(R.string.sign_up),
+                color = Blue00.copy(alpha = 0.5F),
+                fontSize = 16.sp,
+                modifier = Modifier.padding(top = 20.dp),
+            )
         }
 
         Image(
