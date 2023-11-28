@@ -10,8 +10,12 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.outlined.Person
 import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.Icon
 import androidx.compose.material3.OutlinedTextField
+import androidx.compose.material3.OutlinedTextFieldDefaults
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextFieldDefaults
 import androidx.compose.runtime.Composable
@@ -65,7 +69,13 @@ fun AuthScreen() {
                     focusedBorderColor = Color(0xFF375299),
                     unfocusedBorderColor = Color(0xFF375299)
                 ),
-                modifier = modifier
+                modifier = modifier,
+                leadingIcon = {
+                    Icon(
+                        imageVector = Icons.Outlined.Person,
+                        contentDescription = "",
+                    )
+                }
             )
 
             Text(
@@ -152,12 +162,18 @@ fun PreviewAuthScreen() {
             OutlinedTextField(
                 value = "",
                 onValueChange = {},
-                colors = TextFieldDefaults.outlinedTextFieldColors(
+                colors = OutlinedTextFieldDefaults.colors(
                     focusedBorderColor = Color(0xFF375299),
-                    unfocusedBorderColor = Color(0xFF375299)
+                    unfocusedBorderColor = Color(0xFF375299),
                 ),
                 modifier = modifier,
-                leadingIcon = {},
+                leadingIcon = {
+                    Icon(
+                        painter = painterResource(id = R.drawable.ic_login),
+                        contentDescription = "",
+                        tint = Color(0xFF375299)
+                    )
+                },
             )
 
             Text(
@@ -175,6 +191,13 @@ fun PreviewAuthScreen() {
                     focusedBorderColor = Color(0xFF375299),
                     unfocusedBorderColor = Color(0xFF375299)
                 ),
+                leadingIcon = {
+                    Icon(
+                        painter = painterResource(id = R.drawable.ic_password),
+                        contentDescription = "",
+                        tint = Color(0xFF375299)
+                    )
+                },
                 modifier = modifier.padding(top = 10.dp)
             )
 
