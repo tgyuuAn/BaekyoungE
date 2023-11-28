@@ -94,7 +94,7 @@ fun AuthScreen(
                 style = BaekyoungTheme.typography.contentBig,
                 color = BaekyoungTheme.colors.blue37,
                 modifier = Modifier
-                    .padding(top = 10.dp)
+                    .padding(top = 20.dp, bottom = 10.dp)
                     .align(alignment = Alignment.Start)
             )
 
@@ -115,12 +115,12 @@ fun AuthScreen(
                         tint = BaekyoungTheme.colors.blue37
                     )
                 },
-                modifier = modifier.padding(top = 10.dp)
+                modifier = modifier,
             )
 
             Box(
                 modifier = Modifier
-                    .padding(top = 50.dp)
+                    .padding(top = 40.dp)
                     .fillMaxWidth()
                     .height(70.dp)
                     .clip(shape = RoundedCornerShape(8.dp))
