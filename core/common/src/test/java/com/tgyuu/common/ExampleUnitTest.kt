@@ -1,4 +1,4 @@
-package com.pknu.designsystem
+package com.tgyuu.common
 
 import org.junit.Test
 

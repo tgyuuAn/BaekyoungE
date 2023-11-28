@@ -30,6 +30,8 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import com.tgyuu.designsystem.theme.Blue37
+import com.tgyuu.designsystem.theme.Blue60
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -51,7 +53,7 @@ fun AuthScreen() {
                 .fillMaxWidth()
                 .border(
                     width = 3.dp,
-                    color = Color(0xFF375299),
+                    color = Blue37,
                     shape = RoundedCornerShape(7.dp)
                 )
 
@@ -59,15 +61,15 @@ fun AuthScreen() {
                 text = "아이디",
                 fontSize = 20.sp,
                 fontWeight = FontWeight.Bold,
-                color = Color(0xFF375299)
+                color =Blue37
             )
 
             OutlinedTextField(
                 value = "",
                 onValueChange = {},
                 colors = TextFieldDefaults.outlinedTextFieldColors(
-                    focusedBorderColor = Color(0xFF375299),
-                    unfocusedBorderColor = Color(0xFF375299)
+                    focusedBorderColor = Blue37,
+                    unfocusedBorderColor = Blue37
                 ),
                 modifier = modifier,
                 leadingIcon = {
@@ -82,7 +84,7 @@ fun AuthScreen() {
                 text = "비밀번호",
                 fontSize = 20.sp,
                 fontWeight = FontWeight.Bold,
-                color = Color(0xFF375299),
+                color = Blue37,
                 modifier = Modifier.padding(top = 10.dp)
             )
 
@@ -90,8 +92,8 @@ fun AuthScreen() {
                 value = "",
                 onValueChange = {},
                 colors = TextFieldDefaults.outlinedTextFieldColors(
-                    focusedBorderColor = Color(0xFF375299),
-                    unfocusedBorderColor = Color(0xFF375299)
+                    focusedBorderColor = Blue37,
+                    unfocusedBorderColor = Blue37,
                 ),
                 modifier = modifier.padding(top = 10.dp)
             )
@@ -148,7 +150,7 @@ fun PreviewAuthScreen() {
                 .fillMaxWidth()
                 .border(
                     width = 3.dp,
-                    color = Color(0xFF375299),
+                    color = Blue37,
                     shape = RoundedCornerShape(7.dp)
                 )
 
@@ -156,22 +158,22 @@ fun PreviewAuthScreen() {
                 text = "아이디",
                 fontSize = 20.sp,
                 fontWeight = FontWeight.Bold,
-                color = Color(0xFF375299)
+                color = Blue37,
             )
 
             OutlinedTextField(
                 value = "",
                 onValueChange = {},
                 colors = OutlinedTextFieldDefaults.colors(
-                    focusedBorderColor = Color(0xFF375299),
-                    unfocusedBorderColor = Color(0xFF375299),
+                    focusedBorderColor = Blue37,
+                    unfocusedBorderColor = Blue37,
                 ),
                 modifier = modifier,
                 leadingIcon = {
                     Icon(
                         painter = painterResource(id = R.drawable.ic_login),
                         contentDescription = "",
-                        tint = Color(0xFF375299)
+                        tint = Blue37
                     )
                 },
             )
@@ -180,7 +182,7 @@ fun PreviewAuthScreen() {
                 text = "비밀번호",
                 fontSize = 20.sp,
                 fontWeight = FontWeight.Bold,
-                color = Color(0xFF375299),
+                color = Blue37,
                 modifier = Modifier.padding(top = 10.dp)
             )
 
@@ -188,14 +190,14 @@ fun PreviewAuthScreen() {
                 value = "",
                 onValueChange = {},
                 colors = TextFieldDefaults.outlinedTextFieldColors(
-                    focusedBorderColor = Color(0xFF375299),
-                    unfocusedBorderColor = Color(0xFF375299)
+                    focusedBorderColor = Blue37,
+                    unfocusedBorderColor = Blue37,
                 ),
                 leadingIcon = {
                     Icon(
                         painter = painterResource(id = R.drawable.ic_password),
                         contentDescription = "",
-                        tint = Color(0xFF375299)
+                        tint = Blue37
                     )
                 },
                 modifier = modifier.padding(top = 10.dp)
@@ -207,7 +209,7 @@ fun PreviewAuthScreen() {
                     .fillMaxWidth()
                     .height(70.dp)
                     .clip(shape = RoundedCornerShape(8.dp))
-                    .background(Color(0xFF0038FF).copy(alpha = 0.6F))
+                    .background(Blue60.copy(alpha = 0.6F))
             ) {
                 Text(
                     text = "로그인",
