@@ -8,4 +8,9 @@
     <string name="auth_id_description">아이디 필드 아이콘입니다.</string>
     <string name="auth_password_description">비밀번호 필드 아이콘입니다.</string>
     <string name="bbugong_auth_conext_descriptioin">귀여운 뿌공이 사진입니다.</string>
+
+    <string name="home">홈</string>
+    <string name="consulting">상담</string>
+    <string name="community">상담</string>
+    <string name="etc">더보기</string>
 </resources>
