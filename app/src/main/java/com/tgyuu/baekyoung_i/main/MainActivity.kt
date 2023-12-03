@@ -75,17 +75,21 @@ internal fun BaekyoungBottomBar(
         modifier = modifier
     ) {
         TopLevelDestination.entries.forEach { destination ->
+            val isSelect = currentRoute == destination.route
             BottomNavigationItem(
-                selected = currentRoute == destination.route,
+                selected = isSelect,
                 onClick = { onNavigateToDestination(destination) },
                 icon = {
                     destination.selectedIcon
                 },
+                selectedContentColor = BaekyoungTheme.colors.blueFF,
+                unselectedContentColor = BaekyoungTheme.colors.gray95,
                 label = {
                     Text(
                         text = stringResource(id = destination.titleTextId),
                         style = BaekyoungTheme.typography.labelNormal,
-                        color = BaekyoungTheme.colors.
+                        color = if (isSelect) BaekyoungTheme.colors.blueFF
+                        else BaekyoungTheme.colors.gray95
                     )
                 }
             )
