@@ -6,6 +6,11 @@ import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import com.tgyuu.baekyoung_i.auth.navigation.authNavigationRoute
 import com.tgyuu.baekyoung_i.auth.navigation.authScreen
+import com.tgyuu.baekyoung_i.community.navigation.communityScreen
+import com.tgyuu.baekyoung_i.consulting.navigation.consultingScreen
+import com.tgyuu.baekyoung_i.etc.navigation.etcScreen
+import com.tgyuu.baekyoung_i.home.navigation.homeScreen
+import com.tgyuu.baekyoung_i.home.navigation.navigateToHome
 
 @Composable
 fun BaekyoungNavHost(
@@ -18,6 +23,10 @@ fun BaekyoungNavHost(
         startDestination = startDestination,
         modifier = modifier,
     ) {
-        authScreen()
+        authScreen(navigateToHome = { navController.navigateToHome() })
+        homeScreen()
+        consultingScreen()
+        communityScreen()
+        etcScreen()
     }
 }

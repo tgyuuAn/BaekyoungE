@@ -9,22 +9,23 @@ import androidx.navigation.NavController
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.NavOptions
 import androidx.navigation.compose.composable
+import androidx.navigation.navOptions
 import com.tgyuu.baekyoung_i.auth.AuthScreen
 
 const val authNavigationRoute = "auth_route"
 
-fun NavController.navigateToAuth(navOptions: NavOptions?) {
+fun NavController.navigateToAuth(navOptions: NavOptions? = navOptions {}) {
     this.navigate(authNavigationRoute, navOptions)
 }
 
-fun NavGraphBuilder.authScreen() {
+fun NavGraphBuilder.authScreen(navigateToHome: () -> Unit) {
     composable(route = authNavigationRoute) {
-        AuthRoute()
+        AuthRoute(navigateToHome)
     }
 }
 
 @Composable
-internal fun AuthRoute() {
+internal fun AuthRoute(navigateToHome: () -> Unit) {
     var id by remember { mutableStateOf("") }
     var password by remember { mutableStateOf("") }
 
@@ -41,5 +42,6 @@ internal fun AuthRoute() {
         password = password,
         idChanged = idChanged,
         passwordChanged = passwordChanged,
+        navigateToHome = navigateToHome,
     )
 }
