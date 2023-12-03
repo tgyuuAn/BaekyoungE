@@ -27,7 +27,7 @@
   
 - **AAC**
   
-- **App + Presentation + domain + data 모듈화**
+- **Modularization**
   
 <br><br><br>
 
