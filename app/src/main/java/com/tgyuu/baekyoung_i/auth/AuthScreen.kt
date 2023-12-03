@@ -3,6 +3,7 @@ package com.tgyuu.baekyoung_i.auth
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
@@ -36,6 +37,7 @@ fun AuthScreen(
     password: String,
     idChanged: (String) -> Unit,
     passwordChanged: (String) -> Unit,
+    navigateToHome: () -> Unit,
 ) {
     Box(modifier = Modifier.fillMaxSize()) {
         Image(
@@ -125,6 +127,7 @@ fun AuthScreen(
                     .height(70.dp)
                     .clip(shape = RoundedCornerShape(8.dp))
                     .background(Blue00.copy(alpha = 0.6F))
+                    .clickable { navigateToHome() }
             ) {
                 Text(
                     text = stringResource(R.string.login),
