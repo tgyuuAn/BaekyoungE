@@ -1,3 +1,11 @@
 <resources>
     <string name="app_name">baekyoung-i</string>
+    <string name="id">아이디</string>
+    <string name="password">비밀번호</string>
+    <string name="login">로그인</string>
+    <string name="sign_up">회원가입</string>
+
+    <string name="auth_id_description">아이디 필드 아이콘입니다.</string>
+    <string name="auth_password_description">비밀번호 필드 아이콘입니다.</string>
+    <string name="bbugong_auth_conext_descriptioin">귀여운 뿌공이 사진입니다.</string>
 </resources>
