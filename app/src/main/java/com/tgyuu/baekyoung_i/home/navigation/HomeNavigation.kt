@@ -7,14 +7,14 @@ import androidx.navigation.NavOptions
 import androidx.navigation.compose.composable
 import com.tgyuu.baekyoung_i.home.HomeScreen
 
-const val authHomeRoute = "home_route"
+const val homeNavigationRoute = "home_route"
 
 fun NavController.navigateToHome(navOptions: NavOptions?) {
-    this.navigate(authHomeRoute, navOptions)
+    this.navigate(homeNavigationRoute, navOptions)
 }
 
 fun NavGraphBuilder.homeScreen() {
-    composable(route = authHomeRoute) {
+    composable(route = homeNavigationRoute) {
         HomeRoute()
     }
 }
