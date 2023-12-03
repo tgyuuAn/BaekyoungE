@@ -20,6 +20,7 @@ androidx-contstraintlayout = "2.1.4"
 androidx-test-junit = "1.1.5"
 androidx-test-espresso = "3.5.1"
 androidx-navigation = "2.7.5"
+androidx-compose-material = "1.5.4"
 
 androidx_compose_bom = "2023.10.01"
 compose-compiler = "1.5.3"
@@ -68,6 +69,7 @@ androidx-compose-ui-util = { group = "androidx.compose.ui", name = "ui-util" }
 androidx-compose-ui = { group = "androidx.compose.ui", name = "ui" }
 androidx-compose-foundation = { group = "androidx.compose.foundation", name = "foundation" }
 androidx-compose-foundation-layout = { group = "androidx.compose.foundation", name = "foundation-layout" }
+androidx-compose-material = { group = "androidx.compose.material", name = "material", version.ref = "androidx-compose-material"}
 
 androidx-activity-compose = { group = "androidx.activity", name = "activity-compose", version.ref = "androidx_activity" }
 androidx-lifecycle-viewmodel-compose = { group = "androidx.lifecycle", name = "lifecycle-viewmodel-compose", version.ref = "androidx_lifecycle" }
@@ -103,7 +105,8 @@ androidx = [
     "androidx-fragment",
     "androidx-lifecycle-runtime",
     "androidx-lifecycle-viewmodel-compose",
-    "androidx-lifecycle-runtime-compose"
+    "androidx-lifecycle-runtime-compose",
+    "androidx-compose-material"
 ]
 
 compose-debug = ["androidx-compose-ui-test-manifest", "androidx-compose-ui-tooling"]
