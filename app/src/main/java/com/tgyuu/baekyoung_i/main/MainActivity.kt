@@ -1,7 +1,6 @@
 package com.tgyuu.baekyoung_i.main
 
 import android.os.Bundle
-import android.util.Log
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.compose.animation.AnimatedVisibility
@@ -58,7 +57,8 @@ class MainActivity : ComponentActivity() {
                                 )
                             }
                         )
-                    }) { innerPadding ->
+                    }
+                ) { innerPadding ->
                     BaekyoungNavHost(
                         navController = navController,
                         modifier = Modifier.padding(innerPadding)
