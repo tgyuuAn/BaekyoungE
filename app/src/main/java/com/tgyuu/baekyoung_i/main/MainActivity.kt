@@ -1,4 +1,4 @@
-package com.tgyuu.baekyoung_i
+package com.tgyuu.baekyoung_i.main
 
 import android.os.Bundle
 import android.util.Log
@@ -8,6 +8,7 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
+import com.tgyuu.baekyoung_i.auth.AuthScreen
 import com.tgyuu.designsystem.theme.BaekyoungTheme
 
 class MainActivity : ComponentActivity() {
@@ -19,12 +20,10 @@ class MainActivity : ComponentActivity() {
 
             val idChanged : (String) -> Unit = { textValue ->
                 id = textValue
-                Log.d("test", id)
             }
 
             val passwordChanged : (String) -> Unit = { textValue ->
                 password = textValue
-                Log.d("test", password)
             }
 
             BaekyoungTheme {
