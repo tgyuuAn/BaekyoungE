@@ -94,7 +94,7 @@ fun AuthScreen(
                 style = BaekyoungTheme.typography.contentBig,
                 color = BaekyoungTheme.colors.blue37,
                 modifier = Modifier
-                    .padding(top = 20.dp, bottom = 10.dp)
+                    .padding(top = 10.dp)
                     .align(alignment = Alignment.Start)
             )
 
@@ -139,7 +139,7 @@ fun AuthScreen(
                 text = stringResource(R.string.sign_up),
                 color = BaekyoungTheme.colors.blue00.copy(alpha = 0.5F),
                 style = BaekyoungTheme.typography.contentNormal,
-                modifier = Modifier.padding(top = 20.dp),
+                modifier = Modifier.padding(top = 10.dp),
             )
         }
 
