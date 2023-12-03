@@ -49,6 +49,13 @@ val teunteunBold: FontFamily =
         )
     )
 
+val notoSansKR: FontFamily =
+    FontFamily(
+        Font(
+            resId = R.font.noto
+        )
+    )
+
 @Stable
 class BaekKyoungTypogrphy internal constructor(
     contentNormal: TextStyle,
