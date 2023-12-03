@@ -49,10 +49,30 @@ val teunteunBold: FontFamily =
         )
     )
 
-val notoSansKR: FontFamily =
+val notoSansKrBold: FontFamily =
     FontFamily(
         Font(
-            resId = R.font.noto
+            resId = R.font.noto_sans_kr_bold,
+            weight = FontWeight.Bold,
+            style = FontStyle.Normal,
+        )
+    )
+
+val notoSansKrRegular: FontFamily =
+    FontFamily(
+        Font(
+            resId = R.font.noto_sans_kr_regular,
+            weight = FontWeight.Normal,
+            style = FontStyle.Normal,
+        )
+    )
+
+val notoSansKrMedium: FontFamily =
+    FontFamily(
+        Font(
+            resId = R.font.noto_sans_kr_medium,
+            weight = FontWeight.Medium,
+            style = FontStyle.Normal,
         )
     )
 
@@ -61,12 +81,16 @@ class BaekKyoungTypogrphy internal constructor(
     contentNormal: TextStyle,
     contentBig: TextStyle,
     titleNormal: TextStyle,
+    labelNormal: TextStyle,
 ) {
     var contentBig: TextStyle by mutableStateOf(contentBig)
         private set
     var contentNormal: TextStyle by mutableStateOf(contentNormal)
         private set
     var titleNormal: TextStyle by mutableStateOf(titleNormal)
+        private set
+    var labelNormal: TextStyle by mutableStateOf(labelNormal)
+        private set
 }
 
 @Composable
@@ -74,15 +98,19 @@ fun BaekKyoungTypoGraphy(): BaekKyoungTypogrphy {
     return BaekKyoungTypogrphy(
         contentNormal = TextStyle(
             fontSize = 16.sp,
-            fontFamily = teunteunNormal,
+            fontFamily = notoSansKrMedium,
         ),
         contentBig = TextStyle(
             fontSize = 20.sp,
-            fontFamily = teunteunBold,
+            fontFamily = notoSansKrBold,
         ),
         titleNormal = TextStyle(
             fontSize = 30.sp,
-            fontFamily = teunteunNormal
+            fontFamily = notoSansKrMedium,
+        ),
+        labelNormal = TextStyle(
+            fontSize = 12.sp,
+            fontFamily = notoSansKrMedium,
         )
     )
 }

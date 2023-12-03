@@ -84,7 +84,8 @@ internal fun BaekyoungBottomBar(
                 label = {
                     Text(
                         text = stringResource(id = destination.titleTextId),
-                        fontStyle = BaekyoungTheme.typography.contentNormal
+                        style = BaekyoungTheme.typography.labelNormal,
+                        color = BaekyoungTheme.colors.
                     )
                 }
             )
