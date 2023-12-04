@@ -13,4 +13,13 @@
     <string name="consulting">상담</string>
     <string name="community">커뮤니티</string>
     <string name="etc">더보기</string>
+
+    <string name="setting_account">계정 설정</string>
+    <string name="logout">로그아웃</string>
+    <string name="withdrawal">회원 탈퇴</string>
+    <string name="inquriy_and_policy">문의 및 정책</string>
+    <string name="inquriy">문의 하기</string>
+    <string name="faq">FAQ</string>
+    <string name="policy">약관 및 정책</string>
+    <string name="private_policy">개인정보 처리 방침</string>
 </resources>

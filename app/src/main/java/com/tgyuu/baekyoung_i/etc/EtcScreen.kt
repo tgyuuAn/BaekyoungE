@@ -6,6 +6,7 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.material.Divider
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.stringResource
 import com.tgyuu.baekyoung_i.R
 import com.tgyuu.baekyoung_i.etc.component.SettingBar
 import com.tgyuu.baekyoung_i.etc.component.SettingTitleBar
@@ -20,24 +21,26 @@ fun EtcScreen() {
             .fillMaxSize()
             .background(BaekyoungTheme.colors.white)
     ) {
+        val dividerColor = BaekyoungTheme.colors.purple
+
         BaekyoungTopAppBar(ETC.titleTextId)
-        Divider(color = BaekyoungTheme.colors.purple)
+        Divider(color = dividerColor)
         SettingTitleBar(
-            title = "계정 설정",
+            title = stringResource(id = R.string.setting_account),
             leadIconId = R.drawable.ic_account_setting,
         )
-        Divider(color = BaekyoungTheme.colors.purple)
-        SettingBar(text = "로그아웃")
-        SettingBar(text = "회원 탈퇴")
-        Divider(color = BaekyoungTheme.colors.purple)
+        Divider(color = dividerColor)
+        SettingBar(text = stringResource(id = R.string.logout))
+        SettingBar(text = stringResource(id = R.string.withdrawal))
+        Divider(color = dividerColor)
         SettingTitleBar(
-            title = "문의 및 정책",
+            title = stringResource(id = R.string.inquriy_and_policy),
             leadIconId = R.drawable.ic_inquiry_policy,
         )
-        Divider(color = BaekyoungTheme.colors.purple)
-        SettingBar(text = "문의 하기")
-        SettingBar(text = "FAQ")
-        SettingBar(text = "약관 및 정책")
-        SettingBar(text = "개인정보 처리 방침")
+        Divider(color = dividerColor)
+        SettingBar(text = stringResource(id = R.string.inquriy))
+        SettingBar(text = stringResource(id = R.string.faq))
+        SettingBar(text = stringResource(id = R.string.policy))
+        SettingBar(text = stringResource(id = R.string.private_policy))
     }
 }
