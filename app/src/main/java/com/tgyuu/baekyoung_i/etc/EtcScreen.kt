@@ -33,8 +33,9 @@ fun EtcScreen() {
         ) {
             Text(
                 text = stringResource(TopLevelDestination.ETC.titleTextId),
-                style = BaekyoungTheme.typography.titleNormal,
+                style = BaekyoungTheme.typography.contentBig,
                 textAlign = TextAlign.Center,
+                color = BaekyoungTheme.colors.black,
                 modifier = Modifier
                     .padding(start = 20.dp)
             )

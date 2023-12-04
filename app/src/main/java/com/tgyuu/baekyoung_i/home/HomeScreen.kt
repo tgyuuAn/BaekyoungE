@@ -41,10 +41,10 @@ fun HomeScreen() {
         ) {
             Text(
                 text = stringResource(HOME.titleTextId),
-                style = BaekyoungTheme.typography.titleNormal,
+                style = BaekyoungTheme.typography.contentBig,
                 textAlign = TextAlign.Center,
-                modifier = Modifier
-                    .padding(start = 20.dp)
+                color = BaekyoungTheme.colors.black,
+                modifier = Modifier.padding(start = 20.dp)
             )
         }
 
@@ -75,7 +75,7 @@ fun HomeScreen() {
                         .padding(start = 10.dp)
                 ) {
                     Image(
-                        painter = painterResource(id = R.drawable.ic_hackers),
+                        painter = painterResource(id = R.drawable.ic_extracurricular),
                         contentDescription = null,
                         contentScale = ContentScale.FillBounds
                     )
@@ -89,7 +89,7 @@ fun HomeScreen() {
                         .weight(1f)
                 ) {
                     Image(
-                        painter = painterResource(id = R.drawable.ic_hackers),
+                        painter = painterResource(id = R.drawable.ic_webtoon),
                         contentDescription = null,
                         contentScale = ContentScale.FillBounds
                     )
@@ -102,7 +102,7 @@ fun HomeScreen() {
                         .padding(start = 10.dp)
                 ) {
                     Image(
-                        painter = painterResource(id = R.drawable.ic_hackers),
+                        painter = painterResource(id = R.drawable.ic_mentoring),
                         contentDescription = null,
                         contentScale = ContentScale.FillBounds
                     )

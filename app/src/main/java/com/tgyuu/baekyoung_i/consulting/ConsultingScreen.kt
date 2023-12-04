@@ -33,10 +33,10 @@ fun ConsultingScreen() {
         ) {
             Text(
                 text = stringResource(TopLevelDestination.CONSULTING.titleTextId),
-                style = BaekyoungTheme.typography.titleNormal,
+                style = BaekyoungTheme.typography.contentBig,
                 textAlign = TextAlign.Center,
-                modifier = Modifier
-                    .padding(start = 20.dp)
+                color = BaekyoungTheme.colors.black,
+                modifier = Modifier.padding(start = 20.dp)
             )
         }
     }
