@@ -9,7 +9,9 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.wrapContentHeight
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material.Button
 import androidx.compose.material.Card
+import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.layout.ContentScale
@@ -30,6 +32,13 @@ fun HomeScreen() {
         BaekyoungTopAppBar(HOME.titleTextId)
         WhaleBeeContents()
         HotPost()
+        Button(onClick = {}, modifier = Modifier.background(BaekyoungTheme.colors.)) {
+            Text(
+                text = "내 상담내역 확인하기",
+                style = BaekyoungTheme.typography.titleNormal,
+                color = BaekyoungTheme.colors.white,
+            )
+        }
     }
 }
 
@@ -104,8 +113,9 @@ private fun HotPost() {
         modifier = Modifier
             .fillMaxWidth()
             .padding(horizontal = 10.dp)
-            .background(BaekyoungTheme.colors.gray95)
-    ){
+            .background(BaekyoungTheme.colors.grayF4)
+            .padding(vertical = 20.dp)
+    ) {
 
     }
 }
