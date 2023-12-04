@@ -6,6 +6,7 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.padding
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
@@ -24,16 +25,18 @@ fun HomeScreen() {
             .background(BaekyoungTheme.colors.blue5FF)
     ) {
         Box(
+            contentAlignment = Alignment.CenterStart,
             modifier = Modifier
                 .fillMaxWidth()
-                .height(60.dp)
+                .height(50.dp)
                 .background(BaekyoungTheme.colors.white)
         ) {
             Text(
                 text = stringResource(HOME.titleTextId),
                 style = BaekyoungTheme.typography.titleNormal,
                 textAlign = TextAlign.Center,
-                modifier = Modifier.align(Alignment.Center)
+                modifier = Modifier
+                    .padding(start = 20.dp)
             )
         }
     }
