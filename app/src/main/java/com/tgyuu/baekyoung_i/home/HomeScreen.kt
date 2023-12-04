@@ -29,12 +29,12 @@ fun HomeScreen() {
     ) {
         BaekyoungTopAppBar(HOME.titleTextId)
         WhaleBeeContents()
+        HotPost()
     }
 }
 
 @Composable
 private fun WhaleBeeContents() {
-
     Column(
         modifier = Modifier
             .padding(start = 10.dp, end = 10.dp, top = 10.dp)
@@ -95,5 +95,17 @@ private fun WhaleBeeContents() {
                 )
             }
         }
+    }
+}
+
+@Composable
+private fun HotPost() {
+    Column(
+        modifier = Modifier
+            .fillMaxWidth()
+            .padding(horizontal = 10.dp)
+            .background(BaekyoungTheme.colors.gray95)
+    ){
+
     }
 }
