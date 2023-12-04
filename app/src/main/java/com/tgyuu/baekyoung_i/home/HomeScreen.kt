@@ -2,17 +2,20 @@ package com.tgyuu.baekyoung_i.home
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.wrapContentHeight
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material.Button
 import androidx.compose.material.Card
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
@@ -24,21 +27,18 @@ import com.tgyuu.designsystem.theme.BaekyoungTheme
 
 @Composable
 fun HomeScreen() {
-    Column(
-        modifier = Modifier
-            .fillMaxSize()
-            .background(BaekyoungTheme.colors.blue5FF)
-    ) {
-        BaekyoungTopAppBar(HOME.titleTextId)
-        WhaleBeeContents()
-        HotPost()
-        Button(onClick = {}, modifier = Modifier.background(BaekyoungTheme.colors.)) {
-            Text(
-                text = "내 상담내역 확인하기",
-                style = BaekyoungTheme.typography.titleNormal,
-                color = BaekyoungTheme.colors.white,
-            )
+    Box(modifier = Modifier.fillMaxSize()) {
+        Column(
+            modifier = Modifier
+                .align(Alignment.TopCenter)
+                .wrapContentHeight()
+                .background(BaekyoungTheme.colors.blue5FF)
+        ) {
+            BaekyoungTopAppBar(titleTextId = HOME.titleTextId)
+            WhaleBeeContents()
+            HotPost()
         }
+        ConsultingHistoryButton(modifier = Modifier.align(Alignment.BottomCenter))
     }
 }
 
@@ -55,7 +55,9 @@ private fun WhaleBeeContents() {
         ) {
             Card(
                 shape = RoundedCornerShape(10.dp),
-                modifier = Modifier.weight(1f)
+                modifier = Modifier
+                    .weight(1f)
+                    .clickable { }
             ) {
                 Image(
                     painter = painterResource(id = R.drawable.ic_hackers),
@@ -69,6 +71,7 @@ private fun WhaleBeeContents() {
                 modifier = Modifier
                     .weight(1f)
                     .padding(start = 10.dp)
+                    .clickable { }
             ) {
                 Image(
                     painter = painterResource(id = R.drawable.ic_extracurricular),
@@ -83,6 +86,7 @@ private fun WhaleBeeContents() {
                 shape = RoundedCornerShape(10.dp),
                 modifier = Modifier
                     .weight(1f)
+                    .clickable { }
             ) {
                 Image(
                     painter = painterResource(id = R.drawable.ic_webtoon),
@@ -96,6 +100,7 @@ private fun WhaleBeeContents() {
                 modifier = Modifier
                     .weight(1f)
                     .padding(start = 10.dp)
+                    .clickable { }
             ) {
                 Image(
                     painter = painterResource(id = R.drawable.ic_mentoring),
@@ -108,14 +113,39 @@ private fun WhaleBeeContents() {
 }
 
 @Composable
-private fun HotPost() {
+private fun HotPost(modifier: Modifier = Modifier) {
     Column(
-        modifier = Modifier
-            .fillMaxWidth()
-            .padding(horizontal = 10.dp)
-            .background(BaekyoungTheme.colors.grayF4)
-            .padding(vertical = 20.dp)
+        modifier = modifier
+            .fillMaxSize()
+            .padding(horizontal = 10.dp, vertical = 20.dp)
+            .background(BaekyoungTheme.colors.white)
     ) {
+    }
+}
 
+@Composable
+private fun ConsultingHistoryButton(modifier: Modifier = Modifier) {
+    Box(
+        modifier = modifier
+            .background(BaekyoungTheme.colors.blueD5FF)
+            .fillMaxWidth()
+            .height(60.dp)
+            .clickable { }
+    ) {
+        Text(
+            text = "내 상담내역 확인하기",
+            style = BaekyoungTheme.typography.titleNormal,
+            color = BaekyoungTheme.colors.white,
+            modifier = Modifier
+                .align(Alignment.CenterStart)
+                .padding(start = 20.dp)
+        )
+        Image(
+            painter = painterResource(R.drawable.ic_right_arrow),
+            contentDescription = null,
+            modifier = Modifier
+                .align(Alignment.CenterEnd)
+                .padding(end = 20.dp)
+        )
     }
 }

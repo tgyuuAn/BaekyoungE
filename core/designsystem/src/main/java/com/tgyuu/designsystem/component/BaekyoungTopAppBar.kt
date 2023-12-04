@@ -16,10 +16,13 @@ import androidx.compose.ui.unit.dp
 import com.tgyuu.designsystem.theme.BaekyoungTheme
 
 @Composable
-fun BaekyoungTopAppBar(@StringRes titleTextId: Int) {
+fun BaekyoungTopAppBar(
+    @StringRes titleTextId: Int,
+    modifier: Modifier = Modifier,
+) {
     Box(
         contentAlignment = Alignment.CenterStart,
-        modifier = Modifier
+        modifier = modifier
             .fillMaxWidth()
             .height(50.dp)
             .background(BaekyoungTheme.colors.white)
