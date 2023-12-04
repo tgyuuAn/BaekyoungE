@@ -105,7 +105,7 @@ fun BaekKyoungTypoGraphy(): BaekKyoungTypogrphy {
             fontFamily = notoSansKrBold,
         ),
         titleNormal = TextStyle(
-            fontSize = 30.sp,
+            fontSize = 24.sp,
             fontFamily = notoSansKrMedium,
         ),
         labelNormal = TextStyle(
