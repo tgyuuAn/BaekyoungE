@@ -27,17 +27,21 @@ import com.tgyuu.designsystem.theme.BaekyoungTheme
 
 @Composable
 fun HomeScreen() {
-    Box(modifier = Modifier.fillMaxSize()) {
+    Box(
+        modifier = Modifier
+            .fillMaxSize()
+            .background(BaekyoungTheme.colors.blue5FF)
+    ) {
         Column(
             modifier = Modifier
                 .align(Alignment.TopCenter)
                 .wrapContentHeight()
-                .background(BaekyoungTheme.colors.blue5FF)
         ) {
             BaekyoungTopAppBar(titleTextId = HOME.titleTextId)
             WhaleBeeContents()
             HotPost()
         }
+
         ConsultingHistoryButton(modifier = Modifier.align(Alignment.BottomCenter))
     }
 }
