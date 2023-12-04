@@ -1,13 +1,14 @@
 package com.tgyuu.baekyoung_i.etc.component
 
 import androidx.annotation.DrawableRes
-import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
-import androidx.compose.material.Icon
+import androidx.compose.foundation.layout.padding
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
@@ -20,20 +21,22 @@ internal fun SettingTitleBar(
     modifier: Modifier = Modifier,
 ) {
     Row(
-        horizontalArrangement = Arrangement.spacedBy(15.dp),
+        verticalAlignment = Alignment.CenterVertically,
         modifier = modifier
             .fillMaxWidth()
             .height(50.dp)
     ) {
-        Icon(
+        Image(
             painter = painterResource(id = leadIconId),
             contentDescription = null,
+            modifier = Modifier.padding(start = 15.dp)
         )
 
         Text(
             text = title,
             style = BaekyoungTheme.typography.contentNormal,
             color = BaekyoungTheme.colors.black,
+            modifier = Modifier.padding(start = 15.dp)
         )
 
     }
