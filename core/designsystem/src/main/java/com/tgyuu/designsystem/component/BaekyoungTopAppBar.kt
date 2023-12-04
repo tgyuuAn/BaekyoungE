@@ -11,6 +11,7 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
@@ -19,6 +20,7 @@ import com.tgyuu.designsystem.theme.BaekyoungTheme
 @Composable
 fun BaekyoungTopAppBar(
     @StringRes titleTextId: Int,
+    textColor: Color = BaekyoungTheme.colors.black,
     modifier: Modifier = Modifier,
 ) {
     Box(
@@ -32,8 +34,12 @@ fun BaekyoungTopAppBar(
             text = stringResource(titleTextId),
             style = BaekyoungTheme.typography.contentBig,
             textAlign = TextAlign.Center,
-            color = BaekyoungTheme.colors.black,
+            color = textColor,
             modifier = Modifier.padding(start = 20.dp)
+        )
+        Divider(
+            color = BaekyoungTheme.colors.blueFF,
+            modifier = Modifier.align(Alignment.BottomStart)
         )
     }
 }

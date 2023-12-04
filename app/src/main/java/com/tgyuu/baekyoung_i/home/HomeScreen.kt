@@ -19,6 +19,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import com.tgyuu.baekyoung_i.R
 import com.tgyuu.baekyoung_i.main.navigation.TopLevelDestination.HOME
@@ -30,14 +31,17 @@ fun HomeScreen() {
     Box(
         modifier = Modifier
             .fillMaxSize()
-            .background(BaekyoungTheme.colors.blue5FF)
+            .background(BaekyoungTheme.colors.white)
     ) {
         Column(
             modifier = Modifier
                 .align(Alignment.TopCenter)
                 .wrapContentHeight()
         ) {
-            BaekyoungTopAppBar(titleTextId = HOME.titleTextId)
+            BaekyoungTopAppBar(
+                titleTextId = R.string.app_name,
+                textColor = BaekyoungTheme.colors.blueFF
+            )
             WhaleBeeContents()
             HotPost()
         }
