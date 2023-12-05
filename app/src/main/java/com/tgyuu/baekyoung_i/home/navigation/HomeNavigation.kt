@@ -7,7 +7,6 @@ import androidx.navigation.NavOptions
 import androidx.navigation.compose.composable
 import androidx.navigation.navOptions
 import com.tgyuu.baekyoung_i.home.HomeRoute
-import com.tgyuu.baekyoung_i.home.HomeScreen
 
 const val homeNavigationRoute = "home_route"
 
