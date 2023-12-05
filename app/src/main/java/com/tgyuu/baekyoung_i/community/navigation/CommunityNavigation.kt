@@ -6,6 +6,7 @@ import androidx.navigation.NavGraphBuilder
 import androidx.navigation.NavOptions
 import androidx.navigation.compose.composable
 import androidx.navigation.navOptions
+import com.tgyuu.baekyoung_i.community.CommunityRoute
 import com.tgyuu.baekyoung_i.community.CommunityScreen
 import com.tgyuu.baekyoung_i.consulting.navigation.consultingNavigationRoute
 
@@ -19,9 +20,4 @@ fun NavGraphBuilder.communityScreen() {
     composable(route = communityNavigationRoute) {
         CommunityRoute()
     }
-}
-
-@Composable
-internal fun CommunityRoute() {
-    CommunityScreen()
 }

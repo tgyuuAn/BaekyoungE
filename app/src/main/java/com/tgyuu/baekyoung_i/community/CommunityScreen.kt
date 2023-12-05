@@ -10,6 +10,11 @@ import com.tgyuu.designsystem.component.BaekyoungTopAppBar
 import com.tgyuu.designsystem.theme.BaekyoungTheme
 
 @Composable
+internal fun CommunityRoute() {
+    CommunityScreen()
+}
+
+@Composable
 fun CommunityScreen() {
     Column(
         modifier = Modifier

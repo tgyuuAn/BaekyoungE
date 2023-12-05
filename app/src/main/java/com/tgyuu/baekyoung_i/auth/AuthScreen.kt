@@ -16,6 +16,10 @@ import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.OutlinedTextFieldDefaults
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -30,6 +34,28 @@ import com.tgyuu.baekyoung_i.R
 import com.tgyuu.designsystem.theme.BaekyoungTheme
 import com.tgyuu.designsystem.theme.Blue00
 import com.tgyuu.designsystem.theme.Blue37
+
+@Composable
+internal fun AuthRoute(navigateToHome: () -> Unit) {
+    var id by remember { mutableStateOf("") }
+    var password by remember { mutableStateOf("") }
+
+    val idChanged: (String) -> Unit = { textValue ->
+        id = textValue
+    }
+
+    val passwordChanged: (String) -> Unit = { textValue ->
+        password = textValue
+    }
+
+    AuthScreen(
+        id = id,
+        password = password,
+        idChanged = idChanged,
+        passwordChanged = passwordChanged,
+        navigateToHome = navigateToHome,
+    )
+}
 
 @Composable
 fun AuthScreen(

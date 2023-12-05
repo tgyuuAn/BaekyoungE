@@ -15,6 +15,11 @@ import com.tgyuu.designsystem.component.BaekyoungTopAppBar
 import com.tgyuu.designsystem.theme.BaekyoungTheme
 
 @Composable
+internal fun EtcRoute() {
+    EtcScreen()
+}
+
+@Composable
 fun EtcScreen() {
     Column(
         modifier = Modifier

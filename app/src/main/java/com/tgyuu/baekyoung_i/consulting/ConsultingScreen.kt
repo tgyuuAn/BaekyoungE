@@ -17,6 +17,11 @@ import com.tgyuu.designsystem.component.BaekyoungTopAppBar
 import com.tgyuu.designsystem.theme.BaekyoungTheme
 
 @Composable
+internal fun ConsultingRoute() {
+    ConsultingScreen()
+}
+
+@Composable
 fun ConsultingScreen() {
     Box(
         modifier = Modifier

@@ -25,6 +25,11 @@ import com.tgyuu.designsystem.component.BaekyoungTopAppBar
 import com.tgyuu.designsystem.theme.BaekyoungTheme
 
 @Composable
+internal fun HomeRoute() {
+    HomeScreen()
+}
+
+@Composable
 fun HomeScreen() {
     Column(
         modifier = Modifier
