@@ -32,7 +32,7 @@
 <br><br><br>
 
 ## 📊 모듈 의존성 그래프
-![백경이 모듈 의존성 그래프 drawio](https://github.com/tgyuuAn/Baekyoung-i/assets/116813010/0f04c57d-8c48-4a33-a798-64969f3ecf35)
+![Baekyoung 모듈 의존성 그래프](https://github.com/tgyuuAn/Baekyoung-i/assets/116813010/6aa7cc8a-c4ab-4a76-a7be-14e07e8aee2a)
 
 <br><br><br>
 
