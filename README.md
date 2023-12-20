@@ -18,6 +18,8 @@
 <br><br><br>
 ## 🎨 UI/UX
 
+![image](https://github.com/tgyuuAn/Baekyoung-i/assets/116813010/726369e8-7ae1-44c8-9965-7bbaffab3078)
+
 <a href="https://www.figma.com/file/z7dilPOmXYdRUc8KhICWnw/%EC%B1%97%EB%B4%87%EC%96%B4%ED%94%8C-%EB%B0%B1%EA%B2%BD%EC%9D%B4?type=design&node-id=0%3A1&mode=design&t=QXZRcBkarEtVyH9d-1">Figma Link</a>
 
 <br><br><br>
