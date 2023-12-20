@@ -3,9 +3,12 @@ package com.tgyuu.baekyoung_i.main
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
+import androidx.compose.animation.AnimatedContent
 import androidx.compose.animation.AnimatedVisibility
+import androidx.compose.animation.ExperimentalAnimationApi
 import androidx.compose.animation.slideInVertically
 import androidx.compose.animation.slideOutVertically
+import androidx.compose.animation.with
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.BottomNavigation
@@ -96,6 +99,7 @@ private fun navigateToTopLevelDestination(
     }
 }
 
+@OptIn(ExperimentalAnimationApi::class)
 @Composable
 internal fun BaekyoungBottomBar(
     modifier: Modifier = Modifier,
@@ -103,39 +107,44 @@ internal fun BaekyoungBottomBar(
     onNavigateToDestination: (TopLevelDestination) -> Unit,
     bottomBarState: Boolean,
 ) {
-    AnimatedVisibility(
-        visible = bottomBarState,
-        enter = slideInVertically(initialOffsetY = { it }),
-        exit = slideOutVertically(targetOffsetY = { it }),
-        content = {
-            BottomNavigation(
-                backgroundColor = BaekyoungTheme.colors.white,
-                modifier = modifier
-            ) {
-                TopLevelDestination.entries.forEach { destination ->
-                    val isSelect = currentRoute == destination.route
-                    BottomNavigationItem(
-                        selected = isSelect,
-                        onClick = { onNavigateToDestination(destination) },
-                        selectedContentColor = BaekyoungTheme.colors.blueFF,
-                        unselectedContentColor = BaekyoungTheme.colors.gray95,
-                        icon = {
-                            Icon(
-                                painter = painterResource(id = destination.selectedIcon),
-                                contentDescription = null,
-                            )
-                        },
-                        label = {
-                            Text(
-                                text = stringResource(id = destination.titleTextId),
-                                style = BaekyoungTheme.typography.labelNormal,
-                                color = if (isSelect) BaekyoungTheme.colors.blueFF
-                                else BaekyoungTheme.colors.gray95,
-                            )
-                        }
-                    )
+    AnimatedContent(
+        targetState = bottomBarState,
+        label = "",
+        transitionSpec = {
+            slideInVertically { height -> height } with
+                    slideOutVertically { height -> height }
+        },
+        content = { isVisible ->
+            if (isVisible) {
+                BottomNavigation(
+                    backgroundColor = BaekyoungTheme.colors.white,
+                    modifier = modifier
+                ) {
+                    TopLevelDestination.entries.forEach { destination ->
+                        val isSelect = currentRoute == destination.route
+                        BottomNavigationItem(
+                            selected = isSelect,
+                            onClick = { onNavigateToDestination(destination) },
+                            selectedContentColor = BaekyoungTheme.colors.blueFF,
+                            unselectedContentColor = BaekyoungTheme.colors.gray95,
+                            icon = {
+                                Icon(
+                                    painter = painterResource(id = destination.selectedIcon),
+                                    contentDescription = null,
+                                )
+                            },
+                            label = {
+                                Text(
+                                    text = stringResource(id = destination.titleTextId),
+                                    style = BaekyoungTheme.typography.labelNormal,
+                                    color = if (isSelect) BaekyoungTheme.colors.blueFF
+                                    else BaekyoungTheme.colors.gray95,
+                                )
+                            }
+                        )
+                    }
                 }
             }
-        }
+        },
     )
 }

@@ -30,7 +30,7 @@ internal fun HomeRoute() {
 }
 
 @Composable
-fun HomeScreen() {
+internal fun HomeScreen() {
     Column(
         modifier = Modifier
             .fillMaxSize()

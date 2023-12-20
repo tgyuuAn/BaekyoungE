@@ -1,6 +1,5 @@
 package com.tgyuu.baekyoung_i.home.navigation
 
-import androidx.compose.runtime.Composable
 import androidx.navigation.NavController
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.NavOptions
