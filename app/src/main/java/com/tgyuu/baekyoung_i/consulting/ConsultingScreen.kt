@@ -83,7 +83,7 @@ internal fun ConsultingScreen(
             ) {
                 Text(
                     text = "상담정보 입력",
-                    style = BaekyoungTheme.typography.contentNormal.copy(fontSize = 24.sp),
+                    style = BaekyoungTheme.typography.contentNormal.copy(fontSize = 22.sp),
                     color = BaekyoungTheme.colors.gray95,
                     textAlign = TextAlign.Start,
                 )

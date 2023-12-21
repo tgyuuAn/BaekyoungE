@@ -48,7 +48,7 @@ fun ConsultingTextField(
         )
 
         Divider(
-            color = BaekyoungTheme.colors.blue00,
+            color = BaekyoungTheme.colors.grayCF,
             thickness = 1.dp
         )
     }
