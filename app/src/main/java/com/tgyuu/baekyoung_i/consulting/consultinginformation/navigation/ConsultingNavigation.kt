@@ -1,11 +1,11 @@
-package com.tgyuu.baekyoung_i.consulting.navigation
+package com.tgyuu.baekyoung_i.consulting.consultinginformation.navigation
 
 import androidx.navigation.NavController
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.NavOptions
 import androidx.navigation.compose.composable
 import androidx.navigation.navOptions
-import com.tgyuu.baekyoung_i.consulting.ConsultingRoute
+import com.tgyuu.baekyoung_i.consulting.consultinginformation.ConsultingRoute
 import com.tgyuu.baekyoung_i.consulting.chatting.navigation.chattingScreen
 
 const val consultingNavigationRoute = "consulting_route"

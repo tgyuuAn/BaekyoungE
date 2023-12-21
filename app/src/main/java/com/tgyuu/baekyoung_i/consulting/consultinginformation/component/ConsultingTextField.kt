@@ -1,4 +1,4 @@
-package com.tgyuu.baekyoung_i.consulting.component
+package com.tgyuu.baekyoung_i.consulting.consultinginformation.component
 
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxWidth

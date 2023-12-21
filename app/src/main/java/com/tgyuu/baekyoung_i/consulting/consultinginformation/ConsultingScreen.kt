@@ -1,4 +1,4 @@
-package com.tgyuu.baekyoung_i.consulting
+package com.tgyuu.baekyoung_i.consulting.consultinginformation
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
@@ -14,6 +14,7 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -27,7 +28,7 @@ import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.tgyuu.baekyoung_i.R
-import com.tgyuu.baekyoung_i.consulting.component.ConsultingTextField
+import com.tgyuu.baekyoung_i.consulting.consultinginformation.component.ConsultingTextField
 import com.tgyuu.baekyoung_i.main.navigation.TopLevelDestination.CONSULTING
 import com.tgyuu.designsystem.component.BaekyoungTopAppBar
 import com.tgyuu.designsystem.theme.BaekyoungTheme
@@ -39,6 +40,10 @@ internal fun ConsultingRoute(
 ) {
     val grade by viewModel.grade.collectAsStateWithLifecycle()
     val major by viewModel.major.collectAsStateWithLifecycle()
+
+    LaunchedEffect(true) {
+        viewModel.event.collect { handleEvent(it) }
+    }
 
     ConsultingScreen(
         grade = grade,
@@ -101,7 +106,7 @@ internal fun ConsultingScreen(
                     title = stringResource(R.string.major),
                     value = major,
                     onValueChanged = onMajorValueChanged,
-                    modifier = Modifier.padding(top = 20.dp),
+                    modifier = Modifier.padding(top = 25.dp),
                 )
 
                 ConsultingTextField(
@@ -109,7 +114,7 @@ internal fun ConsultingScreen(
                     value = grade,
                     onValueChanged = onGradeValueChanged,
                     keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number),
-                    modifier = Modifier.padding(top = 25.dp),
+                    modifier = Modifier.padding(top = 20.dp),
                 )
 
                 val buttonModifier = Modifier
@@ -151,4 +156,9 @@ internal fun ConsultingScreen(
             }
         }
     }
+}
+
+private fun handleEvent(event: ConsultingEvent) = when (event) {
+    is ConsultingEvent.NavigateToChatting -> {}
+    is ConsultingEvent.ShowSnackBar -> {}
 }
