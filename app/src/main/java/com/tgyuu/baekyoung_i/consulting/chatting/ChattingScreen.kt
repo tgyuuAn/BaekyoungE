@@ -3,6 +3,7 @@ package com.tgyuu.baekyoung_i.consulting.chatting
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -47,7 +48,8 @@ internal fun ChattingRoute(viewModel: ChattingViewModel = hiltViewModel()) {
     ChattingScreen(
         chat,
         userInput,
-        viewModel::setUserInput
+        viewModel::setUserInput,
+        viewModel::postUserChatting,
     )
 }
 
@@ -57,6 +59,7 @@ internal fun ChattingScreen(
     chat: UiState<List<ConsultingChatting>>,
     userInput: String,
     onUserInputChanged: (String) -> Unit,
+    postUserChatting: () -> Unit,
 ) {
     Box(
         modifier = Modifier
@@ -122,6 +125,7 @@ internal fun ChattingScreen(
                         .clip(shape = RoundedCornerShape(5.dp))
                         .background(BaekyoungTheme.colors.grayF4)
                         .border(width = 2.dp, color = BaekyoungTheme.colors.gray95)
+                        .clickable { postUserChatting() }
                 ) {
                     Text(
                         text = "전송",

@@ -3,8 +3,8 @@ package com.pknu.network.source.consulting
 import android.util.Log
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.ktx.toObject
-import com.pknu.network.constant.CHATTING_COLLECTION
 import com.pknu.network.constant.CHATTING_LOG_COLLECTION
+import com.pknu.network.constant.CHAT_USER_COLLECTION
 import com.pknu.network.constant.USER_INFORMATION_COLLECTION
 import com.pknu.network.model.consulting.ChatLogResponse
 import com.pknu.network.model.consulting.ChatRequest
@@ -30,8 +30,8 @@ class ConsultingDataSourceImpl @Inject constructor(
 
     override suspend fun postUserChatting(chatRequest: ChatRequest) =
         runCatching {
-            val task = firebaseFirestore.collection(CHATTING_COLLECTION)
-                .document("K2PrpK1UBiJU6ZXUsQh1")
+            val task = firebaseFirestore.collection(CHAT_USER_COLLECTION)
+                .document("s0tSqorXJqEn4ntIxcQj")
                 .set(chatRequest)
                 .await()
         }
