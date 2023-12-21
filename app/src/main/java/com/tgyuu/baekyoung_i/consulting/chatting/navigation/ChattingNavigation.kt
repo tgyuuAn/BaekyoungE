@@ -11,7 +11,7 @@ import com.tgyuu.baekyoung_i.consulting.navigation.consultingNavigationRoute
 
 const val chattingNavigationRoute = "chatting_route"
 
-fun NavController.navigateToConsulting(navOptions: NavOptions? = navOptions {}) {
+fun NavController.navigateToChatting(navOptions: NavOptions? = navOptions {}) {
     this.navigate(chattingNavigationRoute, navOptions)
 }
 

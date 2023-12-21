@@ -8,7 +8,9 @@ import androidx.navigation.navOptions
 import com.tgyuu.baekyoung_i.auth.navigation.authNavigationRoute
 import com.tgyuu.baekyoung_i.auth.navigation.authScreen
 import com.tgyuu.baekyoung_i.community.navigation.communityScreen
-import com.tgyuu.baekyoung_i.consulting.navigation.consultingScreen
+import com.tgyuu.baekyoung_i.consulting.chatting.navigation.navigateToChatting
+import com.tgyuu.baekyoung_i.consulting.navigation.consultingGraph
+import com.tgyuu.baekyoung_i.consulting.navigation.consultingNavigationRoute
 import com.tgyuu.baekyoung_i.etc.navigation.etcScreen
 import com.tgyuu.baekyoung_i.home.navigation.homeScreen
 import com.tgyuu.baekyoung_i.home.navigation.navigateToHome
@@ -30,7 +32,11 @@ fun BaekyoungNavHost(
             })
         })
         homeScreen()
-        consultingScreen()
+        consultingGraph(navigateToChatting = {
+            navController.navigateToChatting(navOptions {
+                popUpTo(consultingNavigationRoute)
+            })
+        })
         communityScreen()
         etcScreen()
     }

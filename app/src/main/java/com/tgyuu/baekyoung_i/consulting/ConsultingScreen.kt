@@ -1,6 +1,5 @@
 package com.tgyuu.baekyoung_i.consulting
 
-import android.view.WindowManager
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
@@ -34,7 +33,10 @@ import com.tgyuu.designsystem.component.BaekyoungTopAppBar
 import com.tgyuu.designsystem.theme.BaekyoungTheme
 
 @Composable
-internal fun ConsultingRoute(viewModel: ConsultingViewModel = hiltViewModel()) {
+internal fun ConsultingRoute(
+    viewModel: ConsultingViewModel = hiltViewModel(),
+    navigateToChatting: () -> Unit,
+) {
     val grade by viewModel.grade.collectAsStateWithLifecycle()
     val major by viewModel.major.collectAsStateWithLifecycle()
 
@@ -44,6 +46,7 @@ internal fun ConsultingRoute(viewModel: ConsultingViewModel = hiltViewModel()) {
         onGradeValueChanged = viewModel::setGrade,
         onMajorValueChanged = viewModel::setMajor,
         postConsultingInformation = viewModel::postConsultingInformation,
+        navigateToChatting = navigateToChatting,
     )
 }
 
@@ -54,6 +57,7 @@ internal fun ConsultingScreen(
     onGradeValueChanged: (String) -> Unit,
     onMajorValueChanged: (String) -> Unit,
     postConsultingInformation: () -> Unit,
+    navigateToChatting: () -> Unit,
 ) {
     Box(
         modifier = Modifier
@@ -118,7 +122,10 @@ internal fun ConsultingScreen(
                     Box(
                         modifier = buttonModifier
                             .background(BaekyoungTheme.colors.blueF8)
-                            .clickable { postConsultingInformation() }
+                            .clickable {
+                                postConsultingInformation()
+                                navigateToChatting()
+                            }
                     ) {
                         Text(
                             text = stringResource(R.string.start_consulting),
