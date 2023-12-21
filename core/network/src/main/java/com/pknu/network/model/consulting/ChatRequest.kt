@@ -1,5 +1,5 @@
 package com.pknu.network.model.consulting
 
 data class ChatRequest(
-    val chatUser: String,
+    val chat_user: String,
 )

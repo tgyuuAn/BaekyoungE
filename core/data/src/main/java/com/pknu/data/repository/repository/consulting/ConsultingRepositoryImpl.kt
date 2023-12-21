@@ -22,7 +22,7 @@ class ConsultingRepositoryImpl @Inject constructor(
     override suspend fun postUserChatting(chatUser: String): Result<Unit> =
         consultingDataSource.postUserChatting(
             ChatRequest(
-                chatUser = chatUser
+                chat_user = chatUser
             )
         )
 
