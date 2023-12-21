@@ -1,5 +1,6 @@
 plugins {
     id("plugin.android.library")
+    id("plugin.android.hilt")
 }
 
 android {
