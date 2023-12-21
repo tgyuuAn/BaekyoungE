@@ -8,9 +8,10 @@ android {
 }
 
 dependencies {
+    implementation(project(":core:model"))
+
     implementation(platform(libs.firebase.bom))
     implementation(libs.firebase.firestore)
-
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.test.junit)
 }
