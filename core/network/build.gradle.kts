@@ -8,7 +8,9 @@ android {
 }
 
 dependencies {
-    implementation(libs.androidx.core)
+    implementation(platform(libs.firebase.bom))
+    implementation(libs.firebase.firestore)
+
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.test.junit)
 }
