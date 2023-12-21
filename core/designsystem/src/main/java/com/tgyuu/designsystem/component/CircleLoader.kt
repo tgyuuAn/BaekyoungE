@@ -10,11 +10,10 @@ import com.airbnb.lottie.compose.LottieCompositionSpec
 import com.airbnb.lottie.compose.LottieConstants
 import com.airbnb.lottie.compose.rememberLottieComposition
 import com.tgyuu.designsystem.R
-import com.wap.wapp.core.designsystem.R
 
 @Composable
-fun CircleLoader(modifier: Modifier = Modifier) {
-    val composition by rememberLottieComposition(LottieCompositionSpec.RawRes(R.raw.raw_loading))
+fun Loader(modifier: Modifier = Modifier) {
+    val composition by rememberLottieComposition(LottieCompositionSpec.RawRes(R.raw.anim_loading))
     Box(
         modifier = modifier,
         contentAlignment = Alignment.TopCenter,
