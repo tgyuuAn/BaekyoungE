@@ -34,12 +34,6 @@ class ChattingViewModel @Inject constructor(
                 initialValue = UiState.Loading
             )
 
-    private val _assistantChat: MutableStateFlow<String> = MutableStateFlow("")
-    val assistantChat get() = _assistantChat.asStateFlow()
-
-    private val _userChat: MutableStateFlow<String> = MutableStateFlow("")
-    val userChat get() = _userChat.asStateFlow()
-
     private val _userInput: MutableStateFlow<String> = MutableStateFlow("")
     val userInput get() = _userInput.asStateFlow()
 
