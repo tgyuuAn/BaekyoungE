@@ -12,6 +12,8 @@ class ApplicationConventionPlugin : Plugin<Project> {
                 apply("com.android.application")
                 apply("plugin.android.hilt")
                 apply("androidx.navigation.safeargs.kotlin")
+                apply("com.google.gms.google-services")
+                apply("com.google.firebase.crashlytics")
             }
             extensions.configure<ApplicationExtension> {
                 configureKotlinAndroid(this)
@@ -23,6 +25,10 @@ class ApplicationConventionPlugin : Plugin<Project> {
                 "implementation"(platform(libs.findLibrary("androidx.compose.bom").get()))
                 "implementation"(libs.findBundle("compose.bom").get())
                 "debugImplementation"(libs.findBundle("compose.debug").get())
+
+                "implementation"(platform(libs.findLibrary("firebase-bom").get()))
+                "implementation"(libs.findLibrary("firebase-analytics").get())
+                "implementation"(libs.findLibrary("firebase-crashlytics").get())
             }
         }
 

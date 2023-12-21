@@ -7,8 +7,8 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
@@ -70,14 +70,12 @@ fun ConsultingScreen(
                 .align(Alignment.BottomEnd)
         )
 
-        Column {
+        Column(modifier = Modifier.padding(horizontal = 40.dp)) {
             BaekyoungTopAppBar(CONSULTING.titleTextId)
 
             Column(
                 verticalArrangement = Arrangement.Center,
-                modifier = Modifier
-                    .fillMaxSize()
-                    .padding(horizontal = 40.dp)
+                modifier = Modifier.fillMaxSize()
             ) {
                 Text(
                     text = "상담정보 입력",
@@ -105,12 +103,12 @@ fun ConsultingScreen(
                     modifier = Modifier
                         .padding(top = 90.dp)
                         .fillMaxWidth()
-                        .size(height = 60.dp, width = 270.dp)
+                        .height(60.dp)
                         .clip(shape = RoundedCornerShape(8.dp))
                         .background(BaekyoungTheme.colors.blueF8)
                 ) {
                     Text(
-                        text = "상담",
+                        text = "상담 시작하기",
                         textAlign = TextAlign.Center,
                         style = BaekyoungTheme.typography.contentBig,
                         color = BaekyoungTheme.colors.white,
