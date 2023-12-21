@@ -1,4 +1,4 @@
-package com.pknu.data.repository.consulting
+package com.pknu.data.repository.repository.consulting
 
 import com.pknu.model.consulting.ConsultingChatting
 import com.pknu.network.model.consulting.ConsultingRequest
