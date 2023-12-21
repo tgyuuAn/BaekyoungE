@@ -2,6 +2,7 @@ package com.tgyuu.baekyoung_i.consulting.component
 
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.Text
 import androidx.compose.material3.Divider
@@ -48,8 +49,9 @@ fun ConsultingTextField(
         )
 
         Divider(
-            color = BaekyoungTheme.colors.grayCF,
-            thickness = 1.dp
+            color = BaekyoungTheme.colors.gray95,
+            thickness = 1.dp,
+            modifier = Modifier.padding(horizontal = 10.dp)
         )
     }
 }

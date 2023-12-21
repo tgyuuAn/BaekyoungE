@@ -72,7 +72,7 @@ internal fun ConsultingScreen(
             modifier = Modifier.align(Alignment.BottomEnd)
         )
 
-        Column(modifier = Modifier.fillMaxWidth()) {
+        Column(modifier = Modifier.fillMaxSize()) {
             BaekyoungTopAppBar(CONSULTING.titleTextId)
 
             Column(
@@ -92,7 +92,7 @@ internal fun ConsultingScreen(
                     title = "학과",
                     value = major,
                     onValueChanged = onMajorValueChanged,
-                    modifier = Modifier.padding(top = 30.dp),
+                    modifier = Modifier.padding(top = 20.dp),
                 )
 
                 ConsultingTextField(
@@ -103,21 +103,36 @@ internal fun ConsultingScreen(
                     modifier = Modifier.padding(top = 25.dp),
                 )
 
-                Box(
-                    modifier = Modifier
-                        .padding(top = 90.dp)
-                        .fillMaxWidth()
-                        .height(60.dp)
-                        .clip(shape = RoundedCornerShape(8.dp))
-                        .background(BaekyoungTheme.colors.blueF8)
-                ) {
-                    Text(
-                        text = "상담 시작하기",
-                        textAlign = TextAlign.Center,
-                        style = BaekyoungTheme.typography.contentBig,
-                        color = BaekyoungTheme.colors.white,
-                        modifier = Modifier.align(Alignment.Center)
-                    )
+                val buttonModifier = Modifier
+                    .padding(top = 50.dp, bottom = 50.dp)
+                    .fillMaxWidth()
+                    .height(60.dp)
+                    .clip(shape = RoundedCornerShape(8.dp))
+
+                if (grade.isNotEmpty() && major.isNotEmpty()) {
+                    Box(
+                        modifier = buttonModifier.background(BaekyoungTheme.colors.blueF8)
+                    ) {
+                        Text(
+                            text = "상담 시작하기",
+                            textAlign = TextAlign.Center,
+                            style = BaekyoungTheme.typography.contentBig,
+                            color = BaekyoungTheme.colors.white,
+                            modifier = Modifier.align(Alignment.Center)
+                        )
+                    }
+                } else {
+                    Box(
+                        modifier = buttonModifier.background(BaekyoungTheme.colors.gray95.copy(alpha = 0.8F))
+                    ) {
+                        Text(
+                            text = "상담 시작하기",
+                            textAlign = TextAlign.Center,
+                            style = BaekyoungTheme.typography.contentBig,
+                            color = BaekyoungTheme.colors.white,
+                            modifier = Modifier.align(Alignment.Center)
+                        )
+                    }
                 }
             }
         }
