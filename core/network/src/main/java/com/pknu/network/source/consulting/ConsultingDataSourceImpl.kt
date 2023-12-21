@@ -1,5 +1,6 @@
 package com.pknu.network.source.consulting
 
+import android.util.Log
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.ktx.toObject
 import com.pknu.network.constant.CHATTING_COLLECTION
@@ -48,7 +49,8 @@ class ConsultingDataSourceImpl @Inject constructor(
                 consultingResponse.chat_log
             }
             emit(consulting)
-            delay(500L)
+            Log.d("test","DataSource"+consulting.toString())
+            delay(1000L)
         }
     }
 }

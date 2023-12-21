@@ -23,7 +23,7 @@ class ConsultingViewModel @Inject constructor(
     private val _major: MutableStateFlow<String> = MutableStateFlow("")
     val major get() = _major.asStateFlow()
 
-    private val _uiState: MutableStateFlow<UiState> = MutableStateFlow(UiState.Nothing)
+    private val _uiState: MutableStateFlow<UiState<Unit>> = MutableStateFlow(UiState.Init)
     val uiState get() = _uiState.asStateFlow()
 
     private val _event: MutableSharedFlow<ConsultingEvent> = MutableSharedFlow()
@@ -37,7 +37,7 @@ class ConsultingViewModel @Inject constructor(
         _major.value = major
     }
 
-    fun setUiState(uiState: UiState) {
+    fun setUiState(uiState: UiState<Unit>) {
         _uiState.value = uiState
     }
 
@@ -54,7 +54,7 @@ class ConsultingViewModel @Inject constructor(
             )
         } ?: _event.emit(ConsultingEvent.ShowSnackBar("학년 정보를 숫자로 입력해주세요."))
 
-        setUiState(UiState.Nothing)
+        setUiState(UiState.Init)
     }
 
 }

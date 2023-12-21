@@ -71,7 +71,7 @@ internal fun ConsultingRoute(
 internal fun ConsultingScreen(
     grade: String,
     major: String,
-    uiState: UiState,
+    uiState: UiState<Unit>,
     onGradeValueChanged: (String) -> Unit,
     onMajorValueChanged: (String) -> Unit,
     postConsultingInformation: () -> Unit,

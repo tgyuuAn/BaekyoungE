@@ -11,7 +11,6 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
-import kotlinx.coroutines.flow.fold
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.stateIn
 import javax.inject.Inject
@@ -23,15 +22,19 @@ class ChattingViewModel @Inject constructor(
 ) : ViewModel() {
 
     val chat: StateFlow<UiState<List<ConsultingChatting>>> =
-        getConsultingChattingUseCase().
-            .stateIn(
+        getConsultingChattingUseCase()
+            .map { result ->
+                result.fold(
+                    onSuccess = { UiState.Success(it) },
+                    onFailure = { UiState.Error(it.message ?: "알 수 없는 오류입니다.") }
+                )
+            }.stateIn(
                 scope = viewModelScope,
                 started = SharingStarted.WhileSubscribed(5_000),
-                initialValue = UiState.Loading,
+                initialValue = UiState.Loading
             )
 
-    private
-    val _assistantChat: MutableStateFlow<String> = MutableStateFlow("")
+    private val _assistantChat: MutableStateFlow<String> = MutableStateFlow("")
     val assistantChat get() = _assistantChat.asStateFlow()
 
     private val _userChat: MutableStateFlow<String> = MutableStateFlow("")
