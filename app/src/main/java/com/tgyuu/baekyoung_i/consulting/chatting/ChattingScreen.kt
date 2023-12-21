@@ -20,7 +20,7 @@ internal fun ChattingScreen() {
     Column(
         modifier = Modifier
             .fillMaxSize()
-            .background(BaekyoungTheme.colors.blueFF)
+            .background(BaekyoungTheme.colors.blueEFF)
     ) {
         BaekyoungTopAppBar(TopLevelDestination.CONSULTING.titleTextId)
 
