@@ -1,5 +1,7 @@
 package com.tgyuu.baekyoung_i.consulting.consultinginformation
 
+import android.content.Context
+import android.widget.Toast
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
@@ -19,6 +21,7 @@ import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.input.KeyboardType
@@ -40,9 +43,15 @@ internal fun ConsultingRoute(
 ) {
     val grade by viewModel.grade.collectAsStateWithLifecycle()
     val major by viewModel.major.collectAsStateWithLifecycle()
+    val context = LocalContext.current
 
     LaunchedEffect(true) {
-        viewModel.event.collect { handleEvent(it) }
+        viewModel.event.collect { event ->
+            when (event) {
+                is ConsultingEvent.NavigateToChatting -> navigateToChatting()
+                is ConsultingEvent.ShowSnackBar -> showToast(event.message, context)
+            }
+        }
     }
 
     ConsultingScreen(
@@ -51,8 +60,11 @@ internal fun ConsultingRoute(
         onGradeValueChanged = viewModel::setGrade,
         onMajorValueChanged = viewModel::setMajor,
         postConsultingInformation = viewModel::postConsultingInformation,
-        navigateToChatting = navigateToChatting,
     )
+}
+
+private fun showToast(text: String, context: Context) {
+    Toast.makeText(context, text, Toast.LENGTH_SHORT).show()
 }
 
 @Composable
@@ -62,7 +74,6 @@ internal fun ConsultingScreen(
     onGradeValueChanged: (String) -> Unit,
     onMajorValueChanged: (String) -> Unit,
     postConsultingInformation: () -> Unit,
-    navigateToChatting: () -> Unit,
 ) {
     Box(
         modifier = Modifier
@@ -127,10 +138,7 @@ internal fun ConsultingScreen(
                     Box(
                         modifier = buttonModifier
                             .background(BaekyoungTheme.colors.blueF8)
-                            .clickable {
-                                postConsultingInformation()
-                                navigateToChatting()
-                            }
+                            .clickable { postConsultingInformation() }
                     ) {
                         Text(
                             text = stringResource(R.string.start_consulting),
@@ -156,9 +164,4 @@ internal fun ConsultingScreen(
             }
         }
     }
-}
-
-private fun handleEvent(event: ConsultingEvent) = when (event) {
-    is ConsultingEvent.NavigateToChatting -> {}
-    is ConsultingEvent.ShowSnackBar -> {}
 }
