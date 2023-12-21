@@ -1,6 +1,7 @@
 package com.tgyuu.baekyoung_i.consulting.consultinginformation
 
 import android.content.Context
+import android.util.Log
 import android.widget.Toast
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
@@ -33,7 +34,9 @@ import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.tgyuu.baekyoung_i.R
 import com.tgyuu.baekyoung_i.consulting.consultinginformation.component.ConsultingTextField
 import com.tgyuu.baekyoung_i.main.navigation.TopLevelDestination.CONSULTING
+import com.tgyuu.common.util.UiState
 import com.tgyuu.designsystem.component.BaekyoungTopAppBar
+import com.tgyuu.designsystem.component.Loader
 import com.tgyuu.designsystem.theme.BaekyoungTheme
 
 @Composable
@@ -43,6 +46,7 @@ internal fun ConsultingRoute(
 ) {
     val grade by viewModel.grade.collectAsStateWithLifecycle()
     val major by viewModel.major.collectAsStateWithLifecycle()
+    val uiState by viewModel.uiState.collectAsStateWithLifecycle()
     val context = LocalContext.current
 
     LaunchedEffect(true) {
@@ -57,20 +61,18 @@ internal fun ConsultingRoute(
     ConsultingScreen(
         grade = grade,
         major = major,
+        uiState = uiState,
         onGradeValueChanged = viewModel::setGrade,
         onMajorValueChanged = viewModel::setMajor,
         postConsultingInformation = viewModel::postConsultingInformation,
     )
 }
 
-private fun showToast(text: String, context: Context) {
-    Toast.makeText(context, text, Toast.LENGTH_SHORT).show()
-}
-
 @Composable
 internal fun ConsultingScreen(
     grade: String,
     major: String,
+    uiState: UiState,
     onGradeValueChanged: (String) -> Unit,
     onMajorValueChanged: (String) -> Unit,
     postConsultingInformation: () -> Unit,
@@ -80,6 +82,12 @@ internal fun ConsultingScreen(
             .fillMaxSize()
             .background(color = BaekyoungTheme.colors.white)
     ) {
+
+        Log.d("text",uiState.toString())
+
+        if (uiState is UiState.Loading) {
+            Loader(modifier = Modifier.fillMaxSize())
+        }
 
         Image(
             painterResource(id = R.drawable.ic_consulting_bbugong),
@@ -150,7 +158,11 @@ internal fun ConsultingScreen(
                     }
                 } else {
                     Box(
-                        modifier = buttonModifier.background(BaekyoungTheme.colors.gray95.copy(alpha = 0.8F))
+                        modifier = buttonModifier.background(
+                            BaekyoungTheme.colors.gray95.copy(
+                                alpha = 0.8F
+                            )
+                        )
                     ) {
                         Text(
                             text = stringResource(R.string.start_consulting),
@@ -164,4 +176,8 @@ internal fun ConsultingScreen(
             }
         }
     }
+}
+
+private fun showToast(text: String, context: Context) {
+    Toast.makeText(context, text, Toast.LENGTH_SHORT).show()
 }

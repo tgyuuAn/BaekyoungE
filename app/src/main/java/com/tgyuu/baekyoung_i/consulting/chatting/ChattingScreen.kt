@@ -8,6 +8,7 @@ import androidx.compose.ui.Modifier
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.tgyuu.baekyoung_i.main.navigation.TopLevelDestination
 import com.tgyuu.designsystem.component.BaekyoungTopAppBar
+import com.tgyuu.designsystem.component.Loader
 import com.tgyuu.designsystem.theme.BaekyoungTheme
 
 @Composable
@@ -24,5 +25,8 @@ internal fun ChattingScreen() {
     ) {
         BaekyoungTopAppBar(TopLevelDestination.CONSULTING.titleTextId)
 
+        Loader(modifier = Modifier
+            .fillMaxSize()
+        )
     }
 }
