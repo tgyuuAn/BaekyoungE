@@ -1,6 +1,6 @@
 package com.pknu.data.repository.consulting
 
-import com.pknu.network.model.consulting.ConsultingResponse
+import com.pknu.model.consulting.ConsultingChatting
 import kotlinx.coroutines.flow.Flow
 
 interface ConsultingRepository {
@@ -14,5 +14,5 @@ interface ConsultingRepository {
         chatUser: String,
     ): Result<Unit>
 
-    suspend fun getAssistantChatting(): Flow<Result<ConsultingResponse>>
+    suspend fun getAssistantChatting(): Flow<Result<ConsultingChatting>>
 }

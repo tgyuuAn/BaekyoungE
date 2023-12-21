@@ -9,6 +9,7 @@ android {
 
 dependencies {
     implementation(project(":core:network"))
+    implementation(project(":core:model"))
 
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.test.junit)
