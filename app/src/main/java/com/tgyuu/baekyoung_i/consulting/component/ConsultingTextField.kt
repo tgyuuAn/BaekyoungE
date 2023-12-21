@@ -1,16 +1,17 @@
 package com.tgyuu.baekyoung_i.consulting.component
 
-import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.Text
+import androidx.compose.material3.Divider
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.OutlinedTextFieldDefaults
 import androidx.compose.runtime.Composable
-import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.TextStyle
+import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.tgyuu.designsystem.theme.BaekyoungTheme
@@ -20,29 +21,35 @@ fun ConsultingTextField(
     title: String,
     value: String,
     onValueChanged: (String) -> Unit,
+    keyboardOptions: KeyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Text),
     modifier: Modifier = Modifier,
 ) {
-    Box(
+    Column(
         modifier = modifier.fillMaxWidth()
     ) {
         Text(
             text = title,
-            style = BaekyoungTheme.typography.contentNormal,
-            modifier = Modifier.align(Alignment.CenterStart)
+            style = BaekyoungTheme.typography.contentNormal.copy(fontSize = 18.sp),
+            color = BaekyoungTheme.colors.black,
+            modifier = Modifier.fillMaxWidth()
         )
 
         OutlinedTextField(
             value = value,
             onValueChange = onValueChanged,
             singleLine = true,
-            textStyle = TextStyle.Default.copy(fontSize = 16.sp),
+            keyboardOptions = keyboardOptions,
+            textStyle = TextStyle.Default.copy(fontSize = 18.sp),
             colors = OutlinedTextFieldDefaults.colors(
-                focusedBorderColor = BaekyoungTheme.colors.blue37,
-                unfocusedBorderColor = BaekyoungTheme.colors.blue37,
+                focusedBorderColor = Color.Transparent,
+                unfocusedBorderColor = Color.Transparent,
             ),
-            modifier = Modifier
-                .size(height = 30.dp, width = 200.dp)
-                .align(Alignment.CenterEnd),
+            modifier = Modifier.fillMaxWidth()
+        )
+
+        Divider(
+            color = BaekyoungTheme.colors.blue00,
+            thickness = 1.dp
         )
     }
 }

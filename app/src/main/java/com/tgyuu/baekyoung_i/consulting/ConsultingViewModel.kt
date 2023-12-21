@@ -1,5 +1,6 @@
 package com.tgyuu.baekyoung_i.consulting
 
+import android.util.Log
 import androidx.lifecycle.ViewModel
 import com.pknu.domain.usecase.consulting.GetConsultingChattingUseCase
 import com.pknu.domain.usecase.consulting.PostConsultingInformationUseCase
@@ -16,17 +17,19 @@ class ConsultingViewModel @Inject constructor(
     private val getConsultingChattingUseCase: GetConsultingChattingUseCase,
 ) : ViewModel() {
 
-    private val _grade: MutableStateFlow<Int> = MutableStateFlow(0)
+    private val _grade: MutableStateFlow<String> = MutableStateFlow("")
     val grade get() = _grade.asStateFlow()
 
     private val _major: MutableStateFlow<String> = MutableStateFlow("")
     val major get() = _major.asStateFlow()
 
-    fun setGrade(grade: Int) {
+    fun setGrade(grade: String) {
         _grade.value = grade
+        Log.d("test",_grade.value.toString())
     }
 
     fun setMajor(major: String) {
         _major.value = major
+        Log.d("test",_major.value)
     }
 }

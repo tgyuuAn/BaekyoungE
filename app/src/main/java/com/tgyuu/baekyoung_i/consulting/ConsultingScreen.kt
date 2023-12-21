@@ -10,6 +10,7 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
@@ -17,6 +18,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -32,6 +34,7 @@ import com.tgyuu.designsystem.theme.BaekyoungTheme
 internal fun ConsultingRoute(viewModel: ConsultingViewModel = hiltViewModel()) {
     val grade by viewModel.grade.collectAsStateWithLifecycle()
     val major by viewModel.major.collectAsStateWithLifecycle()
+
     ConsultingScreen(
         grade = grade,
         major = major,
@@ -41,10 +44,10 @@ internal fun ConsultingRoute(viewModel: ConsultingViewModel = hiltViewModel()) {
 }
 
 @Composable
-fun ConsultingScreen(
-    grade: Int,
+internal fun ConsultingScreen(
+    grade: String,
     major: String,
-    onGradeValueChanged: (Int) -> Unit,
+    onGradeValueChanged: (String) -> Unit,
     onMajorValueChanged: (String) -> Unit,
 ) {
     Box(
@@ -66,16 +69,17 @@ fun ConsultingScreen(
             painterResource(id = R.drawable.ic_consulting_baekyoung),
             contentDescription = null,
             alpha = 0.3F,
-            modifier = Modifier
-                .align(Alignment.BottomEnd)
+            modifier = Modifier.align(Alignment.BottomEnd)
         )
 
-        Column(modifier = Modifier.padding(horizontal = 40.dp)) {
+        Column(modifier = Modifier.fillMaxWidth()) {
             BaekyoungTopAppBar(CONSULTING.titleTextId)
 
             Column(
                 verticalArrangement = Arrangement.Center,
-                modifier = Modifier.fillMaxSize()
+                modifier = Modifier
+                    .fillMaxSize()
+                    .padding(horizontal = 40.dp)
             ) {
                 Text(
                     text = "상담정보 입력",
@@ -88,15 +92,15 @@ fun ConsultingScreen(
                     title = "학과",
                     value = major,
                     onValueChanged = onMajorValueChanged,
+                    modifier = Modifier.padding(top = 30.dp),
                 )
 
                 ConsultingTextField(
                     title = "학년",
-                    value = grade.toString(),
-                    onValueChanged = { grade ->
-                        onGradeValueChanged(grade.toInt())
-                    },
-                    modifier = Modifier.padding(top = 20.dp),
+                    value = grade,
+                    onValueChanged = onGradeValueChanged,
+                    keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number),
+                    modifier = Modifier.padding(top = 25.dp),
                 )
 
                 Box(
