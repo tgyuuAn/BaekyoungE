@@ -16,7 +16,7 @@ class ConsultingDataSourceImpl @Inject constructor(
     private val firebaseFirestore: FirebaseFirestore,
 ) : ConsultingDataSource {
 
-    override suspend fun postConsultingInformation(consultingRequest: ConsultingRequest): Result<Unit> =
+    override suspend fun postConsultingInformation(consultingRequest: ConsultingRequest) =
         runCatching {
             val task = firebaseFirestore.collection(USER_INFORMATION_COLLECTION)
                 .document("8I9y4HW94HGLiTlxPCFf")
@@ -24,7 +24,7 @@ class ConsultingDataSourceImpl @Inject constructor(
                 .await()
         }
 
-    override suspend fun postUserChatting(consultingResponse: ConsultingResponse): Result<Unit> =
+    override suspend fun postUserChatting(consultingResponse: ConsultingResponse) =
         runCatching {
             val task = firebaseFirestore.collection(CHATTING_COLLECTION)
                 .document("K2PrpK1UBiJU6ZXUsQh1")
