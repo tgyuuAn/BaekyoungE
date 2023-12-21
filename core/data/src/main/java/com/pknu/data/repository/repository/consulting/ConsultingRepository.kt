@@ -10,9 +10,8 @@ interface ConsultingRepository {
     ): Result<Unit>
 
     suspend fun postUserChatting(
-        chatAssistant: String,
         chatUser: String,
     ): Result<Unit>
 
-    suspend fun getAssistantChatting(): Flow<Result<ConsultingChatting>>
+    fun getChatting(): Flow<Result<List<ConsultingChatting>>>
 }

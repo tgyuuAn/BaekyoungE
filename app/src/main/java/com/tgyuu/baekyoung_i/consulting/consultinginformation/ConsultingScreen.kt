@@ -1,7 +1,6 @@
 package com.tgyuu.baekyoung_i.consulting.consultinginformation
 
 import android.content.Context
-import android.util.Log
 import android.widget.Toast
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
@@ -83,10 +82,8 @@ internal fun ConsultingScreen(
             .background(color = BaekyoungTheme.colors.white)
     ) {
 
-        Log.d("text",uiState.toString())
-
         if (uiState is UiState.Loading) {
-            Loader(modifier = Modifier.fillMaxSize())
+            Loader()
         }
 
         Image(

@@ -1,8 +1,8 @@
 package com.pknu.data.repository.repository.consulting
 
 import com.pknu.model.consulting.ConsultingChatting
+import com.pknu.network.model.consulting.ChatRequest
 import com.pknu.network.model.consulting.ConsultingRequest
-import com.pknu.network.model.consulting.ConsultingResponse
 import com.pknu.network.source.consulting.ConsultingDataSource
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
@@ -19,18 +19,19 @@ class ConsultingRepositoryImpl @Inject constructor(
             )
         )
 
-    override suspend fun postUserChatting(chatAssistant: String, chatUser: String): Result<Unit> =
+    override suspend fun postUserChatting(chatUser: String): Result<Unit> =
         consultingDataSource.postUserChatting(
-            ConsultingResponse(
-                chat_assistant = chatAssistant,
-                chat_user = chatUser,
+            ChatRequest(
+                chatUser = chatUser
             )
         )
 
-    override suspend fun getAssistantChatting(): Flow<Result<ConsultingChatting>> =
-        consultingDataSource.getAssistantChatting().map { response ->
-            response.mapCatching {
-                it.toConsultingChatting()
+    override fun getChatting(): Flow<Result<List<ConsultingChatting>>> =
+        consultingDataSource.getChattingLog().map { response ->
+            response.mapCatching { chatLogResponseList ->
+                chatLogResponseList.map {
+                    it.toConsultingChatting()
+                }
             }
         }
 }

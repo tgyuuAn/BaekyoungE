@@ -8,6 +8,6 @@ import javax.inject.Inject
 class GetConsultingChattingUseCase @Inject constructor(
     private val consultingRepository: ConsultingRepository,
 ) {
-    suspend operator fun invoke(): Flow<Result<ConsultingChatting>> =
-        consultingRepository.getAssistantChatting()
+    operator fun invoke(): Flow<Result<List<ConsultingChatting>>> =
+        consultingRepository.getChatting()
 }
