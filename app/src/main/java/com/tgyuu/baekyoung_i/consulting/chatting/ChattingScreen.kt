@@ -70,7 +70,7 @@ internal fun ChattingScreen(
                             ChattingRole.SYSTEM -> {}
                             ChattingRole.USER -> {
                                 Row(modifier = Modifier.wrapContentSize()) {
-                                    
+
                                 }
                             }
 
