@@ -145,6 +145,7 @@ internal fun ChattingScreen(
 @Composable
 fun UserChatting(chat: ConsultingChatting) {
     Row(
+        verticalAlignment = Alignment.CenterVertically,
         modifier = Modifier
             .wrapContentSize()
             .padding(vertical = 15.dp)
@@ -183,6 +184,7 @@ fun UserChatting(chat: ConsultingChatting) {
 @Composable
 fun AssistantChatting(chat: ConsultingChatting) {
     Row(
+        verticalAlignment = Alignment.CenterVertically,
         modifier = Modifier
             .wrapContentSize()
             .padding(vertical = 15.dp, horizontal = 10.dp)
