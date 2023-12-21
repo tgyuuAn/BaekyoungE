@@ -1,10 +1,10 @@
 package com.tgyuu.baekyoung_i.main
 
 import android.os.Bundle
+import android.view.WindowManager
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.compose.animation.AnimatedContent
-import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.ExperimentalAnimationApi
 import androidx.compose.animation.slideInVertically
 import androidx.compose.animation.slideOutVertically
@@ -39,6 +39,9 @@ import dagger.hilt.android.AndroidEntryPoint
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
+        window.setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_PAN)
+
         setContent {
             BaekyoungTheme {
                 val navController = rememberNavController()
@@ -90,7 +93,7 @@ private fun handleBottomBarState(
 
 private fun navigateToTopLevelDestination(
     navController: NavController,
-    destination: TopLevelDestination
+    destination: TopLevelDestination,
 ) {
     navController.navigate(route = destination.route) {
         popUpTo(navController.graph.findStartDestination().id) {

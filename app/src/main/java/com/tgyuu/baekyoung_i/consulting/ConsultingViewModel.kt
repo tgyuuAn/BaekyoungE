@@ -14,9 +14,7 @@ import javax.inject.Inject
 
 @HiltViewModel
 class ConsultingViewModel @Inject constructor(
-    private val postUserChattingUseCase: PostUserChattingUseCase,
     private val postConsultingInformationUseCase: PostConsultingInformationUseCase,
-    private val getConsultingChattingUseCase: GetConsultingChattingUseCase,
 ) : ViewModel() {
 
     private val _grade: MutableStateFlow<String> = MutableStateFlow("")

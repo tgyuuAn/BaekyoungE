@@ -1,7 +1,9 @@
 package com.tgyuu.baekyoung_i.consulting
 
+import android.view.WindowManager
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -18,6 +20,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
@@ -40,6 +43,7 @@ internal fun ConsultingRoute(viewModel: ConsultingViewModel = hiltViewModel()) {
         major = major,
         onGradeValueChanged = viewModel::setGrade,
         onMajorValueChanged = viewModel::setMajor,
+        postConsultingInformation = viewModel::postConsultingInformation,
     )
 }
 
@@ -49,6 +53,7 @@ internal fun ConsultingScreen(
     major: String,
     onGradeValueChanged: (String) -> Unit,
     onMajorValueChanged: (String) -> Unit,
+    postConsultingInformation: () -> Unit,
 ) {
     Box(
         modifier = Modifier
@@ -82,21 +87,21 @@ internal fun ConsultingScreen(
                     .padding(horizontal = 40.dp)
             ) {
                 Text(
-                    text = "상담정보 입력",
+                    text = stringResource(R.string.consulting_inforamtion_input),
                     style = BaekyoungTheme.typography.contentNormal.copy(fontSize = 22.sp),
                     color = BaekyoungTheme.colors.gray95,
                     textAlign = TextAlign.Start,
                 )
 
                 ConsultingTextField(
-                    title = "학과",
+                    title = stringResource(R.string.major),
                     value = major,
                     onValueChanged = onMajorValueChanged,
                     modifier = Modifier.padding(top = 20.dp),
                 )
 
                 ConsultingTextField(
-                    title = "학년",
+                    title = stringResource(R.string.grade),
                     value = grade,
                     onValueChanged = onGradeValueChanged,
                     keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number),
@@ -111,10 +116,12 @@ internal fun ConsultingScreen(
 
                 if (grade.isNotEmpty() && major.isNotEmpty()) {
                     Box(
-                        modifier = buttonModifier.background(BaekyoungTheme.colors.blueF8)
+                        modifier = buttonModifier
+                            .background(BaekyoungTheme.colors.blueF8)
+                            .clickable { postConsultingInformation() }
                     ) {
                         Text(
-                            text = "상담 시작하기",
+                            text = stringResource(R.string.start_consulting),
                             textAlign = TextAlign.Center,
                             style = BaekyoungTheme.typography.contentBig,
                             color = BaekyoungTheme.colors.white,
@@ -126,7 +133,7 @@ internal fun ConsultingScreen(
                         modifier = buttonModifier.background(BaekyoungTheme.colors.gray95.copy(alpha = 0.8F))
                     ) {
                         Text(
-                            text = "상담 시작하기",
+                            text = stringResource(R.string.start_consulting),
                             textAlign = TextAlign.Center,
                             style = BaekyoungTheme.typography.contentBig,
                             color = BaekyoungTheme.colors.white,
