@@ -19,6 +19,7 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.hilt.navigation.compose.hiltViewModel
 import com.tgyuu.baekyoung_i.R
 import com.tgyuu.baekyoung_i.consulting.component.ConsultingTextField
 import com.tgyuu.baekyoung_i.main.navigation.TopLevelDestination.CONSULTING
@@ -26,7 +27,7 @@ import com.tgyuu.designsystem.component.BaekyoungTopAppBar
 import com.tgyuu.designsystem.theme.BaekyoungTheme
 
 @Composable
-internal fun ConsultingRoute() {
+internal fun ConsultingRoute(viewModel: ConsultingViewModel = hiltViewModel()) {
     ConsultingScreen()
 }
 
