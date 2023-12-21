@@ -30,6 +30,7 @@ import androidx.navigation.NavGraph.Companion.findStartDestination
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
 import com.tgyuu.baekyoung_i.auth.navigation.authNavigationRoute
+import com.tgyuu.baekyoung_i.consulting.chatting.navigation.chattingNavigationRoute
 import com.tgyuu.baekyoung_i.main.navigation.BaekyoungNavHost
 import com.tgyuu.baekyoung_i.main.navigation.TopLevelDestination
 import com.tgyuu.designsystem.theme.BaekyoungTheme
@@ -88,6 +89,7 @@ private fun handleBottomBarState(
 ): Unit = when (currentRoute) {
     null -> setBottomBarState(false)
     authNavigationRoute -> setBottomBarState(false)
+    chattingNavigationRoute -> setBottomBarState(false)
     else -> setBottomBarState(true)
 }
 
