@@ -7,8 +7,8 @@ import javax.inject.Inject
 class ConsultingDataSourceImpl @Inject constructor(
     private val firebaseFirestore: FirebaseFirestore,
 ) : ConsultingDataSource {
-    override suspend fun postConsultingInformation(): Result<Unit> {
-        TODO("Not yet implemented")
+    override suspend fun postConsultingInformation(): Result<Unit> = runCatching {
+        firebaseFirestore.collection()
     }
 
     override suspend fun postUserChatting(): Result<Unit> {
