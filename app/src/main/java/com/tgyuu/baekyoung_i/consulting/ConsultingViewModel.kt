@@ -21,4 +21,12 @@ class ConsultingViewModel @Inject constructor(
 
     private val _major: MutableStateFlow<String> = MutableStateFlow("")
     val major get() = _major.asStateFlow()
+
+    fun setGrade(grade: Int) {
+        _grade.value = grade
+    }
+
+    fun setMajor(major: String) {
+        _major.value = major
+    }
 }

@@ -12,6 +12,7 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -20,6 +21,7 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.tgyuu.baekyoung_i.R
 import com.tgyuu.baekyoung_i.consulting.component.ConsultingTextField
 import com.tgyuu.baekyoung_i.main.navigation.TopLevelDestination.CONSULTING
@@ -28,11 +30,23 @@ import com.tgyuu.designsystem.theme.BaekyoungTheme
 
 @Composable
 internal fun ConsultingRoute(viewModel: ConsultingViewModel = hiltViewModel()) {
-    ConsultingScreen()
+    val grade by viewModel.grade.collectAsStateWithLifecycle()
+    val major by viewModel.major.collectAsStateWithLifecycle()
+    ConsultingScreen(
+        grade = grade,
+        major = major,
+        onGradeValueChanged = viewModel::setGrade,
+        onMajorValueChanged = viewModel::setMajor,
+    )
 }
 
 @Composable
-fun ConsultingScreen() {
+fun ConsultingScreen(
+    grade: Int,
+    major: String,
+    onGradeValueChanged: (Int) -> Unit,
+    onMajorValueChanged: (String) -> Unit,
+) {
     Box(
         modifier = Modifier
             .fillMaxSize()
@@ -74,14 +88,16 @@ fun ConsultingScreen() {
 
                 ConsultingTextField(
                     title = "학과",
-                    value = "",
-                    onValueChanged = {},
+                    value = major,
+                    onValueChanged = onMajorValueChanged,
                 )
 
                 ConsultingTextField(
                     title = "학년",
-                    value = "",
-                    onValueChanged = {},
+                    value = grade.toString(),
+                    onValueChanged = { grade ->
+                        onGradeValueChanged(grade.toInt())
+                    },
                     modifier = Modifier.padding(top = 20.dp),
                 )
 
