@@ -48,7 +48,7 @@
 
 - **Test** : Junit + mockk
 
-- **Firebase** : Analytics + Crashlytics + Authentication + Realtime DataBase
+- **Firebase** : Analytics + Crashlytics + Authentication + FireStoreDatabase
  
 <br><br><br>
 
