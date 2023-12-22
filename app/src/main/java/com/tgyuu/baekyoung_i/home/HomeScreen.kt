@@ -21,24 +21,35 @@ import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import com.tgyuu.baekyoung_i.R
-import com.tgyuu.baekyoung_i.main.navigation.TopLevelDestination.HOME
 import com.tgyuu.designsystem.component.BaekyoungTopAppBar
 import com.tgyuu.designsystem.theme.BaekyoungTheme
 
 @Composable
-fun HomeScreen() {
-    Box(modifier = Modifier.fillMaxSize()) {
+internal fun HomeRoute() {
+    HomeScreen()
+}
+
+@Composable
+internal fun HomeScreen() {
+    Column(
+        modifier = Modifier
+            .fillMaxSize()
+            .background(BaekyoungTheme.colors.white)
+    ) {
         Column(
             modifier = Modifier
-                .align(Alignment.TopCenter)
+                .weight(0.91F)
                 .wrapContentHeight()
-                .background(BaekyoungTheme.colors.blue5FF)
         ) {
-            BaekyoungTopAppBar(titleTextId = HOME.titleTextId)
+            BaekyoungTopAppBar(
+                titleTextId = R.string.app_name,
+                textColor = BaekyoungTheme.colors.blueFF
+            )
             WhaleBeeContents()
             HotPost()
         }
-        ConsultingHistoryButton(modifier = Modifier.align(Alignment.BottomCenter))
+
+        ConsultingHistoryButton(modifier = Modifier.weight(0.09F))
     }
 }
 
@@ -118,7 +129,7 @@ private fun HotPost(modifier: Modifier = Modifier) {
         modifier = modifier
             .fillMaxSize()
             .padding(horizontal = 10.dp, vertical = 20.dp)
-            .background(BaekyoungTheme.colors.white)
+            .background(BaekyoungTheme.colors.grayF4)
     ) {
     }
 }

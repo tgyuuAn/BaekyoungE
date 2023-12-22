@@ -6,7 +6,6 @@ class HiltConventionPlugin : Plugin<Project> {
     override fun apply(target: Project) {
         with(target) {
             with(pluginManager) {
-                apply("org.jetbrains.kotlin.kapt")
                 apply("com.google.devtools.ksp")
                 apply("com.google.dagger.hilt.android")
             }

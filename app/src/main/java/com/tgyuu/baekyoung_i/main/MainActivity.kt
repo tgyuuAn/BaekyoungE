@@ -1,11 +1,14 @@
 package com.tgyuu.baekyoung_i.main
 
 import android.os.Bundle
+import android.view.WindowManager
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
-import androidx.compose.animation.AnimatedVisibility
+import androidx.compose.animation.AnimatedContent
+import androidx.compose.animation.ExperimentalAnimationApi
 import androidx.compose.animation.slideInVertically
 import androidx.compose.animation.slideOutVertically
+import androidx.compose.animation.with
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.BottomNavigation
@@ -27,13 +30,19 @@ import androidx.navigation.NavGraph.Companion.findStartDestination
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
 import com.tgyuu.baekyoung_i.auth.navigation.authNavigationRoute
+import com.tgyuu.baekyoung_i.consulting.chatting.navigation.chattingNavigationRoute
 import com.tgyuu.baekyoung_i.main.navigation.BaekyoungNavHost
 import com.tgyuu.baekyoung_i.main.navigation.TopLevelDestination
 import com.tgyuu.designsystem.theme.BaekyoungTheme
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
+        window.setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_PAN)
+
         setContent {
             BaekyoungTheme {
                 val navController = rememberNavController()
@@ -80,12 +89,13 @@ private fun handleBottomBarState(
 ): Unit = when (currentRoute) {
     null -> setBottomBarState(false)
     authNavigationRoute -> setBottomBarState(false)
+    chattingNavigationRoute -> setBottomBarState(false)
     else -> setBottomBarState(true)
 }
 
 private fun navigateToTopLevelDestination(
     navController: NavController,
-    destination: TopLevelDestination
+    destination: TopLevelDestination,
 ) {
     navController.navigate(route = destination.route) {
         popUpTo(navController.graph.findStartDestination().id) {
@@ -96,6 +106,7 @@ private fun navigateToTopLevelDestination(
     }
 }
 
+@OptIn(ExperimentalAnimationApi::class)
 @Composable
 internal fun BaekyoungBottomBar(
     modifier: Modifier = Modifier,
@@ -103,39 +114,44 @@ internal fun BaekyoungBottomBar(
     onNavigateToDestination: (TopLevelDestination) -> Unit,
     bottomBarState: Boolean,
 ) {
-    AnimatedVisibility(
-        visible = bottomBarState,
-        enter = slideInVertically(initialOffsetY = { it }),
-        exit = slideOutVertically(targetOffsetY = { it }),
-        content = {
-            BottomNavigation(
-                backgroundColor = BaekyoungTheme.colors.white,
-                modifier = modifier
-            ) {
-                TopLevelDestination.entries.forEach { destination ->
-                    val isSelect = currentRoute == destination.route
-                    BottomNavigationItem(
-                        selected = isSelect,
-                        onClick = { onNavigateToDestination(destination) },
-                        selectedContentColor = BaekyoungTheme.colors.blueFF,
-                        unselectedContentColor = BaekyoungTheme.colors.gray95,
-                        icon = {
-                            Icon(
-                                painter = painterResource(id = destination.selectedIcon),
-                                contentDescription = null,
-                            )
-                        },
-                        label = {
-                            Text(
-                                text = stringResource(id = destination.titleTextId),
-                                style = BaekyoungTheme.typography.labelNormal,
-                                color = if (isSelect) BaekyoungTheme.colors.blueFF
-                                else BaekyoungTheme.colors.gray95,
-                            )
-                        }
-                    )
+    AnimatedContent(
+        targetState = bottomBarState,
+        label = "",
+        transitionSpec = {
+            slideInVertically { height -> height } with
+                    slideOutVertically { height -> height }
+        },
+        content = { isVisible ->
+            if (isVisible) {
+                BottomNavigation(
+                    backgroundColor = BaekyoungTheme.colors.white,
+                    modifier = modifier
+                ) {
+                    TopLevelDestination.entries.forEach { destination ->
+                        val isSelect = currentRoute == destination.route
+                        BottomNavigationItem(
+                            selected = isSelect,
+                            onClick = { onNavigateToDestination(destination) },
+                            selectedContentColor = BaekyoungTheme.colors.blueFF,
+                            unselectedContentColor = BaekyoungTheme.colors.gray95,
+                            icon = {
+                                Icon(
+                                    painter = painterResource(id = destination.selectedIcon),
+                                    contentDescription = null,
+                                )
+                            },
+                            label = {
+                                Text(
+                                    text = stringResource(id = destination.titleTextId),
+                                    style = BaekyoungTheme.typography.labelNormal,
+                                    color = if (isSelect) BaekyoungTheme.colors.blueFF
+                                    else BaekyoungTheme.colors.gray95,
+                                )
+                            }
+                        )
+                    }
                 }
             }
-        }
+        },
     )
 }

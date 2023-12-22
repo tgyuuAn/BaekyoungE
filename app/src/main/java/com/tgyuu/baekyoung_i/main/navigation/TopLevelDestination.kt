@@ -4,7 +4,7 @@ import androidx.annotation.DrawableRes
 import androidx.annotation.StringRes
 import com.tgyuu.baekyoung_i.R
 import com.tgyuu.baekyoung_i.community.navigation.communityNavigationRoute
-import com.tgyuu.baekyoung_i.consulting.navigation.consultingNavigationRoute
+import com.tgyuu.baekyoung_i.consulting.consultinginformation.navigation.consultingNavigationRoute
 import com.tgyuu.baekyoung_i.etc.navigation.etcNavigationRoute
 import com.tgyuu.baekyoung_i.home.navigation.homeNavigationRoute
 

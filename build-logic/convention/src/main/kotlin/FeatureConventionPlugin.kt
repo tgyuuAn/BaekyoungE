@@ -20,7 +20,6 @@ class FeatureConventionPlugin : Plugin<Project> {
             }
 
             dependencies {
-                "implementation"(libs.findBundle("compose.navigation").get())
                 "implementation"(platform(libs.findLibrary("androidx.compose.bom").get()))
                 "implementation"(libs.findBundle("compose.bom").get())
                 "debugImplementation"(libs.findBundle("compose.debug").get())

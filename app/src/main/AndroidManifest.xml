@@ -3,6 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools">
 
     <application
+        android:name="com.tgyuu.BaekyoungiApplication"
         android:allowBackup="true"
         android:dataExtractionRules="@xml/data_extraction_rules"
         android:fullBackupContent="@xml/backup_rules"
@@ -15,7 +16,8 @@
         <activity
             android:name=".main.MainActivity"
             android:exported="true"
-            android:theme="@style/Theme.Baekyoungi">
+            android:theme="@style/Theme.Baekyoungi"
+            android:windowSoftInputMode="adjustPan">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

@@ -15,32 +15,42 @@ import com.tgyuu.designsystem.component.BaekyoungTopAppBar
 import com.tgyuu.designsystem.theme.BaekyoungTheme
 
 @Composable
+internal fun EtcRoute() {
+    EtcScreen()
+}
+
+@Composable
 fun EtcScreen() {
     Column(
         modifier = Modifier
             .fillMaxSize()
             .background(BaekyoungTheme.colors.white)
     ) {
-        val dividerColor = BaekyoungTheme.colors.purple
+        val dividerColor = BaekyoungTheme.colors.blueFF
 
         BaekyoungTopAppBar(ETC.titleTextId)
-        Divider(color = dividerColor)
-        SettingTitleBar(
-            title = stringResource(id = R.string.setting_account),
-            leadIconId = R.drawable.ic_account_setting,
-        )
-        Divider(color = dividerColor)
-        SettingBar(text = stringResource(id = R.string.logout))
-        SettingBar(text = stringResource(id = R.string.withdrawal))
-        Divider(color = dividerColor)
-        SettingTitleBar(
-            title = stringResource(id = R.string.inquriy_and_policy),
-            leadIconId = R.drawable.ic_inquiry_policy,
-        )
-        Divider(color = dividerColor)
-        SettingBar(text = stringResource(id = R.string.inquriy))
-        SettingBar(text = stringResource(id = R.string.faq))
-        SettingBar(text = stringResource(id = R.string.policy))
-        SettingBar(text = stringResource(id = R.string.private_policy))
+
+        Column(
+            modifier = Modifier
+                .fillMaxSize()
+                .background(BaekyoungTheme.colors.white)
+        ) {
+            SettingTitleBar(
+                title = stringResource(id = R.string.setting_account),
+                leadIconId = R.drawable.ic_account_setting,
+            )
+            SettingBar(text = stringResource(id = R.string.logout))
+            SettingBar(text = stringResource(id = R.string.withdrawal))
+            Divider(color = dividerColor)
+            SettingTitleBar(
+                title = stringResource(id = R.string.inquriy_and_policy),
+                leadIconId = R.drawable.ic_inquiry_policy,
+            )
+            Divider(color = dividerColor)
+            SettingBar(text = stringResource(id = R.string.inquriy))
+            SettingBar(text = stringResource(id = R.string.faq))
+            SettingBar(text = stringResource(id = R.string.policy))
+            SettingBar(text = stringResource(id = R.string.private_policy))
+        }
     }
 }

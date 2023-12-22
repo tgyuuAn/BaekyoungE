@@ -25,7 +25,7 @@
 <br><br><br>
 ## 🏗️ Android 앱 아키텍처
 
-- **MVI**
+- **MVVM** _(추후 MVI로 변경)_
   
 - **AAC**
   
@@ -50,7 +50,7 @@
 
 - **Test** : Junit + mockk
 
-- **Firebase** : Analytics + Crashlytics + Authentication + Realtime DataBase
+- **Firebase** : Analytics + Crashlytics + Authentication + FireStoreDatabase
  
 <br><br><br>
 
