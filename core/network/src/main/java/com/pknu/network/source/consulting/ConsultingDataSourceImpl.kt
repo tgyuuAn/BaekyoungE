@@ -1,6 +1,5 @@
 package com.pknu.network.source.consulting
 
-import android.util.Log
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.ktx.toObject
 import com.pknu.network.constant.CHATTING_LOG_COLLECTION
@@ -38,7 +37,6 @@ class ConsultingDataSourceImpl @Inject constructor(
     override fun getChattingLog(): Flow<Result<List<ChatLogResponse>>> = flow {
         while (true) {
             val consulting = runCatching {
-
                 val task = firebaseFirestore.collection(CHATTING_LOG_COLLECTION)
                     .document("lqDCZs2rMJo6wReAU29M")
                     .get()

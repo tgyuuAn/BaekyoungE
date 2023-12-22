@@ -5,6 +5,6 @@ data class ConsultingChatting(
     val role: ChattingRole,
 )
 
-enum class ChattingRole{
+enum class ChattingRole {
     USER, ASSISTANT, SYSTEM
 }

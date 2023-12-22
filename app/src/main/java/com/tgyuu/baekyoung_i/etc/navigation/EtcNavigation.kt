@@ -9,7 +9,7 @@ import com.tgyuu.baekyoung_i.etc.EtcRoute
 
 const val etcNavigationRoute = "etc_route"
 
-fun NavController.navigateToEtc(navOptions: NavOptions?  = navOptions {}) {
+fun NavController.navigateToEtc(navOptions: NavOptions? = navOptions {}) {
     this.navigate(etcNavigationRoute, navOptions)
 }
 
