@@ -20,21 +20,20 @@ class ConsultingDataSourceImpl @Inject constructor(
     private val firebaseFirestore: FirebaseFirestore,
 ) : ConsultingDataSource {
 
-    override suspend fun postConsultingInformation(consultingRequest: ConsultingRequest) =
+    override suspend fun postConsultingInformation(consultingRequest: ConsultingRequest): Result<Unit> =
         runCatching {
-            val task = firebaseFirestore.collection(USER_INFORMATION_COLLECTION)
+            firebaseFirestore.collection(USER_INFORMATION_COLLECTION)
                 .document("8I9y4HW94HGLiTlxPCFf")
                 .set(consultingRequest)
                 .await()
         }
 
-    override suspend fun postUserChatting(chatRequest: ChatRequest) =
-        runCatching {
-            val task = firebaseFirestore.collection(CHAT_USER_COLLECTION)
-                .document("s0tSqorXJqEn4ntIxcQj")
-                .set(chatRequest)
-                .await()
-        }
+    override suspend fun postUserChatting(chatRequest: ChatRequest): Result<Unit> = runCatching {
+        firebaseFirestore.collection(CHAT_USER_COLLECTION)
+            .document("s0tSqorXJqEn4ntIxcQj")
+            .set(chatRequest)
+            .await()
+    }
 
     override fun getChattingLog(): Flow<Result<List<ChatLogResponse>>> = flow {
         while (true) {
@@ -49,8 +48,7 @@ class ConsultingDataSourceImpl @Inject constructor(
                 consultingResponse.chat_log
             }
             emit(consulting)
-            Log.d("test","DataSource"+consulting.toString())
-            delay(1000L)
+            delay(300L)
         }
     }
 }
