@@ -8,6 +8,14 @@
 
 ## 🌟 주요 기능
 
+**1차 개발** _(2023-11-01 ~2023-12-26)_
+
+![ezgif com-crop (5)](https://github.com/tgyuuAn/Baekyoung-i/assets/116813010/60f9c954-cc59-4616-8d01-7a1db2b8ab3c)
+
+![ezgif com-video-to-gif-converter](https://github.com/tgyuuAn/Baekyoung-i/assets/116813010/23ae4842-9ec2-4278-9001-a5ce672e1764)
+
+_추후 디자인 리팩토링, 채팅 기능 이외 기능 추가_
+
 <br><br><br>
 ## 🧑‍🤝‍🧑 팀원
 
