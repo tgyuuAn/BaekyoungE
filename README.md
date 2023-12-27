@@ -16,7 +16,18 @@
 
 _추후 디자인 리팩토링, 채팅 기능 이외 기능 추가_
 
-<br><br><br>
+<details>
+<summary><h3>🎖️Award</h3></summary>
+- 부경대학교 LINC 캡스톤디자인 경진대회 우수상 <sub>(2023.12.26 )</sub>
+
+<br><br>
+
+<img src="https://github.com/tgyuuAn/Baekyoung-i/assets/116813010/f4df0f51-5047-4c23-ae4d-003b54e15cbf" width=500/>
+
+<br><br>
+
+</details>
+
 ## 🧑‍🤝‍🧑 팀원
 
 | [안태규](https://github.com/tgyuuAn) | 박준형 | 신상후 | 김종현 |
