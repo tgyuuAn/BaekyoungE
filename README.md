@@ -22,7 +22,7 @@ _추후 디자인 리팩토링, 채팅 기능 이외 기능 추가_
 
 <br><br>
 
-<img src="https://github.com/tgyuuAn/Baekyoung-i/assets/116813010/f4df0f51-5047-4c23-ae4d-003b54e15cbf" width=500/>
+<img src="https://github.com/tgyuuAn/Baekyoung-i/assets/116813010/141fefed-4b15-4458-a6bf-b8aea454e608" width=500/>
 
 <br><br>
 
