@@ -6,6 +6,7 @@ import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.BasicTextField
@@ -34,7 +35,6 @@ internal fun SignUpTextField(
     val keyboardController = LocalSoftwareKeyboardController.current
 
     Column(
-        verticalArrangement = Arrangement.spacedBy(4.dp),
         modifier = modifier
     ) {
         Text(
@@ -54,6 +54,7 @@ internal fun SignUpTextField(
             keyboardOptions = KeyboardOptions(imeAction = ImeAction.Done),
             keyboardActions = KeyboardActions(onDone = { keyboardController?.hide() }),
             modifier = Modifier
+                .fillMaxWidth()
                 .background(color = BaekyoungTheme.colors.white, shape = RoundedCornerShape(10.dp))
                 .border(
                     width = 1.dp,
@@ -61,7 +62,7 @@ internal fun SignUpTextField(
                     shape = RoundedCornerShape(10.dp),
                 ),
         ){ innerTextField ->
-            Box(modifier = Modifier.padding(vertical = 10.dp, horizontal = 12.dp)) {
+            Box(modifier = Modifier.padding(vertical = 6.dp, horizontal = 12.dp)) {
                 if (value.isEmpty()) {
                     Text(
                         text = stringResource(id = hint),
