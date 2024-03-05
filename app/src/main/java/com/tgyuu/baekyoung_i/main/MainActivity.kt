@@ -9,8 +9,11 @@ import androidx.compose.animation.ExperimentalAnimationApi
 import androidx.compose.animation.slideInVertically
 import androidx.compose.animation.slideOutVertically
 import androidx.compose.animation.with
+import androidx.compose.foundation.layout.WindowInsets
 import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.navigationBars
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.windowInsetsPadding
 import androidx.compose.material.BottomNavigation
 import androidx.compose.material.BottomNavigationItem
 import androidx.compose.material.Icon
@@ -70,7 +73,8 @@ class MainActivity : ComponentActivity() {
                             },
                             modifier = Modifier.height(70.dp)
                         )
-                    }
+                    },
+                    modifier = Modifier.windowInsetsPadding(WindowInsets.navigationBars)
                 ) { innerPadding ->
                     BaekyoungNavHost(
                         navController = navController,
