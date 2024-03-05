@@ -148,7 +148,7 @@ internal fun ConsultingScreen(
                         Text(
                             text = stringResource(R.string.start_consulting),
                             textAlign = TextAlign.Center,
-                            style = BaekyoungTheme.typography.contentBig,
+                            style = BaekyoungTheme.typography.contentBold,
                             color = BaekyoungTheme.colors.white,
                             modifier = Modifier.align(Alignment.Center)
                         )
@@ -164,7 +164,7 @@ internal fun ConsultingScreen(
                         Text(
                             text = stringResource(R.string.start_consulting),
                             textAlign = TextAlign.Center,
-                            style = BaekyoungTheme.typography.contentBig,
+                            style = BaekyoungTheme.typography.contentBold,
                             color = BaekyoungTheme.colors.white,
                             modifier = Modifier.align(Alignment.Center)
                         )

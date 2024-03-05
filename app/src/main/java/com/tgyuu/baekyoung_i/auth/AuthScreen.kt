@@ -11,11 +11,15 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.offset
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.layout.wrapContentHeight
 import androidx.compose.foundation.shape.CircleShape
-import androidx.compose.material3.BottomSheetScaffold
+import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material3.Divider
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -31,6 +35,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.tgyuu.baekyoung_i.R.drawable
 import com.tgyuu.baekyoung_i.R.string
+import com.tgyuu.baekyoung_i.auth.component.ButtonWithShadow
 import com.tgyuu.designsystem.theme.BaekyoungTheme
 
 @Composable
@@ -40,132 +45,111 @@ internal fun AuthRoute(navigateToHome: () -> Unit) {
     )
 }
 
-@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun AuthScreen(
     navigateToHome: () -> Unit,
 ) {
-    BottomSheetScaffold(
-        sheetContainerColor = BaekyoungTheme.colors.white,
-        sheetContentColor = BaekyoungTheme.colors.white,
-        sheetContent = {
-            Column(
-                horizontalAlignment = Alignment.CenterHorizontally,
-                modifier = Modifier
-                    .padding(vertical = 15.dp)
-                    .fillMaxSize(),
-            ) {
-                Text(
-                    text = stringResource(id = string.sign_up),
-                    style = BaekyoungTheme.typography.contentRegular.copy(fontSize = 20.sp),
-                    color = BaekyoungTheme.colors.blueF8,
-                )
+    val gradientColor = Brush.verticalGradient(
+        listOf(
+            BaekyoungTheme.colors.white,
+            BaekyoungTheme.colors.blueF5FF
+        )
+    )
 
-                Row(
-                    horizontalArrangement = Arrangement.Center,
-                    verticalAlignment = Alignment.CenterVertically,
-                    modifier = Modifier.padding(vertical = 27.dp)
-                ) {
-                    ButtonWithShadow(
-                        drawableId = drawable.ic_naver,
-                        contentDescription = string.sign_up
-                    )
+    Box(
+        modifier = Modifier
+            .fillMaxSize()
+            .background(gradientColor)
+    ) {
+        Image(
+            painter = painterResource(id = drawable.ic_cheer_up_baekgyoung),
+            contentDescription = stringResource(id = string.cheer_up_baekgyoung_description),
+            modifier = Modifier.align(Alignment.TopEnd)
+        )
 
-                    Spacer(modifier = Modifier.size(49.dp))
+        Text(
+            text = stringResource(id = string.welcome_ment),
+            style = BaekyoungTheme.typography.titleBold,
+            color = BaekyoungTheme.colors.blueDD,
+            modifier = Modifier
+                .align(Alignment.TopStart)
+                .padding(start = 20.dp, top = 16.dp)
+        )
 
-                    ButtonWithShadow(
-                        drawableId = drawable.ic_google,
-                        contentDescription = string.sign_up
-                    )
-                }
+        Text(
+            text = stringResource(id = string.login),
+            style = BaekyoungTheme.typography.titleBold.copy(fontSize = 20.sp),
+            color = BaekyoungTheme.colors.blueF8,
+            modifier = Modifier
+                .align(Alignment.TopEnd)
+                .padding(end = 20.dp, top = 16.dp)
+        )
 
-                Row(
-                    horizontalArrangement = Arrangement.Center,
-                    verticalAlignment = Alignment.CenterVertically,
-                ) {
-                    ButtonWithShadow(
-                        drawableId = drawable.ic_kakao,
-                        contentDescription = string.sign_up
-                    )
-
-                    Spacer(modifier = Modifier.size(49.dp))
-
-                    ButtonWithShadow(
-                        drawableId = drawable.ic_facebook,
-                        contentDescription = string.sign_up
-                    )
-
-                    Spacer(modifier = Modifier.size(49.dp))
-
-                    ButtonWithShadow(
-                        drawableId = drawable.ic_apple,
-                        contentDescription = string.sign_up
-                    )
-                }
-            }
-        },
-        content = {
-            val gradientColor = Brush.verticalGradient(
-                listOf(
-                    BaekyoungTheme.colors.white,
-                    BaekyoungTheme.colors.blueF5FF
-                )
+        Column(
+            horizontalAlignment = Alignment.CenterHorizontally,
+            modifier = Modifier
+                .align(Alignment.BottomCenter)
+                .wrapContentHeight()
+                .fillMaxWidth()
+                .clip(RoundedCornerShape(topStart = 20.dp, topEnd = 20.dp))
+                .background(BaekyoungTheme.colors.white),
+        ) {
+            Text(
+                text = stringResource(id = string.sign_up),
+                style = BaekyoungTheme.typography.contentRegular.copy(fontSize = 20.sp),
+                color = BaekyoungTheme.colors.blueF8,
             )
 
-            Box(
-                modifier = Modifier
-                    .fillMaxSize()
-                    .background(gradientColor)
+            Row(
+                horizontalArrangement = Arrangement.Center,
+                verticalAlignment = Alignment.CenterVertically,
+                modifier = Modifier.padding(vertical = 27.dp)
             ) {
-                Image(
-                    painter = painterResource(id = drawable.ic_cheer_up_baekgyoung),
-                    contentDescription = stringResource(id = string.cheer_up_baekgyoung_description),
-                    modifier = Modifier.align(Alignment.TopEnd)
+                ButtonWithShadow(
+                    drawableId = drawable.ic_naver,
+                    contentDescription = string.sign_up
                 )
 
-                Text(
-                    text = stringResource(id = string.welcome_ment),
-                    style = BaekyoungTheme.typography.titleBold,
-                    color = BaekyoungTheme.colors.blueDD,
-                    modifier = Modifier
-                        .align(Alignment.TopStart)
-                        .padding(start = 20.dp, top = 16.dp)
-                )
+                Spacer(modifier = Modifier.size(49.dp))
 
-                Text(
-                    text = stringResource(id = string.login),
-                    style = BaekyoungTheme.typography.titleBold.copy(fontSize = 20.sp),
-                    color = BaekyoungTheme.colors.blueF8,
-                    modifier = Modifier
-                        .align(Alignment.TopEnd)
-                        .padding(end = 20.dp, top = 16.dp)
+                ButtonWithShadow(
+                    drawableId = drawable.ic_google,
+                    contentDescription = string.sign_up
                 )
             }
-        },
-    )
-}
 
-@Composable
-private fun ButtonWithShadow(
-    @DrawableRes drawableId: Int,
-    @StringRes contentDescription: Int,
-    onClickButton: () -> Unit = {},
-) {
-    Box {
-        Spacer(
-            modifier = Modifier
-                .size(48.dp)
-                .offset(x = 4.dp, y = 4.dp)
-                .background(Color.Transparent)
-                .shadow(elevation = 6.dp, shape = CircleShape, clip = false)
-        )
+            Row(
+                horizontalArrangement = Arrangement.Center,
+                verticalAlignment = Alignment.CenterVertically,
+            ) {
+                ButtonWithShadow(
+                    drawableId = drawable.ic_kakao,
+                    contentDescription = string.sign_up
+                )
 
-        Image(
-            painter = painterResource(id = drawableId),
-            contentDescription = stringResource(id = contentDescription),
-            modifier = Modifier
-                .size(49.dp)
-                .clickable { onClickButton() },
-        )
+                Spacer(modifier = Modifier.size(49.dp))
+
+                ButtonWithShadow(
+                    drawableId = drawable.ic_facebook,
+                    contentDescription = string.sign_up
+                )
+
+                Spacer(modifier = Modifier.size(49.dp))
+
+                ButtonWithShadow(
+                    drawableId = drawable.ic_apple,
+                    contentDescription = string.sign_up
+                )
+            }
+
+            Divider(
+                color = BaekyoungTheme.colors.grayAC,
+                thickness = 5.dp,
+                modifier = Modifier
+                    .padding(top = 60.dp, bottom = 15.dp)
+                    .width(150.dp)
+                    .clip(RoundedCornerShape(10.dp))
+            )
+        }
     }
 }
