@@ -57,7 +57,7 @@ fun AuthScreen(
             val gradientColor = Brush.verticalGradient(
                 listOf(
                     BaekyoungTheme.colors.white,
-                    BaekyoungTheme.colors.blueF8
+                    BaekyoungTheme.colors.blueF5FF
                 )
             )
 
@@ -83,11 +83,11 @@ fun AuthScreen(
 
                 Text(
                     text = "로그인",
-                    style = BaekyoungTheme.typography.titleBold,
-                    color = BaekyoungTheme.colors.blueDD,
+                    style = BaekyoungTheme.typography.titleBold.copy(fontSize = 20.sp),
+                    color = BaekyoungTheme.colors.blueF8,
                     modifier = Modifier
-                        .align(Alignment.TopStart)
-                        .padding(start = 20.dp, top = 16.dp)
+                        .align(Alignment.TopEnd)
+                        .padding(end = 20.dp, top = 16.dp)
                 )
             }
         },
