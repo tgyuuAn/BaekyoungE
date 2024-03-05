@@ -7,6 +7,7 @@ import androidx.navigation.compose.composable
 import androidx.navigation.navOptions
 import com.tgyuu.baekyoung_i.auth.AuthRoute
 import com.tgyuu.baekyoung_i.auth.navigation.authNavigationRoute
+import com.tgyuu.baekyoung_i.auth.signup.SignUpRoute
 
 const val signUpNavigationRoute = "sign_up_route"
 
@@ -16,6 +17,6 @@ fun NavController.navigateToSignUp(navOptions: NavOptions? = navOptions {}) {
 
 fun NavGraphBuilder.signUpScreen(navigateToHome: () -> Unit) {
     composable(route = signUpNavigationRoute) {
-        AuthRoute(navigateToHome)
+        SignUpRoute(navigateToHome)
     }
 }

@@ -33,15 +33,15 @@ import com.tgyuu.baekyoung_i.auth.component.ButtonWithShadow
 import com.tgyuu.designsystem.theme.BaekyoungTheme
 
 @Composable
-internal fun AuthRoute(navigateToHome: () -> Unit) {
+internal fun AuthRoute(navigateToSignUp: () -> Unit) {
     AuthScreen(
-        navigateToHome = navigateToHome,
+        navigateToSignUp = navigateToSignUp,
     )
 }
 
 @Composable
 fun AuthScreen(
-    navigateToHome: () -> Unit,
+    navigateToSignUp: () -> Unit,
 ) {
     val gradientColor = Brush.verticalGradient(
         listOf(
@@ -77,7 +77,7 @@ fun AuthScreen(
             modifier = Modifier
                 .align(Alignment.TopEnd)
                 .padding(end = 20.dp, top = 16.dp)
-                .clickable { navigateToHome() }
+                .clickable { navigateToSignUp() }
         )
 
         Column(
