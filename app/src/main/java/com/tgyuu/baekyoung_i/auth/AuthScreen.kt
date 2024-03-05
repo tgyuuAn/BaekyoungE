@@ -15,9 +15,12 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import com.tgyuu.baekyoung_i.R
 import com.tgyuu.baekyoung_i.R.drawable
+import com.tgyuu.baekyoung_i.R.string
 import com.tgyuu.designsystem.theme.BaekyoungTheme
 
 @Composable
@@ -43,7 +46,7 @@ fun AuthScreen(
                     .fillMaxSize(),
             ) {
                 Text(
-                    text = "회원가입을 진행해 주세요",
+                    text = stringResource(id = string.sign_up),
                     style = BaekyoungTheme.typography.contentRegular.copy(fontSize = 20.sp),
                     color = BaekyoungTheme.colors.blueF8,
                 )
@@ -68,12 +71,12 @@ fun AuthScreen(
             ) {
                 Image(
                     painter = painterResource(id = drawable.ic_cheer_up_baekgyoung),
-                    contentDescription = "꿈을 찾는 것을 응원하는 백경이",
+                    contentDescription = stringResource(id = string.cheer_up_baekgyoung_description),
                     modifier = Modifier.align(Alignment.TopEnd)
                 )
 
                 Text(
-                    text = "백경이와 함께 꿈을\n찾으러 가보자",
+                    text = stringResource(id = string.welcome_ment),
                     style = BaekyoungTheme.typography.titleBold,
                     color = BaekyoungTheme.colors.blueDD,
                     modifier = Modifier
@@ -82,7 +85,7 @@ fun AuthScreen(
                 )
 
                 Text(
-                    text = "로그인",
+                    text = stringResource(id = string.login),
                     style = BaekyoungTheme.typography.titleBold.copy(fontSize = 20.sp),
                     color = BaekyoungTheme.colors.blueF8,
                     modifier = Modifier
