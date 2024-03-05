@@ -21,8 +21,10 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
 import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.graphics.Brush
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
@@ -73,6 +75,30 @@ fun AuthScreen(
 
                     ButtonWithShadow(
                         drawableId = drawable.ic_google,
+                        contentDescription = string.sign_up
+                    )
+                }
+
+                Row(
+                    horizontalArrangement = Arrangement.Center,
+                    verticalAlignment = Alignment.CenterVertically,
+                ) {
+                    ButtonWithShadow(
+                        drawableId = drawable.ic_kakao,
+                        contentDescription = string.sign_up
+                    )
+
+                    Spacer(modifier = Modifier.size(49.dp))
+
+                    ButtonWithShadow(
+                        drawableId = drawable.ic_facebook,
+                        contentDescription = string.sign_up
+                    )
+
+                    Spacer(modifier = Modifier.size(49.dp))
+
+                    ButtonWithShadow(
+                        drawableId = drawable.ic_apple,
                         contentDescription = string.sign_up
                     )
                 }
@@ -128,9 +154,10 @@ private fun ButtonWithShadow(
     Box {
         Spacer(
             modifier = Modifier
-                .size(49.dp)
+                .size(48.dp)
                 .offset(x = 4.dp, y = 4.dp)
-                .shadow(elevation = 5.dp, shape = CircleShape, clip = true),
+                .background(Color.Transparent)
+                .shadow(elevation = 6.dp, shape = CircleShape, clip = false)
         )
 
         Image(
