@@ -79,13 +79,16 @@ val notoSansKrMedium: FontFamily =
 @Stable
 class BaekKyoungTypogrphy internal constructor(
     contentNormal: TextStyle,
-    contentBig: TextStyle,
+    contentBold: TextStyle,
+    contentRegular: TextStyle,
     titleNormal: TextStyle,
     labelNormal: TextStyle,
 ) {
-    var contentBig: TextStyle by mutableStateOf(contentBig)
+    var contentBold: TextStyle by mutableStateOf(contentBold)
         private set
     var contentNormal: TextStyle by mutableStateOf(contentNormal)
+        private set
+    var contentRegular: TextStyle by mutableStateOf(contentRegular)
         private set
     var titleNormal: TextStyle by mutableStateOf(titleNormal)
         private set
@@ -100,9 +103,13 @@ fun BaekKyoungTypoGraphy(): BaekKyoungTypogrphy {
             fontSize = 16.sp,
             fontFamily = notoSansKrMedium,
         ),
-        contentBig = TextStyle(
-            fontSize = 20.sp,
+        contentBold = TextStyle(
+            fontSize = 16.sp,
             fontFamily = notoSansKrBold,
+        ),
+        contentRegular = TextStyle(
+            fontSize = 16.sp,
+            fontFamily = notoSansKrRegular,
         ),
         titleNormal = TextStyle(
             fontSize = 24.sp,

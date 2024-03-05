@@ -46,7 +46,7 @@ class ConsultingDataSourceImpl @Inject constructor(
                 consultingResponse.chat_log
             }
             emit(consulting)
-            delay(300L)
+            delay(100L)
         }
     }
 }

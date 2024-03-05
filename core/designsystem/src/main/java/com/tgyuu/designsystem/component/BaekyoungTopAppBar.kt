@@ -32,7 +32,7 @@ fun BaekyoungTopAppBar(
     ) {
         Text(
             text = stringResource(titleTextId),
-            style = BaekyoungTheme.typography.contentBig,
+            style = BaekyoungTheme.typography.contentBold,
             textAlign = TextAlign.Center,
             color = textColor,
             modifier = Modifier.padding(start = 20.dp)
