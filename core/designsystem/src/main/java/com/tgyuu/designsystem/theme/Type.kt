@@ -79,17 +79,32 @@ val notoSansKrMedium: FontFamily =
 @Stable
 class BaekKyoungTypogrphy internal constructor(
     contentNormal: TextStyle,
-    contentBig: TextStyle,
+    contentBold: TextStyle,
+    contentRegular: TextStyle,
+    titleBold: TextStyle,
     titleNormal: TextStyle,
+    titleRegular: TextStyle,
     labelNormal: TextStyle,
+    labelBold: TextStyle,
+    labelRegular: TextStyle,
 ) {
-    var contentBig: TextStyle by mutableStateOf(contentBig)
+    var contentBold: TextStyle by mutableStateOf(contentBold)
         private set
     var contentNormal: TextStyle by mutableStateOf(contentNormal)
         private set
+    var contentRegular: TextStyle by mutableStateOf(contentRegular)
+        private set
+    var titleBold: TextStyle by mutableStateOf(titleBold)
+        private set
     var titleNormal: TextStyle by mutableStateOf(titleNormal)
         private set
+    var titleRegular: TextStyle by mutableStateOf(titleRegular)
+        private set
     var labelNormal: TextStyle by mutableStateOf(labelNormal)
+        private set
+    var labelBold: TextStyle by mutableStateOf(labelBold)
+        private set
+    var labelRegular: TextStyle by mutableStateOf(labelRegular)
         private set
 }
 
@@ -100,17 +115,37 @@ fun BaekKyoungTypoGraphy(): BaekKyoungTypogrphy {
             fontSize = 16.sp,
             fontFamily = notoSansKrMedium,
         ),
-        contentBig = TextStyle(
-            fontSize = 20.sp,
+        contentBold = TextStyle(
+            fontSize = 16.sp,
             fontFamily = notoSansKrBold,
+        ),
+        contentRegular = TextStyle(
+            fontSize = 16.sp,
+            fontFamily = notoSansKrRegular,
         ),
         titleNormal = TextStyle(
             fontSize = 24.sp,
             fontFamily = notoSansKrMedium,
         ),
+        titleBold = TextStyle(
+            fontSize = 24.sp,
+            fontFamily = notoSansKrBold,
+        ),
+        titleRegular = TextStyle(
+            fontSize = 24.sp,
+            fontFamily = notoSansKrRegular,
+        ),
         labelNormal = TextStyle(
             fontSize = 12.sp,
             fontFamily = notoSansKrMedium,
-        )
+        ),
+        labelRegular = TextStyle(
+            fontSize = 12.sp,
+            fontFamily = notoSansKrMedium,
+        ),
+        labelBold = TextStyle(
+            fontSize = 12.sp,
+            fontFamily = notoSansKrMedium,
+        ),
     )
 }

@@ -1,16 +1,19 @@
 package com.tgyuu.baekyoung_i.main
 
 import android.os.Bundle
-import android.view.WindowManager
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
+import androidx.activity.enableEdgeToEdge
 import androidx.compose.animation.AnimatedContent
 import androidx.compose.animation.ExperimentalAnimationApi
 import androidx.compose.animation.slideInVertically
 import androidx.compose.animation.slideOutVertically
 import androidx.compose.animation.with
+import androidx.compose.foundation.layout.WindowInsets
 import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.navigationBars
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.windowInsetsPadding
 import androidx.compose.material.BottomNavigation
 import androidx.compose.material.BottomNavigationItem
 import androidx.compose.material.Icon
@@ -40,8 +43,7 @@ import dagger.hilt.android.AndroidEntryPoint
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-
-        window.setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_PAN)
+        setSystemBarTransParent()
 
         setContent {
             BaekyoungTheme {
@@ -71,7 +73,8 @@ class MainActivity : ComponentActivity() {
                             },
                             modifier = Modifier.height(70.dp)
                         )
-                    }
+                    },
+                    modifier = Modifier.windowInsetsPadding(WindowInsets.navigationBars)
                 ) { innerPadding ->
                     BaekyoungNavHost(
                         navController = navController,
@@ -155,3 +158,5 @@ internal fun BaekyoungBottomBar(
         },
     )
 }
+
+private fun ComponentActivity.setSystemBarTransParent() = enableEdgeToEdge()
