@@ -14,7 +14,6 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Brush
-import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -55,24 +54,26 @@ fun AuthScreen(
             }
         },
         content = {
+            val gradientColor = Brush.verticalGradient(
+                listOf(
+                    BaekyoungTheme.colors.white,
+                    BaekyoungTheme.colors.blueF8
+                )
+            )
+
             Box(
                 modifier = Modifier
                     .fillMaxSize()
-                    .background(
-                        Brush.verticalGradient(
-                            listOf(
-                                BaekyoungTheme.colors.white,
-                                BaekyoungTheme.colors.blueF8
-                            )
-                        )
-                    )
+                    .background(gradientColor)
             ) {
                 Image(
                     painter = painterResource(id = drawable.ic_cheer_up_baekgyoung),
                     contentDescription = "꿈을 찾는 것을 응원하는 백경이",
-                    contentScale = ContentScale.Fit,
                     modifier = Modifier.align(Alignment.TopEnd)
                 )
+
+                Text(text = "백경이와 함께 꿈을\n 찾으러 가보자",
+                    style = BaekyoungTheme.typography.titleNormal)
             }
         },
     )

@@ -81,7 +81,9 @@ class BaekKyoungTypogrphy internal constructor(
     contentNormal: TextStyle,
     contentBold: TextStyle,
     contentRegular: TextStyle,
+    titleBold: TextStyle,
     titleNormal: TextStyle,
+    titleRegular: TextStyle,
     labelNormal: TextStyle,
 ) {
     var contentBold: TextStyle by mutableStateOf(contentBold)
@@ -90,7 +92,11 @@ class BaekKyoungTypogrphy internal constructor(
         private set
     var contentRegular: TextStyle by mutableStateOf(contentRegular)
         private set
+    var titleBold: TextStyle by mutableStateOf(titleBold)
+        private set
     var titleNormal: TextStyle by mutableStateOf(titleNormal)
+        private set
+    var titleRegular: TextStyle by mutableStateOf(titleRegular)
         private set
     var labelNormal: TextStyle by mutableStateOf(labelNormal)
         private set
@@ -114,6 +120,14 @@ fun BaekKyoungTypoGraphy(): BaekKyoungTypogrphy {
         titleNormal = TextStyle(
             fontSize = 24.sp,
             fontFamily = notoSansKrMedium,
+        ),
+        titleBold = TextStyle(
+            fontSize = 24.sp,
+            fontFamily = notoSansKrBold,
+        ),
+        titleRegular = TextStyle(
+            fontSize = 24.sp,
+            fontFamily = notoSansKrRegular,
         ),
         labelNormal = TextStyle(
             fontSize = 12.sp,
