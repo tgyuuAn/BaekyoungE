@@ -72,8 +72,23 @@ fun AuthScreen(
                     modifier = Modifier.align(Alignment.TopEnd)
                 )
 
-                Text(text = "백경이와 함께 꿈을\n 찾으러 가보자",
-                    style = BaekyoungTheme.typography.titleNormal)
+                Text(
+                    text = "백경이와 함께 꿈을\n찾으러 가보자",
+                    style = BaekyoungTheme.typography.titleBold,
+                    color = BaekyoungTheme.colors.blueDD,
+                    modifier = Modifier
+                        .align(Alignment.TopStart)
+                        .padding(start = 20.dp, top = 16.dp)
+                )
+
+                Text(
+                    text = "로그인",
+                    style = BaekyoungTheme.typography.titleBold,
+                    color = BaekyoungTheme.colors.blueDD,
+                    modifier = Modifier
+                        .align(Alignment.TopStart)
+                        .padding(start = 20.dp, top = 16.dp)
+                )
             }
         },
     )
