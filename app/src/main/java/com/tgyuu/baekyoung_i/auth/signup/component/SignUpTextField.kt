@@ -1,10 +1,13 @@
 package com.tgyuu.baekyoung_i.auth.signup.component
 
 import androidx.annotation.StringRes
+import androidx.compose.foundation.background
+import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.BasicTextField
 import androidx.compose.foundation.text.KeyboardActions
 import androidx.compose.foundation.text.KeyboardOptions
@@ -50,6 +53,13 @@ internal fun SignUpTextField(
             singleLine = true,
             keyboardOptions = KeyboardOptions(imeAction = ImeAction.Done),
             keyboardActions = KeyboardActions(onDone = { keyboardController?.hide() }),
+            modifier = Modifier
+                .background(color = BaekyoungTheme.colors.white, shape = RoundedCornerShape(10.dp))
+                .border(
+                    width = 1.dp,
+                    color = BaekyoungTheme.colors.grayD0,
+                    shape = RoundedCornerShape(10.dp),
+                ),
         ){ innerTextField ->
             Box(modifier = Modifier.padding(vertical = 10.dp, horizontal = 12.dp)) {
                 if (value.isEmpty()) {
