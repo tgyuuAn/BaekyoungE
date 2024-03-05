@@ -21,6 +21,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
@@ -85,6 +86,10 @@ fun AuthScreen(
                 .align(Alignment.BottomCenter)
                 .wrapContentHeight()
                 .fillMaxWidth()
+                .shadow(
+                    elevation = 20.dp,
+                    shape = RoundedCornerShape(topStart = 20.dp, topEnd = 20.dp)
+                )
                 .clip(RoundedCornerShape(topStart = 20.dp, topEnd = 20.dp))
                 .background(BaekyoungTheme.colors.white),
         ) {
@@ -101,14 +106,14 @@ fun AuthScreen(
             ) {
                 ButtonWithShadow(
                     drawableId = drawable.ic_naver,
-                    contentDescription = string.sign_up
+                    contentDescription = string.naver_description,
                 )
 
                 Spacer(modifier = Modifier.size(49.dp))
 
                 ButtonWithShadow(
                     drawableId = drawable.ic_google,
-                    contentDescription = string.sign_up
+                    contentDescription = string.google_description,
                 )
             }
 
@@ -118,21 +123,21 @@ fun AuthScreen(
             ) {
                 ButtonWithShadow(
                     drawableId = drawable.ic_kakao,
-                    contentDescription = string.sign_up
+                    contentDescription = string.kakao_description,
                 )
 
                 Spacer(modifier = Modifier.size(49.dp))
 
                 ButtonWithShadow(
                     drawableId = drawable.ic_facebook,
-                    contentDescription = string.sign_up
+                    contentDescription = string.facebook_description,
                 )
 
                 Spacer(modifier = Modifier.size(49.dp))
 
                 ButtonWithShadow(
                     drawableId = drawable.ic_apple,
-                    contentDescription = string.sign_up
+                    contentDescription = string.apple_description,
                 )
             }
 
