@@ -13,8 +13,8 @@ fun NavController.navigateToAuth(navOptions: NavOptions? = navOptions {}) {
     this.navigate(authNavigationRoute, navOptions)
 }
 
-fun NavGraphBuilder.authScreen(navigateToHome: () -> Unit) {
+fun NavGraphBuilder.authScreen(navigateToSignUp: () -> Unit) {
     composable(route = authNavigationRoute) {
-        AuthRoute(navigateToHome)
+        AuthRoute(navigateToSignUp)
     }
 }

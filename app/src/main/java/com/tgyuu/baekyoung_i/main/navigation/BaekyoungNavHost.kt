@@ -7,6 +7,9 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.navOptions
 import com.tgyuu.baekyoung_i.auth.navigation.authNavigationRoute
 import com.tgyuu.baekyoung_i.auth.navigation.authScreen
+import com.tgyuu.baekyoung_i.auth.signup.navigation.navigateToSignUp
+import com.tgyuu.baekyoung_i.auth.signup.navigation.signUpNavigationRoute
+import com.tgyuu.baekyoung_i.auth.signup.navigation.signUpScreen
 import com.tgyuu.baekyoung_i.community.navigation.communityScreen
 import com.tgyuu.baekyoung_i.consulting.chatting.navigation.navigateToChatting
 import com.tgyuu.baekyoung_i.consulting.consultinginformation.navigation.consultingGraph
@@ -26,9 +29,14 @@ fun BaekyoungNavHost(
         startDestination = startDestination,
         modifier = modifier,
     ) {
-        authScreen(navigateToHome = {
-            navController.navigateToHome(navOptions {
+        authScreen(navigateToSignUp = {
+            navController.navigateToSignUp(navOptions {
                 popUpTo(authNavigationRoute) { inclusive = true }
+            })
+        })
+        signUpScreen(navigateToHome = {
+            navController.navigateToHome(navOptions {
+                popUpTo(signUpNavigationRoute) { inclusive = true }
             })
         })
         homeScreen()
