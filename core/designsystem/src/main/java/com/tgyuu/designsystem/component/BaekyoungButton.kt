@@ -18,7 +18,7 @@ import com.tgyuu.designsystem.theme.BaekyoungTheme
 @Composable
 fun BaekyoungButton(
     @StringRes text: Int,
-    buttonColor: Color = BaekyoungTheme.colors.blueDD,
+    buttonColor: Color = BaekyoungTheme.colors.blueD7,
     textColor: Color = BaekyoungTheme.colors.white,
     onButtonClick: () -> Unit,
     modifier: Modifier = Modifier,
