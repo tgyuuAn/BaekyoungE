@@ -2,7 +2,6 @@ package com.tgyuu.baekyoung_i.auth.signup
 
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.core.CubicBezierEasing
-import androidx.compose.animation.core.FastOutLinearInEasing
 import androidx.compose.animation.core.animateDpAsState
 import androidx.compose.animation.core.tween
 import androidx.compose.animation.expandVertically
@@ -35,6 +34,7 @@ import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalConfiguration
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import com.tgyuu.baekyoung_i.R
 import com.tgyuu.baekyoung_i.auth.component.BaekyoungCloud
@@ -67,59 +67,7 @@ internal fun SignUpScreen(navigateToHome: () -> Unit) {
             .fillMaxSize()
             .background(BaekyoungTheme.colors.blueF5FF)
     ) {
-        BaekyoungCloud(
-            offsetX = -110.dp,
-            offsetY = 40.dp,
-            translationY = animateOffset,
-        )
-
-        BaekyoungCloud(
-            offsetX = 251.dp,
-            offsetY = 270.dp,
-            translationY = animateOffset,
-        )
-
-        BaekyoungCloud(
-            offsetX = -60.dp,
-            offsetY = 420.dp,
-            translationY = animateOffset,
-        )
-
-        BaekyoungCloud(
-            offsetX = 60.dp,
-            offsetY = 610.dp,
-            translationY = animateOffset,
-        )
-
-        BaekyoungCloud(
-            offsetX = -110.dp,
-            offsetY = 936.dp,
-            translationY = animateOffset,
-        )
-
-        BaekyoungCloud(
-            offsetX = 251.dp,
-            offsetY = 1130.dp,
-            translationY = animateOffset,
-        )
-
-        BaekyoungCloud(
-            offsetX = -60.dp,
-            offsetY = 1280.dp,
-            translationY = animateOffset,
-        )
-
-        BaekyoungCloud(
-            offsetX = 60.dp,
-            offsetY = 1470.dp,
-            translationY = animateOffset,
-        )
-
-        BaekyoungCloud(
-            offsetX = -110.dp,
-            offsetY = 1736.dp,
-            translationY = animateOffset,
-        )
+        BaekgyoungClouds(animateOffset = animateOffset)
 
         Image(
             painter = painterResource(id = R.drawable.ic_sea),
@@ -250,6 +198,65 @@ internal fun SignUpScreen(navigateToHome: () -> Unit) {
                 )
             }
         }
+    }
+}
+
+@Composable
+private fun BaekgyoungClouds(animateOffset: Dp) {
+    Box(modifier = Modifier.fillMaxSize()) {
+        BaekyoungCloud(
+            offsetX = -110.dp,
+            offsetY = 40.dp,
+            translationY = animateOffset,
+        )
+
+        BaekyoungCloud(
+            offsetX = 251.dp,
+            offsetY = 270.dp,
+            translationY = animateOffset,
+        )
+
+        BaekyoungCloud(
+            offsetX = -60.dp,
+            offsetY = 420.dp,
+            translationY = animateOffset,
+        )
+
+        BaekyoungCloud(
+            offsetX = 60.dp,
+            offsetY = 610.dp,
+            translationY = animateOffset,
+        )
+
+        BaekyoungCloud(
+            offsetX = -110.dp,
+            offsetY = 936.dp,
+            translationY = animateOffset,
+        )
+
+        BaekyoungCloud(
+            offsetX = 251.dp,
+            offsetY = 1130.dp,
+            translationY = animateOffset,
+        )
+
+        BaekyoungCloud(
+            offsetX = -60.dp,
+            offsetY = 1280.dp,
+            translationY = animateOffset,
+        )
+
+        BaekyoungCloud(
+            offsetX = 60.dp,
+            offsetY = 1470.dp,
+            translationY = animateOffset,
+        )
+
+        BaekyoungCloud(
+            offsetX = -110.dp,
+            offsetY = 1736.dp,
+            translationY = animateOffset,
+        )
     }
 }
 
