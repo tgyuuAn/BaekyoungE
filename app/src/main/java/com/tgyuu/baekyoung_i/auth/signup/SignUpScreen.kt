@@ -1,8 +1,12 @@
 package com.tgyuu.baekyoung_i.auth.signup
 
+import androidx.compose.animation.AnimatedVisibility
+import androidx.compose.animation.expandVertically
+import androidx.compose.animation.shrinkVertically
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -10,10 +14,16 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material3.Divider
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
@@ -31,6 +41,8 @@ internal fun SignUpRoute(navigateToHome: () -> Unit) {
 
 @Composable
 internal fun SignUpScreen(navigateToHome: () -> Unit) {
+    var showSpinner by remember { mutableStateOf(false) }
+
     Box(
         modifier = Modifier
             .fillMaxSize()
@@ -69,6 +81,7 @@ internal fun SignUpScreen(navigateToHome: () -> Unit) {
                         color = BaekyoungTheme.colors.grayD0,
                         shape = RoundedCornerShape(10.dp),
                     )
+                    .clickable { showSpinner = !showSpinner }
             ) {
                 Text(
                     text = "남성",
@@ -98,5 +111,34 @@ internal fun SignUpScreen(navigateToHome: () -> Unit) {
                 .fillMaxWidth()
                 .padding(horizontal = 24.dp, vertical = 40.dp)
         )
+
+        AnimatedVisibility(
+            visible = showSpinner,
+            modifier = Modifier.align(Alignment.BottomCenter),
+            enter = expandVertically(),
+            exit = shrinkVertically(),
+        ) {
+            Column(
+                horizontalAlignment = Alignment.CenterHorizontally,
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .clip(RoundedCornerShape(topStart = 10.dp, topEnd = 10.dp))
+                    .background(BaekyoungTheme.colors.white),
+            ) {
+                Text(
+                    text = "남성",
+                    style = BaekyoungTheme.typography.labelRegular,
+                    modifier = Modifier.padding(vertical = 15.dp),
+                )
+
+                Divider(color = BaekyoungTheme.colors.grayD0)
+
+                Text(
+                    text = "여성",
+                    style = BaekyoungTheme.typography.labelRegular,
+                    modifier = Modifier.padding(vertical = 15.dp),
+                )
+            }
+        }
     }
 }
