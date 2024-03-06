@@ -15,6 +15,7 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.offset
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Divider
@@ -27,6 +28,9 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.graphics.graphicsLayer
+import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.platform.LocalConfiguration
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
@@ -45,12 +49,12 @@ internal fun SignUpRoute(navigateToHome: () -> Unit) {
 
 @Composable
 internal fun SignUpScreen(navigateToHome: () -> Unit) {
+    val localConfiguration = LocalConfiguration.current
     var showSpinner by remember { mutableStateOf(false) }
     var isSignUpSuccess by remember { mutableStateOf(false) }
-
     val animateOffset by animateDpAsState(
-        targetValue = if (!isSignUpSuccess) 0.dp else -1360.dp,
-        animationSpec = tween(3000, 1000)
+        targetValue = if (!isSignUpSuccess) 0.dp else -ANIMATION_OFFSET.dp,
+        animationSpec = tween(DROP_CAMERA_DURATION_MILLIS, HIDE_SIGN_UP_UI_DURATION_MILLIS)
     )
 
     Box(
@@ -108,13 +112,43 @@ internal fun SignUpScreen(navigateToHome: () -> Unit) {
 
         BaekyoungCloud(
             offsetX = -110.dp,
-            offsetY = 1636.dp,
+            offsetY = 1736.dp,
             translationY = animateOffset,
+        )
+
+        Image(
+            painter = painterResource(id = R.drawable.ic_sea),
+            contentDescription = null,
+            contentScale = ContentScale.FillWidth,
+            modifier = Modifier
+                .fillMaxWidth()
+                .offset(
+                    y = localConfiguration.screenHeightDp.dp +
+                            ANIMATION_OFFSET.dp - SEA_IMAGE_HEIGHT.dp
+                )
+                .graphicsLayer {
+                    this.translationY = animateOffset.toPx()
+                },
+        )
+
+        Image(
+            painter = painterResource(id = R.drawable.ic_main_baekgyoung),
+            contentDescription = null,
+            modifier = Modifier
+                .fillMaxWidth()
+                .align(Alignment.TopCenter)
+                .offset(
+                    y = localConfiguration.screenHeightDp.dp +
+                            ANIMATION_OFFSET.dp - SEA_IMAGE_HEIGHT.dp - 43.dp
+                )
+                .graphicsLayer {
+                    this.translationY = animateOffset.toPx()
+                },
         )
 
         AnimatedVisibility(
             visible = !isSignUpSuccess,
-            exit = fadeOut(tween(1000))
+            exit = fadeOut(tween(HIDE_SIGN_UP_UI_DURATION_MILLIS))
         ) {
             Box(modifier = Modifier.fillMaxSize()) {
                 Column(
@@ -213,3 +247,8 @@ internal fun SignUpScreen(navigateToHome: () -> Unit) {
         }
     }
 }
+
+private val ANIMATION_OFFSET = 1360
+private val SEA_IMAGE_HEIGHT = 166
+private val DROP_CAMERA_DURATION_MILLIS = 3000
+private val HIDE_SIGN_UP_UI_DURATION_MILLIS = 1000
