@@ -139,7 +139,7 @@ internal fun SignUpScreen(navigateToHome: () -> Unit) {
                             .clickable { showSpinner = !showSpinner }
                     ) {
                         Text(
-                            text = "남성",
+                            text = stringResource(id = R.string.male),
                             style = BaekyoungTheme.typography.labelRegular,
                             color = BaekyoungTheme.colors.black56,
                             modifier = Modifier
@@ -183,7 +183,7 @@ internal fun SignUpScreen(navigateToHome: () -> Unit) {
                     .background(BaekyoungTheme.colors.white),
             ) {
                 Text(
-                    text = "남성",
+                    text = stringResource(id = R.string.male),
                     style = BaekyoungTheme.typography.labelRegular,
                     modifier = Modifier.padding(vertical = 15.dp),
                 )
@@ -191,7 +191,7 @@ internal fun SignUpScreen(navigateToHome: () -> Unit) {
                 Divider(color = BaekyoungTheme.colors.grayD0)
 
                 Text(
-                    text = "여성",
+                    text = stringResource(id = R.string.female),
                     style = BaekyoungTheme.typography.labelRegular,
                     modifier = Modifier.padding(vertical = 15.dp),
                 )
