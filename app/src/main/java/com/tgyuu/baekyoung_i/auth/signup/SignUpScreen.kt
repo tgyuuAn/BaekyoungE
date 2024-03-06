@@ -1,6 +1,8 @@
 package com.tgyuu.baekyoung_i.auth.signup
 
 import androidx.compose.animation.AnimatedVisibility
+import androidx.compose.animation.core.CubicBezierEasing
+import androidx.compose.animation.core.FastOutLinearInEasing
 import androidx.compose.animation.core.animateDpAsState
 import androidx.compose.animation.core.tween
 import androidx.compose.animation.expandVertically
@@ -54,7 +56,10 @@ internal fun SignUpScreen(navigateToHome: () -> Unit) {
     var isSignUpSuccess by remember { mutableStateOf(false) }
     val animateOffset by animateDpAsState(
         targetValue = if (!isSignUpSuccess) 0.dp else -ANIMATION_OFFSET.dp,
-        animationSpec = tween(DROP_CAMERA_DURATION_MILLIS, HIDE_SIGN_UP_UI_DURATION_MILLIS)
+        animationSpec = tween(
+            DROP_CAMERA_DURATION_MILLIS, HIDE_SIGN_UP_UI_DURATION_MILLIS,
+            CubicBezierEasing(0.3f, 0.3f, 0.6f, 0.9f)
+        )
     )
 
     Box(
