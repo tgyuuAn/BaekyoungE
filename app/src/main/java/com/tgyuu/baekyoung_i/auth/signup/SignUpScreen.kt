@@ -1,7 +1,10 @@
 package com.tgyuu.baekyoung_i.auth.signup
 
 import androidx.compose.animation.AnimatedVisibility
+import androidx.compose.animation.core.animateDpAsState
+import androidx.compose.animation.core.tween
 import androidx.compose.animation.expandVertically
+import androidx.compose.animation.fadeOut
 import androidx.compose.animation.shrinkVertically
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
@@ -28,6 +31,7 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import com.tgyuu.baekyoung_i.R
+import com.tgyuu.baekyoung_i.auth.component.BaekyoungCloud
 import com.tgyuu.baekyoung_i.auth.signup.component.SignUpTextField
 import com.tgyuu.designsystem.component.BaekyoungButton
 import com.tgyuu.designsystem.theme.BaekyoungTheme
@@ -42,75 +46,142 @@ internal fun SignUpRoute(navigateToHome: () -> Unit) {
 @Composable
 internal fun SignUpScreen(navigateToHome: () -> Unit) {
     var showSpinner by remember { mutableStateOf(false) }
+    var isSignUpSuccess by remember { mutableStateOf(false) }
+
+    val animateOffset by animateDpAsState(
+        targetValue = if (!isSignUpSuccess) 0.dp else -1360.dp,
+        animationSpec = tween(3000, 1000)
+    )
 
     Box(
         modifier = Modifier
             .fillMaxSize()
             .background(BaekyoungTheme.colors.blueF5FF)
     ) {
-        Column(
-            verticalArrangement = Arrangement.spacedBy(16.dp),
-            modifier = Modifier
-                .fillMaxSize()
-                .padding(start = 24.dp, end = 24.dp, top = 60.dp),
+        BaekyoungCloud(
+            offsetX = -110.dp,
+            offsetY = 40.dp,
+            translationY = animateOffset,
+        )
+
+        BaekyoungCloud(
+            offsetX = 251.dp,
+            offsetY = 270.dp,
+            translationY = animateOffset,
+        )
+
+        BaekyoungCloud(
+            offsetX = -60.dp,
+            offsetY = 420.dp,
+            translationY = animateOffset,
+        )
+
+        BaekyoungCloud(
+            offsetX = 60.dp,
+            offsetY = 610.dp,
+            translationY = animateOffset,
+        )
+
+        BaekyoungCloud(
+            offsetX = -110.dp,
+            offsetY = 936.dp,
+            translationY = animateOffset,
+        )
+
+        BaekyoungCloud(
+            offsetX = 251.dp,
+            offsetY = 1130.dp,
+            translationY = animateOffset,
+        )
+
+        BaekyoungCloud(
+            offsetX = -60.dp,
+            offsetY = 1280.dp,
+            translationY = animateOffset,
+        )
+
+        BaekyoungCloud(
+            offsetX = 60.dp,
+            offsetY = 1470.dp,
+            translationY = animateOffset,
+        )
+
+        BaekyoungCloud(
+            offsetX = -110.dp,
+            offsetY = 1636.dp,
+            translationY = animateOffset,
+        )
+
+        AnimatedVisibility(
+            visible = !isSignUpSuccess,
+            exit = fadeOut(tween(1000))
         ) {
-            SignUpTextField(
-                title = R.string.nickname,
-                hint = R.string.nickname_hint,
-                value = "",
-                onValueChange = {},
-                modifier = Modifier.fillMaxWidth()
-            )
-
-            Text(
-                text = stringResource(id = R.string.sex),
-                style = BaekyoungTheme.typography.contentBold,
-                color = BaekyoungTheme.colors.black56,
-                modifier = Modifier.padding(start = 5.dp),
-            )
-
-            Box(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .background(
-                        color = BaekyoungTheme.colors.white,
-                        shape = RoundedCornerShape(10.dp)
-                    )
-                    .border(
-                        width = 1.dp,
-                        color = BaekyoungTheme.colors.grayD0,
-                        shape = RoundedCornerShape(10.dp),
-                    )
-                    .clickable { showSpinner = !showSpinner }
-            ) {
-                Text(
-                    text = "남성",
-                    style = BaekyoungTheme.typography.labelRegular,
-                    color = BaekyoungTheme.colors.black56,
+            Box(modifier = Modifier.fillMaxSize()) {
+                Column(
+                    verticalArrangement = Arrangement.spacedBy(16.dp),
                     modifier = Modifier
-                        .align(Alignment.CenterStart)
-                        .padding(horizontal = 12.dp, vertical = 6.dp),
-                )
+                        .fillMaxSize()
+                        .padding(start = 24.dp, end = 24.dp, top = 60.dp),
+                ) {
+                    SignUpTextField(
+                        title = R.string.nickname,
+                        hint = R.string.nickname_hint,
+                        value = "",
+                        onValueChange = {},
+                        modifier = Modifier.fillMaxWidth()
+                    )
 
-                Image(
-                    painter = painterResource(id = R.drawable.ic_arrow_down),
-                    contentDescription = null,
+                    Text(
+                        text = stringResource(id = R.string.sex),
+                        style = BaekyoungTheme.typography.contentBold,
+                        color = BaekyoungTheme.colors.black56,
+                        modifier = Modifier.padding(start = 5.dp),
+                    )
+
+                    Box(
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .background(
+                                color = BaekyoungTheme.colors.white,
+                                shape = RoundedCornerShape(10.dp)
+                            )
+                            .border(
+                                width = 1.dp,
+                                color = BaekyoungTheme.colors.grayD0,
+                                shape = RoundedCornerShape(10.dp),
+                            )
+                            .clickable { showSpinner = !showSpinner }
+                    ) {
+                        Text(
+                            text = "남성",
+                            style = BaekyoungTheme.typography.labelRegular,
+                            color = BaekyoungTheme.colors.black56,
+                            modifier = Modifier
+                                .align(Alignment.CenterStart)
+                                .padding(horizontal = 12.dp, vertical = 6.dp),
+                        )
+
+                        Image(
+                            painter = painterResource(id = R.drawable.ic_arrow_down),
+                            contentDescription = null,
+                            modifier = Modifier
+                                .align(Alignment.CenterEnd)
+                                .padding(horizontal = 12.dp, vertical = 6.dp)
+                        )
+
+                    }
+                }
+
+                BaekyoungButton(
+                    text = R.string.confirm,
+                    onButtonClick = { isSignUpSuccess = !isSignUpSuccess },
                     modifier = Modifier
-                        .align(Alignment.CenterEnd)
-                        .padding(horizontal = 12.dp, vertical = 6.dp)
+                        .align(Alignment.BottomCenter)
+                        .fillMaxWidth()
+                        .padding(horizontal = 24.dp, vertical = 40.dp)
                 )
-
             }
         }
-
-        BaekyoungButton(
-            text = R.string.confirm,
-            onButtonClick = { /*TODO*/ },
-            modifier = Modifier
-                .align(Alignment.BottomCenter)
-                .fillMaxWidth()
-                .padding(horizontal = 24.dp, vertical = 40.dp)
-        )
 
         AnimatedVisibility(
             visible = showSpinner,
