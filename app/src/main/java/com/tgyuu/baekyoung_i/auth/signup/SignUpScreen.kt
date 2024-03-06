@@ -19,6 +19,7 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import com.tgyuu.baekyoung_i.R
 import com.tgyuu.baekyoung_i.auth.signup.component.SignUpTextField
+import com.tgyuu.designsystem.component.BaekyoungButton
 import com.tgyuu.designsystem.theme.BaekyoungTheme
 
 @Composable
@@ -88,5 +89,14 @@ internal fun SignUpScreen(navigateToHome: () -> Unit) {
 
             }
         }
+
+        BaekyoungButton(
+            text = R.string.confirm,
+            onButtonClick = { /*TODO*/ },
+            modifier = Modifier
+                .align(Alignment.BottomCenter)
+                .fillMaxWidth()
+                .padding(horizontal = 24.dp, vertical = 40.dp)
+        )
     }
 }
