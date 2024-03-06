@@ -10,14 +10,17 @@ import androidx.compose.ui.graphics.Color.Companion.White
 
 val GrayCF = Color(0XFFCFCFCF)
 val GrayF4 = Color(0xFFF4F4F4)
-val Gray95 = Color(0xFF959595)
+val GrayD0 = Color(0xFFD0D0D0)
 val GrayAC = Color(0xFFACACAC)
+val Gray95 = Color(0xFF959595)
+val Black56 = Color(0xFF565656)
 val Blue5FF = Color(0xFFEAF5FF)
 val BlueF5FF = Color(0xFFC6F5FF)
 val BlueEFF = Color(0xFFC8EEFF)
 val BlueF8 = Color(0xFFA6DFF8)
 val BlueD5FF = Color(0xFFA8D5FF)
 val BlueFF = Color(0xFF85A0FF)
+val BlueD7 = Color(0xFF6584D7)
 val BlueDD = Color(0xFF0F9EDD)
 val Blue00 = Color(0xFF0038FF)
 val Blue37 = Color(0xFF375299)
@@ -27,6 +30,7 @@ val Purple = Color(0xFF765FFF)
 class BaekyoungColor(
     white: Color = White,
     black: Color = Black,
+    black56: Color = Black56,
     blue37: Color = Blue37,
     blue00: Color = Blue00,
     blueFF: Color = BlueFF,
@@ -34,10 +38,12 @@ class BaekyoungColor(
     blueF5FF: Color = BlueF5FF,
     blueD5FF: Color = BlueD5FF,
     blueDD: Color = BlueDD,
+    blueD7: Color = BlueD7,
     blueF8: Color = BlueF8,
     blueEFF: Color = BlueEFF,
     gray95: Color = Gray95,
     grayAC: Color = GrayAC,
+    grayD0: Color = GrayD0,
     grayF4: Color = GrayF4,
     grayCF: Color = GrayCF,
     purple: Color = Purple,
@@ -45,6 +51,8 @@ class BaekyoungColor(
     var white by mutableStateOf(white)
         private set
     var black by mutableStateOf(black)
+        private set
+    var black56 by mutableStateOf(black56)
         private set
     var blue37 by mutableStateOf(blue37)
         private set
@@ -64,6 +72,8 @@ class BaekyoungColor(
         private set
     var blueDD by mutableStateOf(blueDD)
         private set
+    var blueD7 by mutableStateOf(blueD7)
+        private set
     var gray95 by mutableStateOf(gray95)
         private set
     var grayF4 by mutableStateOf(grayF4)
@@ -71,6 +81,8 @@ class BaekyoungColor(
     var grayAC by mutableStateOf(grayAC)
         private set
     var grayCF by mutableStateOf(grayCF)
+        private set
+    var grayD0 by mutableStateOf(grayD0)
         private set
     var purple by mutableStateOf(purple)
         private set

@@ -37,6 +37,7 @@ fun BaekyoungTopAppBar(
             color = textColor,
             modifier = Modifier.padding(start = 20.dp)
         )
+
         Divider(
             color = BaekyoungTheme.colors.blueFF,
             modifier = Modifier.align(Alignment.BottomStart)
