@@ -23,7 +23,6 @@ import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.unit.dp
 import com.tgyuu.designsystem.theme.BaekyoungTheme
 
-@OptIn(ExperimentalComposeUiApi::class)
 @Composable
 internal fun SignUpTextField(
     @StringRes title: Int,
@@ -62,7 +61,7 @@ internal fun SignUpTextField(
                     shape = RoundedCornerShape(10.dp),
                 ),
         ){ innerTextField ->
-            Box(modifier = Modifier.padding(vertical = 6.dp, horizontal = 12.dp)) {
+            Box(modifier = Modifier.padding(vertical = 10.dp, horizontal = 12.dp)) {
                 if (value.isEmpty()) {
                     Text(
                         text = stringResource(id = hint),

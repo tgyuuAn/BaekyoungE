@@ -11,6 +11,7 @@ import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
+import androidx.compose.foundation.gestures.detectTapGestures
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -19,7 +20,7 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.offset
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material3.Divider
+import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
@@ -29,9 +30,12 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.focus.FocusManager
 import androidx.compose.ui.graphics.graphicsLayer
+import androidx.compose.ui.input.pointer.pointerInput
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalConfiguration
+import androidx.compose.ui.platform.LocalFocusManager
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
@@ -50,6 +54,7 @@ internal fun SignUpRoute(navigateToHome: () -> Unit) {
 
 @Composable
 internal fun SignUpScreen(navigateToHome: () -> Unit) {
+    val focusManager = LocalFocusManager.current
     val localConfiguration = LocalConfiguration.current
     var showSpinner by remember { mutableStateOf(false) }
     var isSignUpSuccess by remember { mutableStateOf(false) }
@@ -65,6 +70,10 @@ internal fun SignUpScreen(navigateToHome: () -> Unit) {
         modifier = Modifier
             .fillMaxSize()
             .background(BaekyoungTheme.colors.blueF5FF)
+            .addFocusCleaner(
+                focusManager = focusManager,
+                doOnClear = { showSpinner = false },
+            )
     ) {
         BaekgyoungClouds(animateOffset = animateOffset)
 
@@ -144,7 +153,7 @@ internal fun SignUpScreen(navigateToHome: () -> Unit) {
                             color = BaekyoungTheme.colors.black56,
                             modifier = Modifier
                                 .align(Alignment.CenterStart)
-                                .padding(horizontal = 12.dp, vertical = 6.dp),
+                                .padding(horizontal = 12.dp, vertical = 10.dp),
                         )
 
                         Image(
@@ -188,7 +197,7 @@ internal fun SignUpScreen(navigateToHome: () -> Unit) {
                     modifier = Modifier.padding(vertical = 15.dp),
                 )
 
-                Divider(color = BaekyoungTheme.colors.grayD0)
+                HorizontalDivider(color = BaekyoungTheme.colors.grayD0)
 
                 Text(
                     text = stringResource(id = R.string.female),
@@ -204,3 +213,12 @@ private val ANIMATION_OFFSET = 1360
 private val SEA_IMAGE_HEIGHT = 166
 private val DROP_CAMERA_DURATION_MILLIS = 3000
 private val HIDE_SIGN_UP_UI_DURATION_MILLIS = 1000
+
+fun Modifier.addFocusCleaner(focusManager: FocusManager, doOnClear: () -> Unit = {}): Modifier {
+    return this.pointerInput(Unit) {
+        detectTapGestures(onTap = {
+            doOnClear()
+            focusManager.clearFocus()
+        })
+    }
+}
