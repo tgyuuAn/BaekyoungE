@@ -30,9 +30,7 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
-import androidx.compose.ui.focus.FocusManager
 import androidx.compose.ui.graphics.graphicsLayer
-import androidx.compose.ui.input.pointer.pointerInput
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalConfiguration
 import androidx.compose.ui.platform.LocalFocusManager
@@ -41,6 +39,7 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import com.tgyuu.baekyoung_i.R
 import com.tgyuu.baekyoung_i.auth.signup.component.SignUpTextField
+import com.tgyuu.common.util.addFocusCleaner
 import com.tgyuu.designsystem.component.BaekgyoungClouds
 import com.tgyuu.designsystem.component.BaekyoungButton
 import com.tgyuu.designsystem.theme.BaekyoungTheme
@@ -213,12 +212,3 @@ private val ANIMATION_OFFSET = 1360
 private val SEA_IMAGE_HEIGHT = 166
 private val DROP_CAMERA_DURATION_MILLIS = 3000
 private val HIDE_SIGN_UP_UI_DURATION_MILLIS = 1000
-
-fun Modifier.addFocusCleaner(focusManager: FocusManager, doOnClear: () -> Unit = {}): Modifier {
-    return this.pointerInput(Unit) {
-        detectTapGestures(onTap = {
-            doOnClear()
-            focusManager.clearFocus()
-        })
-    }
-}
