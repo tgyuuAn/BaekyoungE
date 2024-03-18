@@ -1,5 +1,6 @@
 package com.tgyuu.baekyoung_i.auth.signup
 
+import android.util.Log
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.core.CubicBezierEasing
 import androidx.compose.animation.core.animateDpAsState
@@ -11,7 +12,6 @@ import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
-import androidx.compose.foundation.gestures.detectTapGestures
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -23,6 +23,7 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -43,6 +44,9 @@ import com.tgyuu.common.util.addFocusCleaner
 import com.tgyuu.designsystem.component.BaekgyoungClouds
 import com.tgyuu.designsystem.component.BaekyoungButton
 import com.tgyuu.designsystem.theme.BaekyoungTheme
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.withContext
 
 @Composable
 internal fun SignUpRoute(navigateToHome: () -> Unit) {
@@ -64,6 +68,16 @@ internal fun SignUpScreen(navigateToHome: () -> Unit) {
             CubicBezierEasing(0.3f, 0.3f, 0.6f, 0.9f)
         )
     )
+
+    LaunchedEffect(isSignUpSuccess) {
+        if (isSignUpSuccess) {
+            Log.d("test", "홈으로 이동")
+            delay((DROP_CAMERA_DURATION_MILLIS + HIDE_SIGN_UP_UI_DURATION_MILLIS + 100).toLong())
+            withContext(Dispatchers.Main) {
+                navigateToHome()
+            }
+        }
+    }
 
     Box(
         modifier = Modifier

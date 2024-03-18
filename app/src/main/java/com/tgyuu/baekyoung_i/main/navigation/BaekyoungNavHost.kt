@@ -1,7 +1,7 @@
 package com.tgyuu.baekyoung_i.main.navigation
 
-import androidx.compose.animation.core.tween
-import androidx.compose.animation.fadeIn
+import androidx.compose.animation.EnterTransition
+import androidx.compose.animation.ExitTransition
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.navigation.NavHostController
@@ -28,13 +28,9 @@ fun BaekyoungNavHost(
 ) {
     NavHost(
         navController = navController,
+        enterTransition = { EnterTransition.None },
+        exitTransition = { ExitTransition.None },
         startDestination = startDestination,
-        enterTransition = {
-            when (initialState.destination.route) {
-                signUpNavigationRoute -> fadeIn(animationSpec = tween(700, 700))
-                else -> fadeIn(animationSpec = tween(700))
-            }
-        },
         modifier = modifier,
     ) {
         authScreen(navigateToSignUp = {
