@@ -1,5 +1,10 @@
 package com.tgyuu.baekyoung_i.home
 
+import androidx.compose.animation.AnimatedVisibility
+import androidx.compose.animation.fadeIn
+import androidx.compose.animation.fadeOut
+import androidx.compose.animation.slideInVertically
+import androidx.compose.animation.slideOutVertically
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
@@ -12,6 +17,11 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -34,6 +44,11 @@ internal fun HomeRoute() {
 internal fun HomeScreen() {
     val focusManager = LocalFocusManager.current
     val localConfiguration = LocalConfiguration.current
+    var showTopBar by remember { mutableStateOf(false) }
+
+    LaunchedEffect(true) {
+        showTopBar = true
+    }
 
     Box(
         modifier = Modifier
@@ -62,30 +77,54 @@ internal fun HomeScreen() {
                 .offset(y = localConfiguration.screenHeightDp.dp + -SEA_IMAGE_HEIGHT.dp - 43.dp)
         )
 
-        Box(
-            modifier = Modifier
-                .padding(start = 16.dp, end = 16.dp, top = 16.dp)
-                .fillMaxWidth()
-                .clip(RoundedCornerShape(10.dp))
-                .background(BaekyoungTheme.colors.white.copy(alpha = 0.4f)),
+        AnimatedVisibility(
+            visible = showTopBar,
+            enter = fadeIn() + slideInVertically(),
+            exit = fadeOut() + slideOutVertically(),
         ) {
-            Row(
-                verticalAlignment = Alignment.CenterVertically,
-                horizontalArrangement = Arrangement.spacedBy(5.dp),
+            Box(
                 modifier = Modifier
-                    .align(Alignment.CenterStart)
-                    .padding(10.dp),
+                    .padding(start = 16.dp, end = 16.dp, top = 16.dp)
+                    .fillMaxWidth()
+                    .clip(RoundedCornerShape(10.dp))
+                    .background(BaekyoungTheme.colors.white.copy(alpha = 0.4f)),
             ) {
-                Image(
-                    painterResource(id = R.drawable.ic_fish),
-                    contentDescription = null,
-                )
+                Row(
+                    verticalAlignment = Alignment.CenterVertically,
+                    horizontalArrangement = Arrangement.spacedBy(5.dp),
+                    modifier = Modifier
+                        .align(Alignment.CenterStart)
+                        .padding(10.dp),
+                ) {
+                    Image(
+                        painterResource(id = R.drawable.ic_fish),
+                        contentDescription = null,
+                    )
 
-                Text(
-                    text = "50",
-                    style = BaekyoungTheme.typography.contentBold,
-                    color = BaekyoungTheme.colors.white,
-                )
+                    Text(
+                        text = "50",
+                        style = BaekyoungTheme.typography.contentBold,
+                        color = BaekyoungTheme.colors.white,
+                    )
+                }
+
+                Row(
+                    verticalAlignment = Alignment.CenterVertically,
+                    horizontalArrangement = Arrangement.spacedBy(10.dp),
+                    modifier = Modifier
+                        .align(Alignment.CenterEnd)
+                        .padding(10.dp),
+                ) {
+                    Image(
+                        painterResource(id = R.drawable.ic_chat),
+                        contentDescription = null,
+                    )
+
+                    Image(
+                        painterResource(id = R.drawable.ic_setting),
+                        contentDescription = null,
+                    )
+                }
             }
         }
     }
