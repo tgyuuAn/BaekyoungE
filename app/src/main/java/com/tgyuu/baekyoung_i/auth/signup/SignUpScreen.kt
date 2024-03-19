@@ -29,6 +29,7 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.graphicsLayer
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalConfiguration
@@ -76,10 +77,17 @@ internal fun SignUpScreen(navigateToHome: () -> Unit) {
         }
     }
 
+    val backgroundColor = Brush.verticalGradient(
+        listOf(
+            BaekyoungTheme.colors.blueEDFF,
+            BaekyoungTheme.colors.white
+        )
+    )
+
     Box(
         modifier = Modifier
             .fillMaxSize()
-            .background(BaekyoungTheme.colors.blueF5FF)
+            .background(backgroundColor)
             .addFocusCleaner(
                 focusManager = focusManager,
                 doOnClear = { showSpinner = false },
@@ -191,8 +199,8 @@ internal fun SignUpScreen(navigateToHome: () -> Unit) {
                     }
 
                     SignUpTextField(
-                        title = R.string.nickname,
-                        hint = R.string.nickname_hint,
+                        title = R.string.major,
+                        hint = R.string.major_hint,
                         value = "",
                         onValueChange = {},
                         modifier = Modifier
@@ -201,8 +209,8 @@ internal fun SignUpScreen(navigateToHome: () -> Unit) {
                     )
 
                     SignUpTextField(
-                        title = R.string.nickname,
-                        hint = R.string.nickname_hint,
+                        title = R.string.grade,
+                        hint = R.string.grade_hint,
                         value = "",
                         onValueChange = {},
                         modifier = Modifier

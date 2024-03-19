@@ -53,7 +53,7 @@ internal fun HomeScreen() {
 
     val backgroundColor = Brush.verticalGradient(
         listOf(
-            BaekyoungTheme.colors.blueFFF2,
+            BaekyoungTheme.colors.blueEDFF,
             BaekyoungTheme.colors.white
         )
     )
