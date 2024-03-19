@@ -31,6 +31,7 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.graphicsLayer
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalConfiguration
@@ -79,10 +80,17 @@ internal fun SignUpScreen(navigateToHome: () -> Unit) {
         }
     }
 
+    val backgroundColor = Brush.verticalGradient(
+        listOf(
+            BaekyoungTheme.colors.blueFFF2,
+            BaekyoungTheme.colors.white
+        )
+    )
+
     Box(
         modifier = Modifier
             .fillMaxSize()
-            .background(BaekyoungTheme.colors.blueF5FF)
+            .background(backgroundColor)
             .addFocusCleaner(
                 focusManager = focusManager,
                 doOnClear = { showSpinner = false },
