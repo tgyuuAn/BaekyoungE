@@ -34,6 +34,7 @@ android {
 
 dependencies {
     implementation(libs.bundles.androidx)
+    implementation(libs.androidx.navigation.compose)
     implementation(project(":core:designsystem"))
     implementation(project(":core:data"))
     implementation(project(":core:network"))

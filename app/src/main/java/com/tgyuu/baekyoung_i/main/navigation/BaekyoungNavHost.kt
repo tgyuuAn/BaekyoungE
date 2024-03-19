@@ -1,5 +1,7 @@
 package com.tgyuu.baekyoung_i.main.navigation
 
+import androidx.compose.animation.EnterTransition
+import androidx.compose.animation.ExitTransition
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.navigation.NavHostController
@@ -26,6 +28,8 @@ fun BaekyoungNavHost(
 ) {
     NavHost(
         navController = navController,
+        enterTransition = { EnterTransition.None },
+        exitTransition = { ExitTransition.None },
         startDestination = startDestination,
         modifier = modifier,
     ) {

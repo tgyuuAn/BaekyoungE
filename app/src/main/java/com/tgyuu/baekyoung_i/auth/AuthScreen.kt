@@ -16,6 +16,7 @@ import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.layout.wrapContentHeight
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Divider
+import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
@@ -97,6 +98,7 @@ fun AuthScreen(
                 text = stringResource(id = string.sign_up),
                 style = BaekyoungTheme.typography.contentRegular.copy(fontSize = 20.sp),
                 color = BaekyoungTheme.colors.blueF8,
+                modifier = Modifier.padding(top = 15.dp),
             )
 
             Row(
@@ -141,13 +143,13 @@ fun AuthScreen(
                 )
             }
 
-            Divider(
-                color = BaekyoungTheme.colors.grayAC,
-                thickness = 5.dp,
+            HorizontalDivider(
                 modifier = Modifier
                     .padding(top = 60.dp, bottom = 15.dp)
                     .width(150.dp)
-                    .clip(RoundedCornerShape(10.dp))
+                    .clip(RoundedCornerShape(10.dp)),
+                thickness = 5.dp,
+                color = BaekyoungTheme.colors.grayAC
             )
         }
     }

@@ -11,7 +11,6 @@ import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
-import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
@@ -19,9 +18,10 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.offset
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material3.Divider
+import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -29,17 +29,23 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.graphicsLayer
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalConfiguration
+import androidx.compose.ui.platform.LocalFocusManager
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import com.tgyuu.baekyoung_i.R
 import com.tgyuu.baekyoung_i.auth.signup.component.SignUpTextField
+import com.tgyuu.common.util.addFocusCleaner
 import com.tgyuu.designsystem.component.BaekgyoungClouds
 import com.tgyuu.designsystem.component.BaekyoungButton
 import com.tgyuu.designsystem.theme.BaekyoungTheme
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.withContext
 
 @Composable
 internal fun SignUpRoute(navigateToHome: () -> Unit) {
@@ -50,6 +56,7 @@ internal fun SignUpRoute(navigateToHome: () -> Unit) {
 
 @Composable
 internal fun SignUpScreen(navigateToHome: () -> Unit) {
+    val focusManager = LocalFocusManager.current
     val localConfiguration = LocalConfiguration.current
     var showSpinner by remember { mutableStateOf(false) }
     var isSignUpSuccess by remember { mutableStateOf(false) }
@@ -61,10 +68,30 @@ internal fun SignUpScreen(navigateToHome: () -> Unit) {
         )
     )
 
+    LaunchedEffect(isSignUpSuccess) {
+        if (isSignUpSuccess) {
+            delay((DROP_CAMERA_DURATION_MILLIS + HIDE_SIGN_UP_UI_DURATION_MILLIS + 100).toLong())
+            withContext(Dispatchers.Main) {
+                navigateToHome()
+            }
+        }
+    }
+
+    val backgroundColor = Brush.verticalGradient(
+        listOf(
+            BaekyoungTheme.colors.blueEDFF,
+            BaekyoungTheme.colors.white
+        )
+    )
+
     Box(
         modifier = Modifier
             .fillMaxSize()
-            .background(BaekyoungTheme.colors.blueF5FF)
+            .background(backgroundColor)
+            .addFocusCleaner(
+                focusManager = focusManager,
+                doOnClear = { showSpinner = false },
+            )
     ) {
         BaekgyoungClouds(animateOffset = animateOffset)
 
@@ -104,24 +131,39 @@ internal fun SignUpScreen(navigateToHome: () -> Unit) {
         ) {
             Box(modifier = Modifier.fillMaxSize()) {
                 Column(
-                    verticalArrangement = Arrangement.spacedBy(16.dp),
                     modifier = Modifier
                         .fillMaxSize()
-                        .padding(start = 24.dp, end = 24.dp, top = 60.dp),
+                        .padding(start = 24.dp, end = 24.dp, top = 30.dp),
                 ) {
+                    Text(
+                        text = "처음 가입하시네요!",
+                        style = BaekyoungTheme.typography.titleBold,
+                        color = BaekyoungTheme.colors.black56,
+                        modifier = Modifier.padding(start = 5.dp, top = 16.dp),
+                    )
+
+                    Text(
+                        text = "별명과 성별을 입력해주세요.",
+                        style = BaekyoungTheme.typography.labelBold,
+                        color = BaekyoungTheme.colors.black56,
+                        modifier = Modifier.padding(start = 5.dp, top = 16.dp),
+                    )
+
                     SignUpTextField(
                         title = R.string.nickname,
                         hint = R.string.nickname_hint,
                         value = "",
                         onValueChange = {},
-                        modifier = Modifier.fillMaxWidth()
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .padding(top = 75.dp)
                     )
 
                     Text(
                         text = stringResource(id = R.string.sex),
                         style = BaekyoungTheme.typography.contentBold,
                         color = BaekyoungTheme.colors.black56,
-                        modifier = Modifier.padding(start = 5.dp),
+                        modifier = Modifier.padding(start = 5.dp, top = 16.dp),
                     )
 
                     Box(
@@ -144,7 +186,7 @@ internal fun SignUpScreen(navigateToHome: () -> Unit) {
                             color = BaekyoungTheme.colors.black56,
                             modifier = Modifier
                                 .align(Alignment.CenterStart)
-                                .padding(horizontal = 12.dp, vertical = 6.dp),
+                                .padding(horizontal = 12.dp, vertical = 10.dp),
                         )
 
                         Image(
@@ -154,8 +196,27 @@ internal fun SignUpScreen(navigateToHome: () -> Unit) {
                                 .align(Alignment.CenterEnd)
                                 .padding(horizontal = 12.dp, vertical = 6.dp)
                         )
-
                     }
+
+                    SignUpTextField(
+                        title = R.string.major,
+                        hint = R.string.major_hint,
+                        value = "",
+                        onValueChange = {},
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .padding(top = 16.dp)
+                    )
+
+                    SignUpTextField(
+                        title = R.string.grade,
+                        hint = R.string.grade_hint,
+                        value = "",
+                        onValueChange = {},
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .padding(top = 16.dp)
+                    )
                 }
 
                 BaekyoungButton(
@@ -188,7 +249,7 @@ internal fun SignUpScreen(navigateToHome: () -> Unit) {
                     modifier = Modifier.padding(vertical = 15.dp),
                 )
 
-                Divider(color = BaekyoungTheme.colors.grayD0)
+                HorizontalDivider(color = BaekyoungTheme.colors.grayD0)
 
                 Text(
                     text = stringResource(id = R.string.female),
