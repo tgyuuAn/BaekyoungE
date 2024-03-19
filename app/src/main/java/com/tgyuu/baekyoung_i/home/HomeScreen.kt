@@ -63,6 +63,7 @@ internal fun HomeScreen() {
         Box(
             modifier = Modifier
                 .padding(start = 16.dp, end = 16.dp, top = 16.dp)
+                .fillMaxWidth()
                 .clip(RoundedCornerShape(10.dp))
                 .background(BaekyoungTheme.colors.white.copy(alpha = 0.3f)),
         ) {
