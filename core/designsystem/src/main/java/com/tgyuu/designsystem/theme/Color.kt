@@ -35,6 +35,7 @@ class BaekyoungColor(
     black: Color = Black,
     black56: Color = Black56,
     blue37: Color = Blue37,
+
     blue00: Color = Blue00,
     blueFF2: Color = BlueFF2,
     blueFFF2: Color = BlueFFF2,

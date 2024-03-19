@@ -1,6 +1,5 @@
 package com.tgyuu.baekyoung_i.auth.signup
 
-import android.util.Log
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.core.CubicBezierEasing
 import androidx.compose.animation.core.animateDpAsState
@@ -12,7 +11,6 @@ import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
-import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
@@ -31,7 +29,6 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
-import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.graphicsLayer
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalConfiguration
@@ -72,7 +69,6 @@ internal fun SignUpScreen(navigateToHome: () -> Unit) {
 
     LaunchedEffect(isSignUpSuccess) {
         if (isSignUpSuccess) {
-            Log.d("test", "홈으로 이동")
             delay((DROP_CAMERA_DURATION_MILLIS + HIDE_SIGN_UP_UI_DURATION_MILLIS + 100).toLong())
             withContext(Dispatchers.Main) {
                 navigateToHome()
@@ -80,17 +76,10 @@ internal fun SignUpScreen(navigateToHome: () -> Unit) {
         }
     }
 
-    val backgroundColor = Brush.verticalGradient(
-        listOf(
-            BaekyoungTheme.colors.blueFFF2,
-            BaekyoungTheme.colors.white
-        )
-    )
-
     Box(
         modifier = Modifier
             .fillMaxSize()
-            .background(backgroundColor)
+            .background(BaekyoungTheme.colors.blueF5FF)
             .addFocusCleaner(
                 focusManager = focusManager,
                 doOnClear = { showSpinner = false },
@@ -134,24 +123,39 @@ internal fun SignUpScreen(navigateToHome: () -> Unit) {
         ) {
             Box(modifier = Modifier.fillMaxSize()) {
                 Column(
-                    verticalArrangement = Arrangement.spacedBy(16.dp),
                     modifier = Modifier
                         .fillMaxSize()
-                        .padding(start = 24.dp, end = 24.dp, top = 60.dp),
+                        .padding(start = 24.dp, end = 24.dp, top = 30.dp),
                 ) {
+                    Text(
+                        text = "처음 가입하시네요!",
+                        style = BaekyoungTheme.typography.titleBold,
+                        color = BaekyoungTheme.colors.black56,
+                        modifier = Modifier.padding(start = 5.dp, top = 16.dp),
+                    )
+
+                    Text(
+                        text = "별명과 성별을 입력해주세요.",
+                        style = BaekyoungTheme.typography.labelBold,
+                        color = BaekyoungTheme.colors.black56,
+                        modifier = Modifier.padding(start = 5.dp, top = 16.dp),
+                    )
+
                     SignUpTextField(
                         title = R.string.nickname,
                         hint = R.string.nickname_hint,
                         value = "",
                         onValueChange = {},
-                        modifier = Modifier.fillMaxWidth()
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .padding(top = 75.dp)
                     )
 
                     Text(
                         text = stringResource(id = R.string.sex),
                         style = BaekyoungTheme.typography.contentBold,
                         color = BaekyoungTheme.colors.black56,
-                        modifier = Modifier.padding(start = 5.dp),
+                        modifier = Modifier.padding(start = 5.dp, top = 16.dp),
                     )
 
                     Box(
@@ -184,8 +188,27 @@ internal fun SignUpScreen(navigateToHome: () -> Unit) {
                                 .align(Alignment.CenterEnd)
                                 .padding(horizontal = 12.dp, vertical = 6.dp)
                         )
-
                     }
+
+                    SignUpTextField(
+                        title = R.string.nickname,
+                        hint = R.string.nickname_hint,
+                        value = "",
+                        onValueChange = {},
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .padding(top = 16.dp)
+                    )
+
+                    SignUpTextField(
+                        title = R.string.nickname,
+                        hint = R.string.nickname_hint,
+                        value = "",
+                        onValueChange = {},
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .padding(top = 16.dp)
+                    )
                 }
 
                 BaekyoungButton(
