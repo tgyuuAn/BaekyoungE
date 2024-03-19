@@ -6,9 +6,13 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.offset
+import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
+import androidx.compose.ui.graphics.painter.Painter
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalConfiguration
 import androidx.compose.ui.platform.LocalFocusManager
@@ -55,6 +59,14 @@ internal fun HomeScreen() {
                 .align(Alignment.TopCenter)
                 .offset(y = localConfiguration.screenHeightDp.dp + -SEA_IMAGE_HEIGHT.dp - 43.dp)
         )
+
+        Box(
+            modifier = Modifier
+                .padding(start = 16.dp, end = 16.dp, top = 16.dp)
+                .clip(RoundedCornerShape(10.dp))
+                .background(BaekyoungTheme.colors.white.copy(alpha = 0.3f)),
+        ) {
+        }
     }
 }
 
