@@ -5,6 +5,10 @@ import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
 import androidx.compose.animation.AnimatedVisibility
+import androidx.compose.animation.fadeIn
+import androidx.compose.animation.fadeOut
+import androidx.compose.animation.slideInVertically
+import androidx.compose.animation.slideOutVertically
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.WindowInsets
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -75,7 +79,7 @@ class MainActivity : ComponentActivity() {
                                     destination
                                 )
                             },
-                            modifier = Modifier.height(70.dp)
+                            modifier = Modifier.height(60.dp)
                         )
                     },
                     modifier = Modifier.windowInsetsPadding(WindowInsets.navigationBars)
@@ -124,6 +128,8 @@ internal fun BaekyoungBottomBar(
     AnimatedVisibility(
         visible = bottomBarState,
         label = "",
+        enter = fadeIn() + slideInVertically(),
+        exit = fadeOut() + slideOutVertically(),
     ) {
         BottomNavigation(
             backgroundColor = Color.Transparent,
