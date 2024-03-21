@@ -23,6 +23,5 @@ fun BaekyoungTopBar(
             .padding(vertical = 20.dp)
             .background(Color.Transparent)
     ) {
-
     }
 }
