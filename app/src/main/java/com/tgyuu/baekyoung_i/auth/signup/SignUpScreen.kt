@@ -38,6 +38,7 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.tgyuu.baekyoung_i.R
 import com.tgyuu.baekyoung_i.auth.signup.component.SignUpTextField
 import com.tgyuu.common.util.addFocusCleaner
@@ -53,13 +54,25 @@ internal fun SignUpRoute(
     navigateToHome: () -> Unit,
     viewModel: SignUpViewModel = hiltViewModel(),
 ) {
+    val major by viewModel.major.collectAsStateWithLifecycle()
+    val grade by viewModel.grade.collectAsStateWithLifecycle()
+    val nickname by viewModel.nickname.collectAsStateWithLifecycle()
+
     SignUpScreen(
         navigateToHome = navigateToHome,
+        nickname = nickname,
+        major = major,
+        grade = grade,
     )
 }
 
 @Composable
-internal fun SignUpScreen(navigateToHome: () -> Unit) {
+internal fun SignUpScreen(
+    nickname: String,
+    major: String,
+    grade: String,
+    navigateToHome: () -> Unit,
+) {
     val focusManager = LocalFocusManager.current
     val localConfiguration = LocalConfiguration.current
     var showSpinner by remember { mutableStateOf(false) }
@@ -156,7 +169,7 @@ internal fun SignUpScreen(navigateToHome: () -> Unit) {
                     SignUpTextField(
                         title = R.string.nickname,
                         hint = R.string.nickname_hint,
-                        value = "",
+                        value = nickname,
                         onValueChange = {},
                         modifier = Modifier
                             .fillMaxWidth()
@@ -205,7 +218,7 @@ internal fun SignUpScreen(navigateToHome: () -> Unit) {
                     SignUpTextField(
                         title = R.string.major,
                         hint = R.string.major_hint,
-                        value = "",
+                        value = major,
                         onValueChange = {},
                         modifier = Modifier
                             .fillMaxWidth()
@@ -215,7 +228,7 @@ internal fun SignUpScreen(navigateToHome: () -> Unit) {
                     SignUpTextField(
                         title = R.string.grade,
                         hint = R.string.grade_hint,
-                        value = "",
+                        value = grade,
                         onValueChange = {},
                         modifier = Modifier
                             .fillMaxWidth()
