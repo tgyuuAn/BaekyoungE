@@ -1,6 +1,5 @@
 package com.tgyuu.designsystem.component
 
-import androidx.annotation.DisplayContext
 import androidx.annotation.DrawableRes
 import androidx.annotation.StringRes
 import androidx.compose.foundation.Image
@@ -19,6 +18,7 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import com.tgyuu.designsystem.R
 import com.tgyuu.designsystem.theme.BaekyoungTheme
 
@@ -49,7 +49,7 @@ fun BaekyoungTopBar(
 
             Text(
                 text = stringResource(id = titleTextId),
-                style = BaekyoungTheme.typography.labelBold,
+                style = BaekyoungTheme.typography.labelBold.copy(fontSize = 13.sp),
                 color = textColor,
             )
         }
