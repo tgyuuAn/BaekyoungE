@@ -37,6 +37,7 @@ import androidx.compose.ui.platform.LocalFocusManager
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
+import androidx.hilt.navigation.compose.hiltViewModel
 import com.tgyuu.baekyoung_i.R
 import com.tgyuu.baekyoung_i.auth.signup.component.SignUpTextField
 import com.tgyuu.common.util.addFocusCleaner
@@ -48,7 +49,10 @@ import kotlinx.coroutines.delay
 import kotlinx.coroutines.withContext
 
 @Composable
-internal fun SignUpRoute(navigateToHome: () -> Unit) {
+internal fun SignUpRoute(
+    navigateToHome: () -> Unit,
+    viewModel: SignUpViewModel = hiltViewModel(),
+) {
     SignUpScreen(
         navigateToHome = navigateToHome,
     )
