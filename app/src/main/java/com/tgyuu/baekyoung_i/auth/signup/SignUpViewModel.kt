@@ -16,4 +16,16 @@ class SignUpViewModel @Inject constructor() : ViewModel() {
 
     private val _grade = MutableStateFlow("")
     val grade = _grade.asStateFlow()
+
+    fun setNickname(nickname: String) {
+        _nickname.value = nickname
+    }
+
+    fun setMajor(major: String) {
+        _major.value = major
+    }
+
+    fun setGrade(grade: String) {
+        _grade.value = grade
+    }
 }

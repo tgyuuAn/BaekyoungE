@@ -63,6 +63,9 @@ internal fun SignUpRoute(
         nickname = nickname,
         major = major,
         grade = grade,
+        onNicknameChanged = viewModel::setNickname,
+        onMajorChanged = viewModel::setMajor,
+        onGradeChanged = viewModel::setGrade,
     )
 }
 
@@ -71,6 +74,9 @@ internal fun SignUpScreen(
     nickname: String,
     major: String,
     grade: String,
+    onNicknameChanged: (String) -> Unit,
+    onMajorChanged: (String) -> Unit,
+    onGradeChanged: (String) -> Unit,
     navigateToHome: () -> Unit,
 ) {
     val focusManager = LocalFocusManager.current
@@ -170,7 +176,7 @@ internal fun SignUpScreen(
                         title = R.string.nickname,
                         hint = R.string.nickname_hint,
                         value = nickname,
-                        onValueChange = {},
+                        onValueChange = onNicknameChanged,
                         modifier = Modifier
                             .fillMaxWidth()
                             .padding(top = 75.dp)
@@ -219,7 +225,7 @@ internal fun SignUpScreen(
                         title = R.string.major,
                         hint = R.string.major_hint,
                         value = major,
-                        onValueChange = {},
+                        onValueChange = onMajorChanged,
                         modifier = Modifier
                             .fillMaxWidth()
                             .padding(top = 16.dp)
@@ -229,7 +235,7 @@ internal fun SignUpScreen(
                         title = R.string.grade,
                         hint = R.string.grade_hint,
                         value = grade,
-                        onValueChange = {},
+                        onValueChange = onGradeChanged,
                         modifier = Modifier
                             .fillMaxWidth()
                             .padding(top = 16.dp)
