@@ -62,7 +62,13 @@ fun BaekyoungCenterTopBar(
                 modifier = Modifier
                     .align(Alignment.CenterStart)
                     .padding(20.dp)
-                    .clickable { onClickBackButton() }
+                    .clickable {
+                        if (showSearchBar) {
+                            onShowSearchBarChanged()
+                        } else {
+                            onClickBackButton()
+                        }
+                    }
             )
         }
 
@@ -112,9 +118,7 @@ fun BaekyoungCenterTopBar(
                         text = stringResource(id = titleTextId),
                         style = BaekyoungTheme.typography.contentBold,
                         color = textColor,
-                        modifier = Modifier
-                            .align(Alignment.Center)
-                            .padding(vertical = 20.dp)
+                        modifier = Modifier.align(Alignment.Center)
                     )
 
                     Row(
@@ -128,12 +132,10 @@ fun BaekyoungCenterTopBar(
                             Image(
                                 painter = painterResource(id = R.drawable.ic_search),
                                 contentDescription = null,
-                                modifier = Modifier
-                                    .padding(vertical = 20.dp)
-                                    .clickable {
-                                        onShowSearchBarChanged()
-                                        onClickBackButton()
-                                    }
+                                modifier = Modifier.clickable {
+                                    onShowSearchBarChanged()
+                                    onClickBackButton()
+                                }
                             )
                         }
 
@@ -141,9 +143,7 @@ fun BaekyoungCenterTopBar(
                             Image(
                                 painter = painterResource(id = R.drawable.ic_drawer),
                                 contentDescription = null,
-                                modifier = Modifier
-                                    .padding(vertical = 20.dp)
-                                    .clickable { onClickDrawerButton() }
+                                modifier = Modifier.clickable { onClickDrawerButton() }
                             )
                         }
                     }
