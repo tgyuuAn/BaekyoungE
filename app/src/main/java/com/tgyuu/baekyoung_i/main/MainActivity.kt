@@ -35,6 +35,7 @@ import androidx.navigation.compose.rememberNavController
 import com.tgyuu.baekyoung_i.auth.navigation.authNavigationRoute
 import com.tgyuu.baekyoung_i.auth.signup.navigation.signUpNavigationRoute
 import com.tgyuu.baekyoung_i.consulting.chatting.navigation.chattingNavigationRoute
+import com.tgyuu.baekyoung_i.home.navigation.homeNavigationRoute
 import com.tgyuu.baekyoung_i.main.navigation.BaekyoungNavHost
 import com.tgyuu.baekyoung_i.main.navigation.TopLevelDestination
 import com.tgyuu.designsystem.theme.BaekyoungTheme
@@ -131,12 +132,18 @@ internal fun BaekyoungBottomBar(
         ) {
             TopLevelDestination.entries.forEach { destination ->
                 val isSelect = currentRoute == destination.route
+                val unselectedContentColor = if(currentRoute == homeNavigationRoute){
+                    BaekyoungTheme.colors.blueFB
+                } else {
+                    BaekyoungTheme.colors.gray95
+                }
+
                 BottomNavigationItem(
                     selected = isSelect,
                     modifier = Modifier.background(Color.Transparent),
                     onClick = { onNavigateToDestination(destination) },
                     selectedContentColor = BaekyoungTheme.colors.blueFF,
-                    unselectedContentColor = BaekyoungTheme.colors.gray95,
+                    unselectedContentColor = unselectedContentColor,
                     icon = {
                         Icon(
                             painter = painterResource(id = destination.selectedIcon),

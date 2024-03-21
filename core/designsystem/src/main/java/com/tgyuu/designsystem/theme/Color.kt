@@ -26,6 +26,7 @@ val BlueEDFF = Color(0xFF99EDFF)
 val BlueFF = Color(0xFF85A0FF)
 val BlueD7 = Color(0xFF6584D7)
 val BlueDD = Color(0xFF0F9EDD)
+val BlueFB = Color(0xFF7A9DFB)
 val Blue00 = Color(0xFF0038FF)
 val Blue94 = Color(0XFF204094)
 val Blue37 = Color(0xFF375299)
@@ -41,6 +42,7 @@ class BaekyoungColor(
     blueFF2: Color = BlueFF2,
     blueFFF2: Color = BlueFFF2,
     blueFF: Color = BlueFF,
+    blueFB: Color = BlueFB,
     blueEDFF: Color = BlueEDFF,
     blue5FF: Color = Blue5FF,
     blueF5FF: Color = BlueF5FF,
@@ -69,6 +71,8 @@ class BaekyoungColor(
     var blue00 by mutableStateOf(blue00)
         private set
     var blueFF by mutableStateOf(blueFF)
+        private set
+    var blueFB by mutableStateOf(blueFB)
         private set
     var blueFF2 by mutableStateOf(blueFF2)
         private set

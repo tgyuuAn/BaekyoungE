@@ -27,6 +27,7 @@ enum class TopLevelDestination(
     STORAGE(
         route = consultingNavigationRoute,
         homeIcon = R.drawable.ic_home_storage,
+        selectedIcon = R.drawable.ic_selected_storage,
         unselectedIcon = R.drawable.ic_storage,
         iconTextId = R.string.storage,
         titleTextId = R.string.storage,
@@ -34,6 +35,7 @@ enum class TopLevelDestination(
     HOME(
         route = homeNavigationRoute,
         homeIcon = R.drawable.ic_home_home,
+        selectedIcon = R.drawable.ic_selected_home,
         unselectedIcon = R.drawable.ic_home,
         iconTextId = R.string.home,
         titleTextId = R.string.home,
@@ -41,6 +43,7 @@ enum class TopLevelDestination(
     COMMUNITY(
         route = communityNavigationRoute,
         homeIcon = R.drawable.ic_home_community,
+        selectedIcon = R.drawable.ic_selected_community,
         unselectedIcon = R.drawable.ic_community,
         iconTextId = R.string.community,
         titleTextId = R.string.community,
@@ -48,6 +51,7 @@ enum class TopLevelDestination(
     PROFILE(
         route = profileNavigationRoute,
         homeIcon = R.drawable.ic_home_profile,
+        selectedIcon = R.drawable.ic_selected_profile,
         unselectedIcon = R.drawable.ic_profile,
         iconTextId = R.string.profile,
         titleTextId = R.string.profile,
