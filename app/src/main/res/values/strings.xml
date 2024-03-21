@@ -28,8 +28,9 @@
 
     <string name="home">홈</string>
     <string name="consulting">상담</string>
+    <string name="storage">저장소</string>
     <string name="community">커뮤니티</string>
-    <string name="etc">더보기</string>
+    <string name="profile">내 정보</string>
 
     <string name="setting_account">계정 설정</string>
     <string name="logout">로그아웃</string>

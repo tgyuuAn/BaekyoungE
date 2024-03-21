@@ -5,7 +5,7 @@ import androidx.annotation.StringRes
 import com.tgyuu.baekyoung_i.R
 import com.tgyuu.baekyoung_i.community.navigation.communityNavigationRoute
 import com.tgyuu.baekyoung_i.consulting.consultinginformation.navigation.consultingNavigationRoute
-import com.tgyuu.baekyoung_i.etc.navigation.etcNavigationRoute
+import com.tgyuu.baekyoung_i.etc.navigation.profileNavigationRoute
 import com.tgyuu.baekyoung_i.home.navigation.homeNavigationRoute
 
 enum class TopLevelDestination(
@@ -15,19 +15,26 @@ enum class TopLevelDestination(
     @StringRes val iconTextId: Int,
     @StringRes val titleTextId: Int,
 ) {
-    HOME(
-        route = homeNavigationRoute,
-        selectedIcon = R.drawable.ic_selected_home,
-        unselectedIcon = R.drawable.ic_home,
-        iconTextId = R.string.home,
-        titleTextId = R.string.home,
-    ),
     CONSULTING(
         route = consultingNavigationRoute,
         selectedIcon = R.drawable.ic_selected_consulting,
         unselectedIcon = R.drawable.ic_consulting,
         iconTextId = R.string.consulting,
         titleTextId = R.string.consulting,
+    ),
+    STORAGE(
+        route = consultingNavigationRoute,
+        selectedIcon = R.drawable.ic_selected_storage,
+        unselectedIcon = R.drawable.ic_storage,
+        iconTextId = R.string.storage,
+        titleTextId = R.string.storage,
+    ),
+    HOME(
+        route = homeNavigationRoute,
+        selectedIcon = R.drawable.ic_selected_home,
+        unselectedIcon = R.drawable.ic_home,
+        iconTextId = R.string.home,
+        titleTextId = R.string.home,
     ),
     COMMUNITY(
         route = communityNavigationRoute,
@@ -36,11 +43,11 @@ enum class TopLevelDestination(
         iconTextId = R.string.community,
         titleTextId = R.string.community,
     ),
-    ETC(
-        route = etcNavigationRoute,
-        selectedIcon = R.drawable.ic_selected_etc,
-        unselectedIcon = R.drawable.ic_etc,
-        iconTextId = R.string.etc,
-        titleTextId = R.string.etc,
+    PROFILE(
+        route = profileNavigationRoute,
+        selectedIcon = R.drawable.ic_selected_profile,
+        unselectedIcon = R.drawable.ic_profile,
+        iconTextId = R.string.profile,
+        titleTextId = R.string.profile,
     ),
 }

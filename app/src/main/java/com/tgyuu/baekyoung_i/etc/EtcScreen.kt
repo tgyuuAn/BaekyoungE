@@ -10,7 +10,7 @@ import androidx.compose.ui.res.stringResource
 import com.tgyuu.baekyoung_i.R
 import com.tgyuu.baekyoung_i.etc.component.SettingBar
 import com.tgyuu.baekyoung_i.etc.component.SettingTitleBar
-import com.tgyuu.baekyoung_i.main.navigation.TopLevelDestination.ETC
+import com.tgyuu.baekyoung_i.main.navigation.TopLevelDestination.PROFILE
 import com.tgyuu.designsystem.component.BaekyoungTopBar
 import com.tgyuu.designsystem.theme.BaekyoungTheme
 
@@ -28,7 +28,7 @@ fun EtcScreen() {
     ) {
         val dividerColor = BaekyoungTheme.colors.blueFF
 
-        BaekyoungTopBar(ETC.titleTextId)
+        BaekyoungTopBar(PROFILE.titleTextId)
 
         Column(
             modifier = Modifier
