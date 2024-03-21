@@ -36,6 +36,7 @@ import androidx.compose.ui.platform.LocalConfiguration
 import androidx.compose.ui.platform.LocalFocusManager
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
@@ -236,6 +237,7 @@ internal fun SignUpScreen(
                         hint = R.string.grade_hint,
                         value = grade,
                         onValueChange = onGradeChanged,
+                        keyboardType = KeyboardType.Number,
                         modifier = Modifier
                             .fillMaxWidth()
                             .padding(top = 16.dp)
