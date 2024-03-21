@@ -9,6 +9,7 @@ import androidx.compose.ui.graphics.Color.Companion.Black
 import androidx.compose.ui.graphics.Color.Companion.White
 
 val GrayCF = Color(0XFFCFCFCF)
+val GrayF5 = Color(0xFFF5F5F5)
 val GrayF4 = Color(0xFFF4F4F4)
 val GrayD0 = Color(0xFFD0D0D0)
 val GrayAC = Color(0xFFACACAC)
@@ -53,6 +54,7 @@ class BaekyoungColor(
     grayAC: Color = GrayAC,
     grayD0: Color = GrayD0,
     grayF4: Color = GrayF4,
+    grayF5: Color = GrayF5,
     grayCF: Color = GrayCF,
     purple: Color = Purple,
 ) {
@@ -93,6 +95,8 @@ class BaekyoungColor(
     var blue94 by mutableStateOf(blue94)
         private set
     var grayF4 by mutableStateOf(grayF4)
+        private set
+    var grayF5 by mutableStateOf(grayF5)
         private set
     var grayAC by mutableStateOf(grayAC)
         private set

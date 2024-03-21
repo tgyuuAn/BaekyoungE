@@ -5,13 +5,13 @@
       <entry key="BaekyoungCloudPreview">
         <State />
       </entry>
-      <entry key="PreviewAuthButton">
-        <State />
-      </entry>
       <entry key="PreviewBaekyongTopBar">
         <State />
       </entry>
       <entry key="PreviewBaekyongTopBarWithoutImage">
+        <State />
+      </entry>
+      <entry key="PreviewConsultingScreen">
         <State />
       </entry>
       <entry key="app">
