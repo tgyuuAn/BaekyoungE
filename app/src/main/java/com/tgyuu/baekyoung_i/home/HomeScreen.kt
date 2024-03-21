@@ -31,13 +31,14 @@ import androidx.compose.ui.platform.LocalConfiguration
 import androidx.compose.ui.platform.LocalFocusManager
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
+import androidx.hilt.navigation.compose.hiltViewModel
 import com.tgyuu.baekyoung_i.R
 import com.tgyuu.common.util.addFocusCleaner
 import com.tgyuu.designsystem.component.BaekgyoungClouds
 import com.tgyuu.designsystem.theme.BaekyoungTheme
 
 @Composable
-internal fun HomeRoute() {
+internal fun HomeRoute(viewModel: HomeViewModel = hiltViewModel()) {
     HomeScreen()
 }
 

@@ -36,30 +36,62 @@ import androidx.compose.ui.platform.LocalConfiguration
 import androidx.compose.ui.platform.LocalFocusManager
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.unit.dp
+import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.tgyuu.baekyoung_i.R
 import com.tgyuu.baekyoung_i.auth.signup.component.SignUpTextField
 import com.tgyuu.common.util.addFocusCleaner
 import com.tgyuu.designsystem.component.BaekgyoungClouds
 import com.tgyuu.designsystem.component.BaekyoungButton
 import com.tgyuu.designsystem.theme.BaekyoungTheme
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.delay
-import kotlinx.coroutines.withContext
+import kotlinx.coroutines.flow.collectLatest
 
 @Composable
-internal fun SignUpRoute(navigateToHome: () -> Unit) {
+internal fun SignUpRoute(
+    navigateToHome: () -> Unit,
+    viewModel: SignUpViewModel = hiltViewModel(),
+) {
+    val major by viewModel.major.collectAsStateWithLifecycle()
+    val grade by viewModel.grade.collectAsStateWithLifecycle()
+    val nickname by viewModel.nickname.collectAsStateWithLifecycle()
+    val isSignUpSuccess by viewModel.isSignUpSuccess.collectAsStateWithLifecycle()
+
+    LaunchedEffect(true) {
+        viewModel.signUpEventFlow.collectLatest { event ->
+            when (event) {
+                is SignUpViewModel.SignUpEvent.SignUpSuccess -> navigateToHome()
+            }
+        }
+    }
+
     SignUpScreen(
-        navigateToHome = navigateToHome,
+        nickname = nickname,
+        major = major,
+        grade = grade,
+        isSignUpSuccess = isSignUpSuccess,
+        signUp = viewModel::signUp,
+        onNicknameChanged = viewModel::setNickname,
+        onMajorChanged = viewModel::setMajor,
+        onGradeChanged = viewModel::setGrade,
     )
 }
 
 @Composable
-internal fun SignUpScreen(navigateToHome: () -> Unit) {
+internal fun SignUpScreen(
+    nickname: String,
+    major: String,
+    grade: String,
+    isSignUpSuccess: Boolean,
+    signUp: () -> Unit,
+    onNicknameChanged: (String) -> Unit,
+    onMajorChanged: (String) -> Unit,
+    onGradeChanged: (String) -> Unit,
+) {
     val focusManager = LocalFocusManager.current
     val localConfiguration = LocalConfiguration.current
     var showSpinner by remember { mutableStateOf(false) }
-    var isSignUpSuccess by remember { mutableStateOf(false) }
     val animateOffset by animateDpAsState(
         targetValue = if (!isSignUpSuccess) 0.dp else -ANIMATION_OFFSET.dp,
         animationSpec = tween(
@@ -67,15 +99,6 @@ internal fun SignUpScreen(navigateToHome: () -> Unit) {
             CubicBezierEasing(0.3f, 0.3f, 0.6f, 0.9f)
         )
     )
-
-    LaunchedEffect(isSignUpSuccess) {
-        if (isSignUpSuccess) {
-            delay((DROP_CAMERA_DURATION_MILLIS + HIDE_SIGN_UP_UI_DURATION_MILLIS + 100).toLong())
-            withContext(Dispatchers.Main) {
-                navigateToHome()
-            }
-        }
-    }
 
     val backgroundColor = Brush.verticalGradient(
         listOf(
@@ -136,14 +159,14 @@ internal fun SignUpScreen(navigateToHome: () -> Unit) {
                         .padding(start = 24.dp, end = 24.dp, top = 30.dp),
                 ) {
                     Text(
-                        text = "처음 가입하시네요!",
+                        text = stringResource(id = R.string.welcome_message),
                         style = BaekyoungTheme.typography.titleBold,
                         color = BaekyoungTheme.colors.black56,
                         modifier = Modifier.padding(start = 5.dp, top = 16.dp),
                     )
 
                     Text(
-                        text = "별명과 성별을 입력해주세요.",
+                        text = stringResource(id = R.string.please_input_nickname_and_sex),
                         style = BaekyoungTheme.typography.labelBold,
                         color = BaekyoungTheme.colors.black56,
                         modifier = Modifier.padding(start = 5.dp, top = 16.dp),
@@ -152,8 +175,8 @@ internal fun SignUpScreen(navigateToHome: () -> Unit) {
                     SignUpTextField(
                         title = R.string.nickname,
                         hint = R.string.nickname_hint,
-                        value = "",
-                        onValueChange = {},
+                        value = nickname,
+                        onValueChange = onNicknameChanged,
                         modifier = Modifier
                             .fillMaxWidth()
                             .padding(top = 75.dp)
@@ -201,8 +224,8 @@ internal fun SignUpScreen(navigateToHome: () -> Unit) {
                     SignUpTextField(
                         title = R.string.major,
                         hint = R.string.major_hint,
-                        value = "",
-                        onValueChange = {},
+                        value = major,
+                        onValueChange = onMajorChanged,
                         modifier = Modifier
                             .fillMaxWidth()
                             .padding(top = 16.dp)
@@ -211,8 +234,9 @@ internal fun SignUpScreen(navigateToHome: () -> Unit) {
                     SignUpTextField(
                         title = R.string.grade,
                         hint = R.string.grade_hint,
-                        value = "",
-                        onValueChange = {},
+                        value = grade,
+                        onValueChange = onGradeChanged,
+                        keyboardType = KeyboardType.Number,
                         modifier = Modifier
                             .fillMaxWidth()
                             .padding(top = 16.dp)
@@ -221,7 +245,7 @@ internal fun SignUpScreen(navigateToHome: () -> Unit) {
 
                 BaekyoungButton(
                     text = R.string.confirm,
-                    onButtonClick = { isSignUpSuccess = !isSignUpSuccess },
+                    onButtonClick = { signUp() },
                     modifier = Modifier
                         .align(Alignment.BottomCenter)
                         .fillMaxWidth()

@@ -15,7 +15,6 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.layout.wrapContentHeight
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material3.Divider
 import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -28,13 +27,17 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.hilt.navigation.compose.hiltViewModel
 import com.tgyuu.baekyoung_i.R.drawable
 import com.tgyuu.baekyoung_i.R.string
 import com.tgyuu.baekyoung_i.auth.component.ButtonWithShadow
 import com.tgyuu.designsystem.theme.BaekyoungTheme
 
 @Composable
-internal fun AuthRoute(navigateToSignUp: () -> Unit) {
+internal fun AuthRoute(
+    navigateToSignUp: () -> Unit,
+    viewModel: AuthViewModel = hiltViewModel(),
+) {
     AuthScreen(
         navigateToSignUp = navigateToSignUp,
     )

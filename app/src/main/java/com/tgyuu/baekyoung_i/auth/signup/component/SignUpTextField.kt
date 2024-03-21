@@ -18,6 +18,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalSoftwareKeyboardController
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.input.ImeAction
+import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.unit.dp
 import com.tgyuu.designsystem.theme.BaekyoungTheme
 
@@ -26,6 +27,7 @@ internal fun SignUpTextField(
     @StringRes title: Int,
     @StringRes hint: Int,
     value: String,
+    keyboardType: KeyboardType = KeyboardType.Text,
     onValueChange: (String) -> Unit,
     modifier: Modifier = Modifier,
 ) {
@@ -48,7 +50,10 @@ internal fun SignUpTextField(
                 color = BaekyoungTheme.colors.black56
             ),
             singleLine = true,
-            keyboardOptions = KeyboardOptions(imeAction = ImeAction.Done),
+            keyboardOptions = KeyboardOptions(
+                keyboardType = keyboardType,
+                imeAction = ImeAction.Done
+            ),
             keyboardActions = KeyboardActions(onDone = { keyboardController?.hide() }),
             modifier = Modifier
                 .fillMaxWidth()
