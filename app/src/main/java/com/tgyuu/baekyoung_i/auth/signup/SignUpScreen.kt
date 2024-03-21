@@ -136,14 +136,14 @@ internal fun SignUpScreen(navigateToHome: () -> Unit) {
                         .padding(start = 24.dp, end = 24.dp, top = 30.dp),
                 ) {
                     Text(
-                        text = "처음 가입하시네요!",
+                        text = stringResource(id = R.string.welcome_message),
                         style = BaekyoungTheme.typography.titleBold,
                         color = BaekyoungTheme.colors.black56,
                         modifier = Modifier.padding(start = 5.dp, top = 16.dp),
                     )
 
                     Text(
-                        text = "별명과 성별을 입력해주세요.",
+                        text = stringResource(id = R.string.please_input_nickname_and_sex),
                         style = BaekyoungTheme.typography.labelBold,
                         color = BaekyoungTheme.colors.black56,
                         modifier = Modifier.padding(start = 5.dp, top = 16.dp),
