@@ -8,7 +8,10 @@
       <entry key="PreviewAuthButton">
         <State />
       </entry>
-      <entry key="PreviewSettingBar">
+      <entry key="PreviewBaekyongTopBar">
+        <State />
+      </entry>
+      <entry key="PreviewBaekyongTopBarWithoutImage">
         <State />
       </entry>
       <entry key="app">
