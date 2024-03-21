@@ -50,11 +50,12 @@ internal fun ConsultingRoute(
         }
     }
 
-    ConsultingScreen()
+    ConsultingScreen(navigateToChatting)
 }
 
 @Composable
 internal fun ConsultingScreen(
+    navigateToChatting: () -> Unit,
 ) {
     Scaffold(
         topBar = {
@@ -103,7 +104,7 @@ internal fun ConsultingScreen(
 
                 BaekyoungButton(
                     text = R.string.navigate_to_consulting,
-                    onButtonClick = { /*TODO*/ },
+                    onButtonClick = { navigateToChatting() },
                     buttonColor = BaekyoungTheme.colors.black,
                     modifier = Modifier
                         .padding(top = 30.dp)
@@ -133,7 +134,7 @@ private fun generateUserNameSpan(userName: String): AnnotatedString = buildAnnot
 internal fun PreviewConsultingScreen(
 ) {
     BaekyoungTheme {
-        ConsultingScreen()
+        ConsultingScreen({})
     }
 }
 
