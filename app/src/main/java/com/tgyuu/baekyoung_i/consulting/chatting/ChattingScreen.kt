@@ -36,7 +36,7 @@ import com.pknu.model.consulting.ConsultingChatting
 import com.tgyuu.baekyoung_i.R
 import com.tgyuu.baekyoung_i.main.navigation.TopLevelDestination
 import com.tgyuu.common.util.UiState
-import com.tgyuu.designsystem.component.BaekyoungTopAppBar
+import com.tgyuu.designsystem.component.BaekyoungTopBar
 import com.tgyuu.designsystem.component.Loader
 import com.tgyuu.designsystem.theme.BaekyoungTheme
 
@@ -71,7 +71,7 @@ internal fun ChattingScreen(
         }
 
         Column(modifier = Modifier.fillMaxSize()) {
-            BaekyoungTopAppBar(TopLevelDestination.CONSULTING.titleTextId)
+            BaekyoungTopBar(TopLevelDestination.CONSULTING.titleTextId)
 
             when (chat) {
                 is UiState.Success -> {
