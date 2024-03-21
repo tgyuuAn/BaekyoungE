@@ -38,6 +38,7 @@ import com.tgyuu.baekyoung_i.consulting.chatting.navigation.chattingNavigationRo
 import com.tgyuu.baekyoung_i.home.navigation.homeNavigationRoute
 import com.tgyuu.baekyoung_i.main.navigation.BaekyoungNavHost
 import com.tgyuu.baekyoung_i.main.navigation.TopLevelDestination
+import com.tgyuu.baekyoung_i.shop.navigation.shopNavigationRoute
 import com.tgyuu.designsystem.theme.BaekyoungTheme
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -133,6 +134,12 @@ internal fun BaekyoungBottomBar(
             TopLevelDestination.entries.forEach { destination ->
                 if ((currentRoute == homeNavigationRoute) &&
                     (destination.route == homeNavigationRoute)
+                ) {
+                    return@forEach
+                }
+
+                if ((currentRoute != homeNavigationRoute) &&
+                    (destination.route == shopNavigationRoute)
                 ) {
                     return@forEach
                 }
