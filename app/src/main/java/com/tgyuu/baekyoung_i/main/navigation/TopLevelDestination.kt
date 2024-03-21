@@ -32,6 +32,14 @@ enum class TopLevelDestination(
         iconTextId = R.string.storage,
         titleTextId = R.string.storage,
     ),
+    SHOP(
+        route = homeNavigationRoute,
+        homeIcon = R.drawable.ic_selected_shop,
+        selectedIcon = R.drawable.ic_selected_shop,
+        unselectedIcon = R.drawable.ic_selected_shop,
+        iconTextId = R.string.home,
+        titleTextId = R.string.home,
+    ),
     HOME(
         route = homeNavigationRoute,
         homeIcon = R.drawable.ic_home_home,

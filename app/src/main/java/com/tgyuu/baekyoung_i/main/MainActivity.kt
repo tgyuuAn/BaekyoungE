@@ -131,8 +131,14 @@ internal fun BaekyoungBottomBar(
             modifier = modifier,
         ) {
             TopLevelDestination.entries.forEach { destination ->
+                if ((currentRoute == homeNavigationRoute) &&
+                    (destination.route == homeNavigationRoute)
+                ) {
+                    return@forEach
+                }
+
                 val isSelect = currentRoute == destination.route
-                val unselectedContentColor = if(currentRoute == homeNavigationRoute){
+                val unselectedContentColor = if (currentRoute == homeNavigationRoute) {
                     BaekyoungTheme.colors.blueFB
                 } else {
                     BaekyoungTheme.colors.gray95
@@ -142,7 +148,7 @@ internal fun BaekyoungBottomBar(
                     selected = isSelect,
                     modifier = Modifier.background(Color.Transparent),
                     onClick = { onNavigateToDestination(destination) },
-                    selectedContentColor = BaekyoungTheme.colors.blueFF,
+                    selectedContentColor = BaekyoungTheme.colors.black,
                     unselectedContentColor = unselectedContentColor,
                     icon = {
                         Icon(
