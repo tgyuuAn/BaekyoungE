@@ -53,7 +53,6 @@ internal fun ChattingRoute(viewModel: ChattingViewModel = hiltViewModel()) {
     )
 }
 
-@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 internal fun ChattingScreen(
     chat: UiState<List<ConsultingChatting>>,

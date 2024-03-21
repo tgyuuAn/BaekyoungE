@@ -8,6 +8,7 @@ import com.tgyuu.baekyoung_i.consulting.consultinginformation.navigation.consult
 import com.tgyuu.baekyoung_i.etc.navigation.profileNavigationRoute
 import com.tgyuu.baekyoung_i.home.navigation.homeNavigationRoute
 import com.tgyuu.baekyoung_i.shop.navigation.shopNavigationRoute
+import com.tgyuu.baekyoung_i.storage.navigation.storageNavigationRoute
 
 enum class TopLevelDestination(
     val route: String,
@@ -26,7 +27,7 @@ enum class TopLevelDestination(
         titleTextId = R.string.consulting,
     ),
     STORAGE(
-        route = consultingNavigationRoute,
+        route = storageNavigationRoute,
         homeIcon = R.drawable.ic_home_storage,
         selectedIcon = R.drawable.ic_selected_storage,
         unselectedIcon = R.drawable.ic_storage,

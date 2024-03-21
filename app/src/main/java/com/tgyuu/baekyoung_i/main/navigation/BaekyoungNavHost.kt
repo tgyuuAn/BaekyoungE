@@ -20,6 +20,7 @@ import com.tgyuu.baekyoung_i.etc.navigation.etcScreen
 import com.tgyuu.baekyoung_i.home.navigation.homeScreen
 import com.tgyuu.baekyoung_i.home.navigation.navigateToHome
 import com.tgyuu.baekyoung_i.shop.navigation.shopScreen
+import com.tgyuu.baekyoung_i.storage.navigation.storageScreen
 
 @Composable
 fun BaekyoungNavHost(
@@ -46,6 +47,7 @@ fun BaekyoungNavHost(
         })
         homeScreen()
         shopScreen()
+        storageScreen()
         consultingGraph(navigateToChatting = {
             navController.navigateToChatting(navOptions {
                 popUpTo(consultingNavigationRoute)
