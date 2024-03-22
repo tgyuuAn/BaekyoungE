@@ -94,7 +94,7 @@ fun BaekyoungCenterTopBar(
                             .fillMaxWidth()
                             .padding(start = 50.dp, end = 20.dp)
                             .background(
-                                color = BaekyoungTheme.colors.white,
+                                color = BaekyoungTheme.colors.white.copy(alpha = 0.4f),
                                 shape = RoundedCornerShape(10.dp)
                             ),
                     ) { innerTextField ->
