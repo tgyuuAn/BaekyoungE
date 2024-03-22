@@ -29,6 +29,7 @@ import com.tgyuu.baekyoung_i.R
 import com.tgyuu.common.util.UiState
 import com.tgyuu.common.util.addFocusCleaner
 import com.tgyuu.designsystem.component.BaekyoungCenterTopBar
+import com.tgyuu.designsystem.component.BaekyoungChatTextField
 import com.tgyuu.designsystem.theme.BaekyoungTheme
 
 @Composable
@@ -93,6 +94,12 @@ internal fun ChattingScreen(
                 modifier = Modifier
                     .align(Alignment.BottomCenter)
                     .padding(start = 20.dp, bottom = 80.dp),
+            )
+
+            BaekyoungChatTextField(
+                chatText = "",
+                onTextChanged = {},
+                modifier = Modifier.align(Alignment.BottomCenter)
             )
         }
     }
