@@ -36,17 +36,24 @@ class ChattingViewModel @Inject constructor(
                 initialValue = UiState.Loading
             )
 
-    private val _userInput: MutableStateFlow<String> = MutableStateFlow("")
-    val userInput get() = _userInput.asStateFlow()
+    private val _chatText: MutableStateFlow<String> = MutableStateFlow("")
+    val chatText get() = _chatText.asStateFlow()
 
-    fun setUserInput(input: String) {
-        _userInput.value = input
+    private val _searchText: MutableStateFlow<String> = MutableStateFlow("")
+    val searchText get() = _searchText.asStateFlow()
+
+    fun setChatText(chatText: String) {
+        _chatText.value = chatText
+    }
+
+    fun setSearchText(searchText: String) {
+        _searchText.value = searchText
     }
 
     fun postUserChatting() = viewModelScope.launch {
-        require(_userInput.value.isNotEmpty())
-        postUserChattingUseCase(_userInput.value).fold(
-            onSuccess = { _userInput.value = "" },
+        require(_chatText.value.isNotEmpty())
+        postUserChattingUseCase(_chatText.value).fold(
+            onSuccess = { _chatText.value = "" },
             onFailure = { Log.d("test", "메세지를 전송하는 데 실패하였습니다.") },
         )
     }

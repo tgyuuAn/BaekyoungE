@@ -37,21 +37,26 @@ internal fun ChattingRoute(
     viewModel: ChattingViewModel = hiltViewModel(),
 ) {
     val chat by viewModel.chat.collectAsStateWithLifecycle()
-    val userInput by viewModel.userInput.collectAsStateWithLifecycle()
+    val chatText by viewModel.chatText.collectAsStateWithLifecycle()
+    val searchText by viewModel.searchText.collectAsStateWithLifecycle()
 
     ChattingScreen(
-        chat,
-        userInput,
-        viewModel::setUserInput,
-        viewModel::postUserChatting,
+        chat = chat,
+        chatText = chatText,
+        searchText = searchText,
+        onChatTextChanged = viewModel::setChatText,
+        onSearchTextChanged = viewModel::setSearchText,
+        postUserChatting = viewModel::postUserChatting,
     )
 }
 
 @Composable
 internal fun ChattingScreen(
     chat: UiState<List<ConsultingChatting>>,
-    userInput: String,
-    onUserInputChanged: (String) -> Unit,
+    chatText: String,
+    searchText: String,
+    onChatTextChanged: (String) -> Unit,
+    onSearchTextChanged: (String) -> Unit,
     postUserChatting: () -> Unit,
 ) {
     val focusManager = LocalFocusManager.current
@@ -76,6 +81,9 @@ internal fun ChattingScreen(
                 titleTextId = R.string.consulting,
                 textColor = BaekyoungTheme.colors.white,
                 showSearchButton = true,
+                searchText = searchText,
+                onSearchTextChanged = onSearchTextChanged,
+                clearSearchText = { onSearchTextChanged("") },
             )
 
             Image(
@@ -97,10 +105,13 @@ internal fun ChattingScreen(
             )
 
             BaekyoungChatTextField(
-                chatText = "",
-                onTextChanged = {},
-                sendMessage = {},
-                modifier = Modifier.align(Alignment.BottomCenter)
+                chatText = chatText,
+                onTextChanged = onChatTextChanged,
+                sendMessage = postUserChatting,
+                textColor = BaekyoungTheme.colors.white,
+                modifier = Modifier
+                    .align(Alignment.BottomCenter)
+                    .padding(start = 8.dp, end = 8.dp, bottom = 8.dp)
             )
         }
     }

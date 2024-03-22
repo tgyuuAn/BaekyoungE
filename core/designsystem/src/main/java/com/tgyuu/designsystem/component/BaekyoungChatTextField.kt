@@ -45,7 +45,6 @@ fun BaekyoungChatTextField(
         keyboardActions = KeyboardActions(onDone = { keyboardController?.hide() }),
         modifier = modifier
             .fillMaxWidth()
-            .padding(start = 8.dp, end = 8.dp, bottom = 8.dp)
             .background(
                 color = BaekyoungTheme.colors.white.copy(alpha = 0.4f),
                 shape = RoundedCornerShape(3.dp)
@@ -64,7 +63,7 @@ fun BaekyoungChatTextField(
                     contentDescription = null,
                     modifier = Modifier
                         .align(Alignment.CenterEnd)
-                        .padding(horizontal = 10.dp)
+                        .padding(start = 10.dp)
                         .clickable { sendMessage() }
                 )
             }
