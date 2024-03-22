@@ -23,7 +23,9 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.SolidColor
 import androidx.compose.ui.platform.LocalSoftwareKeyboardController
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
@@ -90,6 +92,7 @@ fun BaekyoungCenterTopBar(
                         keyboardOptions = KeyboardOptions(
                             imeAction = ImeAction.Done
                         ),
+                        cursorBrush = SolidColor(BaekyoungTheme.colors.white),
                         keyboardActions = KeyboardActions(onDone = { keyboardController?.hide() }),
                         modifier = Modifier
                             .fillMaxWidth()
