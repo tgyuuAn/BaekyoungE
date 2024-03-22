@@ -19,6 +19,8 @@ import com.tgyuu.baekyoung_i.consulting.consultinginformation.navigation.consult
 import com.tgyuu.baekyoung_i.etc.navigation.etcScreen
 import com.tgyuu.baekyoung_i.home.navigation.homeScreen
 import com.tgyuu.baekyoung_i.home.navigation.navigateToHome
+import com.tgyuu.baekyoung_i.shop.navigation.shopScreen
+import com.tgyuu.baekyoung_i.storage.navigation.storageScreen
 
 @Composable
 fun BaekyoungNavHost(
@@ -44,11 +46,16 @@ fun BaekyoungNavHost(
             })
         })
         homeScreen()
-        consultingGraph(navigateToChatting = {
-            navController.navigateToChatting(navOptions {
-                popUpTo(consultingNavigationRoute)
-            })
-        })
+        shopScreen()
+        storageScreen()
+        consultingGraph(
+            navigateToChatting = {
+                navController.navigateToChatting(navOptions {
+                    popUpTo(consultingNavigationRoute)
+                })
+            },
+            popBackStack = { navController.popBackStack() },
+        )
         communityScreen()
         etcScreen()
     }

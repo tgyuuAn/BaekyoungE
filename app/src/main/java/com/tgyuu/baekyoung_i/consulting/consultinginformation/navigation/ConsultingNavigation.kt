@@ -16,9 +16,10 @@ fun NavController.navigateToConsulting(navOptions: NavOptions? = navOptions {}) 
 
 fun NavGraphBuilder.consultingGraph(
     navigateToChatting: () -> Unit,
+    popBackStack: () -> Unit,
 ) {
     composable(route = consultingNavigationRoute) {
         ConsultingRoute(navigateToChatting = navigateToChatting)
     }
-    chattingScreen()
+    chattingScreen(popBackStack = popBackStack)
 }

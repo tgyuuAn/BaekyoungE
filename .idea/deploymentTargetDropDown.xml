@@ -2,13 +2,19 @@
 <project version="4">
   <component name="deploymentTargetDropDown">
     <value>
-      <entry key="BaekyoungCloudPreview">
+      <entry key="PreviewAiChat">
         <State />
       </entry>
-      <entry key="PreviewAuthButton">
+      <entry key="PreviewBaekyongTopBar">
         <State />
       </entry>
-      <entry key="PreviewSettingBar">
+      <entry key="PreviewBaekyongTopBarWithoutImage">
+        <State />
+      </entry>
+      <entry key="PreviewBaekyoungCenterTopBar">
+        <State />
+      </entry>
+      <entry key="PreviewConsultingScreen">
         <State />
       </entry>
       <entry key="app">

@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="consulting">진로 상담</string>
+    <string name="chatting">채팅</string>
+    <string name="content_description_test"> </string>
+</resources>

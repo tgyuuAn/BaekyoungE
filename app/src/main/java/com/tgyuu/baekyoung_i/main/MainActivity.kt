@@ -35,8 +35,10 @@ import androidx.navigation.compose.rememberNavController
 import com.tgyuu.baekyoung_i.auth.navigation.authNavigationRoute
 import com.tgyuu.baekyoung_i.auth.signup.navigation.signUpNavigationRoute
 import com.tgyuu.baekyoung_i.consulting.chatting.navigation.chattingNavigationRoute
+import com.tgyuu.baekyoung_i.home.navigation.homeNavigationRoute
 import com.tgyuu.baekyoung_i.main.navigation.BaekyoungNavHost
 import com.tgyuu.baekyoung_i.main.navigation.TopLevelDestination
+import com.tgyuu.baekyoung_i.shop.navigation.shopNavigationRoute
 import com.tgyuu.designsystem.theme.BaekyoungTheme
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -130,13 +132,31 @@ internal fun BaekyoungBottomBar(
             modifier = modifier,
         ) {
             TopLevelDestination.entries.forEach { destination ->
+                if ((currentRoute == homeNavigationRoute) &&
+                    (destination.route == homeNavigationRoute)
+                ) {
+                    return@forEach
+                }
+
+                if ((currentRoute != homeNavigationRoute) &&
+                    (destination.route == shopNavigationRoute)
+                ) {
+                    return@forEach
+                }
+
                 val isSelect = currentRoute == destination.route
+                val unselectedContentColor = if (currentRoute == homeNavigationRoute) {
+                    BaekyoungTheme.colors.blueFB
+                } else {
+                    BaekyoungTheme.colors.gray95
+                }
+
                 BottomNavigationItem(
                     selected = isSelect,
                     modifier = Modifier.background(Color.Transparent),
                     onClick = { onNavigateToDestination(destination) },
-                    selectedContentColor = BaekyoungTheme.colors.blueFF,
-                    unselectedContentColor = BaekyoungTheme.colors.gray95,
+                    selectedContentColor = BaekyoungTheme.colors.black,
+                    unselectedContentColor = unselectedContentColor,
                     icon = {
                         Icon(
                             painter = painterResource(id = destination.selectedIcon),
