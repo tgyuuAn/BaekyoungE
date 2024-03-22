@@ -13,8 +13,8 @@ fun NavController.navigateToChatting(navOptions: NavOptions? = navOptions {}) {
     this.navigate(chattingNavigationRoute, navOptions)
 }
 
-fun NavGraphBuilder.chattingScreen() {
+fun NavGraphBuilder.chattingScreen(popBackStack: () -> Unit) {
     composable(route = chattingNavigationRoute) {
-        ChattingRoute()
+        ChattingRoute(popBackStack = popBackStack)
     }
 }

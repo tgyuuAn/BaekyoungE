@@ -34,6 +34,7 @@ import com.tgyuu.designsystem.theme.BaekyoungTheme
 
 @Composable
 internal fun ChattingRoute(
+    popBackStack: () -> Unit,
     viewModel: ChattingViewModel = hiltViewModel(),
 ) {
     val chat by viewModel.chat.collectAsStateWithLifecycle()
@@ -47,6 +48,7 @@ internal fun ChattingRoute(
         onChatTextChanged = viewModel::setChatText,
         onSearchTextChanged = viewModel::setSearchText,
         postUserChatting = viewModel::postUserChatting,
+        popBackStack = popBackStack,
     )
 }
 
@@ -58,6 +60,7 @@ internal fun ChattingScreen(
     onChatTextChanged: (String) -> Unit,
     onSearchTextChanged: (String) -> Unit,
     postUserChatting: () -> Unit,
+    popBackStack: () -> Unit,
 ) {
     val focusManager = LocalFocusManager.current
     val backgroundColor = Brush.verticalGradient(
@@ -84,6 +87,7 @@ internal fun ChattingScreen(
                 searchText = searchText,
                 onSearchTextChanged = onSearchTextChanged,
                 clearSearchText = { onSearchTextChanged("") },
+                onClickBackButton = popBackStack,
             )
 
             Image(

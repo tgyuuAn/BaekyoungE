@@ -48,11 +48,14 @@ fun BaekyoungNavHost(
         homeScreen()
         shopScreen()
         storageScreen()
-        consultingGraph(navigateToChatting = {
-            navController.navigateToChatting(navOptions {
-                popUpTo(consultingNavigationRoute)
-            })
-        })
+        consultingGraph(
+            navigateToChatting = {
+                navController.navigateToChatting(navOptions {
+                    popUpTo(consultingNavigationRoute)
+                })
+            },
+            popBackStack = { navController.popBackStack() },
+        )
         communityScreen()
         etcScreen()
     }
