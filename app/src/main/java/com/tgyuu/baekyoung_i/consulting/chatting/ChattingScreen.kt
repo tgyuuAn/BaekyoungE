@@ -99,6 +99,7 @@ internal fun ChattingScreen(
             BaekyoungChatTextField(
                 chatText = "",
                 onTextChanged = {},
+                sendMessage = {},
                 modifier = Modifier.align(Alignment.BottomCenter)
             )
         }
