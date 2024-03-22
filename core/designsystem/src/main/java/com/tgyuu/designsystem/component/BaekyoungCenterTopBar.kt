@@ -36,7 +36,7 @@ import com.tgyuu.designsystem.theme.BaekyoungTheme
 @Composable
 fun BaekyoungCenterTopBar(
     @StringRes titleTextId: Int,
-    searchText: String = "",
+    searchText: String = "a",
     showBackButton: Boolean = true,
     showSearchButton: Boolean = false,
     showDrawerButton: Boolean = false,
@@ -44,6 +44,7 @@ fun BaekyoungCenterTopBar(
     onClickBackButton: () -> Unit = {},
     onClickDrawerButton: () -> Unit = {},
     onSearchTextChanged: (String) -> Unit = {},
+    clearSearchText: () -> Unit = {},
     modifier: Modifier = Modifier,
 ) {
     var showSearchBar by remember { mutableStateOf(false) }
@@ -108,8 +109,23 @@ fun BaekyoungCenterTopBar(
                                 )
                             }
 
-                            Box(modifier = Modifier.align(Alignment.CenterStart)) {
+                            Box(
+                                modifier = Modifier
+                                    .align(Alignment.CenterStart)
+                                    .fillMaxWidth()
+                            ) {
                                 innerTextField()
+
+                                if (searchText.isNotEmpty()) {
+                                    Image(
+                                        painter = painterResource(id = R.drawable.ic_search_close),
+                                        contentDescription = null,
+                                        modifier = Modifier
+                                            .align(Alignment.CenterEnd)
+                                            .padding(start = 10.dp)
+                                            .clickable { clearSearchText() }
+                                    )
+                                }
                             }
                         }
                     }
