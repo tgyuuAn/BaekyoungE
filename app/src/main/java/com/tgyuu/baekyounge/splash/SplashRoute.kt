@@ -27,6 +27,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.graphicsLayer
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalConfiguration
+import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -40,13 +41,19 @@ internal fun SplashRoute() {
 
 @Composable
 internal fun SplashScreen() {
+    val localConfiguration = LocalConfiguration.current
+    val localDensity = LocalDensity.current
     var showAnimation by remember { mutableStateOf(false) }
-    val animateOffset = animateOffsetAsState(
-        targetValue = if (showAnimation) {
+    val animateOffset by animateOffsetAsState(
+        targetValue = if (!showAnimation) {
             Offset(0f, 0f)
         } else {
-            Offset(10f, 10f)
+            Offset(
+                with(localDensity) { -localConfiguration.screenWidthDp.dp.toPx() },
+                with(localDensity) { localConfiguration.screenHeightDp.dp.toPx() * 2 / 5 },
+            )
         },
+        animationSpec = tween(SHOOTING_STAR_ANIMATION_DURAION),
     )
 
     LaunchedEffect(true) {
@@ -70,7 +77,7 @@ internal fun SplashScreen() {
         ) {
             AnimatedVisibility(
                 visible = showAnimation,
-                enter = fadeIn(tween(1000)),
+                enter = fadeIn(tween(1000, SHOOTING_STAR_ANIMATION_DURAION + 1000)),
                 exit = fadeOut(),
             ) {
                 Text(
@@ -82,7 +89,7 @@ internal fun SplashScreen() {
 
             AnimatedVisibility(
                 visible = showAnimation,
-                enter = fadeIn(tween(1000, 1000)),
+                enter = fadeIn(tween(1000, SHOOTING_STAR_ANIMATION_DURAION + 2000)),
                 exit = fadeOut(),
             ) {
                 Text(
@@ -94,7 +101,7 @@ internal fun SplashScreen() {
 
             AnimatedVisibility(
                 visible = showAnimation,
-                enter = fadeIn(tween(1000, 2000)),
+                enter = fadeIn(tween(1000, SHOOTING_STAR_ANIMATION_DURAION + 3000)),
                 exit = fadeOut(),
             ) {
                 Text(
@@ -107,7 +114,7 @@ internal fun SplashScreen() {
 
         AnimatedVisibility(
             visible = showAnimation,
-            enter = fadeIn(tween(1000)),
+            enter = fadeIn(tween(1000, SHOOTING_STAR_ANIMATION_DURAION)),
             exit = fadeOut(),
             modifier = Modifier
                 .align(Alignment.BottomCenter)
@@ -119,6 +126,8 @@ internal fun SplashScreen() {
                 color = BaekyoungTheme.colors.white.copy(alpha = 0.8f),
             )
         }
+
+        ShootingStar(animatedOffset = animateOffset)
     }
 }
 
@@ -161,18 +170,21 @@ private fun SplashBackground() {
 
 @Composable
 private fun ShootingStar(
-    startOffset: Offset,
     animatedOffset: Offset,
     modifier: Modifier = Modifier,
 ) {
+    val localConfiguration = LocalConfiguration.current
+
     Image(
         painter = painterResource(id = R.drawable.ic_shooting_star),
         contentDescription = "별똥별",
         modifier = modifier
-            .offset(startOffset.x.dp, startOffset.y.dp)
+            .offset((localConfiguration.screenWidthDp.dp - 78.dp), -47.dp)
             .graphicsLayer {
                 this.translationX = animatedOffset.x
                 this.translationY = animatedOffset.y
             },
     )
 }
+
+val SHOOTING_STAR_ANIMATION_DURAION = 3000
