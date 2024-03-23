@@ -24,6 +24,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.blur
 import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.graphicsLayer
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalConfiguration
 import androidx.compose.ui.res.painterResource
@@ -156,4 +157,22 @@ private fun SplashBackground() {
             alpha = 0.4F,
         )
     }
+}
+
+@Composable
+private fun ShootingStar(
+    startOffset: Offset,
+    animatedOffset: Offset,
+    modifier: Modifier = Modifier,
+) {
+    Image(
+        painter = painterResource(id = R.drawable.ic_shooting_star),
+        contentDescription = "별똥별",
+        modifier = modifier
+            .offset(startOffset.x.dp, startOffset.y.dp)
+            .graphicsLayer {
+                this.translationX = animatedOffset.x
+                this.translationY = animatedOffset.y
+            },
+    )
 }
