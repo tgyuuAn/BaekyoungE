@@ -20,6 +20,7 @@ import com.tgyuu.baekyounge.etc.navigation.etcScreen
 import com.tgyuu.baekyounge.home.navigation.homeScreen
 import com.tgyuu.baekyounge.home.navigation.navigateToHome
 import com.tgyuu.baekyounge.shop.navigation.shopScreen
+import com.tgyuu.baekyounge.splash.navigation.splashNavigationRoute
 import com.tgyuu.baekyounge.splash.navigation.splashScreen
 import com.tgyuu.baekyounge.storage.navigation.storageScreen
 
@@ -27,7 +28,7 @@ import com.tgyuu.baekyounge.storage.navigation.storageScreen
 fun BaekyoungNavHost(
     navController: NavHostController,
     modifier: Modifier = Modifier,
-    startDestination: String = authNavigationRoute,
+    startDestination: String = splashNavigationRoute,
 ) {
     NavHost(
         navController = navController,
