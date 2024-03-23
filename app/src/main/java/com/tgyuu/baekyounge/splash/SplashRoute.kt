@@ -1,9 +1,14 @@
 package com.tgyuu.baekyounge.splash
 
+import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.core.animateOffsetAsState
+import androidx.compose.animation.core.tween
+import androidx.compose.animation.fadeIn
+import androidx.compose.animation.fadeOut
 import androidx.compose.foundation.Canvas
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.offset
 import androidx.compose.foundation.layout.padding
@@ -23,6 +28,7 @@ import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalConfiguration
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import com.tgyuu.baekyounge.R
 import com.tgyuu.designsystem.theme.BaekyoungTheme
 
@@ -56,13 +62,62 @@ internal fun SplashScreen() {
 
         SplashBackground()
 
-        Text(
-            text = "화면을 터치하면 넘어갑니다.",
-            style = BaekyoungTheme.typography.labelRegular,
+        Row(
+            modifier = Modifier
+                .align(Alignment.TopCenter)
+                .padding(top = 50.dp),
+        ) {
+            AnimatedVisibility(
+                visible = showAnimation,
+                enter = fadeIn(tween(1000)),
+                exit = fadeOut(),
+            ) {
+                Text(
+                    text = "백",
+                    style = BaekyoungTheme.typography.splashBold.copy(fontSize = 30.sp),
+                    color = BaekyoungTheme.colors.white,
+                )
+            }
+
+            AnimatedVisibility(
+                visible = showAnimation,
+                enter = fadeIn(tween(1000, 1000)),
+                exit = fadeOut(),
+            ) {
+                Text(
+                    text = "경",
+                    style = BaekyoungTheme.typography.splashBold.copy(fontSize = 30.sp),
+                    color = BaekyoungTheme.colors.white,
+                )
+            }
+
+            AnimatedVisibility(
+                visible = showAnimation,
+                enter = fadeIn(tween(1000, 2000)),
+                exit = fadeOut(),
+            ) {
+                Text(
+                    text = "이",
+                    style = BaekyoungTheme.typography.splashBold.copy(fontSize = 30.sp),
+                    color = BaekyoungTheme.colors.white,
+                )
+            }
+        }
+
+        AnimatedVisibility(
+            visible = showAnimation,
+            enter = fadeIn(tween(1000)),
+            exit = fadeOut(),
             modifier = Modifier
                 .align(Alignment.BottomCenter)
                 .padding(bottom = 30.dp),
-        )
+        ) {
+            Text(
+                text = "화면을 터치하면 넘어갑니다.",
+                style = BaekyoungTheme.typography.splashBold,
+                color = BaekyoungTheme.colors.white.copy(alpha = 0.8f),
+            )
+        }
     }
 }
 
