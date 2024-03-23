@@ -41,7 +41,7 @@ import kotlinx.coroutines.flow.collectLatest
 
 @Composable
 internal fun SplashRoute(
-    navigateToHome: () -> Unit,
+    navigateToAuth: () -> Unit,
     viewModel: SplashViewModel = hiltViewModel(),
 ) {
     val canSkipSplash by viewModel.canSkipSplash.collectAsStateWithLifecycle()
@@ -49,14 +49,14 @@ internal fun SplashRoute(
     LaunchedEffect(true) {
         viewModel.eventFlow.collectLatest {
             when (it) {
-                is SplashViewModel.SplashEvent.NavigateToHome -> navigateToHome()
+                is SplashViewModel.SplashEvent.NavigateToAuth -> navigateToAuth()
             }
         }
     }
 
     SplashScreen(
         canSkipSplash = canSkipSplash,
-        onClick = { viewModel.event(SplashViewModel.SplashEvent.NavigateToHome) },
+        onClick = { viewModel.event(SplashViewModel.SplashEvent.NavigateToAuth) },
     )
 }
 

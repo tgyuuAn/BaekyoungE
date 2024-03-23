@@ -29,6 +29,6 @@ class SplashViewModel @Inject constructor() : ViewModel() {
     fun event(event: SplashEvent) = viewModelScope.launch { _eventFlow.emit(event) }
 
     sealed class SplashEvent() {
-        data object NavigateToHome : SplashEvent()
+        data object NavigateToAuth : SplashEvent()
     }
 }

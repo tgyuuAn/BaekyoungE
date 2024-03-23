@@ -9,6 +9,7 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.navOptions
 import com.tgyuu.baekyounge.auth.navigation.authNavigationRoute
 import com.tgyuu.baekyounge.auth.navigation.authScreen
+import com.tgyuu.baekyounge.auth.navigation.navigateToAuth
 import com.tgyuu.baekyounge.auth.signup.navigation.navigateToSignUp
 import com.tgyuu.baekyounge.auth.signup.navigation.signUpNavigationRoute
 import com.tgyuu.baekyounge.auth.signup.navigation.signUpScreen
@@ -38,8 +39,8 @@ fun BaekyoungNavHost(
         modifier = modifier,
     ) {
         splashScreen(
-            navigateToHome = {
-                navController.navigateToHome(
+            navigateToAuth = {
+                navController.navigateToAuth(
                     navOptions {
                         popUpTo(splashNavigationRoute) { inclusive = true }
                     },
