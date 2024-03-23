@@ -19,6 +19,6 @@ data class ChatLogResponse(
                 "system" -> ChattingRole.SYSTEM
                 "assistant" -> ChattingRole.ASSISTANT
                 else -> throw IllegalArgumentException("잘못된 역할 입니다.")
-            }
+            },
         )
 }

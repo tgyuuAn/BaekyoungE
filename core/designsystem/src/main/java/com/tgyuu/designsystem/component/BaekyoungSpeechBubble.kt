@@ -43,12 +43,12 @@ fun BaekyoungSpeechBubble(
                 .widthIn(max = (localConfiguration.screenWidthDp / 2).dp)
                 .align(SpeechBubbleAlignment)
                 .clip(RoundedCornerShape(5.dp))
-                .background(SpeechBubbleBackgroundColor)
+                .background(SpeechBubbleBackgroundColor),
         ) {
             Text(
                 text = text,
                 style = BaekyoungTheme.typography.contentBold,
-                modifier = Modifier.padding(vertical = 5.dp, horizontal = 10.dp)
+                modifier = Modifier.padding(vertical = 5.dp, horizontal = 10.dp),
             )
         }
     }
@@ -62,8 +62,8 @@ private fun PreviewAiChat() {
             BaekyoungSpeechBubble(
                 type = SpeechBubbleType.AI_CHAT,
                 text = "잘 찾아오셨어요!\n" +
-                        "궁금한 점이 있나요?",
-                modifier = Modifier.padding(horizontal = 40.dp, vertical = 10.dp)
+                    "궁금한 점이 있나요?",
+                modifier = Modifier.padding(horizontal = 40.dp, vertical = 10.dp),
             )
         }
     }
@@ -77,8 +77,8 @@ private fun PreviewAiUserChat() {
             BaekyoungSpeechBubble(
                 type = SpeechBubbleType.AI_USER,
                 text = "잘 찾아오셨어요!\n" +
-                        "궁금한 점이 있나요?",
-                modifier = Modifier.padding(horizontal = 40.dp, vertical = 10.dp)
+                    "궁금한 점이 있나요?",
+                modifier = Modifier.padding(horizontal = 40.dp, vertical = 10.dp),
             )
         }
     }
@@ -92,7 +92,7 @@ private fun PreviewMentoMentiOpponentChat() {
             BaekyoungSpeechBubble(
                 type = SpeechBubbleType.MENTOR_MENTI_OPPONENT,
                 text = "긴 텍스트 테스트 가나다라마바사 아자차카타파하 가나다라마바사 아자차카타파하",
-                modifier = Modifier.padding(horizontal = 40.dp, vertical = 10.dp)
+                modifier = Modifier.padding(horizontal = 40.dp, vertical = 10.dp),
             )
         }
     }
@@ -106,8 +106,8 @@ private fun PreviewMentoMentiUserChat() {
             BaekyoungSpeechBubble(
                 type = SpeechBubbleType.MENTOR_MENTI_USER,
                 text = "잘 찾아오셨어요!\n" +
-                        "궁금한 점이 있나요?",
-                modifier = Modifier.padding(horizontal = 40.dp, vertical = 10.dp)
+                    "궁금한 점이 있나요?",
+                modifier = Modifier.padding(horizontal = 40.dp, vertical = 10.dp),
             )
         }
     }

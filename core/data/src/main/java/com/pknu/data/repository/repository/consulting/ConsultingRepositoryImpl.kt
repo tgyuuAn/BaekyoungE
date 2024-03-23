@@ -15,15 +15,15 @@ class ConsultingRepositoryImpl @Inject constructor(
         consultingDataSource.postConsultingInformation(
             ConsultingRequest(
                 grade = grade,
-                major = major
-            )
+                major = major,
+            ),
         )
 
     override suspend fun postUserChatting(chatUser: String): Result<Unit> =
         consultingDataSource.postUserChatting(
             ChatRequest(
-                chat_user = chatUser
-            )
+                chat_user = chatUser,
+            ),
         )
 
     override fun getChatting(): Flow<Result<List<ConsultingChatting>>> =

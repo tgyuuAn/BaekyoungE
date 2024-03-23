@@ -14,7 +14,7 @@ dependencyResolutionManagement {
     }
 }
 
-rootProject.name = "baekyoung-i"
+rootProject.name = "baekyounge"
 include(":app")
 include(":core:common")
 include(":core:designsystem")

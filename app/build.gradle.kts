@@ -3,10 +3,10 @@ plugins {
 }
 
 android {
-    namespace = "com.tgyuu.baekyoung_i"
+    namespace = "com.tgyuu.baekyounge"
 
     defaultConfig {
-        applicationId = "com.tgyuu.baekyoung_i"
+        applicationId = "com.tgyuu.baekyounge"
         versionCode = 1
         versionName = "1.0"
 
@@ -21,7 +21,7 @@ android {
             isMinifyEnabled = false
             proguardFiles(
                 getDefaultProguardFile("proguard-android-optimize.txt"),
-                "proguard-rules.pro"
+                "proguard-rules.pro",
             )
         }
     }

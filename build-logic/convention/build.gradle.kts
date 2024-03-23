@@ -2,7 +2,7 @@ plugins {
     `kotlin-dsl`
 }
 
-group = "com.tgyuu.baekyoung_i.buildlogic"
+group = "com.tgyuu.baekyounge.buildlogic"
 
 java {
     sourceCompatibility = JavaVersion.VERSION_17
