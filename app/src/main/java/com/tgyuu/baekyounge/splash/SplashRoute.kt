@@ -29,6 +29,7 @@ import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalConfiguration
 import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.tgyuu.baekyounge.R
@@ -121,7 +122,7 @@ internal fun SplashScreen() {
                 .padding(bottom = 30.dp),
         ) {
             Text(
-                text = "화면을 터치하면 넘어갑니다.",
+                text = stringResource(id = R.string.press_any_key_to_start),
                 style = BaekyoungTheme.typography.splashBold,
                 color = BaekyoungTheme.colors.white.copy(alpha = 0.8f),
             )
@@ -177,7 +178,7 @@ private fun ShootingStar(
 
     Image(
         painter = painterResource(id = R.drawable.ic_shooting_star),
-        contentDescription = "별똥별",
+        contentDescription = stringResource(id = R.string.shooting_star_description),
         modifier = modifier
             .offset((localConfiguration.screenWidthDp.dp - 78.dp), -47.dp)
             .graphicsLayer {

@@ -1,4 +1,7 @@
 <resources>
+    <string name="press_any_key_to_start">화면을 터치하면 넘어갑니다.</string>
+    <string name="shooting_star_description">별똥별</string>
+
     <string name="app_name">백경이</string>
     <string name="id">아이디</string>
     <string name="password">비밀번호</string>
