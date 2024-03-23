@@ -37,7 +37,15 @@ fun BaekyoungNavHost(
         startDestination = startDestination,
         modifier = modifier,
     ) {
-        splashScreen()
+        splashScreen(
+            navigateToHome = {
+                navController.navigateToHome(
+                    navOptions {
+                        popUpTo(splashNavigationRoute) { inclusive = true }
+                    },
+                )
+            },
+        )
         authScreen(
             navigateToSignUp = {
                 navController.navigateToSignUp(

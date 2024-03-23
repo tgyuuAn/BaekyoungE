@@ -7,6 +7,7 @@ import androidx.compose.animation.fadeIn
 import androidx.compose.animation.fadeOut
 import androidx.compose.foundation.Canvas
 import androidx.compose.foundation.Image
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
@@ -33,16 +34,37 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.tgyuu.baekyounge.R
 import com.tgyuu.designsystem.theme.BaekyoungTheme
+import kotlinx.coroutines.flow.collectLatest
 
 @Composable
-internal fun SplashRoute(viewModel: SplashViewModel = hiltViewModel()) {
-    SplashScreen()
+internal fun SplashRoute(
+    navigateToHome: () -> Unit,
+    viewModel: SplashViewModel = hiltViewModel(),
+) {
+    val canSkipSplash by viewModel.canSkipSplash.collectAsStateWithLifecycle()
+
+    LaunchedEffect(true) {
+        viewModel.eventFlow.collectLatest {
+            when (it) {
+                is SplashViewModel.SplashEvent.NavigateToHome -> navigateToHome()
+            }
+        }
+    }
+
+    SplashScreen(
+        canSkipSplash = canSkipSplash,
+        onClick = { viewModel.event(SplashViewModel.SplashEvent.NavigateToHome) },
+    )
 }
 
 @Composable
-internal fun SplashScreen() {
+internal fun SplashScreen(
+    canSkipSplash: Boolean,
+    onClick: () -> Unit,
+) {
     val localConfiguration = LocalConfiguration.current
     val localDensity = LocalDensity.current
     var showAnimation by remember { mutableStateOf(false) }
@@ -62,7 +84,15 @@ internal fun SplashScreen() {
         showAnimation = true
     }
 
-    Box(modifier = Modifier.fillMaxSize()) {
+    Box(
+        modifier = Modifier
+            .fillMaxSize()
+            .clickable {
+                if (canSkipSplash) {
+                    onClick()
+                }
+            },
+    ) {
         Image(
             painter = painterResource(R.drawable.ic_splash_background),
             contentDescription = null,

@@ -13,8 +13,8 @@ fun NavController.navigateToSplash(navOptions: NavOptions? = navOptions {}) {
     this.navigate(splashNavigationRoute, navOptions)
 }
 
-fun NavGraphBuilder.splashScreen() {
+fun NavGraphBuilder.splashScreen(navigateToHome: () -> Unit) {
     composable(route = splashNavigationRoute) {
-        SplashRoute()
+        SplashRoute(navigateToHome = navigateToHome)
     }
 }
