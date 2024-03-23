@@ -20,6 +20,7 @@ import com.tgyuu.baekyounge.etc.navigation.etcScreen
 import com.tgyuu.baekyounge.home.navigation.homeScreen
 import com.tgyuu.baekyounge.home.navigation.navigateToHome
 import com.tgyuu.baekyounge.shop.navigation.shopScreen
+import com.tgyuu.baekyounge.splash.navigation.splashScreen
 import com.tgyuu.baekyounge.storage.navigation.storageScreen
 
 @Composable
@@ -35,6 +36,7 @@ fun BaekyoungNavHost(
         startDestination = startDestination,
         modifier = modifier,
     ) {
+        splashScreen()
         authScreen(
             navigateToSignUp = {
                 navController.navigateToSignUp(
