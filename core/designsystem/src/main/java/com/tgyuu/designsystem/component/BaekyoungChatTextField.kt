@@ -35,11 +35,11 @@ fun BaekyoungChatTextField(
         value = chatText,
         onValueChange = onTextChanged,
         textStyle = BaekyoungTheme.typography.contentRegular.copy(
-            color = textColor
+            color = textColor,
         ),
         singleLine = true,
         keyboardOptions = KeyboardOptions(
-            imeAction = ImeAction.Done
+            imeAction = ImeAction.Done,
         ),
         cursorBrush = SolidColor(BaekyoungTheme.colors.white),
         keyboardActions = KeyboardActions(onDone = { keyboardController?.hide() }),
@@ -47,14 +47,14 @@ fun BaekyoungChatTextField(
             .fillMaxWidth()
             .background(
                 color = BaekyoungTheme.colors.white.copy(alpha = 0.4f),
-                shape = RoundedCornerShape(3.dp)
+                shape = RoundedCornerShape(3.dp),
             ),
     ) { innerTextField ->
         Box(modifier = Modifier.padding(vertical = 4.dp, horizontal = 12.dp)) {
             Box(
                 modifier = Modifier
                     .align(Alignment.CenterStart)
-                    .fillMaxWidth()
+                    .fillMaxWidth(),
             ) {
                 innerTextField()
 
@@ -64,7 +64,7 @@ fun BaekyoungChatTextField(
                     modifier = Modifier
                         .align(Alignment.CenterEnd)
                         .padding(start = 10.dp)
-                        .clickable { sendMessage() }
+                        .clickable { sendMessage() },
                 )
             }
         }

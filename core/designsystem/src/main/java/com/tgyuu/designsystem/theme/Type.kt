@@ -19,7 +19,7 @@ val gangwonBold: FontFamily =
             resId = R.font.gangwon_bold,
             weight = FontWeight.Bold,
             style = FontStyle.Normal,
-        )
+        ),
     )
 
 val gangwonLight: FontFamily =
@@ -28,7 +28,7 @@ val gangwonLight: FontFamily =
             resId = R.font.gangwon_light,
             weight = FontWeight.Medium,
             style = FontStyle.Normal,
-        )
+        ),
     )
 
 val teunteunNormal: FontFamily =
@@ -37,7 +37,7 @@ val teunteunNormal: FontFamily =
             resId = R.font.gangwon_teunteun,
             weight = FontWeight.Normal,
             style = FontStyle.Normal,
-        )
+        ),
     )
 
 val teunteunBold: FontFamily =
@@ -46,7 +46,7 @@ val teunteunBold: FontFamily =
             resId = R.font.gangwon_teunteun,
             weight = FontWeight.Bold,
             style = FontStyle.Normal,
-        )
+        ),
     )
 
 val notoSansKrBold: FontFamily =
@@ -55,7 +55,7 @@ val notoSansKrBold: FontFamily =
             resId = R.font.noto_sans_kr_bold,
             weight = FontWeight.Bold,
             style = FontStyle.Normal,
-        )
+        ),
     )
 
 val notoSansKrRegular: FontFamily =
@@ -64,7 +64,7 @@ val notoSansKrRegular: FontFamily =
             resId = R.font.noto_sans_kr_regular,
             weight = FontWeight.Normal,
             style = FontStyle.Normal,
-        )
+        ),
     )
 
 val notoSansKrMedium: FontFamily =
@@ -73,7 +73,7 @@ val notoSansKrMedium: FontFamily =
             resId = R.font.noto_sans_kr_medium,
             weight = FontWeight.Medium,
             style = FontStyle.Normal,
-        )
+        ),
     )
 
 @Stable

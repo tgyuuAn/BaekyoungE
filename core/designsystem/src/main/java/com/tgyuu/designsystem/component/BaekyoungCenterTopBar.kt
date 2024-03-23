@@ -55,7 +55,7 @@ fun BaekyoungCenterTopBar(
     Box(
         modifier = modifier
             .fillMaxWidth()
-            .background(Color.Transparent)
+            .background(Color.Transparent),
     ) {
         if (showBackButton) {
             Image(
@@ -70,7 +70,7 @@ fun BaekyoungCenterTopBar(
                         } else {
                             onClickBackButton()
                         }
-                    }
+                    },
             )
         }
 
@@ -78,18 +78,18 @@ fun BaekyoungCenterTopBar(
             Box(
                 modifier = modifier
                     .fillMaxWidth()
-                    .padding(vertical = 20.dp)
+                    .padding(vertical = 20.dp),
             ) {
                 if (showSearchBar) {
                     BasicTextField(
                         value = searchText,
                         onValueChange = onSearchTextChanged,
                         textStyle = BaekyoungTheme.typography.contentRegular.copy(
-                            color = textColor
+                            color = textColor,
                         ),
                         singleLine = true,
                         keyboardOptions = KeyboardOptions(
-                            imeAction = ImeAction.Done
+                            imeAction = ImeAction.Done,
                         ),
                         cursorBrush = SolidColor(BaekyoungTheme.colors.white),
                         keyboardActions = KeyboardActions(onDone = { keyboardController?.hide() }),
@@ -98,7 +98,7 @@ fun BaekyoungCenterTopBar(
                             .padding(start = 50.dp, end = 20.dp)
                             .background(
                                 color = BaekyoungTheme.colors.white.copy(alpha = 0.4f),
-                                shape = RoundedCornerShape(10.dp)
+                                shape = RoundedCornerShape(10.dp),
                             ),
                     ) { innerTextField ->
                         Box(modifier = Modifier.padding(vertical = 4.dp, horizontal = 12.dp)) {
@@ -114,7 +114,7 @@ fun BaekyoungCenterTopBar(
                             Box(
                                 modifier = Modifier
                                     .align(Alignment.CenterStart)
-                                    .fillMaxWidth()
+                                    .fillMaxWidth(),
                             ) {
                                 innerTextField()
 
@@ -125,7 +125,7 @@ fun BaekyoungCenterTopBar(
                                         modifier = Modifier
                                             .align(Alignment.CenterEnd)
                                             .padding(start = 10.dp)
-                                            .clickable { clearSearchText() }
+                                            .clickable { clearSearchText() },
                                     )
                                 }
                             }
@@ -136,7 +136,7 @@ fun BaekyoungCenterTopBar(
                         text = stringResource(id = titleTextId),
                         style = BaekyoungTheme.typography.contentBold,
                         color = textColor,
-                        modifier = Modifier.align(Alignment.Center)
+                        modifier = Modifier.align(Alignment.Center),
                     )
 
                     Row(
@@ -144,13 +144,13 @@ fun BaekyoungCenterTopBar(
                         horizontalArrangement = Arrangement.spacedBy(20.dp),
                         modifier = Modifier
                             .align(Alignment.CenterEnd)
-                            .padding(horizontal = 20.dp)
+                            .padding(horizontal = 20.dp),
                     ) {
                         if (showSearchButton) {
                             Image(
                                 painter = painterResource(id = R.drawable.ic_search),
                                 contentDescription = null,
-                                modifier = Modifier.clickable { onShowSearchBarChanged() }
+                                modifier = Modifier.clickable { onShowSearchBarChanged() },
                             )
                         }
 
@@ -158,7 +158,7 @@ fun BaekyoungCenterTopBar(
                             Image(
                                 painter = painterResource(id = R.drawable.ic_drawer),
                                 contentDescription = null,
-                                modifier = Modifier.clickable { onClickDrawerButton() }
+                                modifier = Modifier.clickable { onClickDrawerButton() },
                             )
                         }
                     }

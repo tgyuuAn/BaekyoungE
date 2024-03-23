@@ -33,12 +33,12 @@ fun BaekyoungTopBar(
     Box(
         modifier = modifier
             .fillMaxWidth()
-            .background(Color.Transparent)
+            .background(Color.Transparent),
     ) {
         Row(
             verticalAlignment = Alignment.CenterVertically,
             horizontalArrangement = Arrangement.spacedBy(10.dp),
-            modifier = Modifier.padding(20.dp)
+            modifier = Modifier.padding(20.dp),
         ) {
             if (titleImageId != null && contentDescriptionId != null) {
                 Image(
@@ -63,7 +63,7 @@ fun PreviewBaekyongTopBar() {
         Box(
             modifier = Modifier
                 .padding(20.dp)
-                .background(BaekyoungTheme.colors.white)
+                .background(BaekyoungTheme.colors.white),
         ) {
             BaekyoungTopBar(
                 titleTextId = R.string.consulting,
@@ -81,7 +81,7 @@ fun PreviewBaekyongTopBarWithoutImage() {
         Box(
             modifier = Modifier
                 .padding(20.dp)
-                .background(BaekyoungTheme.colors.white)
+                .background(BaekyoungTheme.colors.white),
         ) {
             BaekyoungTopBar(
                 titleTextId = R.string.consulting,
