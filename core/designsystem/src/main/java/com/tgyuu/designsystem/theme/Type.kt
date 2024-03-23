@@ -13,6 +13,15 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.sp
 import com.tgyuu.designsystem.R
 
+val gangwonEduAllBold: FontFamily =
+    FontFamily(
+        Font(
+            resId = R.font.gangwon_edu_all_bold,
+            weight = FontWeight.Bold,
+            style = FontStyle.Normal,
+        ),
+    )
+
 val gangwonBold: FontFamily =
     FontFamily(
         Font(
@@ -87,6 +96,7 @@ class BaekKyoungTypogrphy internal constructor(
     labelNormal: TextStyle,
     labelBold: TextStyle,
     labelRegular: TextStyle,
+    splashBold: TextStyle,
 ) {
     var contentBold: TextStyle by mutableStateOf(contentBold)
         private set
@@ -105,6 +115,8 @@ class BaekKyoungTypogrphy internal constructor(
     var labelBold: TextStyle by mutableStateOf(labelBold)
         private set
     var labelRegular: TextStyle by mutableStateOf(labelRegular)
+        private set
+    var splashBold: TextStyle by mutableStateOf(splashBold)
         private set
 }
 
@@ -146,6 +158,10 @@ fun BaekKyoungTypoGraphy(): BaekKyoungTypogrphy {
         labelBold = TextStyle(
             fontSize = 12.sp,
             fontFamily = notoSansKrMedium,
+        ),
+        splashBold = TextStyle(
+            fontSize = 20.sp,
+            fontFamily = gangwonEduAllBold,
         ),
     )
 }
