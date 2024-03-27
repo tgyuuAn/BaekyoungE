@@ -21,6 +21,7 @@ android {
             "KAKAO_NATIVE_APP_KEY",
             getApiKey("kakao_native_app_key"),
         )
+        manifestPlaceholders["KAKAO_OAUTH_HOST"] = getApiKey("kakao_oauth_host")
     }
 
     buildTypes {
