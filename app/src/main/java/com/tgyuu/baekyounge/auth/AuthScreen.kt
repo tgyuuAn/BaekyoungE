@@ -1,5 +1,6 @@
 package com.tgyuu.baekyounge.auth
 
+import android.content.Context
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
@@ -151,15 +152,7 @@ fun AuthScreen(
                         drawableId = R.drawable.ic_kakao,
                         contentDescription = string.kakao_description,
                         onClickButton = {
-                            if (UserApiClient.instance.isKakaoTalkLoginAvailable(context)) {
-                                coroutineScope.launch {
-                                    snackbarHostState.showSnackbar("카카오톡을 실행할 수 없습니다.")
-                                }
-                            } else {
-                                coroutineScope.launch {
-                                    snackbarHostState.showSnackbar("카카오톡을 실행할 수 있습니다.")
-                                }
-                            }
+                            loginKakao(coroutineScope, snackbarHostState, context)
                         },
                     )
 
@@ -187,6 +180,37 @@ fun AuthScreen(
                     color = BaekyoungTheme.colors.grayAC,
                 )
             }
+        }
+    }
+}
+
+private fun loginKakao(
+    coroutineScope: CoroutineScope,
+    snackbarHostState: SnackbarHostState,
+    context: Context,
+) {
+    if (!UserApiClient.instance.isKakaoTalkLoginAvailable(context)) {
+        coroutineScope.launch {
+            snackbarHostState.showSnackbar("카카오톡을 실행할 수 없습니다.")
+        }
+        return
+    }
+
+    UserApiClient.instance.loginWithKakaoTalk(context) { token, error ->
+        if (error != null) {
+            coroutineScope.launch { snackbarHostState.showSnackbar(error.toString()) }
+            return@loginWithKakaoTalk
+        }
+
+        if (token == null) {
+            coroutineScope.launch { snackbarHostState.showSnackbar(error.toString()) }
+            return@loginWithKakaoTalk
+        }
+
+        coroutineScope.launch {
+            snackbarHostState.showSnackbar(
+                "로그인에 성공하였습니다." + token.toString(),
+            )
         }
     }
 }

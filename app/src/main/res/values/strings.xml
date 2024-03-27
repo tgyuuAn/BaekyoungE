@@ -12,7 +12,7 @@
     <string name="naver_description">네이버 로그인 버튼입니다.</string>
     <string name="google_description">구글 로그인 버튼입니다.</string>
     <string name="kakao_description">카카오 로그인 버튼입니다.</string>
-    <string name="facebook_description">카카오 로그인 버튼입니다.</string>
+    <string name="facebook_description">페이스북 로그인 버튼입니다.</string>
     <string name="apple_description">애플 로그인 버튼입니다.</string>
 
     <string name="welcome_message">처음 가입하시네요!</string>
