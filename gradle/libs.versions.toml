@@ -29,6 +29,8 @@ google-firebase = "32.3.1"
 google-services-plugin = "4.4.0"
 google-crashlytics-plguin = "2.9.9"
 
+kakao = "2.20.1"
+
 junit = "4.13.2"
 material = "1.10.0"
 ktlint-gradle = "11.3.1"
@@ -95,6 +97,7 @@ androidx-test-espresso = { module = "androidx.test.espresso:espresso-core", vers
 material = { group = "com.google.android.material", name = "material", version.ref = "material" }
 
 lottie-compose = { module = "com.airbnb.android:lottie-compose", version.ref = "lottie-compose" }
+kakao-user = { module = "com.kakao.sdk:v2-user", version.ref = "kakao" }
 
 [bundles]
 androidx = [
