@@ -1,20 +1,27 @@
 ## 🐋 백경이
 
-<div align="center">
-<img src="https://github.com/tgyuuAn/Baekyoung-i/assets/116813010/02f38685-292b-4f15-935b-7c4d003190e8" width = 500>
-</div>
+<img src="https://github.com/tgyuuAn/BaekyoungE/assets/116813010/c54ff068-acb7-405f-a17b-d98ec1752249" width="300"/>
 
 <br><br><br>
 
 ## 🌟 주요 기능
 
-**1차 개발** _(2023-11-01 ~2023-12-26)_
+<details>
+<summary><h4>1차 개발 _(2023-11-01 ~2023-12-26)_</h4></summary>
 
 ![ezgif com-crop (5)](https://github.com/tgyuuAn/Baekyoung-i/assets/116813010/60f9c954-cc59-4616-8d01-7a1db2b8ab3c)
 
 ![ezgif com-video-to-gif-converter](https://github.com/tgyuuAn/Baekyoung-i/assets/116813010/23ae4842-9ec2-4278-9001-a5ce672e1764)
 
 _추후 디자인 리팩토링, 채팅 기능 이외 기능 추가_
+
+</details>
+
+<br><br><br><br><br><br>
+
+**2차 개발** _(2024-03-01 ~ ing)_
+
+<img src="https://github.com/tgyuuAn/BaekyoungE/assets/116813010/54bc3a0f-7a76-4aae-b580-c10a862f7358" width="300"/>
 
 <details>
 <summary><h3>🎖️Award</h3></summary>
@@ -37,7 +44,7 @@ _추후 디자인 리팩토링, 채팅 기능 이외 기능 추가_
 <br><br><br>
 ## 🎨 UI/UX
 
-![image](https://github.com/tgyuuAn/Baekyoung-i/assets/116813010/726369e8-7ae1-44c8-9965-7bbaffab3078)
+![image](https://github.com/tgyuuAn/BaekyoungE/assets/116813010/9a9183cf-60eb-47b0-ab61-8cd85e555df9)
 
 <a href="https://www.figma.com/file/z7dilPOmXYdRUc8KhICWnw/%EC%B1%97%EB%B4%87%EC%96%B4%ED%94%8C-%EB%B0%B1%EA%B2%BD%EC%9D%B4?type=design&node-id=0%3A1&mode=design&t=QXZRcBkarEtVyH9d-1">Figma Link</a>
 
