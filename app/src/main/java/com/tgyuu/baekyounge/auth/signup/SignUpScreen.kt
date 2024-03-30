@@ -50,6 +50,7 @@ import kotlinx.coroutines.flow.collectLatest
 
 @Composable
 internal fun SignUpRoute(
+    userId: String,
     navigateToHome: () -> Unit,
     viewModel: SignUpViewModel = hiltViewModel(),
 ) {
@@ -59,6 +60,8 @@ internal fun SignUpRoute(
     val isSignUpSuccess by viewModel.isSignUpSuccess.collectAsStateWithLifecycle()
 
     LaunchedEffect(true) {
+        viewModel.setUserId(userId)
+
         viewModel.signUpEventFlow.collectLatest { event ->
             when (event) {
                 is SignUpViewModel.SignUpEvent.SignUpSuccess -> navigateToHome()

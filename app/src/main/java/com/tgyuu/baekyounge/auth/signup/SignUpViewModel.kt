@@ -16,6 +16,9 @@ class SignUpViewModel @Inject constructor() : ViewModel() {
     private val _signUpEventFlow = MutableSharedFlow<SignUpEvent>()
     val signUpEventFlow = _signUpEventFlow.asSharedFlow()
 
+    private val _userId = MutableStateFlow("")
+    val userId = _userId.asStateFlow()
+
     private val _nickname = MutableStateFlow("")
     val nickname = _nickname.asStateFlow()
 
@@ -33,6 +36,10 @@ class SignUpViewModel @Inject constructor() : ViewModel() {
         delay(4000L)
         _signUpEventFlow.emit(SignUpEvent.SignUpSuccess)
         // Todo
+    }
+
+    fun setUserId(userId: String) {
+        _userId.value = userId
     }
 
     fun setNickname(nickname: String) {

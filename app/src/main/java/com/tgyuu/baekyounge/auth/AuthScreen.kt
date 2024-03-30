@@ -214,7 +214,9 @@ private fun loginKakao(
 ) {
     val callback: (OAuthToken?, Throwable?) -> Unit = { token, error ->
         if (error != null) {
-            coroutineScope.launch { snackbarHostState.showSnackbar(error.toString()) }
+            if (!(error is ClientError && error.reason == ClientErrorCause.Cancelled)) {
+                coroutineScope.launch { snackbarHostState.showSnackbar(error.toString()) }
+            }
         } else if (token != null) {
             coroutineScope.launch {
                 snackbarHostState.showSnackbar(

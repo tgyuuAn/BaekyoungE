@@ -30,8 +30,8 @@ class AuthViewModel @Inject constructor(
                         "\n만료시간: ${tokenInfo.expiresIn} 초",
                 )
 
-                checkNotNull(tokenInfo.id){
-                    viewModelScope.launch{
+                checkNotNull(tokenInfo.id) {
+                    viewModelScope.launch {
                         _eventFlow.emit(AuthEvent.Error(IllegalStateException("고유 회원 Id 값이 비었습니다.")))
                     }
                 }
@@ -53,7 +53,6 @@ class AuthViewModel @Inject constructor(
             _eventFlow.emit(AuthEvent.Error(it))
         }
     }
-
 
     sealed class AuthEvent {
         data object VerifySuccess : AuthEvent()
