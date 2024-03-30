@@ -2,6 +2,8 @@ package com.tgyuu.baekyounge.splash
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.kakao.sdk.auth.AuthApiClient
+import com.kakao.sdk.user.UserApiClient
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableSharedFlow
@@ -28,7 +30,21 @@ class SplashViewModel @Inject constructor() : ViewModel() {
 
     fun event(event: SplashEvent) = viewModelScope.launch { _eventFlow.emit(event) }
 
-    sealed class SplashEvent() {
+    fun checkTokenExists() {
+        if (AuthApiClient.instance.hasToken()) {
+            UserApiClient.instance.accessTokenInfo { tokenInfo, error ->
+                if (error == null) {
+                    event(SplashEvent.NavigateToHome)
+                    return@accessTokenInfo
+                }
+            }
+        }
+
+        event(SplashEvent.NavigateToAuth)
+    }
+
+    sealed class SplashEvent {
         data object NavigateToAuth : SplashEvent()
+        data object NavigateToHome : SplashEvent()
     }
 }
