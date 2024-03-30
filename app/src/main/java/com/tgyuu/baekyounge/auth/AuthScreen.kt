@@ -221,10 +221,6 @@ private fun loginKakao(
             }
         } else if (token != null) {
             coroutineScope.launch {
-                snackbarHostState.showSnackbar(
-                    "로그인에 성공하였습니다." + token.toString(),
-                )
-
                 verifyMemberId()
             }
         }

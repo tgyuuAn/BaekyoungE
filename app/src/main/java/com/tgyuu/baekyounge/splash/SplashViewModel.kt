@@ -34,8 +34,7 @@ class SplashViewModel @Inject constructor() : ViewModel() {
         if (AuthApiClient.instance.hasToken()) {
             UserApiClient.instance.accessTokenInfo { tokenInfo, error ->
                 if (error == null) {
-                    event(SplashEvent.NavigateToHome)
-                    return@accessTokenInfo
+                    // Todo 로컬에 있는 토큰 값을 이용하여 파이어베이스 확인. 유저정보가 있으면 바로 홈으로 이동
                 }
             }
         }
