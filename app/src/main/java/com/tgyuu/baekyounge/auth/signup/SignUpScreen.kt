@@ -68,15 +68,18 @@ internal fun SignUpRoute(
     val isSignUpSuccess by viewModel.isSignUpSuccess.collectAsStateWithLifecycle()
     val snackbarHostState = remember { SnackbarHostState() }
 
+    LaunchedEffect(isSignUpSuccess) {
+        if (isSignUpSuccess) {
+            snackbarHostState.showSnackbar("회원가입에 성공하였습니다!")
+        }
+    }
+
     LaunchedEffect(true) {
         viewModel.setUserId(userId)
 
         viewModel.signUpEventFlow.collectLatest { event ->
             when (event) {
-                is SignUpViewModel.SignUpEvent.SignUpSuccess -> {
-                    snackbarHostState.showSnackbar("회원가입에 성공하였습니다!")
-                    navigateToHome()
-                }
+                is SignUpViewModel.SignUpEvent.SignUpSuccess -> navigateToHome()
 
                 is SignUpViewModel.SignUpEvent.SignUpFailed ->
                     snackbarHostState.showSnackbar(event.message)
@@ -196,7 +199,7 @@ internal fun SignUpScreen(
                         )
 
                         Text(
-                            text = stringResource(id = R.string.please_input_nickname_and_sex),
+                            text = stringResource(id = R.string.please_input_nickname_and_gender),
                             style = BaekyoungTheme.typography.labelBold,
                             color = BaekyoungTheme.colors.black56,
                             modifier = Modifier.padding(start = 5.dp, top = 16.dp),
@@ -213,7 +216,7 @@ internal fun SignUpScreen(
                         )
 
                         Text(
-                            text = stringResource(id = R.string.sex),
+                            text = stringResource(id = R.string.gender),
                             style = BaekyoungTheme.typography.contentBold,
                             color = BaekyoungTheme.colors.black56,
                             modifier = Modifier.padding(start = 5.dp, top = 16.dp),

@@ -16,11 +16,11 @@
     <string name="apple_description">애플 로그인 버튼입니다.</string>
 
     <string name="welcome_message">처음 가입하시네요!</string>
-    <string name="please_input_nickname_and_sex">별명과 성별을 입력해주세요.</string>
+    <string name="please_input_nickname_and_gender">별명과 성별을 입력해주세요.</string>
 
     <string name="nickname">별명</string>
     <string name="nickname_hint">별명을 입력하세요.</string>
-    <string name="sex">성별</string>
+    <string name="gender">성별</string>
     <string name="male">남성</string>
     <string name="female">여성</string>
     <string name="major">학과</string>
