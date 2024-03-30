@@ -1,5 +1,7 @@
 package com.pknu.data.repository.di
 
+import com.pknu.data.repository.repository.auth.AuthRepository
+import com.pknu.data.repository.repository.auth.AuthRepositoryImpl
 import com.pknu.data.repository.repository.consulting.ConsultingRepository
 import com.pknu.data.repository.repository.consulting.ConsultingRepositoryImpl
 import dagger.Binds
@@ -17,4 +19,10 @@ abstract class DataModule {
     abstract fun bindsConsultingRepository(
         consultingRepositoryImpl: ConsultingRepositoryImpl,
     ): ConsultingRepository
+
+    @Binds
+    @Singleton
+    abstract fun bindsAuthRepository(
+        authRepositoryImpl: AuthRepositoryImpl,
+    ): AuthRepository
 }
