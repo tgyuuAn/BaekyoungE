@@ -1,7 +1,6 @@
 package com.tgyuu.baekyounge.auth
 
 import android.content.Context
-import android.util.Log
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
@@ -213,8 +212,6 @@ private fun loginKakao(
     }
 
     UserApiClient.instance.loginWithKakaoTalk(context) { token, error ->
-        Log.d("test", "error : ${error.toString()} token : ${token.toString()}")
-
         if (error != null) {
             // 사용자가 카카오톡 설치 후 디바이스 권한 요청 화면에서 로그인을 취소한 경우,
             // 의도적인 로그인 취소로 보고 카카오계정으로 로그인 시도 없이 로그인 취소로 처리 (예: 뒤로 가기)
