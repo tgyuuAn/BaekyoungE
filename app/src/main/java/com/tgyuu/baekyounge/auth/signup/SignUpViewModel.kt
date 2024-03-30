@@ -62,7 +62,7 @@ class SignUpViewModel @Inject constructor(
             grade = _grade.value.toInt(),
         ).onSuccess {
             _isSignUpSuccess.value = true
-            delay(4000L)
+            delay(4500L)
             _signUpEventFlow.emit(SignUpEvent.SignUpSuccess)
         }.onFailure {
             _signUpEventFlow.emit(SignUpEvent.SignUpFailed("회원정보 등록에 실패하였습니다."))
