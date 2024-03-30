@@ -23,6 +23,7 @@ import androidx.compose.material3.SnackbarHost
 import androidx.compose.material3.SnackbarHostState
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
@@ -45,18 +46,32 @@ import com.tgyuu.baekyounge.R.string
 import com.tgyuu.baekyounge.auth.component.ButtonWithShadow
 import com.tgyuu.designsystem.theme.BaekyoungTheme
 import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 
 @Composable
 internal fun AuthRoute(
     navigateToSignUp: () -> Unit,
+    navigateToHome: () -> Unit,
     viewModel: AuthViewModel = hiltViewModel(),
 ) {
     val snackbarHostState = remember { SnackbarHostState() }
 
+    LaunchedEffect(true) {
+        viewModel.eventFlow.collectLatest { event ->
+            when (event) {
+                is AuthViewModel.AuthEvent.VerifySuccess -> navigateToHome()
+                is AuthViewModel.AuthEvent.VerifyFailed -> navigateToSignUp()
+                is AuthViewModel.AuthEvent.Error ->
+                    snackbarHostState.showSnackbar(event.throwable.toString())
+            }
+        }
+    }
+
     AuthScreen(
         snackbarHostState = snackbarHostState,
         navigateToSignUp = navigateToSignUp,
+        verifyMemberId = viewModel::verifyMemberId,
     )
 }
 
@@ -64,6 +79,7 @@ internal fun AuthRoute(
 fun AuthScreen(
     snackbarHostState: SnackbarHostState,
     navigateToSignUp: () -> Unit,
+    verifyMemberId: () -> Unit,
     coroutineScope: CoroutineScope = rememberCoroutineScope(),
 ) {
     val context = LocalContext.current
@@ -155,7 +171,10 @@ fun AuthScreen(
                         drawableId = R.drawable.ic_kakao,
                         contentDescription = string.kakao_description,
                         onClickButton = {
-                            loginKakao(coroutineScope, snackbarHostState, context)
+                            loginKakao(
+                                coroutineScope, snackbarHostState, context,
+                                verifyMemberId = verifyMemberId,
+                            )
                         },
                     )
 
@@ -191,6 +210,7 @@ private fun loginKakao(
     coroutineScope: CoroutineScope,
     snackbarHostState: SnackbarHostState,
     context: Context,
+    verifyMemberId: () -> Unit,
 ) {
     val callback: (OAuthToken?, Throwable?) -> Unit = { token, error ->
         if (error != null) {
@@ -200,6 +220,8 @@ private fun loginKakao(
                 snackbarHostState.showSnackbar(
                     "로그인에 성공하였습니다." + token.toString(),
                 )
+
+                verifyMemberId()
             }
         }
     }
@@ -228,6 +250,8 @@ private fun loginKakao(
             snackbarHostState.showSnackbar(
                 "로그인에 성공하였습니다." + token.toString(),
             )
+
+            verifyMemberId()
         }
     }
 }

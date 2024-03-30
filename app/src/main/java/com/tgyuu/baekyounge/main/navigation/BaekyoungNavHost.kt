@@ -80,6 +80,13 @@ fun BaekyoungNavHost(
                     },
                 )
             },
+            navigateToHome = {
+                navController.navigateToHome(
+                    navOptions {
+                        popUpTo(authNavigationRoute) { inclusive = true }
+                    },
+                )
+            },
         )
         signUpScreen(
             navigateToHome = {
