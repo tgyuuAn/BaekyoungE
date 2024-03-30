@@ -7,13 +7,13 @@ class PostUserInformationUseCase @Inject constructor(
     private val authRepository: AuthRepository,
 ) {
     suspend operator fun invoke(
-        userId: Long,
+        userId: String,
         nickName: String,
         sex: String,
         major: String,
         grade: Int,
     ): Result<Unit> = authRepository.postUserInformation(
-        userId = userId.toString(),
+        userId = userId,
         nickName = nickName,
         sex = sex,
         major = major,
