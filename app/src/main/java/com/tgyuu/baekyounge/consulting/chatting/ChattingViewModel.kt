@@ -28,12 +28,12 @@ class ChattingViewModel @Inject constructor(
             .map { result ->
                 result.fold(
                     onSuccess = { UiState.Success(it) },
-                    onFailure = { UiState.Error(it.message ?: "알 수 없는 오류입니다.") }
+                    onFailure = { UiState.Error(it.message ?: "알 수 없는 오류입니다.") },
                 )
             }.stateIn(
                 scope = viewModelScope,
                 started = SharingStarted.WhileSubscribed(5_000),
-                initialValue = UiState.Loading
+                initialValue = UiState.Loading,
             )
 
     private val _chatText: MutableStateFlow<String> = MutableStateFlow("")
