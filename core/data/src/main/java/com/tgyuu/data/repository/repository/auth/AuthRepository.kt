@@ -6,7 +6,7 @@ interface AuthRepository {
     suspend fun postUserInformation(
         userId: String,
         nickName: String,
-        sex: String,
+        gender: String,
         major: String,
         grade: Int,
     ): Result<Unit>

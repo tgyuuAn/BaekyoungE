@@ -26,8 +26,8 @@ class SignUpViewModel @Inject constructor(
     private val _nickname = MutableStateFlow("")
     val nickname = _nickname.asStateFlow()
 
-    private val _sex = MutableStateFlow("")
-    val sex = _sex.asStateFlow()
+    private val _gender = MutableStateFlow(Gender.MALE)
+    val gender = _gender.asStateFlow()
 
     private val _major = MutableStateFlow("")
     val major = _major.asStateFlow()
@@ -44,11 +44,6 @@ class SignUpViewModel @Inject constructor(
             return@launch
         }
 
-        if (_sex.value.isEmpty()) {
-            _signUpEventFlow.emit(SignUpEvent.SignUpFailed("성별을 선택해주세요."))
-            return@launch
-        }
-
         if (_major.value.isEmpty()) {
             _signUpEventFlow.emit(SignUpEvent.SignUpFailed("학과를 입력해주세요."))
             return@launch
@@ -62,7 +57,7 @@ class SignUpViewModel @Inject constructor(
         postUserInformationUseCase(
             userId = _userId.value,
             nickName = _nickname.value,
-            sex = _sex.value,
+            gender = _gender.value.displayName,
             major = _major.value,
             grade = _grade.value.toInt(),
         ).onSuccess {
@@ -86,6 +81,10 @@ class SignUpViewModel @Inject constructor(
         _major.value = major
     }
 
+    fun setGender(gender: Gender) {
+        _gender.value = gender
+    }
+
     fun setGrade(grade: String) {
         if (grade.isDigitsOnly()) {
             _grade.value = grade
@@ -95,5 +94,9 @@ class SignUpViewModel @Inject constructor(
     sealed class SignUpEvent {
         data object SignUpSuccess : SignUpEvent()
         data class SignUpFailed(val message: String) : SignUpEvent()
+    }
+
+    enum class Gender(val displayName: String) {
+        MALE("남성"), FEMALE("여성")
     }
 }

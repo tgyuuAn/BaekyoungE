@@ -14,14 +14,14 @@ class AuthRepositoryImpl @Inject constructor(
     override suspend fun postUserInformation(
         userId: String,
         nickName: String,
-        sex: String,
+        gender: String,
         major: String,
         grade: Int,
     ): Result<Unit> = authDataSource.postUserInformation(
         UserInformationRequest(
             userId = userId,
             nickName = nickName,
-            sex = sex,
+            gender = gender,
             major = major,
             grade = grade,
             registrationDate = generateNowDateTime(),

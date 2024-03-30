@@ -9,13 +9,13 @@ class PostUserInformationUseCase @Inject constructor(
     suspend operator fun invoke(
         userId: String,
         nickName: String,
-        sex: String,
+        gender: String,
         major: String,
         grade: Int,
     ): Result<Unit> = authRepository.postUserInformation(
         userId = userId,
         nickName = nickName,
-        sex = sex,
+        gender = gender,
         major = major,
         grade = grade,
     )
