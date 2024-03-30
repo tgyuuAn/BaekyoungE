@@ -33,6 +33,7 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.graphicsLayer
 import androidx.compose.ui.layout.ContentScale
@@ -286,6 +287,10 @@ internal fun SignUpScreen(
                     horizontalAlignment = Alignment.CenterHorizontally,
                     modifier = Modifier
                         .fillMaxWidth()
+                        .shadow(
+                            elevation = 20.dp,
+                            shape = RoundedCornerShape(topStart = 10.dp, topEnd = 10.dp),
+                        )
                         .clip(RoundedCornerShape(topStart = 10.dp, topEnd = 10.dp))
                         .background(BaekyoungTheme.colors.white),
                 ) {
