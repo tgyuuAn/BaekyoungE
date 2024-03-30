@@ -1,6 +1,7 @@
 package com.tgyuu.data.repository.repository.auth
 
 import com.tgyuu.data.util.generateNowDateTime
+import com.tgyuu.data.util.toISOLocalDateTimeString
 import com.tgyuu.network.model.auth.UserInformationRequest
 import com.tgyuu.network.source.auth.AuthDataSource
 import javax.inject.Inject
@@ -24,7 +25,7 @@ class AuthRepositoryImpl @Inject constructor(
             gender = gender,
             major = major,
             grade = grade,
-            registrationDate = generateNowDateTime(),
+            registrationDate = generateNowDateTime().toISOLocalDateTimeString(),
         ),
     )
 }

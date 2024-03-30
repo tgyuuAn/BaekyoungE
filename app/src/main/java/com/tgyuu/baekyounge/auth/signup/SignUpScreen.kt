@@ -42,10 +42,12 @@ import androidx.compose.ui.platform.LocalFocusManager
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.input.KeyboardType
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.tgyuu.baekyounge.R
+import com.tgyuu.baekyounge.auth.signup.SignUpViewModel.Gender
 import com.tgyuu.baekyounge.auth.signup.component.SignUpTextField
 import com.tgyuu.common.util.addFocusCleaner
 import com.tgyuu.designsystem.component.BaekgyoungClouds
@@ -61,6 +63,7 @@ internal fun SignUpRoute(
 ) {
     val major by viewModel.major.collectAsStateWithLifecycle()
     val grade by viewModel.grade.collectAsStateWithLifecycle()
+    val gender by viewModel.gender.collectAsStateWithLifecycle()
     val nickname by viewModel.nickname.collectAsStateWithLifecycle()
     val isSignUpSuccess by viewModel.isSignUpSuccess.collectAsStateWithLifecycle()
     val snackbarHostState = remember { SnackbarHostState() }
@@ -70,7 +73,11 @@ internal fun SignUpRoute(
 
         viewModel.signUpEventFlow.collectLatest { event ->
             when (event) {
-                is SignUpViewModel.SignUpEvent.SignUpSuccess -> navigateToHome()
+                is SignUpViewModel.SignUpEvent.SignUpSuccess -> {
+                    snackbarHostState.showSnackbar("회원가입에 성공하였습니다!")
+                    navigateToHome()
+                }
+
                 is SignUpViewModel.SignUpEvent.SignUpFailed ->
                     snackbarHostState.showSnackbar(event.message)
             }
@@ -81,12 +88,14 @@ internal fun SignUpRoute(
         nickname = nickname,
         major = major,
         grade = grade,
+        gender = gender,
         snackbarHostState = snackbarHostState,
         isSignUpSuccess = isSignUpSuccess,
         signUp = viewModel::signUp,
         onNicknameChanged = viewModel::setNickname,
         onMajorChanged = viewModel::setMajor,
         onGradeChanged = viewModel::setGrade,
+        onGenderChanged = viewModel::setGender,
     )
 }
 
@@ -95,12 +104,14 @@ internal fun SignUpScreen(
     nickname: String,
     major: String,
     grade: String,
+    gender: Gender,
     snackbarHostState: SnackbarHostState,
     isSignUpSuccess: Boolean,
     signUp: () -> Unit,
     onNicknameChanged: (String) -> Unit,
     onMajorChanged: (String) -> Unit,
     onGradeChanged: (String) -> Unit,
+    onGenderChanged: (Gender) -> Unit,
 ) {
     val focusManager = LocalFocusManager.current
     val localConfiguration = LocalConfiguration.current
@@ -223,7 +234,7 @@ internal fun SignUpScreen(
                                 .clickable { showBottomSheet = !showBottomSheet },
                         ) {
                             Text(
-                                text = stringResource(id = R.string.male),
+                                text = gender.displayName,
                                 style = BaekyoungTheme.typography.labelRegular,
                                 color = BaekyoungTheme.colors.black56,
                                 modifier = Modifier
@@ -297,7 +308,14 @@ internal fun SignUpScreen(
                     Text(
                         text = stringResource(id = R.string.male),
                         style = BaekyoungTheme.typography.labelRegular,
-                        modifier = Modifier.padding(vertical = 15.dp),
+                        textAlign = TextAlign.Center,
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .padding(vertical = 15.dp)
+                            .clickable {
+                                onGenderChanged(Gender.MALE)
+                                showBottomSheet = !showBottomSheet
+                            },
                     )
 
                     HorizontalDivider(color = BaekyoungTheme.colors.grayD0)
@@ -305,7 +323,14 @@ internal fun SignUpScreen(
                     Text(
                         text = stringResource(id = R.string.female),
                         style = BaekyoungTheme.typography.labelRegular,
-                        modifier = Modifier.padding(vertical = 15.dp),
+                        textAlign = TextAlign.Center,
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .padding(vertical = 15.dp)
+                            .clickable {
+                                onGenderChanged(Gender.FEMALE)
+                                showBottomSheet = !showBottomSheet
+                            },
                     )
                 }
             }
