@@ -9,7 +9,7 @@ import androidx.navigation.navArgument
 import androidx.navigation.navOptions
 import com.tgyuu.baekyounge.auth.signup.SignUpRoute
 
-fun signUpNavigationRoute(userId: String) = "sign_up_route/$userId"
+fun signUpNavigationRoute(userId: String = "{userId}") = "sign_up_route/$userId"
 
 fun NavController.navigateToSignUp(
     userId: String,

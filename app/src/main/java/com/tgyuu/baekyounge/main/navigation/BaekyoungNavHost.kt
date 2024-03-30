@@ -39,7 +39,7 @@ fun BaekyoungNavHost(
         navController = navController,
         enterTransition = {
             if (navController.currentDestination?.route == homeNavigationRoute &&
-                navController.previousBackStackEntry?.destination?.route == signUpNavigationRoute
+                navController.previousBackStackEntry?.destination?.route == signUpNavigationRoute()
             ) {
                 EnterTransition.None
             } else {
@@ -47,7 +47,7 @@ fun BaekyoungNavHost(
             }
         },
         exitTransition = {
-            if (navController.currentDestination?.route == signUpNavigationRoute) {
+            if (navController.currentDestination?.route == signUpNavigationRoute()) {
                 ExitTransition.None
             } else {
                 fadeOut(animationSpec = tween(700))
@@ -75,6 +75,7 @@ fun BaekyoungNavHost(
         authScreen(
             navigateToSignUp = {
                 navController.navigateToSignUp(
+                    userId = it,
                     navOptions {
                         popUpTo(authNavigationRoute) { inclusive = true }
                     },
@@ -92,7 +93,7 @@ fun BaekyoungNavHost(
             navigateToHome = {
                 navController.navigateToHome(
                     navOptions {
-                        popUpTo(signUpNavigationRoute) { inclusive = true }
+                        popUpTo(signUpNavigationRoute()) { inclusive = true }
                     },
                 )
             },

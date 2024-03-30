@@ -39,6 +39,26 @@ class SignUpViewModel @Inject constructor(
     val isSignUpSuccess = _isSignUpSuccess.asStateFlow()
 
     fun signUp() = viewModelScope.launch {
+        if (_nickname.value.isEmpty()) {
+            _signUpEventFlow.emit(SignUpEvent.SignUpFailed("별명을 입력해주세요."))
+            return@launch
+        }
+
+        if (_sex.value.isEmpty()) {
+            _signUpEventFlow.emit(SignUpEvent.SignUpFailed("성별을 선택해주세요."))
+            return@launch
+        }
+
+        if (_major.value.isEmpty()) {
+            _signUpEventFlow.emit(SignUpEvent.SignUpFailed("학과를 입력해주세요."))
+            return@launch
+        }
+
+        if (_grade.value.isEmpty()) {
+            _signUpEventFlow.emit(SignUpEvent.SignUpFailed("학년을 입력해주세요."))
+            return@launch
+        }
+
         postUserInformationUseCase(
             userId = _userId.value,
             nickName = _nickname.value,

@@ -65,6 +65,7 @@ internal fun SignUpRoute(
         viewModel.signUpEventFlow.collectLatest { event ->
             when (event) {
                 is SignUpViewModel.SignUpEvent.SignUpSuccess -> navigateToHome()
+                is SignUpViewModel.SignUpEvent.SignUpFailed -> {}
             }
         }
     }

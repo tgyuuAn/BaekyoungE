@@ -3,7 +3,7 @@ package com.tgyuu.network.source.consulting
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.ktx.toObject
 import com.tgyuu.network.constant.CHATTING_LOG_COLLECTION
-import com.tgyuu.network.constant.CHAT_USER_COLLECTION
+import com.tgyuu.network.constant.USERS_COLLECTION
 import com.tgyuu.network.constant.USER_INFORMATION_COLLECTION
 import com.tgyuu.network.model.consulting.ChatLogResponse
 import com.tgyuu.network.model.consulting.ChatRequest
@@ -28,7 +28,7 @@ class ConsultingDataSourceImpl @Inject constructor(
         }
 
     override suspend fun postUserChatting(chatRequest: ChatRequest): Result<Unit> = runCatching {
-        firebaseFirestore.collection(CHAT_USER_COLLECTION)
+        firebaseFirestore.collection(USERS_COLLECTION)
             .document("s0tSqorXJqEn4ntIxcQj")
             .set(chatRequest)
             .await()

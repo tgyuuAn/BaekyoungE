@@ -51,7 +51,7 @@ import kotlinx.coroutines.launch
 
 @Composable
 internal fun AuthRoute(
-    navigateToSignUp: () -> Unit,
+    navigateToSignUp: (String) -> Unit,
     navigateToHome: () -> Unit,
     viewModel: AuthViewModel = hiltViewModel(),
 ) {
@@ -61,7 +61,7 @@ internal fun AuthRoute(
         viewModel.eventFlow.collectLatest { event ->
             when (event) {
                 is AuthViewModel.AuthEvent.VerifySuccess -> navigateToHome()
-                is AuthViewModel.AuthEvent.VerifyFailed -> navigateToSignUp()
+                is AuthViewModel.AuthEvent.VerifyFailed -> navigateToSignUp(event.userId)
                 is AuthViewModel.AuthEvent.Error ->
                     snackbarHostState.showSnackbar(event.throwable.toString())
             }
@@ -78,7 +78,7 @@ internal fun AuthRoute(
 @Composable
 fun AuthScreen(
     snackbarHostState: SnackbarHostState,
-    navigateToSignUp: () -> Unit,
+    navigateToSignUp: (String) -> Unit,
     verifyMemberId: () -> Unit,
     coroutineScope: CoroutineScope = rememberCoroutineScope(),
 ) {
@@ -122,7 +122,7 @@ fun AuthScreen(
                 modifier = Modifier
                     .align(Alignment.TopEnd)
                     .padding(end = 20.dp, top = 16.dp)
-                    .clickable { navigateToSignUp() },
+                    .clickable { navigateToSignUp("atg0614") },
             )
 
             Column(
