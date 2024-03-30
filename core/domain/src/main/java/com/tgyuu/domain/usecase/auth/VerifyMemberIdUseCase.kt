@@ -7,5 +7,5 @@ class VerifyMemberIdUseCase @Inject constructor(
     private val authRepository: AuthRepository,
 ) {
     suspend operator fun invoke(userId: Long): Result<Boolean> =
-        authRepository.verifyMemberId(userId.toString())
+        authRepository.verifyUserId(userId.toString())
 }

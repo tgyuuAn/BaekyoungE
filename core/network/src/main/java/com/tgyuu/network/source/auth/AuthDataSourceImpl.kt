@@ -11,7 +11,7 @@ import javax.inject.Inject
 class AuthDataSourceImpl @Inject constructor(
     private val firebaseFirestore: FirebaseFirestore,
 ) : AuthDataSource {
-    override suspend fun verifyMemberId(userId: String): Result<Boolean> = runCatching {
+    override suspend fun verifyUserId(userId: String): Result<Boolean> = runCatching {
         val document = firebaseFirestore.collection(USER_INFORMATION_COLLECTION)
             .document(userId)
             .get()
@@ -21,7 +21,7 @@ class AuthDataSourceImpl @Inject constructor(
         document.toObject<UserInformationResponse>() != null
     }
 
-    override suspend fun postMemberInformation(userInformationRequest: UserInformationRequest):
+    override suspend fun postUserInformation(userInformationRequest: UserInformationRequest):
         Result<Unit> = runCatching {
         firebaseFirestore.collection(USER_INFORMATION_COLLECTION)
             .document(userInformationRequest.userId)
