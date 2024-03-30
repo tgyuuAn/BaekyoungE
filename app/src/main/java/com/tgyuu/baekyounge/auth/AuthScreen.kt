@@ -172,7 +172,9 @@ fun AuthScreen(
                         contentDescription = string.kakao_description,
                         onClickButton = {
                             loginKakao(
-                                coroutineScope, snackbarHostState, context,
+                                coroutineScope = coroutineScope,
+                                snackbarHostState = snackbarHostState,
+                                context = context,
                                 verifyMemberId = verifyMemberId,
                             )
                         },

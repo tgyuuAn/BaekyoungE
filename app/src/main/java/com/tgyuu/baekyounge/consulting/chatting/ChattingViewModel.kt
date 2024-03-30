@@ -3,9 +3,9 @@ package com.tgyuu.baekyounge.consulting.chatting
 import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.pknu.domain.usecase.consulting.GetConsultingChattingUseCase
-import com.pknu.domain.usecase.consulting.PostUserChattingUseCase
-import com.pknu.model.consulting.ConsultingChatting
+import com.tgyuu.domain.usecase.consulting.GetConsultingChattingUseCase
+import com.tgyuu.domain.usecase.consulting.PostUserChattingUseCase
+import com.tgyuu.model.consulting.ConsultingChatting
 import com.tgyuu.common.util.UiState
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
