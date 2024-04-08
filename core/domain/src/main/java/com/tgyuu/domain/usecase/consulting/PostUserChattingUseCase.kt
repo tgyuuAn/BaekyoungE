@@ -6,6 +6,11 @@ import javax.inject.Inject
 class PostUserChattingUseCase @Inject constructor(
     private val consultingRepository: ConsultingRepository,
 ) {
-    suspend operator fun invoke(chatUser: String) =
-        consultingRepository.postUserChatting(chatUser = chatUser)
+    suspend operator fun invoke(
+        userId: String,
+        chat: String,
+    ) = consultingRepository.postUserChatting(
+        userId = userId,
+        chat = chat,
+    )
 }

@@ -2,7 +2,7 @@ package com.tgyuu.network.source.consulting
 
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.ktx.toObject
-import com.tgyuu.network.constant.CHATTING_LOG_COLLECTION
+import com.tgyuu.network.constant.CHAT_LOG_COLLECTION
 import com.tgyuu.network.constant.USERS_COLLECTION
 import com.tgyuu.network.constant.USER_INFORMATION_COLLECTION
 import com.tgyuu.network.model.consulting.ChatLogResponse
@@ -10,6 +10,8 @@ import com.tgyuu.network.model.consulting.ChatRequest
 import com.tgyuu.network.model.consulting.ConsultingRequest
 import com.tgyuu.network.model.consulting.ConsultingResponse
 import com.tgyuu.network.util.await
+import com.tgyuu.network.util.generateNowDateTime
+import com.tgyuu.network.util.toISOLocalDateTimeString
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
@@ -29,7 +31,9 @@ class ConsultingDataSourceImpl @Inject constructor(
 
     override suspend fun postUserChatting(chatRequest: ChatRequest): Result<Unit> = runCatching {
         firebaseFirestore.collection(USERS_COLLECTION)
-            .document("s0tSqorXJqEn4ntIxcQj")
+            .document(chatRequest.userId)
+            .collection(generateNowDateTime().toISOLocalDateTimeString())
+            .document()
             .set(chatRequest)
             .await()
     }
@@ -37,7 +41,7 @@ class ConsultingDataSourceImpl @Inject constructor(
     override fun getChattingLog(): Flow<Result<List<ChatLogResponse>>> = flow {
         while (true) {
             val consulting = runCatching {
-                val task = firebaseFirestore.collection(CHATTING_LOG_COLLECTION)
+                val task = firebaseFirestore.collection(CHAT_LOG_COLLECTION)
                     .document("lqDCZs2rMJo6wReAU29M")
                     .get()
                     .await()

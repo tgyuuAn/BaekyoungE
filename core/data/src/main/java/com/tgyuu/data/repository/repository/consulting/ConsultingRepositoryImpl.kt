@@ -19,12 +19,15 @@ class ConsultingRepositoryImpl @Inject constructor(
             ),
         )
 
-    override suspend fun postUserChatting(chatUser: String): Result<Unit> =
-        consultingDataSource.postUserChatting(
-            ChatRequest(
-                chat_user = chatUser,
-            ),
-        )
+    override suspend fun postUserChatting(
+        userId: String,
+        chat: String,
+    ): Result<Unit> = consultingDataSource.postUserChatting(
+        ChatRequest(
+            userId = userId,
+            chat = chat,
+        ),
+    )
 
     override fun getChatting(): Flow<Result<List<ConsultingChatting>>> =
         consultingDataSource.getChattingLog().map { response ->

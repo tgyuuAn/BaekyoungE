@@ -11,6 +11,7 @@ import androidx.compose.foundation.layout.offset
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -25,12 +26,10 @@ import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.tgyuu.baekyounge.R
-import com.tgyuu.common.util.UiState
 import com.tgyuu.common.util.addFocusCleaner
 import com.tgyuu.designsystem.component.BaekyoungCenterTopBar
 import com.tgyuu.designsystem.component.BaekyoungChatTextField
 import com.tgyuu.designsystem.theme.BaekyoungTheme
-import com.tgyuu.model.consulting.ConsultingChatting
 
 @Composable
 internal fun ChattingRoute(
@@ -38,12 +37,14 @@ internal fun ChattingRoute(
     popBackStack: () -> Unit,
     viewModel: ChattingViewModel = hiltViewModel(),
 ) {
-    val chat by viewModel.chat.collectAsStateWithLifecycle()
     val chatText by viewModel.chatText.collectAsStateWithLifecycle()
     val searchText by viewModel.searchText.collectAsStateWithLifecycle()
 
+    LaunchedEffect(true) {
+        viewModel.setUserId(userId)
+    }
+
     ChattingScreen(
-        chat = chat,
         chatText = chatText,
         searchText = searchText,
         onChatTextChanged = viewModel::setChatText,
@@ -55,7 +56,6 @@ internal fun ChattingRoute(
 
 @Composable
 internal fun ChattingScreen(
-    chat: UiState<List<ConsultingChatting>>,
     chatText: String,
     searchText: String,
     onChatTextChanged: (String) -> Unit,
