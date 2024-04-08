@@ -23,4 +23,9 @@ class ConsultingViewModel @Inject constructor(
     fun setUiState(uiState: UiState<Unit>) {
         _uiState.value = uiState
     }
+
+    sealed class ConsultingEvent {
+        data object NavigateToChatting : ConsultingEvent()
+        data class ShowSnackBar(val message: String) : ConsultingEvent()
+    }
 }
