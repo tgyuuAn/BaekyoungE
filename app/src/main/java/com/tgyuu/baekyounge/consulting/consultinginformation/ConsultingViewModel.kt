@@ -1,7 +1,7 @@
 package com.tgyuu.baekyounge.consulting.consultinginformation
 
 import androidx.lifecycle.ViewModel
-import com.pknu.domain.usecase.consulting.PostConsultingInformationUseCase
+import com.tgyuu.domain.usecase.consulting.PostConsultingInformationUseCase
 import com.tgyuu.common.util.UiState
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableSharedFlow

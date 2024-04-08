@@ -18,7 +18,6 @@ class ApplicationConventionPlugin : Plugin<Project> {
             extensions.configure<ApplicationExtension> {
                 configureKotlinAndroid(this)
                 applyCompose(this)
-                defaultConfig.targetSdk = libs.targetSdk
             }
 
             dependencies {

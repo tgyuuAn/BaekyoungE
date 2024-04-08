@@ -57,6 +57,7 @@ fun Project.applyCompose(
 
     commonExtension.apply {
         buildFeatures.compose = true
+        buildFeatures.buildConfig = true
 
         composeOptions {
             kotlinCompilerExtensionVersion = libs.findVersion("compose.compiler").get().toString()
