@@ -104,6 +104,7 @@ fun BaekyoungNavHost(
         consultingGraph(
             navigateToChatting = {
                 navController.navigateToChatting(
+                    userId = it,
                     navOptions {
                         popUpTo(consultingNavigationRoute)
                     },

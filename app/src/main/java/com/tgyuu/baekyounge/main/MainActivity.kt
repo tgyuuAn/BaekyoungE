@@ -97,7 +97,7 @@ private fun handleBottomBarState(
     null -> setBottomBarState(false)
     splashNavigationRoute -> setBottomBarState(false)
     authNavigationRoute -> setBottomBarState(false)
-    chattingNavigationRoute -> setBottomBarState(false)
+    chattingNavigationRoute() -> setBottomBarState(false)
     signUpNavigationRoute() -> setBottomBarState(false)
     else -> setBottomBarState(true)
 }

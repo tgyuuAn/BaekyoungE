@@ -24,16 +24,17 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
-import com.tgyuu.model.consulting.ConsultingChatting
 import com.tgyuu.baekyounge.R
 import com.tgyuu.common.util.UiState
 import com.tgyuu.common.util.addFocusCleaner
 import com.tgyuu.designsystem.component.BaekyoungCenterTopBar
 import com.tgyuu.designsystem.component.BaekyoungChatTextField
 import com.tgyuu.designsystem.theme.BaekyoungTheme
+import com.tgyuu.model.consulting.ConsultingChatting
 
 @Composable
 internal fun ChattingRoute(
+    userId: String,
     popBackStack: () -> Unit,
     viewModel: ChattingViewModel = hiltViewModel(),
 ) {

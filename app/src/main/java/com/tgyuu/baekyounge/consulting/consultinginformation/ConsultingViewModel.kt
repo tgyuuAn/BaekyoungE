@@ -1,31 +1,51 @@
 package com.tgyuu.baekyounge.consulting.consultinginformation
 
 import androidx.lifecycle.ViewModel
-import com.tgyuu.domain.usecase.consulting.PostConsultingInformationUseCase
-import com.tgyuu.common.util.UiState
+import androidx.lifecycle.viewModelScope
+import com.kakao.sdk.auth.AuthApiClient
+import com.kakao.sdk.user.UserApiClient
+import com.tgyuu.domain.usecase.auth.VerifyMemberIdUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableSharedFlow
-import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asSharedFlow
-import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
 class ConsultingViewModel @Inject constructor(
-    private val postConsultingInformationUseCase: PostConsultingInformationUseCase,
+    private val verifyMemberIdUseCase: VerifyMemberIdUseCase,
 ) : ViewModel() {
-    private val _uiState: MutableStateFlow<UiState<Unit>> = MutableStateFlow(UiState.Init)
-    val uiState get() = _uiState.asStateFlow()
+    private val _eventFlow: MutableSharedFlow<ConsultingEvent> = MutableSharedFlow()
+    val eventFlow get() = _eventFlow.asSharedFlow()
 
-    private val _event: MutableSharedFlow<ConsultingEvent> = MutableSharedFlow()
-    val event get() = _event.asSharedFlow()
+    fun event(event: ConsultingEvent) = viewModelScope.launch { _eventFlow.emit(event) }
 
-    fun setUiState(uiState: UiState<Unit>) {
-        _uiState.value = uiState
+    fun navigateToChatting() {
+        // 토큰이 없을 경우 바로 Auth 페이지로 이동
+        if (!AuthApiClient.instance.hasToken()) {
+            event(ConsultingEvent.ShowSnackBar(ERROR_USER_MESSAGE))
+            return
+        }
+
+        UserApiClient.instance.accessTokenInfo { tokenInfo, error ->
+            if (error == null) {
+                verifyMemberId(tokenInfo?.id ?: -1)
+            }
+        }
+    }
+
+    fun verifyMemberId(userId: Long) = viewModelScope.launch {
+        verifyMemberIdUseCase(userId)
+            .onSuccess { event(ConsultingEvent.NavigateToChatting(userId.toString())) }
+            .onFailure { event(ConsultingEvent.ShowSnackBar(ERROR_USER_MESSAGE)) }
     }
 
     sealed class ConsultingEvent {
-        data object NavigateToChatting : ConsultingEvent()
+        data class NavigateToChatting(val userId: String) : ConsultingEvent()
         data class ShowSnackBar(val message: String) : ConsultingEvent()
+    }
+
+    companion object {
+        private const val ERROR_USER_MESSAGE = "유저 정보가 없습니다."
     }
 }
