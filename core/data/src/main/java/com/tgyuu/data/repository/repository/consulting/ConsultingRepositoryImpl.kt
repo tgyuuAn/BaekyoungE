@@ -1,6 +1,6 @@
 package com.tgyuu.data.repository.repository.consulting
 
-import com.tgyuu.model.consulting.ConsultingChatting
+import com.tgyuu.model.consulting.Message
 import com.tgyuu.network.model.consulting.ChatRequest
 import com.tgyuu.network.model.consulting.ConsultingRequest
 import com.tgyuu.network.source.consulting.ConsultingDataSource
@@ -29,7 +29,7 @@ class ConsultingRepositoryImpl @Inject constructor(
         ),
     )
 
-    override fun getChatting(): Flow<Result<List<ConsultingChatting>>> =
+    override fun getChatting(): Flow<Result<List<Message>>> =
         consultingDataSource.getChattingLog().map { response ->
             response.mapCatching { chatLogResponseList ->
                 chatLogResponseList.map {

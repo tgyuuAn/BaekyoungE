@@ -1,6 +1,6 @@
 package com.tgyuu.data.repository.repository.consulting
 
-import com.tgyuu.model.consulting.ConsultingChatting
+import com.tgyuu.model.consulting.Message
 import kotlinx.coroutines.flow.Flow
 
 interface ConsultingRepository {
@@ -14,5 +14,5 @@ interface ConsultingRepository {
         chat: String,
     ): Result<Unit>
 
-    fun getChatting(): Flow<Result<List<ConsultingChatting>>>
+    fun getChatting(): Flow<Result<List<Message>>>
 }

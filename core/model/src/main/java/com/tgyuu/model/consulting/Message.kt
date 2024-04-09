@@ -1,6 +1,6 @@
 package com.tgyuu.model.consulting
 
-data class ConsultingChatting(
+data class Message(
     val content: String,
     val role: ChattingRole,
 )

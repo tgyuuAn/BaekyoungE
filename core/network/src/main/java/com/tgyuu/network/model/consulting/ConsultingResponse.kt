@@ -1,7 +1,7 @@
 package com.tgyuu.network.model.consulting
 
 import com.tgyuu.model.consulting.ChattingRole
-import com.tgyuu.model.consulting.ConsultingChatting
+import com.tgyuu.model.consulting.Message
 
 data class ConsultingResponse(
     val chat_log: List<ChatLogResponse> = listOf(),
@@ -11,10 +11,10 @@ data class ChatLogResponse(
     val content: String? = null,
     val role: String? = null,
 ) {
-    fun toConsultingChatting(): ConsultingChatting =
-        ConsultingChatting(
-            content = this.content ?: "",
-            role = when (this.role) {
+    fun toConsultingChatting(): Message =
+        Message(
+            content = content ?: "",
+            role = when (role) {
                 "user" -> ChattingRole.USER
                 "system" -> ChattingRole.SYSTEM
                 "assistant" -> ChattingRole.ASSISTANT
