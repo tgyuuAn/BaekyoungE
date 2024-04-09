@@ -24,7 +24,6 @@ import javax.inject.Singleton
 @Module
 @InstallIn(SingletonComponent::class)
 object ApiModule {
-
     val contentType = "application/json".toMediaType()
 
     @Provides
@@ -67,7 +66,7 @@ object OpenAiInterceptor : Interceptor {
 interface OpenAiApi {
 
     @POST(value = "chat/completions")
-    suspend fun sendMessage(
+    suspend fun postChatMessage(
         @Body AiChatRequest: AiChatRequest,
     ): Response<AiChatResponse>
 }
