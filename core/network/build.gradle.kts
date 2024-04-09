@@ -12,6 +12,9 @@ dependencies {
 
     implementation(platform(libs.firebase.bom))
     implementation(libs.firebase.firestore)
+    implementation(libs.bundles.retrofit)
+    implementation(libs.bundles.okhttp)
+
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.test.junit)
 }
