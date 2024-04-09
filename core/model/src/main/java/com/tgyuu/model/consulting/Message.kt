@@ -1,7 +1,7 @@
 package com.tgyuu.model.consulting
 
 data class ChatLog(
-    val messages: List<Message>,
+    val messages: MutableList<Message>,
 )
 
 data class Message(

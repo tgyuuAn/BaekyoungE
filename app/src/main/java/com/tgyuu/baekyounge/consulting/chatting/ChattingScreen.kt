@@ -38,6 +38,7 @@ internal fun ChattingRoute(
     viewModel: ChattingViewModel = hiltViewModel(),
 ) {
     val chatText by viewModel.chatText.collectAsStateWithLifecycle()
+    val chatLog by viewModel.chatLog.collectAsStateWithLifecycle()
     val searchText by viewModel.searchText.collectAsStateWithLifecycle()
 
     LaunchedEffect(true) {

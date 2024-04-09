@@ -2,6 +2,10 @@ package com.tgyuu.baekyounge.consulting.chatting
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.tgyuu.domain.usecase.consulting.ai.PostChatMessageUseCase
+import com.tgyuu.model.consulting.ChatLog
+import com.tgyuu.model.consulting.ChattingRole
+import com.tgyuu.model.consulting.Message
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
@@ -9,12 +13,17 @@ import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
-class ChattingViewModel @Inject constructor() : ViewModel() {
+class ChattingViewModel @Inject constructor(
+    private val postChatMessageUseCase: PostChatMessageUseCase,
+) : ViewModel() {
     private val _chatText: MutableStateFlow<String> = MutableStateFlow("")
     val chatText get() = _chatText.asStateFlow()
 
     private val _searchText: MutableStateFlow<String> = MutableStateFlow("")
     val searchText get() = _searchText.asStateFlow()
+
+    private val _chatLog: MutableStateFlow<ChatLog> = MutableStateFlow(ChatLog(mutableListOf()))
+    val chatLog = _chatLog.asStateFlow()
 
     private val _userId: MutableStateFlow<String> = MutableStateFlow("")
 
@@ -35,6 +44,20 @@ class ChattingViewModel @Inject constructor() : ViewModel() {
             return@launch
         }
 
-        // Todo
+        _chatLog.value.messages.add(
+            Message(
+                content = _chatText.value,
+                role = ChattingRole.USER
+            )
+        )
+
+        postChatMessageUseCase(_chatLog.value)
+            .onSuccess {
+                _chatLog.value = it.copy()
+                _chatText.value = ""
+            }
+            .onFailure {
+                // Todo
+            }
     }
 }
