@@ -4,8 +4,6 @@ import com.tgyuu.network.source.auth.AuthDataSource
 import com.tgyuu.network.source.auth.AuthDataSourceImpl
 import com.tgyuu.network.source.consulting.AiConsultingDataSource
 import com.tgyuu.network.source.consulting.AiConsultingDataSourceImpl
-import com.tgyuu.network.source.consulting.ConsultingDataSource
-import com.tgyuu.network.source.consulting.ConsultingDataSourceImpl
 import dagger.Binds
 import dagger.Module
 import dagger.hilt.InstallIn

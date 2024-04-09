@@ -1,9 +1,7 @@
 package com.tgyuu.data.repository.repository.consulting
 
 import com.tgyuu.model.consulting.Message
-import com.tgyuu.network.model.consulting.ChatRequest
 import com.tgyuu.network.model.consulting.ConsultingRequest
-import com.tgyuu.network.source.consulting.ConsultingDataSource
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
 import javax.inject.Inject

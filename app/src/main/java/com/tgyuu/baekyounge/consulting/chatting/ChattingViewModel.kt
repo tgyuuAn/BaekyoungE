@@ -1,9 +1,7 @@
 package com.tgyuu.baekyounge.consulting.chatting
 
-import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.tgyuu.domain.usecase.consulting.PostUserChattingUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
@@ -11,9 +9,7 @@ import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
-class ChattingViewModel @Inject constructor(
-    private val postUserChattingUseCase: PostUserChattingUseCase,
-) : ViewModel() {
+class ChattingViewModel @Inject constructor() : ViewModel() {
     private val _chatText: MutableStateFlow<String> = MutableStateFlow("")
     val chatText get() = _chatText.asStateFlow()
 
@@ -39,12 +35,6 @@ class ChattingViewModel @Inject constructor(
             return@launch
         }
 
-        postUserChattingUseCase(
-            userId = _userId.value,
-            chat = _chatText.value,
-        ).fold(
-            onSuccess = { _chatText.value = "" },
-            onFailure = { Log.d("test", "메세지를 전송하는 데 실패하였습니다.") },
-        )
+        // Todo
     }
 }
