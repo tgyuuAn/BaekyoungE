@@ -1,38 +1,42 @@
 package com.tgyuu.data.repository.repository.consulting
 
-import com.tgyuu.model.consulting.Message
-import com.tgyuu.network.model.consulting.ConsultingRequest
-import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.map
+import com.tgyuu.model.consulting.ChatLog
+import com.tgyuu.model.consulting.ChattingRole
+import com.tgyuu.network.model.consulting.AiChatRequest
+import com.tgyuu.network.model.consulting.Message
+import com.tgyuu.network.source.consulting.AiConsultingDataSource
 import javax.inject.Inject
 
 class ConsultingRepositoryImpl @Inject constructor(
-    private val consultingDataSource: ConsultingDataSource,
+    private val aiConsultingDataSource: AiConsultingDataSource,
 ) : ConsultingRepository {
-    override suspend fun postConsultingInformation(grade: Int, major: String): Result<Unit> =
-        consultingDataSource.postConsultingInformation(
-            ConsultingRequest(
-                grade = grade,
-                major = major,
+    override suspend fun postChatMessage(chatLog: ChatLog): Result<ChatLog> {
+        val aiChatResponse = aiConsultingDataSource.postChatMessage(
+            AiChatRequest(
+                messages = chatLog.messages.map {
+                    Message(
+                        content = it.content,
+                        role = it.role.name,
+                    )
+                },
             ),
         )
 
-    override suspend fun postUserChatting(
-        userId: String,
-        chat: String,
-    ): Result<Unit> = consultingDataSource.postUserChatting(
-        ChatRequest(
-            userId = userId,
-            chat = chat,
-        ),
-    )
-
-    override fun getChatting(): Flow<Result<List<Message>>> =
-        consultingDataSource.getChattingLog().map { response ->
-            response.mapCatching { chatLogResponseList ->
-                chatLogResponseList.map {
-                    it.toConsultingChatting()
-                }
-            }
+        return aiChatResponse.map { chatResponse ->
+            ChatLog(
+                messages = chatResponse.choices
+                    .map {
+                        com.tgyuu.model.consulting.Message(
+                            content = it.message.content,
+                            role = when (it.message.role) {
+                                "user" -> ChattingRole.USER
+                                "system" -> ChattingRole.SYSTEM
+                                "assistant" -> ChattingRole.ASSISTANT
+                                else -> ChattingRole.ERROR
+                            },
+                        )
+                    },
+            )
         }
+    }
 }
