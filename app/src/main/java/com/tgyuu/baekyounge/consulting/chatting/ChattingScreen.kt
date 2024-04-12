@@ -137,7 +137,7 @@ internal fun ChattingScreen(
 
             LazyColumn(
                 verticalArrangement = Arrangement.spacedBy(20.dp),
-                contentPadding = PaddingValues(horizontal = 35.dp),
+                contentPadding = PaddingValues(horizontal = 25.dp),
                 modifier = Modifier
                     .fillMaxSize()
                     .padding(top = topBarHeight, bottom = textFieldHeight),

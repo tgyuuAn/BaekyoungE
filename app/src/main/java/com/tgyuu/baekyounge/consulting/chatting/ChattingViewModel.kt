@@ -57,12 +57,13 @@ class ChattingViewModel @Inject constructor(
                 role = ChattingRole.USER,
             ),
         )
+        _chatText.value = ""
 
         postChatMessageUseCase(_chatLog.value)
             .onSuccess {
                 Log.d("test", it.toString())
                 _chatLog.value.messages.addAll(it.messages)
-                _chatText.value = ""
+                _chatLog.value = _chatLog.value.copy()
             }
             .onFailure {
                 Log.d("test", "onFailure : " + it.toString())
