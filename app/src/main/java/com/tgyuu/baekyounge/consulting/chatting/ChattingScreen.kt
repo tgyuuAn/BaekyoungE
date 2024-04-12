@@ -3,7 +3,9 @@ package com.tgyuu.baekyounge.consulting.chatting
 import androidx.compose.foundation.Canvas
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.WindowInsets
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -134,16 +136,13 @@ internal fun ChattingScreen(
             )
 
             LazyColumn(
+                verticalArrangement = Arrangement.spacedBy(20.dp),
+                contentPadding = PaddingValues(horizontal = 35.dp),
                 modifier = Modifier
                     .fillMaxSize()
-                    .padding(
-                        top = topBarHeight,
-                        bottom = textFieldHeight,
-                        start = 35.dp,
-                        end = 35.dp,
-                    ),
+                    .padding(top = topBarHeight, bottom = textFieldHeight),
             ) {
-                items(chatLog.messages.toList()) { message ->
+                items(chatLog.messages) { message ->
                     val speechBubbleType = when (message.role) {
                         ChattingRole.USER -> SpeechBubbleType.AI_USER
                         ChattingRole.ASSISTANT -> SpeechBubbleType.AI_CHAT
@@ -168,7 +167,7 @@ internal fun ChattingScreen(
                     .layout { measurable, constraints ->
                         val placeable = measurable.measure(constraints)
 
-                        textFieldHeight = placeable.height.toDp()
+                        textFieldHeight = placeable.height.toDp() + 16.dp
 
                         layout(placeable.width, placeable.height) {
                             placeable.placeRelative(0, 0)
