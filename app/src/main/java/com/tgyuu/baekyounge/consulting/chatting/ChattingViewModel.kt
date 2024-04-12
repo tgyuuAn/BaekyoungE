@@ -23,7 +23,13 @@ class ChattingViewModel @Inject constructor(
     private val _searchText: MutableStateFlow<String> = MutableStateFlow("")
     val searchText get() = _searchText.asStateFlow()
 
-    private val _chatLog: MutableStateFlow<ChatLog> = MutableStateFlow(ChatLog(mutableListOf()))
+    private val _chatLog: MutableStateFlow<ChatLog> = MutableStateFlow(
+        ChatLog(
+            mutableListOf(
+                Message(content = "안녕하세요!무엇을 도와드릴까요 ?", role = ChattingRole.ASSISTANT),
+            ),
+        ),
+    )
     val chatLog = _chatLog.asStateFlow()
 
     private val _userId: MutableStateFlow<String> = MutableStateFlow("")
@@ -41,13 +47,9 @@ class ChattingViewModel @Inject constructor(
     }
 
     fun postUserChatting() = viewModelScope.launch {
-        Log.d("test", "postUserChatting 호출")
-
         if (_chatText.value.isEmpty()) {
             return@launch
         }
-
-        Log.d("test", "postUserChatting 호출")
 
         _chatLog.value.messages.add(
             Message(
@@ -58,9 +60,8 @@ class ChattingViewModel @Inject constructor(
 
         postChatMessageUseCase(_chatLog.value)
             .onSuccess {
-                Log.d("test", "onSuccess : " + it.toString())
-
-                _chatLog.value = it.copy()
+                Log.d("test", it.toString())
+                _chatLog.value.messages.addAll(it.messages)
                 _chatText.value = ""
             }
             .onFailure {

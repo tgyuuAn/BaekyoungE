@@ -1,6 +1,5 @@
 package com.tgyuu.baekyounge.consulting.chatting
 
-import android.util.Log
 import androidx.compose.foundation.Canvas
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
@@ -78,6 +77,7 @@ internal fun ChattingScreen(
     popBackStack: () -> Unit,
 ) {
     var textFieldHeight by remember { mutableStateOf(0.dp) }
+    var topBarHeight by remember { mutableStateOf(0.dp) }
     val focusManager = LocalFocusManager.current
     val backgroundColor = Brush.verticalGradient(
         listOf(
@@ -85,8 +85,6 @@ internal fun ChattingScreen(
             BaekyoungTheme.colors.blue4E.copy(alpha = 0.66f),
         ),
     )
-
-    Log.d("test", textFieldHeight.toString())
 
     Scaffold(contentWindowInsets = WindowInsets(0.dp)) { paddingValues ->
         Box(
@@ -106,6 +104,15 @@ internal fun ChattingScreen(
                 onSearchTextChanged = onSearchTextChanged,
                 clearSearchText = { onSearchTextChanged("") },
                 onClickBackButton = popBackStack,
+                modifier = Modifier.layout { measurable, constraints ->
+                    val placeable = measurable.measure(constraints)
+
+                    topBarHeight = placeable.height.toDp()
+
+                    layout(placeable.width, placeable.height) {
+                        placeable.placeRelative(0, 0)
+                    }
+                },
             )
 
             Image(
@@ -129,11 +136,14 @@ internal fun ChattingScreen(
             LazyColumn(
                 modifier = Modifier
                     .fillMaxSize()
-                    .padding(bottom = textFieldHeight),
+                    .padding(
+                        top = topBarHeight,
+                        bottom = textFieldHeight,
+                        start = 35.dp,
+                        end = 35.dp,
+                    ),
             ) {
                 items(chatLog.messages.toList()) { message ->
-                    Log.d("test", message.toString())
-
                     val speechBubbleType = when (message.role) {
                         ChattingRole.USER -> SpeechBubbleType.AI_USER
                         ChattingRole.ASSISTANT -> SpeechBubbleType.AI_CHAT

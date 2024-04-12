@@ -17,7 +17,7 @@ class ConsultingRepositoryImpl @Inject constructor(
                 messages = chatLog.messages.map {
                     Message(
                         content = it.content,
-                        role = it.role.name,
+                        role = it.role.name.lowercase(),
                     )
                 },
             ),
@@ -36,7 +36,7 @@ class ConsultingRepositoryImpl @Inject constructor(
                             "user" -> ChattingRole.USER
                             "system" -> ChattingRole.SYSTEM
                             "assistant" -> ChattingRole.ASSISTANT
-                            else -> ChattingRole.ERROR
+                            else -> ChattingRole.FUNCTION
                         },
                     ),
                 )

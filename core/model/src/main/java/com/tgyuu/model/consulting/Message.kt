@@ -10,5 +10,5 @@ data class Message(
 )
 
 enum class ChattingRole {
-    USER, ASSISTANT, SYSTEM, ERROR
+    USER, ASSISTANT, SYSTEM, FUNCTION
 }
