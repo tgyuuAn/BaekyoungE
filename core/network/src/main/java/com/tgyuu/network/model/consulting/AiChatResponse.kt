@@ -1,8 +1,12 @@
 package com.tgyuu.network.model.consulting
 
+import kotlinx.serialization.SerialName
+import kotlinx.serialization.Serializable
+
+@Serializable
 data class AiChatResponse(
     val id: String,
-    val _object: String,
+    @SerialName("object") val _object: String,
     val created: Long,
     val model: String,
     val system_fingerprint: String,
@@ -10,13 +14,15 @@ data class AiChatResponse(
     val usage: Usage,
 )
 
+@Serializable
 data class Choice(
     val index: Int,
     val message: Message,
-    val logprobs: Any?, // null 가능성이 있어 Any?로 선언합니다. 필요에 따라 구체적인 타입으로 변경할 수 있습니다.
+    val logprobs: Int? = null,
     val finish_reason: String,
 )
 
+@Serializable
 data class Usage(
     val prompt_tokens: Int,
     val completion_tokens: Int,

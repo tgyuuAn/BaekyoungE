@@ -22,12 +22,6 @@ abstract class NetworkModule {
 
     @Binds
     @Singleton
-    abstract fun bindsConsultingDataSource(
-        consultingDataSourceImpl: ConsultingDataSourceImpl,
-    ): ConsultingDataSource
-
-    @Binds
-    @Singleton
     abstract fun bindsAuthDataSource(
         authDataSourceImpl: AuthDataSourceImpl,
     ): AuthDataSource

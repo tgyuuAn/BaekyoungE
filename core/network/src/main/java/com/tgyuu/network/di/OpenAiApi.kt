@@ -1,7 +1,6 @@
 package com.tgyuu.network.di
 
 import com.jakewharton.retrofit2.converter.kotlinx.serialization.asConverterFactory
-import com.tgyuu.network.BuildConfig.OPEN_AI_API_KEY
 import com.tgyuu.network.constant.OPEN_AI_BASE_URL
 import com.tgyuu.network.model.consulting.AiChatRequest
 import com.tgyuu.network.model.consulting.AiChatResponse
@@ -24,7 +23,13 @@ import javax.inject.Singleton
 @Module
 @InstallIn(SingletonComponent::class)
 object ApiModule {
+
     val contentType = "application/json".toMediaType()
+    val json = Json {
+        ignoreUnknownKeys = true
+        coerceInputValues = true
+        encodeDefaults = true
+    }
 
     @Provides
     @Singleton
@@ -48,7 +53,8 @@ object ApiModule {
         Retrofit.Builder()
             .client(okHttpClient)
             .baseUrl(OPEN_AI_BASE_URL)
-            .addConverterFactory(Json.asConverterFactory(contentType)).build()
+            .addConverterFactory(json.asConverterFactory(contentType))
+            .build()
             .create(OpenAiApi::class.java)
 }
 
@@ -56,7 +62,7 @@ object OpenAiInterceptor : Interceptor {
     override fun intercept(chain: Interceptor.Chain): okhttp3.Response = with(chain) {
         val request = request().newBuilder()
             .addHeader("Content-Type", "application/json")
-            .addHeader("Authorization", "Bearer $OPEN_AI_API_KEY")
+            .addHeader("Authorization", "Bearer ${com.tgyuu.network.BuildConfig.OPEN_AI_API_KEY}")
             .build()
 
         proceed(request)

@@ -6,40 +6,40 @@ versionName = "1.0"
 versionCode = "1"
 
 gradleplugin = "8.1.4"
-android-desugar-jdk = "2.0.3"
-kotlin = "1.9.10"
-ksp = "1.9.10-1.0.13"
+android-desugar-jdk = "2.0.4"
+kotlin = "1.9.23"
+ksp = "1.9.23-1.0.20"
 
 androidx-core = "1.12.0"
 androidx-appcompat = "1.6.1"
 androidx-fragment = "1.6.2"
-androidx-activity = "1.7.2"
-androidx-lifecycle = "2.6.2"
-androidx-compose-hilt = "1.1.0"
+androidx-activity = "1.8.2"
+androidx-lifecycle = "2.7.0"
+androidx-compose-hilt = "1.2.0"
 androidx-contstraintlayout = "2.1.4"
 androidx-test-junit = "1.1.5"
 androidx-test-espresso = "3.5.1"
 androidx-navigation = "2.7.7"
-androidx-compose-material = "1.5.4"
+androidx-compose-material = "1.6.5"
 
-androidx_compose_bom = "2024.02.02"
-compose-compiler = "1.5.3"
+androidx_compose_bom = "2024.04.00"
+compose-compiler = "1.5.11"
 
-google-firebase = "32.3.1"
-google-services-plugin = "4.4.0"
+google-firebase = "32.8.0"
+google-services-plugin = "4.4.1"
 google-crashlytics-plguin = "2.9.9"
 
 kakao = "2.20.1"
 
 junit = "4.13.2"
-material = "1.10.0"
+material = "1.11.0"
 ktlint-gradle = "11.3.1"
 
-hilt = "2.48"
+hilt = "2.49"
 
 retrofit2 = "2.9.0"
 retrofit2KotlinxSerializationJson = "1.0.0"
-kotlinxSerializationJson = "1.5.0"
+kotlinxSerializationJson = "1.6.3"
 
 okhttp3 = "4.11.0"
 
@@ -99,8 +99,7 @@ hilt = { module = "com.google.dagger:hilt-android", version.ref = "hilt" }
 hilt-ksp = { module = "com.google.dagger:hilt-compiler", version.ref = "hilt" }
 hilt-plugin = { group = "com.google.dagger", name = "hilt-android-gradle-plugin", version.ref = "hilt" }
 
-retrofit-core = { group = "com.squareup.retrofit2", name = "retrofit", version.ref = "retrofit2" }
-retrofit-scalars = { group = "com.squareup.retrofit2", name = "converter-scalars", version.ref = "retrofit2" }
+retrofit = { group = "com.squareup.retrofit2", name = "retrofit", version.ref = "retrofit2" }
 retrofit-kotlinx-serialization = { group = "com.jakewharton.retrofit", name = "retrofit2-kotlinx-serialization-converter", version.ref = "retrofit2KotlinxSerializationJson" }
 
 okhttp = { module = "com.squareup.okhttp3:okhttp", version.ref = "okhttp3" }
@@ -142,9 +141,8 @@ compose-bom = [
 ]
 
 retrofit = [
-    "retrofit-core",
+    "retrofit",
     "retrofit-kotlinx-serialization",
-    "retrofit-scalars",
 ]
 
 okhttp = [

@@ -3,6 +3,7 @@ import java.util.Properties
 plugins {
     id("plugin.android.library")
     id("plugin.android.hilt")
+    kotlin("plugin.serialization") version "1.9.23"
 }
 
 android {

@@ -1,5 +1,6 @@
 package com.tgyuu.baekyounge.consulting.chatting
 
+import android.util.Log
 import androidx.compose.foundation.Canvas
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
@@ -9,16 +10,22 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.offset
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.items
 import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.blur
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.layout.layout
 import androidx.compose.ui.platform.LocalConfiguration
 import androidx.compose.ui.platform.LocalFocusManager
 import androidx.compose.ui.res.painterResource
@@ -29,7 +36,11 @@ import com.tgyuu.baekyounge.R
 import com.tgyuu.common.util.addFocusCleaner
 import com.tgyuu.designsystem.component.BaekyoungCenterTopBar
 import com.tgyuu.designsystem.component.BaekyoungChatTextField
+import com.tgyuu.designsystem.component.BaekyoungSpeechBubble
+import com.tgyuu.designsystem.component.SpeechBubbleType
 import com.tgyuu.designsystem.theme.BaekyoungTheme
+import com.tgyuu.model.consulting.ChatLog
+import com.tgyuu.model.consulting.ChattingRole
 
 @Composable
 internal fun ChattingRoute(
@@ -48,6 +59,7 @@ internal fun ChattingRoute(
     ChattingScreen(
         chatText = chatText,
         searchText = searchText,
+        chatLog = chatLog,
         onChatTextChanged = viewModel::setChatText,
         onSearchTextChanged = viewModel::setSearchText,
         postUserChatting = viewModel::postUserChatting,
@@ -59,11 +71,13 @@ internal fun ChattingRoute(
 internal fun ChattingScreen(
     chatText: String,
     searchText: String,
+    chatLog: ChatLog,
     onChatTextChanged: (String) -> Unit,
     onSearchTextChanged: (String) -> Unit,
     postUserChatting: () -> Unit,
     popBackStack: () -> Unit,
 ) {
+    var textFieldHeight by remember { mutableStateOf(0.dp) }
     val focusManager = LocalFocusManager.current
     val backgroundColor = Brush.verticalGradient(
         listOf(
@@ -71,6 +85,8 @@ internal fun ChattingScreen(
             BaekyoungTheme.colors.blue4E.copy(alpha = 0.66f),
         ),
     )
+
+    Log.d("test", textFieldHeight.toString())
 
     Scaffold(contentWindowInsets = WindowInsets(0.dp)) { paddingValues ->
         Box(
@@ -110,6 +126,27 @@ internal fun ChattingScreen(
                     .padding(start = 20.dp, bottom = 80.dp),
             )
 
+            LazyColumn(
+                modifier = Modifier
+                    .fillMaxSize()
+                    .padding(bottom = textFieldHeight),
+            ) {
+                items(chatLog.messages.toList()) { message ->
+                    Log.d("test", message.toString())
+
+                    val speechBubbleType = when (message.role) {
+                        ChattingRole.USER -> SpeechBubbleType.AI_USER
+                        ChattingRole.ASSISTANT -> SpeechBubbleType.AI_CHAT
+                        else -> SpeechBubbleType.AI_USER
+                    }
+
+                    BaekyoungSpeechBubble(
+                        type = speechBubbleType,
+                        text = message.content,
+                    )
+                }
+            }
+
             BaekyoungChatTextField(
                 chatText = chatText,
                 onTextChanged = onChatTextChanged,
@@ -117,7 +154,16 @@ internal fun ChattingScreen(
                 textColor = BaekyoungTheme.colors.white,
                 modifier = Modifier
                     .align(Alignment.BottomCenter)
-                    .padding(start = 8.dp, end = 8.dp, bottom = 8.dp),
+                    .padding(start = 8.dp, end = 8.dp, bottom = 8.dp)
+                    .layout { measurable, constraints ->
+                        val placeable = measurable.measure(constraints)
+
+                        textFieldHeight = placeable.height.toDp()
+
+                        layout(placeable.width, placeable.height) {
+                            placeable.placeRelative(0, 0)
+                        }
+                    },
             )
         }
     }
