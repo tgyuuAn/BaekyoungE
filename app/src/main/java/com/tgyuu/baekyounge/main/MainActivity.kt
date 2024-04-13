@@ -34,7 +34,7 @@ import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
 import com.tgyuu.feature.auth.navigation.authNavigationRoute
 import com.tgyuu.feature.auth.signup.navigation.signUpNavigationRoute
-import com.tgyuu.baekyounge.consulting.chatting.navigation.chattingNavigationRoute
+import com.tgyuu.aichat.navigation.chattingNavigationRoute
 import com.tgyuu.baekyounge.main.navigation.BaekyoungNavHost
 import com.tgyuu.baekyounge.main.navigation.TopLevelDestination
 import com.tgyuu.baekyounge.shop.navigation.shopNavigationRoute

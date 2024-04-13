@@ -10,23 +10,24 @@ import androidx.compose.ui.Modifier
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.navOptions
+import com.tgyuu.aichat.navigation.chattingScreen
+import com.tgyuu.aichat.navigation.navigateToChatting
+import com.tgyuu.baekyounge.community.navigation.communityScreen
+import com.tgyuu.baekyounge.etc.navigation.etcScreen
+import com.tgyuu.baekyounge.shop.navigation.shopScreen
+import com.tgyuu.baekyounge.storage.navigation.storageScreen
 import com.tgyuu.feature.auth.navigation.authNavigationRoute
 import com.tgyuu.feature.auth.navigation.authScreen
 import com.tgyuu.feature.auth.navigation.navigateToAuth
 import com.tgyuu.feature.auth.signup.navigation.navigateToSignUp
 import com.tgyuu.feature.auth.signup.navigation.signUpNavigationRoute
 import com.tgyuu.feature.auth.signup.navigation.signUpScreen
-import com.tgyuu.baekyounge.community.navigation.communityScreen
-import com.tgyuu.baekyounge.consulting.chatting.navigation.navigateToChatting
-import com.tgyuu.baekyounge.consulting.consultinginformation.navigation.consultingGraph
-import com.tgyuu.baekyounge.consulting.consultinginformation.navigation.consultingNavigationRoute
-import com.tgyuu.baekyounge.etc.navigation.etcScreen
+import com.tgyuu.feature.consulting.consultinginformation.navigation.consultingScreen
+import com.tgyuu.feature.consulting.consultinginformation.navigation.consultingNavigationRoute
 import com.tgyuu.feature.home.navigation.homeScreen
 import com.tgyuu.feature.home.navigation.navigateToHome
-import com.tgyuu.baekyounge.shop.navigation.shopScreen
 import com.tgyuu.feature.splash.navigation.splashNavigationRoute
 import com.tgyuu.feature.splash.navigation.splashScreen
-import com.tgyuu.baekyounge.storage.navigation.storageScreen
 
 @Composable
 fun BaekyoungNavHost(
@@ -100,7 +101,7 @@ fun BaekyoungNavHost(
         homeScreen()
         shopScreen()
         storageScreen()
-        consultingGraph(
+        consultingScreen(
             navigateToChatting = {
                 navController.navigateToChatting(
                     userId = it,
@@ -109,8 +110,8 @@ fun BaekyoungNavHost(
                     },
                 )
             },
-            popBackStack = { navController.popBackStack() },
         )
+        chattingScreen(popBackStack = { navController.popBackStack() })
         communityScreen()
         etcScreen()
     }

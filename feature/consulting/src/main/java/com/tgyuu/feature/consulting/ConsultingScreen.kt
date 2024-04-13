@@ -1,4 +1,4 @@
-package com.tgyuu.baekyounge.consulting.consultinginformation
+package com.tgyuu.feature.consulting
 
 import android.content.Context
 import android.widget.Toast
@@ -26,8 +26,8 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
-import com.tgyuu.baekyounge.R
-import com.tgyuu.baekyounge.consulting.consultinginformation.ConsultingViewModel.ConsultingEvent
+import com.tgyuu.designsystem.R.string
+import com.tgyuu.feature.consulting.ConsultingViewModel.ConsultingEvent
 import com.tgyuu.designsystem.component.BaekyoungButton
 import com.tgyuu.designsystem.component.BaekyoungTopBar
 import com.tgyuu.designsystem.theme.BaekyoungTheme
@@ -58,9 +58,9 @@ internal fun ConsultingScreen(
     Scaffold(
         topBar = {
             BaekyoungTopBar(
-                titleTextId = R.string.consulting,
+                titleTextId = string.consulting,
                 titleImageId = R.drawable.ic_consulting_note,
-                contentDescriptionId = R.string.consulting,
+                contentDescriptionId = string.consulting,
             )
         },
         containerColor = BaekyoungTheme.colors.grayF5,

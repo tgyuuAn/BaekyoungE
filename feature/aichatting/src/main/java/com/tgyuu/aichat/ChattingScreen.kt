@@ -1,4 +1,4 @@
-package com.tgyuu.baekyounge.consulting.chatting
+package com.tgyuu.aichat
 
 import androidx.compose.foundation.Canvas
 import androidx.compose.foundation.Image
@@ -35,13 +35,14 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
-import com.tgyuu.baekyounge.R
 import com.tgyuu.common.util.addFocusCleaner
+import com.tgyuu.designsystem.R.string
 import com.tgyuu.designsystem.component.BaekyoungCenterTopBar
 import com.tgyuu.designsystem.component.BaekyoungChatTextField
 import com.tgyuu.designsystem.component.BaekyoungSpeechBubble
 import com.tgyuu.designsystem.component.SpeechBubbleType
 import com.tgyuu.designsystem.theme.BaekyoungTheme
+import com.tgyuu.feature.aichatting.R
 import com.tgyuu.model.consulting.ChattingRole
 import com.tgyuu.model.consulting.Message
 import kotlinx.coroutines.launch
@@ -115,7 +116,7 @@ internal fun ChattingScreen(
             ConsultingChattingBackground()
 
             BaekyoungCenterTopBar(
-                titleTextId = R.string.consulting,
+                titleTextId = string.consulting,
                 textColor = BaekyoungTheme.colors.white,
                 showSearchButton = true,
                 searchText = searchText,

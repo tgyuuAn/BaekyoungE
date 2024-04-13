@@ -1,4 +1,4 @@
-package com.tgyuu.baekyounge.consulting.consultinginformation
+package com.tgyuu.feature.consulting
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope

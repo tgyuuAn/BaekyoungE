@@ -1,4 +1,4 @@
-package com.tgyuu.baekyounge.consulting.chatting
+package com.tgyuu.aichat
 
 import android.util.Log
 import androidx.compose.runtime.mutableStateListOf

@@ -1,4 +1,4 @@
-package com.tgyuu.baekyounge.consulting.chatting.navigation
+package com.tgyuu.aichat.navigation
 
 import androidx.navigation.NavController
 import androidx.navigation.NavGraphBuilder
@@ -7,7 +7,7 @@ import androidx.navigation.NavType
 import androidx.navigation.compose.composable
 import androidx.navigation.navArgument
 import androidx.navigation.navOptions
-import com.tgyuu.baekyounge.consulting.chatting.ChattingRoute
+import com.tgyuu.aichat.ChattingRoute
 
 fun chattingNavigationRoute(userId: String = "{userId}") = "chatting_route/$userId"
 
@@ -24,7 +24,6 @@ fun NavGraphBuilder.chattingScreen(popBackStack: () -> Unit) {
         arguments = listOf(navArgument("userId") { type = NavType.StringType }),
     ) { navBackStackEntry ->
         val userId = navBackStackEntry.arguments?.getString("userId") ?: ""
-
         ChattingRoute(
             userId = userId,
             popBackStack = popBackStack,
