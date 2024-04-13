@@ -1,11 +1,11 @@
-package com.tgyuu.baekyounge.etc.navigation
+package com.tgyuu.feature.etc.navigation
 
 import androidx.navigation.NavController
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.NavOptions
 import androidx.navigation.compose.composable
 import androidx.navigation.navOptions
-import com.tgyuu.baekyounge.etc.EtcRoute
+import com.tgyuu.feature.etc.EtcRoute
 
 const val profileNavigationRoute = "etc_route"
 
