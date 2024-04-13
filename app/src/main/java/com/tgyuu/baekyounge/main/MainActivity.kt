@@ -32,14 +32,13 @@ import androidx.navigation.NavController
 import androidx.navigation.NavGraph.Companion.findStartDestination
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
-import com.tgyuu.baekyounge.auth.navigation.authNavigationRoute
-import com.tgyuu.baekyounge.auth.signup.navigation.signUpNavigationRoute
-import com.tgyuu.baekyounge.consulting.chatting.navigation.chattingNavigationRoute
-import com.tgyuu.baekyounge.home.navigation.homeNavigationRoute
+import com.tgyuu.feature.auth.navigation.authNavigationRoute
+import com.tgyuu.feature.auth.signup.navigation.signUpNavigationRoute
+import com.tgyuu.aichat.navigation.aiChattingNavigationRoute
 import com.tgyuu.baekyounge.main.navigation.BaekyoungNavHost
 import com.tgyuu.baekyounge.main.navigation.TopLevelDestination
-import com.tgyuu.baekyounge.shop.navigation.shopNavigationRoute
-import com.tgyuu.baekyounge.splash.navigation.splashNavigationRoute
+import com.tgyuu.feature.shop.navigation.shopNavigationRoute
+import com.tgyuu.feature.splash.navigation.splashNavigationRoute
 import com.tgyuu.designsystem.theme.BaekyoungTheme
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -97,7 +96,7 @@ private fun handleBottomBarState(
     null -> setBottomBarState(false)
     splashNavigationRoute -> setBottomBarState(false)
     authNavigationRoute -> setBottomBarState(false)
-    chattingNavigationRoute() -> setBottomBarState(false)
+    aiChattingNavigationRoute() -> setBottomBarState(false)
     signUpNavigationRoute() -> setBottomBarState(false)
     else -> setBottomBarState(true)
 }
@@ -134,20 +133,20 @@ internal fun BaekyoungBottomBar(
             modifier = modifier,
         ) {
             TopLevelDestination.entries.forEach { destination ->
-                if ((currentRoute == homeNavigationRoute) &&
-                    (destination.route == homeNavigationRoute)
+                if ((currentRoute == com.tgyuu.feature.home.navigation.homeNavigationRoute) &&
+                    (destination.route == com.tgyuu.feature.home.navigation.homeNavigationRoute)
                 ) {
                     return@forEach
                 }
 
-                if ((currentRoute != homeNavigationRoute) &&
+                if ((currentRoute != com.tgyuu.feature.home.navigation.homeNavigationRoute) &&
                     (destination.route == shopNavigationRoute)
                 ) {
                     return@forEach
                 }
 
                 val isSelect = currentRoute == destination.route
-                val unselectedContentColor = if (currentRoute == homeNavigationRoute) {
+                val unselectedContentColor = if (currentRoute == com.tgyuu.feature.home.navigation.homeNavigationRoute) {
                     BaekyoungTheme.colors.blueFB
                 } else {
                     BaekyoungTheme.colors.gray95

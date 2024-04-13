@@ -3,12 +3,11 @@ package com.tgyuu.baekyounge.main.navigation
 import androidx.annotation.DrawableRes
 import androidx.annotation.StringRes
 import com.tgyuu.baekyounge.R
-import com.tgyuu.baekyounge.community.navigation.communityNavigationRoute
-import com.tgyuu.baekyounge.consulting.consultinginformation.navigation.consultingNavigationRoute
-import com.tgyuu.baekyounge.etc.navigation.profileNavigationRoute
-import com.tgyuu.baekyounge.home.navigation.homeNavigationRoute
-import com.tgyuu.baekyounge.shop.navigation.shopNavigationRoute
-import com.tgyuu.baekyounge.storage.navigation.storageNavigationRoute
+import com.tgyuu.feature.community.navigation.communityNavigationRoute
+import com.tgyuu.feature.consulting.consultinginformation.navigation.consultingNavigationRoute
+import com.tgyuu.feature.etc.navigation.profileNavigationRoute
+import com.tgyuu.feature.shop.navigation.shopNavigationRoute
+import com.tgyuu.feature.storage.navigation.storageNavigationRoute
 
 enum class TopLevelDestination(
     val route: String,
@@ -43,7 +42,7 @@ enum class TopLevelDestination(
         titleTextId = R.string.shop,
     ),
     HOME(
-        route = homeNavigationRoute,
+        route = com.tgyuu.feature.home.navigation.homeNavigationRoute,
         homeIcon = R.drawable.ic_home_home,
         selectedIcon = R.drawable.ic_selected_home,
         unselectedIcon = R.drawable.ic_home,

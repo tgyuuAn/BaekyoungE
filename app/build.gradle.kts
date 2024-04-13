@@ -51,6 +51,17 @@ dependencies {
     implementation(project(":core:domain"))
     implementation(project(":core:common"))
     implementation(project(":core:model"))
+
+    implementation(project(":feature:auth"))
+    implementation(project(":feature:home"))
+    implementation(project(":feature:splash"))
+    implementation(project(":feature:consulting"))
+    implementation(project(":feature:aichatting"))
+    implementation(project(":feature:community"))
+    implementation(project(":feature:storage"))
+    implementation(project(":feature:shop"))
+    implementation(project(":feature:etc"))
+
     implementation(libs.kakao.user)
 
     testImplementation("junit:junit:4.13.2")

@@ -10,24 +10,24 @@ import androidx.compose.ui.Modifier
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.navOptions
-import com.tgyuu.baekyounge.auth.navigation.authNavigationRoute
-import com.tgyuu.baekyounge.auth.navigation.authScreen
-import com.tgyuu.baekyounge.auth.navigation.navigateToAuth
-import com.tgyuu.baekyounge.auth.signup.navigation.navigateToSignUp
-import com.tgyuu.baekyounge.auth.signup.navigation.signUpNavigationRoute
-import com.tgyuu.baekyounge.auth.signup.navigation.signUpScreen
-import com.tgyuu.baekyounge.community.navigation.communityScreen
-import com.tgyuu.baekyounge.consulting.chatting.navigation.navigateToChatting
-import com.tgyuu.baekyounge.consulting.consultinginformation.navigation.consultingGraph
-import com.tgyuu.baekyounge.consulting.consultinginformation.navigation.consultingNavigationRoute
-import com.tgyuu.baekyounge.etc.navigation.etcScreen
-import com.tgyuu.baekyounge.home.navigation.homeNavigationRoute
-import com.tgyuu.baekyounge.home.navigation.homeScreen
-import com.tgyuu.baekyounge.home.navigation.navigateToHome
-import com.tgyuu.baekyounge.shop.navigation.shopScreen
-import com.tgyuu.baekyounge.splash.navigation.splashNavigationRoute
-import com.tgyuu.baekyounge.splash.navigation.splashScreen
-import com.tgyuu.baekyounge.storage.navigation.storageScreen
+import com.tgyuu.aichat.navigation.aiChattingScreen
+import com.tgyuu.aichat.navigation.navigateToAiChatting
+import com.tgyuu.feature.community.navigation.communityScreen
+import com.tgyuu.feature.etc.navigation.etcScreen
+import com.tgyuu.feature.shop.navigation.shopScreen
+import com.tgyuu.feature.storage.navigation.storageScreen
+import com.tgyuu.feature.auth.navigation.authNavigationRoute
+import com.tgyuu.feature.auth.navigation.authScreen
+import com.tgyuu.feature.auth.navigation.navigateToAuth
+import com.tgyuu.feature.auth.signup.navigation.navigateToSignUp
+import com.tgyuu.feature.auth.signup.navigation.signUpNavigationRoute
+import com.tgyuu.feature.auth.signup.navigation.signUpScreen
+import com.tgyuu.feature.consulting.consultinginformation.navigation.consultingScreen
+import com.tgyuu.feature.consulting.consultinginformation.navigation.consultingNavigationRoute
+import com.tgyuu.feature.home.navigation.homeScreen
+import com.tgyuu.feature.home.navigation.navigateToHome
+import com.tgyuu.feature.splash.navigation.splashNavigationRoute
+import com.tgyuu.feature.splash.navigation.splashScreen
 
 @Composable
 fun BaekyoungNavHost(
@@ -38,7 +38,7 @@ fun BaekyoungNavHost(
     NavHost(
         navController = navController,
         enterTransition = {
-            if (navController.currentDestination?.route == homeNavigationRoute &&
+            if (navController.currentDestination?.route == com.tgyuu.feature.home.navigation.homeNavigationRoute &&
                 navController.previousBackStackEntry?.destination?.route == signUpNavigationRoute()
             ) {
                 EnterTransition.None
@@ -101,17 +101,17 @@ fun BaekyoungNavHost(
         homeScreen()
         shopScreen()
         storageScreen()
-        consultingGraph(
+        consultingScreen(
             navigateToChatting = {
-                navController.navigateToChatting(
+                navController.navigateToAiChatting(
                     userId = it,
                     navOptions {
                         popUpTo(consultingNavigationRoute)
                     },
                 )
             },
-            popBackStack = { navController.popBackStack() },
         )
+        aiChattingScreen(popBackStack = { navController.popBackStack() })
         communityScreen()
         etcScreen()
     }

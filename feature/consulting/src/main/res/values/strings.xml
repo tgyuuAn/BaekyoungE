@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="navigate_to_consulting">진로 상담하기</string>
+    <string name="consulting_description">진로는 왜 이렇게 찾기 어려운 걸까, 고민했던 적 있나요?\n
+                        진로상담을 통해 나에게 적합한 진로를 찾을 수 있을거에요.\n
+                        나는 어떤 진로가 적합한지, 지금 바로 알아보세요!</string>
+</resources>

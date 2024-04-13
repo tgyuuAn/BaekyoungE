@@ -68,7 +68,7 @@ fun PreviewBaekyongTopBar() {
             BaekyoungTopBar(
                 titleTextId = R.string.consulting,
                 titleImageId = R.drawable.ic_consulting_note,
-                contentDescriptionId = R.string.content_description_test,
+                contentDescriptionId = null,
             )
         }
     }
