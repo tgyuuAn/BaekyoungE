@@ -1,10 +1,10 @@
 package com.tgyuu.baekyounge.consulting.chatting
 
 import android.util.Log
+import androidx.compose.runtime.mutableStateListOf
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.tgyuu.domain.usecase.consulting.ai.PostChatMessageUseCase
-import com.tgyuu.model.consulting.ChatLog
 import com.tgyuu.model.consulting.ChattingRole
 import com.tgyuu.model.consulting.Message
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -23,14 +23,9 @@ class ChattingViewModel @Inject constructor(
     private val _searchText: MutableStateFlow<String> = MutableStateFlow("")
     val searchText get() = _searchText.asStateFlow()
 
-    private val _chatLog: MutableStateFlow<ChatLog> = MutableStateFlow(
-        ChatLog(
-            mutableListOf(
-                Message(content = "안녕하세요!무엇을 도와드릴까요 ?", role = ChattingRole.ASSISTANT),
-            ),
-        ),
+    val chatLog = mutableStateListOf(
+        Message(content = "안녕하세요!무엇을 도와드릴까요 ?", role = ChattingRole.ASSISTANT),
     )
-    val chatLog = _chatLog.asStateFlow()
 
     private val _userId: MutableStateFlow<String> = MutableStateFlow("")
 
@@ -51,7 +46,7 @@ class ChattingViewModel @Inject constructor(
             return@launch
         }
 
-        _chatLog.value.messages.add(
+        chatLog.add(
             Message(
                 content = _chatText.value,
                 role = ChattingRole.USER,
@@ -59,11 +54,10 @@ class ChattingViewModel @Inject constructor(
         )
         _chatText.value = ""
 
-        postChatMessageUseCase(_chatLog.value)
+        postChatMessageUseCase(chatLog.toList())
             .onSuccess {
                 Log.d("test", it.toString())
-                _chatLog.value.messages.addAll(it.messages)
-                _chatLog.value = _chatLog.value.copy()
+                chatLog.addAll(it.messages)
             }
             .onFailure {
                 Log.d("test", "onFailure : " + it.toString())

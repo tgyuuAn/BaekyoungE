@@ -40,8 +40,8 @@ import com.tgyuu.designsystem.component.BaekyoungChatTextField
 import com.tgyuu.designsystem.component.BaekyoungSpeechBubble
 import com.tgyuu.designsystem.component.SpeechBubbleType
 import com.tgyuu.designsystem.theme.BaekyoungTheme
-import com.tgyuu.model.consulting.ChatLog
 import com.tgyuu.model.consulting.ChattingRole
+import com.tgyuu.model.consulting.Message
 
 @Composable
 internal fun ChattingRoute(
@@ -50,7 +50,7 @@ internal fun ChattingRoute(
     viewModel: ChattingViewModel = hiltViewModel(),
 ) {
     val chatText by viewModel.chatText.collectAsStateWithLifecycle()
-    val chatLog by viewModel.chatLog.collectAsStateWithLifecycle()
+    val chatLog = viewModel.chatLog.toList()
     val searchText by viewModel.searchText.collectAsStateWithLifecycle()
 
     LaunchedEffect(true) {
@@ -72,7 +72,7 @@ internal fun ChattingRoute(
 internal fun ChattingScreen(
     chatText: String,
     searchText: String,
-    chatLog: ChatLog,
+    chatLog: List<Message>,
     onChatTextChanged: (String) -> Unit,
     onSearchTextChanged: (String) -> Unit,
     postUserChatting: () -> Unit,
@@ -142,7 +142,10 @@ internal fun ChattingScreen(
                     .fillMaxSize()
                     .padding(top = topBarHeight, bottom = textFieldHeight),
             ) {
-                items(chatLog.messages) { message ->
+                items(
+                    items = chatLog,
+                    key = { it.content },
+                ) { message ->
                     val speechBubbleType = when (message.role) {
                         ChattingRole.USER -> SpeechBubbleType.AI_USER
                         ChattingRole.ASSISTANT -> SpeechBubbleType.AI_CHAT

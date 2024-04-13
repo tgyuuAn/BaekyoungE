@@ -3,19 +3,20 @@ package com.tgyuu.data.repository.repository.consulting
 import android.util.Log
 import com.tgyuu.model.consulting.ChatLog
 import com.tgyuu.model.consulting.ChattingRole
+import com.tgyuu.model.consulting.Message
 import com.tgyuu.network.model.consulting.AiChatRequest
-import com.tgyuu.network.model.consulting.Message
+import com.tgyuu.network.model.consulting.MessageDTO
 import com.tgyuu.network.source.consulting.AiConsultingDataSource
 import javax.inject.Inject
 
 class ConsultingRepositoryImpl @Inject constructor(
     private val aiConsultingDataSource: AiConsultingDataSource,
 ) : ConsultingRepository {
-    override suspend fun postChatMessage(chatLog: ChatLog): Result<ChatLog> = runCatching {
+    override suspend fun postChatMessage(chatLog: List<Message>): Result<ChatLog> = runCatching {
         val aiChatResponse = aiConsultingDataSource.postChatMessage(
             AiChatRequest(
-                messages = chatLog.messages.map {
-                    Message(
+                messageDTO = chatLog.map {
+                    MessageDTO(
                         content = it.content,
                         role = it.role.name.lowercase(),
                     )
@@ -25,14 +26,14 @@ class ConsultingRepositoryImpl @Inject constructor(
 
         Log.d("test", "aiChatResponse : $aiChatResponse")
 
-        val messages = mutableListOf<com.tgyuu.model.consulting.Message>()
+        val messages = mutableListOf<Message>()
 
         aiChatResponse.map { chatResponse ->
             chatResponse.choices.map {
                 messages.add(
-                    com.tgyuu.model.consulting.Message(
-                        content = it.message.content,
-                        role = when (it.message.role) {
+                    Message(
+                        content = it.messageDTO.content,
+                        role = when (it.messageDTO.role) {
                             "user" -> ChattingRole.USER
                             "system" -> ChattingRole.SYSTEM
                             "assistant" -> ChattingRole.ASSISTANT

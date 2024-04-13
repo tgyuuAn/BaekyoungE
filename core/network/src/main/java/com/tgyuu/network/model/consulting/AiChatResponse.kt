@@ -17,7 +17,7 @@ data class AiChatResponse(
 @Serializable
 data class Choice(
     val index: Int,
-    val message: Message,
+    @SerialName("message") val messageDTO: MessageDTO,
     val logprobs: Int? = null,
     val finish_reason: String,
 )
