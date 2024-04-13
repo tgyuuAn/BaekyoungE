@@ -12,7 +12,7 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.navOptions
 import com.tgyuu.aichat.navigation.aiChattingScreen
 import com.tgyuu.aichat.navigation.navigateToAiChatting
-import com.tgyuu.baekyounge.community.navigation.communityScreen
+import com.tgyuu.feature.community.navigation.communityScreen
 import com.tgyuu.feature.etc.navigation.etcScreen
 import com.tgyuu.baekyounge.shop.navigation.shopScreen
 import com.tgyuu.baekyounge.storage.navigation.storageScreen
