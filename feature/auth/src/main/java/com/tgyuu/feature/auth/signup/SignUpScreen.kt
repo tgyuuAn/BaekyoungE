@@ -1,4 +1,4 @@
-package com.tgyuu.baekyounge.auth.signup
+package com.tgyuu.feature.auth.signup
 
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.core.CubicBezierEasing
@@ -46,13 +46,14 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
-import com.tgyuu.baekyounge.R
-import com.tgyuu.baekyounge.auth.signup.SignUpViewModel.Gender
-import com.tgyuu.baekyounge.auth.signup.component.SignUpTextField
+import com.tgyuu.feature.auth.signup.SignUpViewModel.Gender
+import com.tgyuu.feature.auth.signup.component.SignUpTextField
 import com.tgyuu.common.util.addFocusCleaner
+import com.tgyuu.designsystem.R.drawable
 import com.tgyuu.designsystem.component.BaekgyoungClouds
 import com.tgyuu.designsystem.component.BaekyoungButton
 import com.tgyuu.designsystem.theme.BaekyoungTheme
+import com.tgyuu.feature.auth.R
 import kotlinx.coroutines.flow.collectLatest
 
 @Composable
@@ -152,7 +153,7 @@ internal fun SignUpScreen(
             BaekgyoungClouds(animateOffset = animateOffset)
 
             Image(
-                painter = painterResource(id = R.drawable.ic_sea),
+                painter = painterResource(id = drawable.ic_sea),
                 contentDescription = null,
                 contentScale = ContentScale.FillWidth,
                 modifier = Modifier
@@ -167,7 +168,7 @@ internal fun SignUpScreen(
             )
 
             Image(
-                painter = painterResource(id = R.drawable.ic_main_baekgyoung),
+                painter = painterResource(id = drawable.ic_main_baekgyoung),
                 contentDescription = null,
                 modifier = Modifier
                     .fillMaxWidth()

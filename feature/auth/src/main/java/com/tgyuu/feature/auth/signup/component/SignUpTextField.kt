@@ -1,4 +1,4 @@
-package com.tgyuu.baekyounge.auth.signup.component
+package com.tgyuu.feature.auth.signup.component
 
 import androidx.annotation.StringRes
 import androidx.compose.foundation.background

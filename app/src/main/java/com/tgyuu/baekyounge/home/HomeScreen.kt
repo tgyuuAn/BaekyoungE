@@ -34,6 +34,7 @@ import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.tgyuu.baekyounge.R
 import com.tgyuu.common.util.addFocusCleaner
+import com.tgyuu.designsystem.R.drawable
 import com.tgyuu.designsystem.component.BaekgyoungClouds
 import com.tgyuu.designsystem.theme.BaekyoungTheme
 
@@ -68,7 +69,7 @@ internal fun HomeScreen() {
         BaekgyoungClouds(animateOffset = -ANIMATION_OFFSET.dp)
 
         Image(
-            painter = painterResource(id = R.drawable.ic_sea),
+            painter = painterResource(id = drawable.ic_sea),
             contentDescription = null,
             contentScale = ContentScale.FillWidth,
             modifier = Modifier
@@ -78,7 +79,7 @@ internal fun HomeScreen() {
         )
 
         Image(
-            painter = painterResource(id = R.drawable.ic_main_baekgyoung),
+            painter = painterResource(id = drawable.ic_main_baekgyoung),
             contentDescription = null,
             modifier = Modifier
                 .fillMaxWidth()

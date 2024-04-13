@@ -3,31 +3,6 @@
     <string name="shooting_star_description">별똥별</string>
 
     <string name="app_name">백경이</string>
-    <string name="id">아이디</string>
-    <string name="password">비밀번호</string>
-    <string name="login">로그인</string>
-    <string name="sign_up">회원가입을 진행해 주세요</string>
-    <string name="welcome_ment">백경이와 함께 꿈을\n찾으러 가보자</string>
-    <string name="cheer_up_baekgyoung_description">꿈을 찾는 것을 응원하는 백경이</string>
-    <string name="naver_description">네이버 로그인 버튼입니다.</string>
-    <string name="google_description">구글 로그인 버튼입니다.</string>
-    <string name="kakao_description">카카오 로그인 버튼입니다.</string>
-    <string name="facebook_description">페이스북 로그인 버튼입니다.</string>
-    <string name="apple_description">애플 로그인 버튼입니다.</string>
-
-    <string name="welcome_message">처음 가입하시네요!</string>
-    <string name="please_input_nickname_and_gender">별명과 성별을 입력해주세요.</string>
-
-    <string name="nickname">별명</string>
-    <string name="nickname_hint">별명을 입력하세요.</string>
-    <string name="gender">성별</string>
-    <string name="male">남성</string>
-    <string name="female">여성</string>
-    <string name="major">학과</string>
-    <string name="major_hint">학과를 입력하세요.</string>
-    <string name="grade">학년</string>
-    <string name="grade_hint">학년을 입력하세요.</string>
-    <string name="confirm">완료</string>
 
     <string name="home">홈</string>
     <string name="consulting">진로 상담</string>

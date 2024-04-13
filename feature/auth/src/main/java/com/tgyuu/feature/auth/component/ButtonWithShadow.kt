@@ -1,4 +1,4 @@
-package com.tgyuu.baekyounge.auth.component
+package com.tgyuu.feature.auth.component
 
 import androidx.annotation.DrawableRes
 import androidx.annotation.StringRes

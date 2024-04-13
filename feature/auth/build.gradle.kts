@@ -1,5 +1,5 @@
 plugins {
-    id("plugin.android.library")
+    id("plugin.android.feature")
     id("plugin.android.hilt")
 }
 
@@ -27,6 +27,7 @@ dependencies {
     implementation(project(":core:model"))
     implementation(project(":core:designsystem"))
     implementation(project(":core:common"))
+    implementation(libs.kakao.user)
 
     implementation(libs.bundles.androidx)
     implementation(libs.material)

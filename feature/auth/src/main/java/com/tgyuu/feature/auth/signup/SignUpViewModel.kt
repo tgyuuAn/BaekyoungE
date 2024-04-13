@@ -1,4 +1,4 @@
-package com.tgyuu.baekyounge.auth.signup
+package com.tgyuu.feature.auth.signup
 
 import androidx.core.text.isDigitsOnly
 import androidx.lifecycle.ViewModel

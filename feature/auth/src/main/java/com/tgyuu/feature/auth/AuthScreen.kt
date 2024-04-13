@@ -1,4 +1,4 @@
-package com.tgyuu.baekyounge.auth
+package com.tgyuu.feature.auth
 
 import android.content.Context
 import androidx.compose.foundation.Image
@@ -41,9 +41,7 @@ import com.kakao.sdk.auth.model.OAuthToken
 import com.kakao.sdk.common.model.ClientError
 import com.kakao.sdk.common.model.ClientErrorCause
 import com.kakao.sdk.user.UserApiClient
-import com.tgyuu.baekyounge.R
-import com.tgyuu.baekyounge.R.string
-import com.tgyuu.baekyounge.auth.component.ButtonWithShadow
+import com.tgyuu.feature.auth.component.ButtonWithShadow
 import com.tgyuu.designsystem.theme.BaekyoungTheme
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.flow.collectLatest
@@ -102,12 +100,12 @@ fun AuthScreen(
         ) {
             Image(
                 painter = painterResource(id = R.drawable.ic_cheer_up_baekgyoung),
-                contentDescription = stringResource(id = string.cheer_up_baekgyoung_description),
+                contentDescription = stringResource(id = R.string.cheer_up_baekgyoung_description),
                 modifier = Modifier.align(Alignment.TopEnd),
             )
 
             Text(
-                text = stringResource(id = string.welcome_ment),
+                text = stringResource(id = R.string.welcome_ment),
                 style = BaekyoungTheme.typography.titleBold,
                 color = BaekyoungTheme.colors.blueDD,
                 modifier = Modifier
@@ -116,7 +114,7 @@ fun AuthScreen(
             )
 
             Text(
-                text = stringResource(id = string.login),
+                text = stringResource(id = R.string.login),
                 style = BaekyoungTheme.typography.titleBold.copy(fontSize = 20.sp),
                 color = BaekyoungTheme.colors.blueF8,
                 modifier = Modifier
@@ -139,7 +137,7 @@ fun AuthScreen(
                     .background(BaekyoungTheme.colors.white),
             ) {
                 Text(
-                    text = stringResource(id = string.sign_up),
+                    text = stringResource(id = R.string.sign_up),
                     style = BaekyoungTheme.typography.contentRegular.copy(fontSize = 20.sp),
                     color = BaekyoungTheme.colors.blueF8,
                     modifier = Modifier.padding(top = 15.dp),
@@ -152,14 +150,14 @@ fun AuthScreen(
                 ) {
                     ButtonWithShadow(
                         drawableId = R.drawable.ic_naver,
-                        contentDescription = string.naver_description,
+                        contentDescription = R.string.naver_description,
                     )
 
                     Spacer(modifier = Modifier.size(49.dp))
 
                     ButtonWithShadow(
                         drawableId = R.drawable.ic_google,
-                        contentDescription = string.google_description,
+                        contentDescription = R.string.google_description,
                     )
                 }
 
@@ -169,7 +167,7 @@ fun AuthScreen(
                 ) {
                     ButtonWithShadow(
                         drawableId = R.drawable.ic_kakao,
-                        contentDescription = string.kakao_description,
+                        contentDescription = R.string.kakao_description,
                         onClickButton = {
                             loginKakao(
                                 coroutineScope = coroutineScope,
@@ -184,14 +182,14 @@ fun AuthScreen(
 
                     ButtonWithShadow(
                         drawableId = R.drawable.ic_facebook,
-                        contentDescription = string.facebook_description,
+                        contentDescription = R.string.facebook_description,
                     )
 
                     Spacer(modifier = Modifier.size(49.dp))
 
                     ButtonWithShadow(
                         drawableId = R.drawable.ic_apple,
-                        contentDescription = string.apple_description,
+                        contentDescription = R.string.apple_description,
                     )
                 }
 
