@@ -51,6 +51,7 @@ dependencies {
     implementation(project(":core:domain"))
     implementation(project(":core:common"))
     implementation(project(":core:model"))
+    implementation(project(":feature:auth"))
     implementation(libs.kakao.user)
 
     testImplementation("junit:junit:4.13.2")
