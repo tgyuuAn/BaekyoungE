@@ -13,12 +13,14 @@ import androidx.compose.foundation.layout.offset
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
+import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -42,6 +44,7 @@ import com.tgyuu.designsystem.component.SpeechBubbleType
 import com.tgyuu.designsystem.theme.BaekyoungTheme
 import com.tgyuu.model.consulting.ChattingRole
 import com.tgyuu.model.consulting.Message
+import kotlinx.coroutines.launch
 
 @Composable
 internal fun ChattingRoute(
@@ -81,12 +84,25 @@ internal fun ChattingScreen(
     var textFieldHeight by remember { mutableStateOf(0.dp) }
     var topBarHeight by remember { mutableStateOf(0.dp) }
     val focusManager = LocalFocusManager.current
+    val listState = rememberLazyListState()
+    var previousChatSize by remember { mutableStateOf(1) }
+    val coroutineScope = rememberCoroutineScope()
     val backgroundColor = Brush.verticalGradient(
         listOf(
             BaekyoungTheme.colors.blue4E,
             BaekyoungTheme.colors.blue4E.copy(alpha = 0.66f),
         ),
     )
+
+    LaunchedEffect(chatLog) {
+        if (previousChatSize != chatLog.size) {
+            coroutineScope.launch {
+                listState.animateScrollToItem(chatLog.size - 1)
+            }
+
+            previousChatSize = chatLog.size
+        }
+    }
 
     Scaffold(contentWindowInsets = WindowInsets(0.dp)) { paddingValues ->
         Box(
@@ -136,6 +152,7 @@ internal fun ChattingScreen(
             )
 
             LazyColumn(
+                state = listState,
                 verticalArrangement = Arrangement.spacedBy(20.dp),
                 contentPadding = PaddingValues(horizontal = 25.dp),
                 modifier = Modifier
