@@ -1,37 +1,46 @@
 package com.tgyuu.data.repository.repository.consulting
 
-import com.tgyuu.model.consulting.ConsultingChatting
-import com.tgyuu.network.model.consulting.ChatRequest
-import com.tgyuu.network.model.consulting.ConsultingRequest
-import com.tgyuu.network.source.consulting.ConsultingDataSource
-import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.map
+import android.util.Log
+import com.tgyuu.model.consulting.ChatLog
+import com.tgyuu.model.consulting.ChattingRole
+import com.tgyuu.model.consulting.Message
+import com.tgyuu.network.model.consulting.AiChatRequest
+import com.tgyuu.network.model.consulting.MessageDTO
+import com.tgyuu.network.source.consulting.AiConsultingDataSource
 import javax.inject.Inject
 
 class ConsultingRepositoryImpl @Inject constructor(
-    private val consultingDataSource: ConsultingDataSource,
+    private val aiConsultingDataSource: AiConsultingDataSource,
 ) : ConsultingRepository {
-    override suspend fun postConsultingInformation(grade: Int, major: String): Result<Unit> =
-        consultingDataSource.postConsultingInformation(
-            ConsultingRequest(
-                grade = grade,
-                major = major,
+    override suspend fun postChatMessage(chatLog: List<Message>): Result<ChatLog> = runCatching {
+        val aiChatResponse = aiConsultingDataSource.postChatMessage(
+            AiChatRequest(
+                messageDTO = chatLog.map {
+                    MessageDTO(
+                        content = it.content,
+                        role = it.role.name.lowercase(),
+                    )
+                },
             ),
         )
 
-    override suspend fun postUserChatting(chatUser: String): Result<Unit> =
-        consultingDataSource.postUserChatting(
-            ChatRequest(
-                chat_user = chatUser,
-            ),
-        )
-
-    override fun getChatting(): Flow<Result<List<ConsultingChatting>>> =
-        consultingDataSource.getChattingLog().map { response ->
-            response.mapCatching { chatLogResponseList ->
-                chatLogResponseList.map {
-                    it.toConsultingChatting()
-                }
+        val messages = mutableListOf<Message>()
+        aiChatResponse.map { chatResponse ->
+            chatResponse.choices.map {
+                messages.add(
+                    Message(
+                        content = it.messageDTO.content,
+                        role = when (it.messageDTO.role) {
+                            "user" -> ChattingRole.USER
+                            "system" -> ChattingRole.SYSTEM
+                            "assistant" -> ChattingRole.ASSISTANT
+                            else -> ChattingRole.FUNCTION
+                        },
+                    ),
+                )
             }
         }
+
+        ChatLog(messages = messages)
+    }
 }

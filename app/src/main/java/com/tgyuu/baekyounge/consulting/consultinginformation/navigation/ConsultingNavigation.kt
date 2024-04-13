@@ -15,7 +15,7 @@ fun NavController.navigateToConsulting(navOptions: NavOptions? = navOptions {}) 
 }
 
 fun NavGraphBuilder.consultingGraph(
-    navigateToChatting: () -> Unit,
+    navigateToChatting: (String) -> Unit,
     popBackStack: () -> Unit,
 ) {
     composable(route = consultingNavigationRoute) {

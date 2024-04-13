@@ -2,8 +2,8 @@ package com.tgyuu.network.di
 
 import com.tgyuu.network.source.auth.AuthDataSource
 import com.tgyuu.network.source.auth.AuthDataSourceImpl
-import com.tgyuu.network.source.consulting.ConsultingDataSource
-import com.tgyuu.network.source.consulting.ConsultingDataSourceImpl
+import com.tgyuu.network.source.consulting.AiConsultingDataSource
+import com.tgyuu.network.source.consulting.AiConsultingDataSourceImpl
 import dagger.Binds
 import dagger.Module
 import dagger.hilt.InstallIn
@@ -16,9 +16,9 @@ abstract class NetworkModule {
 
     @Binds
     @Singleton
-    abstract fun bindsConsultingDataSource(
-        consultingDataSourceImpl: ConsultingDataSourceImpl,
-    ): ConsultingDataSource
+    abstract fun bindsAiConsultingDataSource(
+        aiConsultingDataSourceImpl: AiConsultingDataSourceImpl,
+    ): AiConsultingDataSource
 
     @Binds
     @Singleton

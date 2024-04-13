@@ -1,17 +1,8 @@
 package com.tgyuu.data.repository.repository.consulting
 
-import com.tgyuu.model.consulting.ConsultingChatting
-import kotlinx.coroutines.flow.Flow
+import com.tgyuu.model.consulting.ChatLog
+import com.tgyuu.model.consulting.Message
 
 interface ConsultingRepository {
-    suspend fun postConsultingInformation(
-        grade: Int,
-        major: String,
-    ): Result<Unit>
-
-    suspend fun postUserChatting(
-        chatUser: String,
-    ): Result<Unit>
-
-    fun getChatting(): Flow<Result<List<ConsultingChatting>>>
+    suspend fun postChatMessage(chatLog: List<Message>): Result<ChatLog>
 }

@@ -5,6 +5,7 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.widthIn
+import androidx.compose.foundation.layout.wrapContentSize
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
@@ -40,6 +41,7 @@ fun BaekyoungSpeechBubble(
     Box(modifier = modifier.fillMaxWidth()) {
         Box(
             modifier = Modifier
+                .wrapContentSize()
                 .widthIn(max = (localConfiguration.screenWidthDp / 2).dp)
                 .align(SpeechBubbleAlignment)
                 .clip(RoundedCornerShape(5.dp))
