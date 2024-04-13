@@ -48,10 +48,10 @@ import com.tgyuu.model.consulting.Message
 import kotlinx.coroutines.launch
 
 @Composable
-internal fun ChattingRoute(
+internal fun AiChattingRoute(
     userId: String,
     popBackStack: () -> Unit,
-    viewModel: ChattingViewModel = hiltViewModel(),
+    viewModel: AiChattingViewModel = hiltViewModel(),
 ) {
     val chatText by viewModel.chatText.collectAsStateWithLifecycle()
     val chatLog = viewModel.chatLog.toList()
@@ -61,7 +61,7 @@ internal fun ChattingRoute(
         viewModel.setUserId(userId)
     }
 
-    ChattingScreen(
+    AiChattingScreen(
         chatText = chatText,
         searchText = searchText,
         chatLog = chatLog,
@@ -73,7 +73,7 @@ internal fun ChattingRoute(
 }
 
 @Composable
-internal fun ChattingScreen(
+internal fun AiChattingScreen(
     chatText: String,
     searchText: String,
     chatLog: List<Message>,

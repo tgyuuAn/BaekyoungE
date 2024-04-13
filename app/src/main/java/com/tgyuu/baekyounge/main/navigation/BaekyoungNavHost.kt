@@ -10,8 +10,8 @@ import androidx.compose.ui.Modifier
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.navOptions
-import com.tgyuu.aichat.navigation.chattingScreen
-import com.tgyuu.aichat.navigation.navigateToChatting
+import com.tgyuu.aichat.navigation.aiChattingScreen
+import com.tgyuu.aichat.navigation.navigateToAiChatting
 import com.tgyuu.baekyounge.community.navigation.communityScreen
 import com.tgyuu.baekyounge.etc.navigation.etcScreen
 import com.tgyuu.baekyounge.shop.navigation.shopScreen
@@ -103,7 +103,7 @@ fun BaekyoungNavHost(
         storageScreen()
         consultingScreen(
             navigateToChatting = {
-                navController.navigateToChatting(
+                navController.navigateToAiChatting(
                     userId = it,
                     navOptions {
                         popUpTo(consultingNavigationRoute)
@@ -111,7 +111,7 @@ fun BaekyoungNavHost(
                 )
             },
         )
-        chattingScreen(popBackStack = { navController.popBackStack() })
+        aiChattingScreen(popBackStack = { navController.popBackStack() })
         communityScreen()
         etcScreen()
     }

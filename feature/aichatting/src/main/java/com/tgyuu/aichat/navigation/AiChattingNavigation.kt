@@ -7,24 +7,24 @@ import androidx.navigation.NavType
 import androidx.navigation.compose.composable
 import androidx.navigation.navArgument
 import androidx.navigation.navOptions
-import com.tgyuu.aichat.ChattingRoute
+import com.tgyuu.aichat.AiChattingRoute
 
-fun chattingNavigationRoute(userId: String = "{userId}") = "chatting_route/$userId"
+fun aiChattingNavigationRoute(userId: String = "{userId}") = "ai_chatting_route/$userId"
 
-fun NavController.navigateToChatting(
+fun NavController.navigateToAiChatting(
     userId: String,
     navOptions: NavOptions? = navOptions {},
 ) {
-    this.navigate(chattingNavigationRoute(userId), navOptions)
+    this.navigate(aiChattingNavigationRoute(userId), navOptions)
 }
 
-fun NavGraphBuilder.chattingScreen(popBackStack: () -> Unit) {
+fun NavGraphBuilder.aiChattingScreen(popBackStack: () -> Unit) {
     composable(
-        route = chattingNavigationRoute(),
+        route = aiChattingNavigationRoute(),
         arguments = listOf(navArgument("userId") { type = NavType.StringType }),
     ) { navBackStackEntry ->
         val userId = navBackStackEntry.arguments?.getString("userId") ?: ""
-        ChattingRoute(
+        AiChattingRoute(
             userId = userId,
             popBackStack = popBackStack,
         )
