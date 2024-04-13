@@ -21,12 +21,11 @@ import com.tgyuu.baekyounge.consulting.chatting.navigation.navigateToChatting
 import com.tgyuu.baekyounge.consulting.consultinginformation.navigation.consultingGraph
 import com.tgyuu.baekyounge.consulting.consultinginformation.navigation.consultingNavigationRoute
 import com.tgyuu.baekyounge.etc.navigation.etcScreen
-import com.tgyuu.baekyounge.home.navigation.homeNavigationRoute
-import com.tgyuu.baekyounge.home.navigation.homeScreen
-import com.tgyuu.baekyounge.home.navigation.navigateToHome
+import com.tgyuu.feature.home.navigation.homeScreen
+import com.tgyuu.feature.home.navigation.navigateToHome
 import com.tgyuu.baekyounge.shop.navigation.shopScreen
-import com.tgyuu.baekyounge.splash.navigation.splashNavigationRoute
-import com.tgyuu.baekyounge.splash.navigation.splashScreen
+import com.tgyuu.feature.splash.navigation.splashNavigationRoute
+import com.tgyuu.feature.splash.navigation.splashScreen
 import com.tgyuu.baekyounge.storage.navigation.storageScreen
 
 @Composable
@@ -38,7 +37,7 @@ fun BaekyoungNavHost(
     NavHost(
         navController = navController,
         enterTransition = {
-            if (navController.currentDestination?.route == homeNavigationRoute &&
+            if (navController.currentDestination?.route == com.tgyuu.feature.home.navigation.homeNavigationRoute &&
                 navController.previousBackStackEntry?.destination?.route == signUpNavigationRoute()
             ) {
                 EnterTransition.None

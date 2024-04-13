@@ -1,4 +1,4 @@
-package com.tgyuu.baekyounge.home
+package com.tgyuu.feature.home
 
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.fadeIn
@@ -30,11 +30,12 @@ import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalConfiguration
 import androidx.compose.ui.platform.LocalFocusManager
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
-import com.tgyuu.baekyounge.R
 import com.tgyuu.common.util.addFocusCleaner
 import com.tgyuu.designsystem.R.drawable
+import com.tgyuu.designsystem.R.string
 import com.tgyuu.designsystem.component.BaekgyoungClouds
 import com.tgyuu.designsystem.theme.BaekyoungTheme
 
@@ -70,7 +71,7 @@ internal fun HomeScreen() {
 
         Image(
             painter = painterResource(id = drawable.ic_sea),
-            contentDescription = null,
+            contentDescription = stringResource(id = string.sea_description),
             contentScale = ContentScale.FillWidth,
             modifier = Modifier
                 .fillMaxWidth()
@@ -80,7 +81,7 @@ internal fun HomeScreen() {
 
         Image(
             painter = painterResource(id = drawable.ic_main_baekgyoung),
-            contentDescription = null,
+            contentDescription = stringResource(id = string.main_baekgyoung_description),
             modifier = Modifier
                 .fillMaxWidth()
                 .align(Alignment.TopCenter)
@@ -108,7 +109,7 @@ internal fun HomeScreen() {
                 ) {
                     Image(
                         painterResource(id = R.drawable.ic_fish),
-                        contentDescription = null,
+                        contentDescription = stringResource(id = R.string.fish_description),
                     )
 
                     Text(
@@ -127,12 +128,12 @@ internal fun HomeScreen() {
                 ) {
                     Image(
                         painterResource(id = R.drawable.ic_chat),
-                        contentDescription = null,
+                        contentDescription = stringResource(id = R.string.chat_description),
                     )
 
                     Image(
                         painterResource(id = R.drawable.ic_setting),
-                        contentDescription = null,
+                        contentDescription = stringResource(id = R.string.setting_description),
                     )
                 }
             }

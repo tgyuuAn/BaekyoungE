@@ -2,5 +2,6 @@
 <resources>
     <string name="consulting">진로 상담</string>
     <string name="chatting">채팅</string>
-    <string name="content_description_test"> </string>
+    <string name="sea_description">태평양 한 가운데</string>
+    <string name="main_baekgyoung_description">바다 위에 떠있는 귀여운 백경이</string>
 </resources>

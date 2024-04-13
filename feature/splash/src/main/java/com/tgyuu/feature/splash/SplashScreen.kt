@@ -1,4 +1,4 @@
-package com.tgyuu.baekyounge.splash
+package com.tgyuu.feature.splash
 
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.core.animateOffsetAsState
@@ -35,7 +35,6 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
-import com.tgyuu.baekyounge.R
 import com.tgyuu.designsystem.theme.BaekyoungTheme
 import kotlinx.coroutines.flow.collectLatest
 

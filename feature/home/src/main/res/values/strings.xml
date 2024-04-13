@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="fish_description">붕어빵 한 마리</string>
+    <string name="chat_description">나에게 온 채팅 버튼</string>
+    <string name="setting_description">설정 하러가기</string>
+</resources>

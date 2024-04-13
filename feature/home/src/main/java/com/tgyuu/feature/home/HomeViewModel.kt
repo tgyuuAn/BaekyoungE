@@ -1,4 +1,4 @@
-package com.tgyuu.baekyounge.home
+package com.tgyuu.feature.home
 
 import androidx.lifecycle.ViewModel
 import dagger.hilt.android.lifecycle.HiltViewModel

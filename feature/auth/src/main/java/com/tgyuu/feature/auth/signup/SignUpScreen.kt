@@ -50,6 +50,7 @@ import com.tgyuu.feature.auth.signup.SignUpViewModel.Gender
 import com.tgyuu.feature.auth.signup.component.SignUpTextField
 import com.tgyuu.common.util.addFocusCleaner
 import com.tgyuu.designsystem.R.drawable
+import com.tgyuu.designsystem.R.string
 import com.tgyuu.designsystem.component.BaekgyoungClouds
 import com.tgyuu.designsystem.component.BaekyoungButton
 import com.tgyuu.designsystem.theme.BaekyoungTheme
@@ -154,7 +155,7 @@ internal fun SignUpScreen(
 
             Image(
                 painter = painterResource(id = drawable.ic_sea),
-                contentDescription = null,
+                contentDescription = stringResource(id = string.sea_description),
                 contentScale = ContentScale.FillWidth,
                 modifier = Modifier
                     .fillMaxWidth()
@@ -169,7 +170,7 @@ internal fun SignUpScreen(
 
             Image(
                 painter = painterResource(id = drawable.ic_main_baekgyoung),
-                contentDescription = null,
+                contentDescription = stringResource(id = string.main_baekgyoung_description),
                 modifier = Modifier
                     .fillMaxWidth()
                     .align(Alignment.TopCenter)

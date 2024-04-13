@@ -1,11 +1,11 @@
-package com.tgyuu.baekyounge.home.navigation
+package com.tgyuu.feature.home.navigation
 
 import androidx.navigation.NavController
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.NavOptions
 import androidx.navigation.compose.composable
 import androidx.navigation.navOptions
-import com.tgyuu.baekyounge.home.HomeRoute
+import com.tgyuu.feature.home.HomeRoute
 
 const val homeNavigationRoute = "home_route"
 

@@ -1,4 +1,4 @@
-package com.tgyuu.baekyounge.splash
+package com.tgyuu.feature.splash
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
