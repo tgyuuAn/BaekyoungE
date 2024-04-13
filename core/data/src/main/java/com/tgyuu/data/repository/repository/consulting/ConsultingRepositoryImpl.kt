@@ -24,10 +24,7 @@ class ConsultingRepositoryImpl @Inject constructor(
             ),
         )
 
-        Log.d("test", "aiChatResponse : $aiChatResponse")
-
         val messages = mutableListOf<Message>()
-
         aiChatResponse.map { chatResponse ->
             chatResponse.choices.map {
                 messages.add(

@@ -23,7 +23,6 @@ import javax.inject.Singleton
 @Module
 @InstallIn(SingletonComponent::class)
 object ApiModule {
-
     val contentType = "application/json".toMediaType()
     val json = Json {
         ignoreUnknownKeys = true

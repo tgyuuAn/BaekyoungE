@@ -55,12 +55,7 @@ class ChattingViewModel @Inject constructor(
         _chatText.value = ""
 
         postChatMessageUseCase(chatLog.toList())
-            .onSuccess {
-                Log.d("test", it.toString())
-                chatLog.addAll(it.messages)
-            }
-            .onFailure {
-                Log.d("test", "onFailure : " + it.toString())
-            }
+            .onSuccess { chatLog.addAll(it.messages) }
+            .onFailure { Log.d("test", "onFailure : " + it.toString()) }
     }
 }
