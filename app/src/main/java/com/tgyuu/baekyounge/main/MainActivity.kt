@@ -37,7 +37,7 @@ import com.tgyuu.feature.auth.signup.navigation.signUpNavigationRoute
 import com.tgyuu.aichat.navigation.aiChattingNavigationRoute
 import com.tgyuu.baekyounge.main.navigation.BaekyoungNavHost
 import com.tgyuu.baekyounge.main.navigation.TopLevelDestination
-import com.tgyuu.baekyounge.shop.navigation.shopNavigationRoute
+import com.tgyuu.feature.shop.navigation.shopNavigationRoute
 import com.tgyuu.feature.splash.navigation.splashNavigationRoute
 import com.tgyuu.designsystem.theme.BaekyoungTheme
 import dagger.hilt.android.AndroidEntryPoint

@@ -14,8 +14,8 @@ import com.tgyuu.aichat.navigation.aiChattingScreen
 import com.tgyuu.aichat.navigation.navigateToAiChatting
 import com.tgyuu.feature.community.navigation.communityScreen
 import com.tgyuu.feature.etc.navigation.etcScreen
-import com.tgyuu.baekyounge.shop.navigation.shopScreen
-import com.tgyuu.baekyounge.storage.navigation.storageScreen
+import com.tgyuu.feature.shop.navigation.shopScreen
+import com.tgyuu.feature.storage.navigation.storageScreen
 import com.tgyuu.feature.auth.navigation.authNavigationRoute
 import com.tgyuu.feature.auth.navigation.authScreen
 import com.tgyuu.feature.auth.navigation.navigateToAuth

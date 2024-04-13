@@ -4,7 +4,7 @@ plugins {
 }
 
 android {
-    namespace = "com.tgyuu.feature.storage"
+    namespace = "com.tgyuu.feature.shop"
 
     defaultConfig {
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"

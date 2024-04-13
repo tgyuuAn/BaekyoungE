@@ -1,11 +1,11 @@
-package com.tgyuu.baekyounge.shop.navigation
+package com.tgyuu.feature.shop.navigation
 
 import androidx.navigation.NavController
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.NavOptions
 import androidx.navigation.compose.composable
 import androidx.navigation.navOptions
-import com.tgyuu.baekyounge.shop.ShopRoute
+import com.tgyuu.feature.shop.ShopRoute
 
 const val shopNavigationRoute = "shop_route"
 

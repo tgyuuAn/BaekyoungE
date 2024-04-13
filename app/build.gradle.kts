@@ -58,6 +58,8 @@ dependencies {
     implementation(project(":feature:consulting"))
     implementation(project(":feature:aichatting"))
     implementation(project(":feature:community"))
+    implementation(project(":feature:storage"))
+    implementation(project(":feature:shop"))
     implementation(project(":feature:etc"))
 
     implementation(libs.kakao.user)

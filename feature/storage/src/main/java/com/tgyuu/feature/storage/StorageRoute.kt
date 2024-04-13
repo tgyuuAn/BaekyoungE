@@ -1,4 +1,4 @@
-package com.tgyuu.baekyounge.storage
+package com.tgyuu.feature.storage
 
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
