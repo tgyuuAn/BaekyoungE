@@ -2,10 +2,10 @@ package com.tgyuu.feature.profile
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
-import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
@@ -64,7 +64,7 @@ fun ProfileScreen() {
                 .background(BaekyoungTheme.colors.grayF0),
         ) {
             Text(
-                text = "함께한 지 18 일",
+                text = generateDaysSinceRegistrationSpan(days = 18),
                 style = BaekyoungTheme.typography.labelRegular,
                 modifier = Modifier.padding(top = 10.dp, start = 20.dp),
             )
@@ -102,6 +102,32 @@ fun ProfileScreen() {
         }
 
         HorizontalDivider(color = BaekyoungTheme.colors.grayDC)
+
+        Column(
+            horizontalAlignment = Alignment.CenterHorizontally,
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(vertical = 40.dp),
+        ) {
+            Image(
+                painter = painterResource(id = com.tgyuu.feature.profile.R.drawable.ic_suggestion_box),
+                contentDescription = null,
+            )
+
+            Text(
+                "건의함",
+                style = BaekyoungTheme.typography.labelRegular.copy(fontSize = 10.sp),
+                color = BaekyoungTheme.colors.gray95,
+                modifier = Modifier.padding(top = 4.dp),
+            )
+        }
+
+        Spacer(modifier = Modifier.weight(1f))
+
+        HorizontalDivider(
+            color = BaekyoungTheme.colors.grayDC,
+            modifier = Modifier.padding(bottom = 60.dp),
+        )
     }
 }
 
@@ -117,4 +143,19 @@ private fun generateUserNameSpan(userName: String): AnnotatedString = buildAnnot
         append(userName, " ")
     }
     append("님")
+}
+
+@Composable
+private fun generateDaysSinceRegistrationSpan(days: Int): AnnotatedString = buildAnnotatedString {
+    append("함께한 지 ")
+    withStyle(
+        style = SpanStyle(
+            color = BaekyoungTheme.colors.black,
+            fontWeight = FontWeight.Bold,
+            fontSize = 18.sp,
+        ),
+    ) {
+        append(days.toString())
+    }
+    append(" 일")
 }
