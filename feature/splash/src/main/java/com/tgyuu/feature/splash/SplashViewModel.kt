@@ -1,5 +1,6 @@
 package com.tgyuu.feature.splash
 
+import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.kakao.sdk.auth.AuthApiClient
@@ -41,9 +42,12 @@ class SplashViewModel @Inject constructor(
         }
 
         UserApiClient.instance.accessTokenInfo { tokenInfo, error ->
-            if (error == null) {
-                verifyMemberId(tokenInfo?.id ?: -1)
+            if (error != null) {
+                event(SplashEvent.NavigateToAuth)
             }
+
+            verifyMemberId(tokenInfo?.id ?: -1)
+            return@accessTokenInfo
         }
     }
 
