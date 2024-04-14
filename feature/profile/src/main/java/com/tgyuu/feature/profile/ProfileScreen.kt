@@ -56,12 +56,12 @@ fun ProfileScreen() {
             )
         }
 
-        HorizontalDivider(color = BaekyoungTheme.colors.grayD0)
+        HorizontalDivider(color = BaekyoungTheme.colors.grayDC)
 
         Column(
             modifier = Modifier
                 .fillMaxWidth()
-                .background(BaekyoungTheme.colors.whiteFF),
+                .background(BaekyoungTheme.colors.grayF0),
         ) {
             Text(
                 text = "함께한 지 18 일",
@@ -101,7 +101,7 @@ fun ProfileScreen() {
             )
         }
 
-        HorizontalDivider(color = BaekyoungTheme.colors.grayD0)
+        HorizontalDivider(color = BaekyoungTheme.colors.grayDC)
     }
 }
 

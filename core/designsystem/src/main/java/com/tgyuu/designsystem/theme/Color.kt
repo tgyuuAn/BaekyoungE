@@ -15,6 +15,8 @@ val GrayF4 = Color(0xFFF4F4F4)
 val GrayD0 = Color(0xFFD0D0D0)
 val GrayAC = Color(0xFFACACAC)
 val Gray95 = Color(0xFF959595)
+val GrayDC = Color(0xFFDCDCDC)
+val GrayF0 = Color(0xFFF0F0F0)
 val Black56 = Color(0xFF565656)
 val Blue5FF = Color(0xFFEAF5FF)
 val BlueF5FF = Color(0xFFC6F5FF)
@@ -65,6 +67,8 @@ class BaekyoungColor(
     gray95: Color = Gray95,
     grayAC: Color = GrayAC,
     grayD0: Color = GrayD0,
+    grayDC: Color = GrayDC,
+    grayF0: Color = GrayF0,
     grayF4: Color = GrayF4,
     grayF5: Color = GrayF5,
     grayCF: Color = GrayCF,
@@ -123,6 +127,10 @@ class BaekyoungColor(
     var grayF5 by mutableStateOf(grayF5)
         private set
     var grayAC by mutableStateOf(grayAC)
+        private set
+    var grayDC by mutableStateOf(grayDC)
+        private set
+    var grayF0 by mutableStateOf(grayF0)
         private set
     var grayCF by mutableStateOf(grayCF)
         private set
