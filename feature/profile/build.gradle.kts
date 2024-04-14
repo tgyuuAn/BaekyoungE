@@ -4,7 +4,7 @@ plugins {
 }
 
 android {
-    namespace = "com.tgyuu.feature.etc"
+    namespace = "com.tgyuu.feature.profile"
 
     defaultConfig {
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"

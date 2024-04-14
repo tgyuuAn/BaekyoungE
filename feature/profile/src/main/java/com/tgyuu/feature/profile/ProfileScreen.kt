@@ -1,4 +1,4 @@
-package com.tgyuu.feature.etc
+package com.tgyuu.feature.profile
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Column
@@ -8,12 +8,12 @@ import androidx.compose.ui.Modifier
 import com.tgyuu.designsystem.theme.BaekyoungTheme
 
 @Composable
-internal fun EtcRoute() {
-    EtcScreen()
+internal fun ProfileRoute() {
+    ProfileScreen()
 }
 
 @Composable
-fun EtcScreen() {
+fun ProfileScreen() {
     Column(
         modifier = Modifier
             .fillMaxSize()

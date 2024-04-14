@@ -1,4 +1,4 @@
-package com.tgyuu.feature.etc
+package com.tgyuu.feature.profile
 
 import org.junit.Test
 
