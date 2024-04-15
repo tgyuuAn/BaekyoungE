@@ -41,9 +41,12 @@ class SplashViewModel @Inject constructor(
         }
 
         UserApiClient.instance.accessTokenInfo { tokenInfo, error ->
-            if (error == null) {
-                verifyMemberId(tokenInfo?.id ?: -1)
+            if (error != null) {
+                event(SplashEvent.NavigateToAuth)
             }
+
+            verifyMemberId(tokenInfo?.id ?: -1)
+            return@accessTokenInfo
         }
     }
 
