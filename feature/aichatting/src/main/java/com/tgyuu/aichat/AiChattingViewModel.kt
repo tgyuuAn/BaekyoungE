@@ -2,8 +2,10 @@ package com.tgyuu.aichat
 
 import android.util.Log
 import androidx.compose.runtime.mutableStateListOf
+import androidx.compose.runtime.snapshots.SnapshotStateList
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.tgyuu.common.util.UiState
 import com.tgyuu.domain.usecase.consulting.ai.PostChatMessageUseCase
 import com.tgyuu.model.consulting.ChattingRole
 import com.tgyuu.model.consulting.Message
@@ -23,9 +25,12 @@ class AiChattingViewModel @Inject constructor(
     private val _searchText: MutableStateFlow<String> = MutableStateFlow("")
     val searchText get() = _searchText.asStateFlow()
 
-    val chatLog = mutableStateListOf(
+    val chatLog: SnapshotStateList<Message> = mutableStateListOf(
         Message(content = "안녕하세요!무엇을 도와드릴까요 ?", role = ChattingRole.ASSISTANT),
     )
+
+    val _chatState: MutableStateFlow<UiState<Unit>> = MutableStateFlow(UiState.Success(Unit))
+    val chatState = _chatState.asStateFlow()
 
     private val _userId: MutableStateFlow<String> = MutableStateFlow("")
 
@@ -53,9 +58,11 @@ class AiChattingViewModel @Inject constructor(
             ),
         )
         _chatText.value = ""
+        _chatState.value = UiState.Loading
 
         postChatMessageUseCase(chatLog.toList())
             .onSuccess { chatLog.addAll(it.messages) }
             .onFailure { Log.d("test", "onFailure : " + it.toString()) }
+            .also { _chatState.value = UiState.Success(Unit) }
     }
 }

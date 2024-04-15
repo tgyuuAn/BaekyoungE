@@ -35,6 +35,8 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import com.tgyuu.aichat.component.AiChattingLoader
+import com.tgyuu.common.util.UiState
 import com.tgyuu.common.util.addFocusCleaner
 import com.tgyuu.designsystem.R.string
 import com.tgyuu.designsystem.component.BaekyoungCenterTopBar
@@ -56,6 +58,7 @@ internal fun AiChattingRoute(
     val chatText by viewModel.chatText.collectAsStateWithLifecycle()
     val chatLog = viewModel.chatLog.toList()
     val searchText by viewModel.searchText.collectAsStateWithLifecycle()
+    val chatState by viewModel.chatState.collectAsStateWithLifecycle()
 
     LaunchedEffect(true) {
         viewModel.setUserId(userId)
@@ -65,6 +68,7 @@ internal fun AiChattingRoute(
         chatText = chatText,
         searchText = searchText,
         chatLog = chatLog,
+        chatState = chatState,
         onChatTextChanged = viewModel::setChatText,
         onSearchTextChanged = viewModel::setSearchText,
         postUserChatting = viewModel::postUserChatting,
@@ -77,6 +81,7 @@ internal fun AiChattingScreen(
     chatText: String,
     searchText: String,
     chatLog: List<Message>,
+    chatState: UiState<Unit>,
     onChatTextChanged: (String) -> Unit,
     onSearchTextChanged: (String) -> Unit,
     postUserChatting: () -> Unit,
@@ -158,12 +163,9 @@ internal fun AiChattingScreen(
                 contentPadding = PaddingValues(horizontal = 25.dp),
                 modifier = Modifier
                     .fillMaxSize()
-                    .padding(top = topBarHeight, bottom = textFieldHeight),
+                    .padding(top = topBarHeight, bottom = 220.dp),
             ) {
-                items(
-                    items = chatLog,
-                    key = { it.content },
-                ) { message ->
+                items(items = chatLog) { message ->
                     val speechBubbleType = when (message.role) {
                         ChattingRole.USER -> SpeechBubbleType.AI_USER
                         ChattingRole.ASSISTANT -> SpeechBubbleType.AI_CHAT
@@ -175,6 +177,16 @@ internal fun AiChattingScreen(
                         text = message.content,
                     )
                 }
+            }
+
+            when (chatState) {
+                is UiState.Loading -> AiChattingLoader(
+                    modifier = Modifier
+                        .align(Alignment.BottomCenter)
+                        .padding(bottom = 135.dp),
+                )
+
+                else -> Unit
             }
 
             BaekyoungChatTextField(
