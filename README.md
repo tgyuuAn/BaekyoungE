@@ -7,7 +7,7 @@
 ## 🌟 주요 기능
 
 <details>
-<summary><h4>1차 개발 _(2023-11-01 ~2023-12-26)_</h4></summary>
+<summary><h4>1차 개발 (2023-11-01 ~2023-12-26)</h4></summary>
 
 ![ezgif com-crop (5)](https://github.com/tgyuuAn/Baekyoung-i/assets/116813010/60f9c954-cc59-4616-8d01-7a1db2b8ab3c)
 
@@ -22,6 +22,8 @@ _추후 디자인 리팩토링, 채팅 기능 이외 기능 추가_
 **2차 개발** _(2024-03-01 ~ ing)_
 
 <img src="https://github.com/tgyuuAn/BaekyoungE/assets/116813010/54bc3a0f-7a76-4aae-b580-c10a862f7358" width="300"/>
+
+<img src="https://github.com/tgyuuAn/BaekyoungE/assets/116813010/c222155f-232a-4b57-8d11-03e1192dceda" width="300"/>
 
 <details>
 <summary><h3>🎖️Award</h3></summary>
