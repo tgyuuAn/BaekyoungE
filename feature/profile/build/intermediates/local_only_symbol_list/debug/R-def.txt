@@ -1,0 +1,5 @@
+R_DEF: Internal format may change without notice
+local
+drawable ic_arrow_right_gray
+drawable ic_suggestion_box
+string my_account

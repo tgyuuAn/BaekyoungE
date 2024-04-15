@@ -28,6 +28,7 @@ dependencies {
     implementation(project(":core:designsystem"))
     implementation(project(":core:common"))
 
+    implementation(libs.lottie.compose)
     implementation(libs.bundles.androidx)
     implementation(libs.material)
 
