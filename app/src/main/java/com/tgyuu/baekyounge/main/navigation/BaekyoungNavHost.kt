@@ -116,6 +116,6 @@ fun BaekyoungNavHost(
         aiChattingScreen(popBackStack = { navController.popBackStack() })
         communityScreen()
         profileScreen(navigateToSetting = navController::navigateToSetting)
-        settingScreen()
+        settingScreen(popBackStack = { navController.popBackStack() })
     }
 }

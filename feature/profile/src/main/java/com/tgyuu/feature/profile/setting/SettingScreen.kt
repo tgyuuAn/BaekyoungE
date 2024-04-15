@@ -17,14 +17,20 @@ import com.tgyuu.designsystem.theme.BaekyoungTheme
 import com.tgyuu.feature.profile.R
 
 @Composable
-internal fun SettingRoute() {
+internal fun SettingRoute(popBackStack: () -> Unit) {
     val snackbarHostState = remember { SnackbarHostState() }
 
-    SettingScreen(snackbarHostState = snackbarHostState)
+    SettingScreen(
+        snackbarHostState = snackbarHostState,
+        popBackStack = popBackStack,
+    )
 }
 
 @Composable
-fun SettingScreen(snackbarHostState: SnackbarHostState) {
+fun SettingScreen(
+    snackbarHostState: SnackbarHostState,
+    popBackStack: () -> Unit,
+) {
     Scaffold(
         contentWindowInsets = WindowInsets(0.dp),
         snackbarHost = { SnackbarHost(snackbarHostState) },
@@ -38,6 +44,7 @@ fun SettingScreen(snackbarHostState: SnackbarHostState) {
             BaekyoungCenterTopBar(
                 titleTextId = R.string.my_account,
                 showBackButton = true,
+                onClickBackButton = popBackStack,
             )
         }
     }

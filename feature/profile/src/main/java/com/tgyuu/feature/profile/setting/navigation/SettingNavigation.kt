@@ -12,8 +12,8 @@ fun NavController.navigateToSetting(navOptions: NavOptions? = androidx.navigatio
     this.navigate(settingNavigationRoute, navOptions)
 }
 
-fun NavGraphBuilder.settingScreen() {
+fun NavGraphBuilder.settingScreen(popBackStack: () -> Unit) {
     composable(route = settingNavigationRoute) {
-        SettingRoute()
+        SettingRoute(popBackStack = popBackStack)
     }
 }
