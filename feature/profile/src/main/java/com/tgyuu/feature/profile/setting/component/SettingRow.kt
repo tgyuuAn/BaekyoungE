@@ -3,7 +3,7 @@ package com.tgyuu.feature.profile.setting.component
 import androidx.annotation.StringRes
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.clickable
-import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
@@ -24,7 +24,7 @@ internal fun SettingRow(
     @StringRes titleTextId: Int,
     titleTextColor: Color = BaekyoungTheme.colors.black56,
     showContentText: Boolean = false,
-    contentText: String,
+    contentText: String = "",
     showRightArrow: Boolean = false,
     onClick: () -> Unit,
     modifier: Modifier = Modifier,
@@ -35,31 +35,35 @@ internal fun SettingRow(
             .fillMaxWidth()
             .clickable { onClick() },
     ) {
-        Row(
-            horizontalArrangement = Arrangement.SpaceBetween,
-            verticalAlignment = Alignment.CenterVertically,
+        Box(
             modifier = modifier
-                .fillMaxWidth()
-                .padding(vertical = 10.dp),
+                .weight(1f)
+                .padding(horizontal = 20.dp, vertical = 10.dp),
         ) {
             Text(
                 text = stringResource(id = titleTextId),
                 style = BaekyoungTheme.typography.labelRegular.copy(fontSize = 13.sp),
                 color = titleTextColor,
+                modifier = Modifier.align(Alignment.CenterStart),
             )
 
-            Text(
-                text = if (showContentText) contentText else "",
-                style = BaekyoungTheme.typography.labelRegular.copy(fontSize = 13.sp),
-                color = BaekyoungTheme.colors.grayD0,
-            )
+            if (showContentText) {
+                Text(
+                    text = contentText,
+                    style = BaekyoungTheme.typography.labelRegular.copy(
+                        fontSize = 13.sp,
+                    ),
+                    color = BaekyoungTheme.colors.gray95,
+                    modifier = Modifier.align(Alignment.CenterEnd),
+                )
+            }
         }
 
         if (showRightArrow) {
             Image(
                 painter = painterResource(id = R.drawable.ic_arrow_right_gray),
                 contentDescription = null,
-                modifier = Modifier.padding(horizontal = 20.dp),
+                modifier = Modifier.padding(end = 20.dp),
             )
         }
     }
