@@ -19,7 +19,6 @@ import androidx.compose.ui.unit.dp
 import com.tgyuu.designsystem.component.BaekyoungCenterTopBar
 import com.tgyuu.designsystem.theme.BaekyoungTheme
 import com.tgyuu.feature.profile.R
-import com.tgyuu.feature.profile.setting.component.SettingRow
 
 @Composable
 internal fun SettingRoute(popBackStack: () -> Unit) {
@@ -53,7 +52,7 @@ fun SettingScreen(
                 onClickBackButton = popBackStack,
             )
 
-            Box {
+            Box(modifier = Modifier.padding(top = 25.dp)) {
                 Image(
                     painter = painterResource(id = R.drawable.ic_user_default),
                     contentDescription = null,

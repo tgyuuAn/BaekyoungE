@@ -1,4 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="my_account">내 계정</string>
+    <string name="change_nickname">닉네임 변경</string>
+    <string name="change_gender">성별 변경</string>
+    <string name="change_major">학과 변경</string>
+    <string name="change_grade">학년 변경</string>
+    <string name="open_source_license">오픈소스 라이센스</string>
+    <string name="privacy_policy">개인정보처리방침</string>
+    <string name="logout">로그아웃</string>
+    <string name="withdrawal">계정탈퇴</string>
 </resources>
