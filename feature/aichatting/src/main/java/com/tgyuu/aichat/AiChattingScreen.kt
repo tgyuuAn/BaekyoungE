@@ -183,7 +183,7 @@ internal fun AiChattingScreen(
                 is UiState.Loading -> AiChattingLoader(
                     modifier = Modifier
                         .align(Alignment.BottomCenter)
-                        .padding(bottom = 140.dp),
+                        .padding(bottom = 135.dp),
                 )
 
                 else -> Unit
