@@ -1,3 +1,0 @@
-int drawable ic_arrow_right_gray 0x0
-int drawable ic_suggestion_box 0x0
-int string my_account 0x0
