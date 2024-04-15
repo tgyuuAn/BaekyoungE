@@ -2,6 +2,7 @@ package com.tgyuu.feature.profile
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -27,12 +28,12 @@ import com.tgyuu.designsystem.R
 import com.tgyuu.designsystem.theme.BaekyoungTheme
 
 @Composable
-internal fun ProfileRoute() {
-    ProfileScreen()
+internal fun ProfileRoute(navigateToSetting: () -> Unit) {
+    ProfileScreen(navigateToSetting = navigateToSetting)
 }
 
 @Composable
-fun ProfileScreen() {
+fun ProfileScreen(navigateToSetting: () -> Unit) {
     Column(
         modifier = Modifier
             .fillMaxSize()
@@ -52,7 +53,9 @@ fun ProfileScreen() {
             Image(
                 painter = painterResource(id = R.drawable.ic_arrow_right),
                 contentDescription = null,
-                modifier = Modifier.align(Alignment.CenterEnd),
+                modifier = Modifier
+                    .align(Alignment.CenterEnd)
+                    .clickable { navigateToSetting() },
             )
         }
 

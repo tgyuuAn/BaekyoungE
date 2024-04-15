@@ -13,8 +13,8 @@ fun NavController.navigateToProfile(navOptions: NavOptions? = navOptions {}) {
     this.navigate(profileNavigationRoute, navOptions)
 }
 
-fun NavGraphBuilder.etcScreen() {
+fun NavGraphBuilder.profileScreen(navigateToSetting: () -> Unit) {
     composable(route = profileNavigationRoute) {
-        ProfileRoute()
+        ProfileRoute(navigateToSetting = navigateToSetting)
     }
 }
