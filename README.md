@@ -64,8 +64,6 @@ _추후 디자인 리팩토링, 채팅 기능 이외 기능 추가_
 ## 📊 모듈 의존성 그래프
 ![Baekyoung 모듈 의존성 그래프](https://github.com/tgyuuAn/Baekyoung-i/assets/116813010/6aa7cc8a-c4ab-4a76-a7be-14e07e8aee2a)
 
-_(feature쪽은 아직 각각의 패키지가 비대해지지 않아 분리하지 않았습니다. 추후 비대해지면 분리 예정)_
-
 <br><br><br>
 
 ## 🔧 Android 사용할 기술
