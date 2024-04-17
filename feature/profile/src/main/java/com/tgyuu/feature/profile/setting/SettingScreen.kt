@@ -2,6 +2,7 @@ package com.tgyuu.feature.profile.setting
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
@@ -9,14 +10,17 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
-import androidx.compose.material3.BottomSheetScaffold
+import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material3.Button
+import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.HorizontalDivider
-import androidx.compose.material3.SheetState
-import androidx.compose.material3.SheetValue
+import androidx.compose.material3.ModalBottomSheet
+import androidx.compose.material3.Scaffold
 import androidx.compose.material3.SnackbarHost
 import androidx.compose.material3.SnackbarHostState
-import androidx.compose.material3.rememberBottomSheetScaffoldState
+import androidx.compose.material3.Text
+import androidx.compose.material3.rememberModalBottomSheetState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -26,9 +30,10 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.tgyuu.common.util.UiState
@@ -67,30 +72,117 @@ fun SettingScreen(
             is UiState.Loading -> Loader(modifier = Modifier.fillMaxSize())
             is UiState.Success -> {
                 val userInformation = userInformationState.data
-                var bottomSheetType by remember { mutableStateOf(BottomSheetType.INIT) }
-                val coroutineScope = rememberCoroutineScope()
-                val scaffoldState = rememberBottomSheetScaffoldState(
-                    bottomSheetState = SheetState(
-                        skipPartiallyExpanded = false,
-                        initialValue = SheetValue.Hidden,
-                        density = LocalDensity.current,
-                    ),
-                )
 
-                BottomSheetScaffold(
-                    scaffoldState = scaffoldState,
+                var bottomSheetType by remember { mutableStateOf(BottomSheetType.INIT) }
+                var showBottomSheet by remember { mutableStateOf(false) }
+                val coroutineScope = rememberCoroutineScope()
+                val sheetState = rememberModalBottomSheetState()
+
+                Scaffold(
                     snackbarHost = { SnackbarHost(snackbarHostState) },
-                    sheetContainerColor = BaekyoungTheme.colors.white,
-                    sheetContent = {
+                ) { paddingValues ->
+                    if (showBottomSheet) {
                         when (bottomSheetType) {
                             BottomSheetType.INIT -> Unit
-                            BottomSheetType.CHANGE_GENDER -> {}
-                            BottomSheetType.CHANGE_GRADE -> {}
-                            BottomSheetType.CHANGE_MAJOR -> {}
-                            BottomSheetType.CHANGE_NICKNAME -> {}
+                            BottomSheetType.CHANGE_GENDER -> {
+                                ModalBottomSheet(
+                                    onDismissRequest = { showBottomSheet = false },
+                                    sheetState = sheetState,
+                                ) {
+
+                                }
+                            }
+
+                            BottomSheetType.CHANGE_GRADE -> {
+                                ModalBottomSheet(
+                                    onDismissRequest = { showBottomSheet = false },
+                                    sheetState = sheetState,
+                                ) {
+
+                                }
+                            }
+
+                            BottomSheetType.CHANGE_MAJOR -> {
+                                ModalBottomSheet(
+                                    onDismissRequest = { showBottomSheet = false },
+                                    sheetState = sheetState,
+                                ) {
+
+                                }
+                            }
+
+                            BottomSheetType.CHANGE_NICKNAME -> {
+                                ModalBottomSheet(
+                                    onDismissRequest = { showBottomSheet = false },
+                                    sheetState = sheetState,
+                                    containerColor = BaekyoungTheme.colors.white,
+                                    shape = RoundedCornerShape(topStart = 10.dp, topEnd = 10.dp),
+                                ) {
+                                    Column(
+                                        horizontalAlignment = Alignment.CenterHorizontally,
+                                        verticalArrangement = Arrangement.spacedBy(12.dp),
+                                        modifier = Modifier.fillMaxWidth(),
+                                    ) {
+                                        Text(
+                                            text = "새로운 닉네임을 입력해주세요.",
+                                            style = BaekyoungTheme.typography.labelBold.copy(
+                                                fontSize = 14.sp,
+                                            ),
+                                            color = BaekyoungTheme.colors.black,
+                                        )
+
+                                        Text(
+                                            text = "최대 12글자",
+                                            style = BaekyoungTheme.typography.labelBold.copy(
+                                                fontSize = 14.sp,
+                                            ),
+                                            color = BaekyoungTheme.colors.black,
+                                        )
+
+                                        Text(
+                                            text = "언제든지 다시 바꿀 수 있어요.",
+                                            style = BaekyoungTheme.typography.labelBold.copy(
+                                                fontSize = 10.sp,
+                                            ),
+                                            color = BaekyoungTheme.colors.grayD0,
+                                        )
+
+                                        Button(
+                                            onClick = {
+                                                coroutineScope.launch { sheetState.hide() }
+                                                    .invokeOnCompletion {
+                                                        if (!sheetState.isVisible) {
+                                                            showBottomSheet = false
+                                                        }
+                                                    }
+                                            },
+                                            colors = ButtonDefaults.buttonColors(
+                                                containerColor = BaekyoungTheme.colors.gray95,
+                                            ),
+                                            shape = RoundedCornerShape(5.dp),
+                                            modifier = Modifier.padding(
+                                                bottom = 20.dp,
+                                                start = 20.dp,
+                                                end = 20.dp,
+                                            ),
+                                        ) {
+                                            Text(
+                                                text = "완료",
+                                                style = BaekyoungTheme.typography.labelBold,
+                                                color = BaekyoungTheme.colors.white,
+                                                textAlign = TextAlign.Center,  // horizontal center of the text
+                                                modifier = Modifier
+                                                    .fillMaxWidth()
+                                                    .align(Alignment.CenterVertically) //vertical center of the Text composabl
+                                                    .padding(vertical = 8.dp),
+                                            )
+                                        }
+                                    }
+                                }
+                            }
                         }
-                    },
-                ) { paddingValues ->
+                    }
+
                     Column(
                         horizontalAlignment = Alignment.CenterHorizontally,
                         modifier = Modifier
@@ -133,8 +225,8 @@ fun SettingScreen(
                             showRightArrow = true,
                             onClick = {
                                 bottomSheetType = BottomSheetType.CHANGE_NICKNAME
-                                coroutineScope.launch {
-                                    scaffoldState.bottomSheetState.expand()
+                                if (!showBottomSheet) {
+                                    showBottomSheet = true
                                 }
                             },
                         )
@@ -146,8 +238,8 @@ fun SettingScreen(
                             showRightArrow = true,
                             onClick = {
                                 bottomSheetType = BottomSheetType.CHANGE_GENDER
-                                coroutineScope.launch {
-                                    scaffoldState.bottomSheetState.expand()
+                                if (!showBottomSheet) {
+                                    showBottomSheet = true
                                 }
                             },
                         )
@@ -159,8 +251,8 @@ fun SettingScreen(
                             showRightArrow = true,
                             onClick = {
                                 bottomSheetType = BottomSheetType.CHANGE_MAJOR
-                                coroutineScope.launch {
-                                    scaffoldState.bottomSheetState.expand()
+                                if (!showBottomSheet) {
+                                    showBottomSheet = true
                                 }
                             },
                         )
@@ -172,8 +264,8 @@ fun SettingScreen(
                             showRightArrow = true,
                             onClick = {
                                 bottomSheetType = BottomSheetType.CHANGE_GRADE
-                                coroutineScope.launch {
-                                    scaffoldState.bottomSheetState.expand()
+                                if (!showBottomSheet) {
+                                    showBottomSheet = true
                                 }
                             },
                         )

@@ -1,4 +1,4 @@
-package com.tgyuu.designsystem.component
+package com.tgyuu.feature.profile.setting.component
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
@@ -10,39 +10,41 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.BasicTextField
 import androidx.compose.foundation.text.KeyboardActions
 import androidx.compose.foundation.text.KeyboardOptions
+import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.SolidColor
 import androidx.compose.ui.platform.LocalSoftwareKeyboardController
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.input.ImeAction
+import androidx.compose.ui.text.style.TextAlign
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import com.tgyuu.designsystem.R
 import com.tgyuu.designsystem.theme.BaekyoungTheme
 
 @Composable
-fun BaekyoungChatTextField(
-    chatText: String,
+internal fun SettingTextField(
+    text: String,
     onTextChanged: (String) -> Unit,
-    sendMessage: () -> Unit,
-    textColor: Color = BaekyoungTheme.colors.black,
+    onConfirm: () -> Unit,
+    hint: String,
     modifier: Modifier = Modifier,
 ) {
     val keyboardController = LocalSoftwareKeyboardController.current
 
     BasicTextField(
-        value = chatText,
+        value = text,
         onValueChange = onTextChanged,
-        textStyle = BaekyoungTheme.typography.contentRegular.copy(
-            color = textColor,
-        ),
+        textStyle = BaekyoungTheme.typography.contentRegular,
         singleLine = true,
         keyboardOptions = KeyboardOptions(
             imeAction = ImeAction.Done,
         ),
-        cursorBrush = SolidColor(BaekyoungTheme.colors.white),
+        cursorBrush = SolidColor(BaekyoungTheme.colors.black),
         keyboardActions = KeyboardActions(onDone = { keyboardController?.hide() }),
         modifier = modifier
             .fillMaxWidth()
@@ -51,23 +53,52 @@ fun BaekyoungChatTextField(
                 shape = RoundedCornerShape(3.dp),
             ),
     ) { innerTextField ->
-        Box(modifier = Modifier.padding(vertical = 4.dp, horizontal = 12.dp)) {
+        Box(
+            modifier = Modifier
+                .padding(vertical = 4.dp, horizontal = 12.dp)
+                .clip(RoundedCornerShape(5.dp))
+                .background(BaekyoungTheme.colors.grayDC),
+        ) {
             Box(
                 modifier = Modifier
                     .align(Alignment.CenterStart)
-                    .fillMaxWidth(),
+                    .fillMaxWidth()
+                    .padding(10.dp),
             ) {
                 innerTextField()
 
+                if (text.isEmpty()) {
+                    Text(
+                        text = hint,
+                        color = BaekyoungTheme.colors.gray95,
+                        textAlign = TextAlign.Center,
+                        style = BaekyoungTheme.typography.labelRegular.copy(fontSize = 13.sp),
+                        modifier = Modifier.align(Alignment.CenterStart),
+                    )
+                }
+
                 Image(
-                    painter = painterResource(id = R.drawable.ic_send_message),
+                    painter = painterResource(id = R.drawable.ic_text_clear),
                     contentDescription = null,
                     modifier = Modifier
                         .align(Alignment.CenterEnd)
                         .padding(start = 10.dp)
-                        .clickable { sendMessage() },
+                        .clickable { onConfirm() },
                 )
             }
         }
+    }
+}
+
+@Preview
+@Composable
+fun SettingTextFieldPreview() {
+    BaekyoungTheme {
+        SettingTextField(
+            text = "",
+            onTextChanged = {},
+            onConfirm = { /*TODO*/ },
+            hint = "최대 12글자",
+        )
     }
 }
