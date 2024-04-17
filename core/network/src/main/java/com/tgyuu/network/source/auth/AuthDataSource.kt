@@ -1,6 +1,5 @@
 package com.tgyuu.network.source.auth
 
-import com.tgyuu.model.auth.UserInformation
 import com.tgyuu.network.model.auth.UserInformationRequest
 import com.tgyuu.network.model.auth.UserInformationResponse
 

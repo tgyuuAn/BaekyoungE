@@ -14,7 +14,15 @@ class AuthRepositoryImpl @Inject constructor(
         authDataSource.verifyUserId(userId)
 
     override suspend fun getUserInformation(userId: String): Result<UserInformation> =
-        authDataSource.getUserInformation(userId)
+        authDataSource.getUserInformation(userId).mapCatching {
+            UserInformation(
+                userId = it.userId,
+                nickName = it.nickName,
+                gender = it.gender,
+                major = it.major,
+                registrationDate = it.registrationDate,
+            )
+        }
 
     override suspend fun postUserInformation(
         userId: String,
