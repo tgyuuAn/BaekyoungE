@@ -17,6 +17,7 @@ import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.AnnotatedString
 import androidx.compose.ui.text.SpanStyle
 import androidx.compose.ui.text.buildAnnotatedString
@@ -31,6 +32,8 @@ import com.tgyuu.common.util.UiState
 import com.tgyuu.designsystem.R
 import com.tgyuu.designsystem.component.Loader
 import com.tgyuu.designsystem.theme.BaekyoungTheme
+import com.tgyuu.feature.profile.R.drawable
+import com.tgyuu.feature.profile.R.string
 import com.tgyuu.model.auth.UserInformation
 
 @Composable
@@ -139,12 +142,12 @@ fun ProfileScreen(
                         .padding(vertical = 40.dp),
                 ) {
                     Image(
-                        painter = painterResource(id = com.tgyuu.feature.profile.R.drawable.ic_suggestion_box),
+                        painter = painterResource(id = drawable.ic_suggestion_box),
                         contentDescription = null,
                     )
 
                     Text(
-                        "건의함",
+                        text = stringResource(id = string.suggestion_box),
                         style = BaekyoungTheme.typography.labelRegular.copy(fontSize = 10.sp),
                         color = BaekyoungTheme.colors.gray95,
                         modifier = Modifier.padding(top = 4.dp),
@@ -162,8 +165,6 @@ fun ProfileScreen(
             is UiState.Error -> {
                 // Todo
             }
-
-            is UiState.Init -> {}
         }
     }
 }

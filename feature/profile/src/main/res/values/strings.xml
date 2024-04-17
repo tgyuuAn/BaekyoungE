@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <string name="suggestion_box">건의함</string>
     <string name="my_account">내 계정</string>
     <string name="change_nickname">닉네임 변경</string>
     <string name="change_gender">성별 변경</string>
