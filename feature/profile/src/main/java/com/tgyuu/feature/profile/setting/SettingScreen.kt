@@ -42,6 +42,7 @@ import com.tgyuu.designsystem.component.Loader
 import com.tgyuu.designsystem.theme.BaekyoungTheme
 import com.tgyuu.feature.profile.R
 import com.tgyuu.feature.profile.setting.component.SettingRow
+import com.tgyuu.feature.profile.setting.component.SettingTextField
 import com.tgyuu.model.auth.UserInformation
 import kotlinx.coroutines.launch
 
@@ -116,6 +117,7 @@ fun SettingScreen(
                                     onDismissRequest = { showBottomSheet = false },
                                     sheetState = sheetState,
                                     containerColor = BaekyoungTheme.colors.white,
+                                    dragHandle = {},
                                     shape = RoundedCornerShape(topStart = 10.dp, topEnd = 10.dp),
                                 ) {
                                     Column(
@@ -129,14 +131,14 @@ fun SettingScreen(
                                                 fontSize = 14.sp,
                                             ),
                                             color = BaekyoungTheme.colors.black,
+                                            modifier = Modifier.padding(top = 20.dp),
                                         )
 
-                                        Text(
-                                            text = "최대 12글자",
-                                            style = BaekyoungTheme.typography.labelBold.copy(
-                                                fontSize = 14.sp,
-                                            ),
-                                            color = BaekyoungTheme.colors.black,
+                                        SettingTextField(
+                                            text = "",
+                                            onTextChanged = { },
+                                            onConfirm = { },
+                                            hint = "최대 12글자까지 입력할 수 있어요!",
                                         )
 
                                         Text(
