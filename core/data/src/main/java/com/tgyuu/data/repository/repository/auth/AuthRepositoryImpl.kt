@@ -20,6 +20,7 @@ class AuthRepositoryImpl @Inject constructor(
                 nickName = it.nickName,
                 gender = it.gender,
                 major = it.major,
+                grade = it.grade,
                 registrationDate = it.registrationDate,
             )
         }
