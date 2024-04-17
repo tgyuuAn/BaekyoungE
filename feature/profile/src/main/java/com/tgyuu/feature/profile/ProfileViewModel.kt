@@ -4,19 +4,29 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.kakao.sdk.auth.AuthApiClient
 import com.kakao.sdk.user.UserApiClient
-import com.tgyuu.domain.usecase.auth.VerifyMemberIdUseCase
+import com.tgyuu.domain.usecase.auth.GetUserInformationUseCase
+import com.tgyuu.model.auth.UserInformation
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableSharedFlow
+import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asSharedFlow
+import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
 class ProfileViewModel @Inject constructor(
-    private val verifyMemberIdUseCase: VerifyMemberIdUseCase,
+    private val getUserInformationUseCase: GetUserInformationUseCase,
 ) : ViewModel() {
     private val _eventFlow = MutableSharedFlow<ProfileEvent>()
     val eventFlow = _eventFlow.asSharedFlow()
+
+    private val _userInformation = MutableStateFlow(UserInformation())
+    val userInformation = _userInformation.asStateFlow()
+
+    init {
+        checkTokenExists()
+    }
 
     fun checkTokenExists() {
         // 토큰이 없을 경우 바로 Auth 페이지로 이동
@@ -36,8 +46,11 @@ class ProfileViewModel @Inject constructor(
     }
 
     fun verifyMemberId(userId: Long) = viewModelScope.launch {
-        verifyMemberIdUseCase(userId)
-            .onSuccess { event(ProfileEvent.UserLoadingSuccess) }
+        getUserInformationUseCase(userId.toString())
+            .onSuccess {
+                _userInformation.value = it
+                event(ProfileEvent.UserLoadingSuccess)
+            }
             .onFailure { event(ProfileEvent.UserLoadingFailed) }
     }
 
