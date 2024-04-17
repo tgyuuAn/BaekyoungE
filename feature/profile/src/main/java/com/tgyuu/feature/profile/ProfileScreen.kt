@@ -24,11 +24,15 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.withStyle
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.hilt.navigation.compose.hiltViewModel
 import com.tgyuu.designsystem.R
 import com.tgyuu.designsystem.theme.BaekyoungTheme
 
 @Composable
-internal fun ProfileRoute(navigateToSetting: () -> Unit) {
+internal fun ProfileRoute(
+    navigateToSetting: () -> Unit,
+    viewModel: ProfileViewModel = hiltViewModel(),
+) {
     ProfileScreen(navigateToSetting = navigateToSetting)
 }
 
