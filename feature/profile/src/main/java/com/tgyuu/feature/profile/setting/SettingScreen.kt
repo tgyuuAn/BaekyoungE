@@ -146,7 +146,7 @@ fun SettingScreen(
                                             style = BaekyoungTheme.typography.labelBold.copy(
                                                 fontSize = 10.sp,
                                             ),
-                                            color = BaekyoungTheme.colors.grayD0,
+                                            color = BaekyoungTheme.colors.grayAC,
                                         )
 
                                         Button(
@@ -172,10 +172,10 @@ fun SettingScreen(
                                                 text = "완료",
                                                 style = BaekyoungTheme.typography.labelBold,
                                                 color = BaekyoungTheme.colors.white,
-                                                textAlign = TextAlign.Center,  // horizontal center of the text
+                                                textAlign = TextAlign.Center,
                                                 modifier = Modifier
                                                     .fillMaxWidth()
-                                                    .align(Alignment.CenterVertically) //vertical center of the Text composabl
+                                                    .align(Alignment.CenterVertically)
                                                     .padding(vertical = 8.dp),
                                             )
                                         }

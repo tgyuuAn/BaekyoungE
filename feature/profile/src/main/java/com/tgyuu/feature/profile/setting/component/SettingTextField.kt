@@ -57,7 +57,7 @@ internal fun SettingTextField(
             modifier = Modifier
                 .padding(vertical = 4.dp, horizontal = 12.dp)
                 .clip(RoundedCornerShape(5.dp))
-                .background(BaekyoungTheme.colors.grayDC),
+                .background(BaekyoungTheme.colors.grayF2),
         ) {
             Box(
                 modifier = Modifier
@@ -70,7 +70,7 @@ internal fun SettingTextField(
                 if (text.isEmpty()) {
                     Text(
                         text = hint,
-                        color = BaekyoungTheme.colors.gray95,
+                        color = BaekyoungTheme.colors.grayB4,
                         textAlign = TextAlign.Center,
                         style = BaekyoungTheme.typography.labelRegular.copy(fontSize = 13.sp),
                         modifier = Modifier.align(Alignment.CenterStart),
