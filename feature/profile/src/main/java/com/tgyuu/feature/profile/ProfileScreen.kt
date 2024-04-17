@@ -88,7 +88,12 @@ fun ProfileScreen(
                         .background(BaekyoungTheme.colors.grayF0),
                 ) {
                     Text(
-                        text = generateDaysSinceRegistrationSpan(days = 18),
+                        text = generateDaysSinceRegistrationSpan(
+                            days = userInformation
+                                .calculateTimeSinceRegistration()
+                                .toDays()
+                                .toString(),
+                        ),
                         style = BaekyoungTheme.typography.labelRegular,
                         modifier = Modifier.padding(top = 10.dp, start = 20.dp),
                     )
@@ -153,9 +158,11 @@ fun ProfileScreen(
                     modifier = Modifier.padding(bottom = 60.dp),
                 )
             }
+
             is UiState.Error -> {
                 // Todo
             }
+
             is UiState.Init -> {}
         }
     }
@@ -176,7 +183,7 @@ private fun generateUserNameSpan(userName: String): AnnotatedString = buildAnnot
 }
 
 @Composable
-private fun generateDaysSinceRegistrationSpan(days: Int): AnnotatedString =
+private fun generateDaysSinceRegistrationSpan(days: String): AnnotatedString =
     buildAnnotatedString {
         append("함께한 지 ")
         withStyle(
@@ -186,7 +193,7 @@ private fun generateDaysSinceRegistrationSpan(days: Int): AnnotatedString =
                 fontSize = 18.sp,
             ),
         ) {
-            append(days.toString())
+            append(days)
         }
         append(" 일")
     }
