@@ -139,6 +139,7 @@ fun SettingScreen(
                                             onTextChanged = { },
                                             onConfirm = { },
                                             hint = "최대 12글자까지 입력할 수 있어요!",
+                                            modifier = Modifier.padding(horizontal = 20.dp),
                                         )
 
                                         Text(

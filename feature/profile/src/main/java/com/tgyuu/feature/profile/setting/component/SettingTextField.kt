@@ -55,7 +55,7 @@ internal fun SettingTextField(
     ) { innerTextField ->
         Box(
             modifier = Modifier
-                .padding(vertical = 4.dp, horizontal = 12.dp)
+                .padding(vertical = 4.dp)
                 .clip(RoundedCornerShape(5.dp))
                 .background(BaekyoungTheme.colors.grayF2),
         ) {
