@@ -1,6 +1,6 @@
-package com.tgyuu.network.model.auth
+package com.tgyuu.model.auth
 
-data class UserInformationResponse(
+data class UserInformation(
     val userId: String = "",
     val nickName: String = "",
     val gender: String = "",

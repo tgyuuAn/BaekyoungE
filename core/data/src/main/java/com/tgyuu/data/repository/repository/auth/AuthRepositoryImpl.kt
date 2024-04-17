@@ -2,6 +2,7 @@ package com.tgyuu.data.repository.repository.auth
 
 import com.tgyuu.data.util.generateNowDateTime
 import com.tgyuu.data.util.toISOLocalDateTimeString
+import com.tgyuu.model.auth.UserInformation
 import com.tgyuu.network.model.auth.UserInformationRequest
 import com.tgyuu.network.source.auth.AuthDataSource
 import javax.inject.Inject
@@ -11,6 +12,9 @@ class AuthRepositoryImpl @Inject constructor(
 ) : AuthRepository {
     override suspend fun verifyUserId(userId: String): Result<Boolean> =
         authDataSource.verifyUserId(userId)
+
+    override suspend fun getUserInformation(userId: String): Result<UserInformation> =
+        authDataSource.getUserInformation(userId)
 
     override suspend fun postUserInformation(
         userId: String,
