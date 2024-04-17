@@ -15,7 +15,6 @@ import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.HorizontalDivider
-import androidx.compose.material3.ModalBottomSheet
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.SnackbarHost
 import androidx.compose.material3.SnackbarHostState
@@ -41,6 +40,7 @@ import com.tgyuu.designsystem.component.BaekyoungCenterTopBar
 import com.tgyuu.designsystem.component.Loader
 import com.tgyuu.designsystem.theme.BaekyoungTheme
 import com.tgyuu.feature.profile.R
+import com.tgyuu.feature.profile.setting.component.SettingModalBottomSheet
 import com.tgyuu.feature.profile.setting.component.SettingRow
 import com.tgyuu.feature.profile.setting.component.SettingTextField
 import com.tgyuu.model.auth.UserInformation
@@ -86,39 +86,94 @@ fun SettingScreen(
                         when (bottomSheetType) {
                             BottomSheetType.INIT -> Unit
                             BottomSheetType.CHANGE_GENDER -> {
-                                ModalBottomSheet(
-                                    onDismissRequest = { showBottomSheet = false },
+                                SettingModalBottomSheet(
+                                    onDissmissRequest = { showBottomSheet = false },
                                     sheetState = sheetState,
                                 ) {
-
                                 }
                             }
 
                             BottomSheetType.CHANGE_GRADE -> {
-                                ModalBottomSheet(
-                                    onDismissRequest = { showBottomSheet = false },
+                                SettingModalBottomSheet(
+                                    onDissmissRequest = { showBottomSheet = false },
                                     sheetState = sheetState,
                                 ) {
-
                                 }
                             }
 
                             BottomSheetType.CHANGE_MAJOR -> {
-                                ModalBottomSheet(
-                                    onDismissRequest = { showBottomSheet = false },
+                                SettingModalBottomSheet(
+                                    onDissmissRequest = { showBottomSheet = false },
                                     sheetState = sheetState,
                                 ) {
+                                    Column(
+                                        horizontalAlignment = Alignment.CenterHorizontally,
+                                        verticalArrangement = Arrangement.spacedBy(12.dp),
+                                        modifier = Modifier.fillMaxWidth(),
+                                    ) {
+                                        Text(
+                                            text = "학과를 입력해주세요.",
+                                            style = BaekyoungTheme.typography.labelBold.copy(
+                                                fontSize = 14.sp,
+                                            ),
+                                            color = BaekyoungTheme.colors.black,
+                                            modifier = Modifier.padding(top = 20.dp),
+                                        )
 
+                                        SettingTextField(
+                                            text = "",
+                                            onTextChanged = { },
+                                            onConfirm = { },
+                                            hint = "백경이학과",
+                                            modifier = Modifier.padding(horizontal = 20.dp),
+                                        )
+
+                                        Text(
+                                            text = "언제든지 다시 바꿀 수 있어요.",
+                                            style = BaekyoungTheme.typography.labelBold.copy(
+                                                fontSize = 10.sp,
+                                            ),
+                                            color = BaekyoungTheme.colors.grayAC,
+                                        )
+
+                                        Button(
+                                            onClick = {
+                                                coroutineScope.launch { sheetState.hide() }
+                                                    .invokeOnCompletion {
+                                                        if (!sheetState.isVisible) {
+                                                            showBottomSheet = false
+                                                        }
+                                                    }
+                                            },
+                                            colors = ButtonDefaults.buttonColors(
+                                                containerColor = BaekyoungTheme.colors.gray95,
+                                            ),
+                                            shape = RoundedCornerShape(5.dp),
+                                            modifier = Modifier.padding(
+                                                bottom = 20.dp,
+                                                start = 20.dp,
+                                                end = 20.dp,
+                                            ),
+                                        ) {
+                                            Text(
+                                                text = "완료",
+                                                style = BaekyoungTheme.typography.labelBold,
+                                                color = BaekyoungTheme.colors.white,
+                                                textAlign = TextAlign.Center,
+                                                modifier = Modifier
+                                                    .fillMaxWidth()
+                                                    .align(Alignment.CenterVertically)
+                                                    .padding(vertical = 8.dp),
+                                            )
+                                        }
+                                    }
                                 }
                             }
 
                             BottomSheetType.CHANGE_NICKNAME -> {
-                                ModalBottomSheet(
-                                    onDismissRequest = { showBottomSheet = false },
+                                SettingModalBottomSheet(
+                                    onDissmissRequest = { showBottomSheet = false },
                                     sheetState = sheetState,
-                                    containerColor = BaekyoungTheme.colors.white,
-                                    dragHandle = {},
-                                    shape = RoundedCornerShape(topStart = 10.dp, topEnd = 10.dp),
                                 ) {
                                     Column(
                                         horizontalAlignment = Alignment.CenterHorizontally,
