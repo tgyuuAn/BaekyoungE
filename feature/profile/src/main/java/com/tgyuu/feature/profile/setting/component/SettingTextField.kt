@@ -45,7 +45,12 @@ internal fun SettingTextField(
             imeAction = ImeAction.Done,
         ),
         cursorBrush = SolidColor(BaekyoungTheme.colors.black),
-        keyboardActions = KeyboardActions(onDone = { keyboardController?.hide() }),
+        keyboardActions = KeyboardActions(
+            onDone = {
+                keyboardController?.hide()
+                onConfirm()
+            },
+        ),
         modifier = modifier
             .fillMaxWidth()
             .background(

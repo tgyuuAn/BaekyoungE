@@ -38,7 +38,7 @@ internal fun SettingRow(
         Box(
             modifier = modifier
                 .weight(1f)
-                .padding(horizontal = 20.dp, vertical = 10.dp),
+                .padding(horizontal = 20.dp, vertical = 15.dp),
         ) {
             Text(
                 text = stringResource(id = titleTextId),

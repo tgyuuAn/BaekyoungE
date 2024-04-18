@@ -20,8 +20,22 @@ class SettingViewModel @Inject constructor(
     private val _userInformation = MutableStateFlow<UiState<UserInformation>>(UiState.Loading)
     val userInformation = _userInformation.asStateFlow()
 
+    private val _newNickname = MutableStateFlow("")
+    val newNickname = _newNickname.asStateFlow()
+
+    private val _newMajor = MutableStateFlow("")
+    val newMajor = _newMajor.asStateFlow()
+
     init {
         checkTokenExists()
+    }
+
+    fun setNewNickname(nickname: String) {
+        _newNickname.value = nickname
+    }
+
+    fun setNewMajor(major: String) {
+        _newMajor.value = major
     }
 
     fun checkTokenExists() = viewModelScope.launch {

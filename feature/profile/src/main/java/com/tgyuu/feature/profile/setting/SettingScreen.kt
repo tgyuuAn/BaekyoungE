@@ -29,6 +29,7 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalFocusManager
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
@@ -36,6 +37,7 @@ import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.tgyuu.common.util.UiState
+import com.tgyuu.common.util.addFocusCleaner
 import com.tgyuu.designsystem.component.BaekyoungCenterTopBar
 import com.tgyuu.designsystem.component.Loader
 import com.tgyuu.designsystem.theme.BaekyoungTheme
@@ -53,20 +55,30 @@ internal fun SettingRoute(
 ) {
     val snackbarHostState = remember { SnackbarHostState() }
     val userInformationState by viewModel.userInformation.collectAsStateWithLifecycle()
+    val newNickname by viewModel.newNickname.collectAsStateWithLifecycle()
+    val newMajor by viewModel.newMajor.collectAsStateWithLifecycle()
 
     SettingScreen(
+        newNickname = newNickname,
+        newMajor = newMajor,
         userInformationState = userInformationState,
         snackbarHostState = snackbarHostState,
         popBackStack = popBackStack,
+        onNewNicknameChanged = viewModel::setNewNickname,
+        onNewMajorChanged = viewModel::setNewMajor,
     )
 }
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun SettingScreen(
+    newNickname: String,
+    newMajor: String,
     userInformationState: UiState<UserInformation>,
     snackbarHostState: SnackbarHostState,
     popBackStack: () -> Unit,
+    onNewNicknameChanged: (String) -> Unit,
+    onNewMajorChanged: (String) -> Unit,
 ) {
     Box(modifier = Modifier.fillMaxSize()) {
         when (userInformationState) {
@@ -121,8 +133,8 @@ fun SettingScreen(
                                         )
 
                                         SettingTextField(
-                                            text = "",
-                                            onTextChanged = { },
+                                            text = newNickname,
+                                            onTextChanged = onNewNicknameChanged,
                                             onConfirm = { },
                                             hint = "백경이학과",
                                             modifier = Modifier.padding(horizontal = 20.dp),
@@ -190,8 +202,8 @@ fun SettingScreen(
                                         )
 
                                         SettingTextField(
-                                            text = "",
-                                            onTextChanged = { },
+                                            text = newMajor,
+                                            onTextChanged = onNewMajorChanged,
                                             onConfirm = { },
                                             hint = "최대 12글자까지 입력할 수 있어요!",
                                             modifier = Modifier.padding(horizontal = 20.dp),
