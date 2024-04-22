@@ -6,6 +6,7 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.WindowInsets
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
@@ -108,6 +109,7 @@ fun SettingScreen(
                 val sheetState = rememberModalBottomSheetState()
 
                 Scaffold(
+                    contentWindowInsets = WindowInsets(0.dp),
                     snackbarHost = { SnackbarHost(snackbarHostState) },
                 ) { paddingValues ->
                     if (showBottomSheet) {
@@ -209,7 +211,14 @@ fun SettingScreen(
                                         SettingTextField(
                                             text = newNickname,
                                             onTextChanged = onNewNicknameChanged,
-                                            onConfirm = { },
+                                            onConfirm = {
+                                                coroutineScope.launch { sheetState.hide() }
+                                                    .invokeOnCompletion {
+                                                        if (!sheetState.isVisible) {
+                                                            showBottomSheet = false
+                                                        }
+                                                    }
+                                            },
                                             hint = stringResource(id = R.string.hint_major),
                                             modifier = Modifier
                                                 .padding(horizontal = 20.dp)
@@ -286,7 +295,14 @@ fun SettingScreen(
                                         SettingTextField(
                                             text = newMajor,
                                             onTextChanged = onNewMajorChanged,
-                                            onConfirm = { },
+                                            onConfirm = {
+                                                coroutineScope.launch { sheetState.hide() }
+                                                    .invokeOnCompletion {
+                                                        if (!sheetState.isVisible) {
+                                                            showBottomSheet = false
+                                                        }
+                                                    }
+                                            },
                                             hint = stringResource(id = R.string.hint_nickname),
                                             modifier = Modifier
                                                 .padding(horizontal = 20.dp)
