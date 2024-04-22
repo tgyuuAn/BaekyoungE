@@ -1,11 +1,11 @@
 package com.tgyuu.feature.profile.setting
 
-import android.util.Log
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -63,11 +63,14 @@ internal fun SettingRoute(
     val newNickname by viewModel.newNickname.collectAsStateWithLifecycle()
     val newMajor by viewModel.newMajor.collectAsStateWithLifecycle()
     val gradePickerState = rememberFWheelPickerState()
+    val yearPickerState = rememberFWheelPickerState()
+    val monthPickerState = rememberFWheelPickerState()
+    val datePickerState = rememberFWheelPickerState()
 
     LaunchedEffect(gradePickerState) {
         snapshotFlow { gradePickerState.currentIndex }
             .collect { grade ->
-                viewModel.setNewGrade(grade+1)
+                viewModel.setNewGrade(grade + 1)
             }
     }
 
@@ -77,6 +80,9 @@ internal fun SettingRoute(
         userInformationState = userInformationState,
         snackbarHostState = snackbarHostState,
         gradePickerState = gradePickerState,
+        yearPickerState = yearPickerState,
+        monthPickerState = monthPickerState,
+        datePickerState = datePickerState,
         popBackStack = popBackStack,
         onNewNicknameChanged = viewModel::setNewNickname,
         onNewMajorChanged = viewModel::setNewMajor,
@@ -91,6 +97,9 @@ fun SettingScreen(
     userInformationState: UiState<UserInformation>,
     snackbarHostState: SnackbarHostState,
     gradePickerState: FWheelPickerState,
+    yearPickerState: FWheelPickerState,
+    monthPickerState: FWheelPickerState,
+    datePickerState: FWheelPickerState,
     popBackStack: () -> Unit,
     onNewNicknameChanged: (String) -> Unit,
     onNewMajorChanged: (String) -> Unit,
@@ -113,13 +122,6 @@ fun SettingScreen(
                     if (showBottomSheet) {
                         when (bottomSheetType) {
                             BottomSheetType.INIT -> Unit
-                            BottomSheetType.CHANGE_GENDER -> {
-                                SettingModalBottomSheet(
-                                    onDissmissRequest = { showBottomSheet = false },
-                                    sheetState = sheetState,
-                                ) {
-                                }
-                            }
 
                             BottomSheetType.CHANGE_GRADE -> {
                                 SettingModalBottomSheet(
@@ -377,19 +379,6 @@ fun SettingScreen(
                         )
 
                         SettingRow(
-                            titleTextId = R.string.change_gender,
-                            contentText = userInformation.gender,
-                            showContentText = true,
-                            showRightArrow = true,
-                            onClick = {
-                                bottomSheetType = BottomSheetType.CHANGE_GENDER
-                                if (!showBottomSheet) {
-                                    showBottomSheet = true
-                                }
-                            },
-                        )
-
-                        SettingRow(
                             titleTextId = R.string.change_major,
                             contentText = userInformation.major,
                             showContentText = true,
@@ -463,5 +452,5 @@ fun SettingScreen(
 }
 
 enum class BottomSheetType {
-    INIT, CHANGE_NICKNAME, CHANGE_MAJOR, CHANGE_GRADE, CHANGE_GENDER
+    INIT, CHANGE_NICKNAME, CHANGE_MAJOR, CHANGE_GRADE
 }
