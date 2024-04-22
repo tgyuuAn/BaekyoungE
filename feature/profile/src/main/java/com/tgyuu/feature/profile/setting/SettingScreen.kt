@@ -1,5 +1,6 @@
 package com.tgyuu.feature.profile.setting
 
+import android.util.Log
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
@@ -10,6 +11,7 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
@@ -21,23 +23,26 @@ import androidx.compose.material3.SnackbarHostState
 import androidx.compose.material3.Text
 import androidx.compose.material3.rememberModalBottomSheetState
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.setValue
+import androidx.compose.runtime.snapshotFlow
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.platform.LocalFocusManager
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import com.sd.lib.compose.wheel_picker.FVerticalWheelPicker
+import com.sd.lib.compose.wheel_picker.FWheelPickerState
+import com.sd.lib.compose.wheel_picker.rememberFWheelPickerState
 import com.tgyuu.common.util.UiState
-import com.tgyuu.common.util.addFocusCleaner
 import com.tgyuu.designsystem.component.BaekyoungCenterTopBar
 import com.tgyuu.designsystem.component.Loader
 import com.tgyuu.designsystem.theme.BaekyoungTheme
@@ -57,12 +62,21 @@ internal fun SettingRoute(
     val userInformationState by viewModel.userInformation.collectAsStateWithLifecycle()
     val newNickname by viewModel.newNickname.collectAsStateWithLifecycle()
     val newMajor by viewModel.newMajor.collectAsStateWithLifecycle()
+    val gradePickerState = rememberFWheelPickerState()
+
+    LaunchedEffect(gradePickerState) {
+        snapshotFlow { gradePickerState.currentIndex }
+            .collect { grade ->
+                viewModel.setNewGrade(grade+1)
+            }
+    }
 
     SettingScreen(
         newNickname = newNickname,
         newMajor = newMajor,
         userInformationState = userInformationState,
         snackbarHostState = snackbarHostState,
+        gradePickerState = gradePickerState,
         popBackStack = popBackStack,
         onNewNicknameChanged = viewModel::setNewNickname,
         onNewMajorChanged = viewModel::setNewMajor,
@@ -76,6 +90,7 @@ fun SettingScreen(
     newMajor: String,
     userInformationState: UiState<UserInformation>,
     snackbarHostState: SnackbarHostState,
+    gradePickerState: FWheelPickerState,
     popBackStack: () -> Unit,
     onNewNicknameChanged: (String) -> Unit,
     onNewMajorChanged: (String) -> Unit,
@@ -90,6 +105,7 @@ fun SettingScreen(
                 var showBottomSheet by remember { mutableStateOf(false) }
                 val coroutineScope = rememberCoroutineScope()
                 val sheetState = rememberModalBottomSheetState()
+
 
                 Scaffold(
                     snackbarHost = { SnackbarHost(snackbarHostState) },
@@ -110,6 +126,65 @@ fun SettingScreen(
                                     onDissmissRequest = { showBottomSheet = false },
                                     sheetState = sheetState,
                                 ) {
+                                    Column(
+                                        horizontalAlignment = Alignment.CenterHorizontally,
+                                        verticalArrangement = Arrangement.spacedBy(12.dp),
+                                        modifier = Modifier.fillMaxWidth(),
+                                    ) {
+                                        Text(
+                                            text = "몇 학년으로 변경하시겠어요?",
+                                            style = BaekyoungTheme.typography.labelBold.copy(
+                                                fontSize = 14.sp,
+                                            ),
+                                            color = BaekyoungTheme.colors.black,
+                                            modifier = Modifier.padding(top = 20.dp),
+                                        )
+
+                                        FVerticalWheelPicker(
+                                            modifier = Modifier.width(50.dp),
+                                            count = 4,
+                                            state = gradePickerState,
+                                        ) { grade ->
+                                            Text(
+                                                text = "${grade + 1} 학년",
+                                                style = BaekyoungTheme.typography.labelBold.copy(
+                                                    fontSize = 14.sp,
+                                                ),
+                                                color = BaekyoungTheme.colors.black,
+                                            )
+                                        }
+
+                                        Button(
+                                            onClick = {
+                                                coroutineScope.launch { sheetState.hide() }
+                                                    .invokeOnCompletion {
+                                                        if (!sheetState.isVisible) {
+                                                            showBottomSheet = false
+                                                        }
+                                                    }
+                                            },
+                                            colors = ButtonDefaults.buttonColors(
+                                                containerColor = BaekyoungTheme.colors.gray95,
+                                            ),
+                                            shape = RoundedCornerShape(5.dp),
+                                            modifier = Modifier.padding(
+                                                bottom = 20.dp,
+                                                start = 20.dp,
+                                                end = 20.dp,
+                                            ),
+                                        ) {
+                                            Text(
+                                                text = "완료",
+                                                style = BaekyoungTheme.typography.labelBold,
+                                                color = BaekyoungTheme.colors.white,
+                                                textAlign = TextAlign.Center,
+                                                modifier = Modifier
+                                                    .fillMaxWidth()
+                                                    .align(Alignment.CenterVertically)
+                                                    .padding(vertical = 8.dp),
+                                            )
+                                        }
+                                    }
                                 }
                             }
 

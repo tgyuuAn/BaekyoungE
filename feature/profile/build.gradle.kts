@@ -28,7 +28,7 @@ dependencies {
     implementation(project(":core:designsystem"))
     implementation(project(":core:common"))
 
-    implementation("com.github.zj565061763:compose-wheel-picker:Tag")
+    implementation("com.github.zj565061763:compose-wheel-picker:1.0.0-beta05")
     implementation(libs.kakao.user)
     implementation(libs.bundles.androidx)
     implementation(libs.material)

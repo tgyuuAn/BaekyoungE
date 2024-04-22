@@ -26,6 +26,9 @@ class SettingViewModel @Inject constructor(
     private val _newMajor = MutableStateFlow("")
     val newMajor = _newMajor.asStateFlow()
 
+    private val _newGrade = MutableStateFlow(1)
+    val newGrade = _newMajor.asStateFlow()
+
     init {
         checkTokenExists()
     }
@@ -36,6 +39,10 @@ class SettingViewModel @Inject constructor(
 
     fun setNewMajor(major: String) {
         _newMajor.value = major
+    }
+
+    fun setNewGrade(grade: Int) {
+        _newGrade.value = grade
     }
 
     fun checkTokenExists() = viewModelScope.launch {
