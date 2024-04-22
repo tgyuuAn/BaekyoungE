@@ -124,7 +124,7 @@ fun ProfileScreen(
                     }
 
                     Text(
-                        text = "완료한 상담",
+                        text = stringResource(id = string.completed_consulation),
                         textAlign = TextAlign.Center,
                         style = BaekyoungTheme.typography.labelRegular,
                         modifier = Modifier

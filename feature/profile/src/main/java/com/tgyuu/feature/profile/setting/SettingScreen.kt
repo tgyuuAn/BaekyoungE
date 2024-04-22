@@ -34,6 +34,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -63,9 +64,6 @@ internal fun SettingRoute(
     val newNickname by viewModel.newNickname.collectAsStateWithLifecycle()
     val newMajor by viewModel.newMajor.collectAsStateWithLifecycle()
     val gradePickerState = rememberFWheelPickerState()
-    val yearPickerState = rememberFWheelPickerState()
-    val monthPickerState = rememberFWheelPickerState()
-    val datePickerState = rememberFWheelPickerState()
 
     LaunchedEffect(gradePickerState) {
         snapshotFlow { gradePickerState.currentIndex }
@@ -80,9 +78,6 @@ internal fun SettingRoute(
         userInformationState = userInformationState,
         snackbarHostState = snackbarHostState,
         gradePickerState = gradePickerState,
-        yearPickerState = yearPickerState,
-        monthPickerState = monthPickerState,
-        datePickerState = datePickerState,
         popBackStack = popBackStack,
         onNewNicknameChanged = viewModel::setNewNickname,
         onNewMajorChanged = viewModel::setNewMajor,
@@ -97,9 +92,6 @@ fun SettingScreen(
     userInformationState: UiState<UserInformation>,
     snackbarHostState: SnackbarHostState,
     gradePickerState: FWheelPickerState,
-    yearPickerState: FWheelPickerState,
-    monthPickerState: FWheelPickerState,
-    datePickerState: FWheelPickerState,
     popBackStack: () -> Unit,
     onNewNicknameChanged: (String) -> Unit,
     onNewMajorChanged: (String) -> Unit,
@@ -109,7 +101,6 @@ fun SettingScreen(
             is UiState.Loading -> Loader(modifier = Modifier.fillMaxSize())
             is UiState.Success -> {
                 val userInformation = userInformationState.data
-
                 var bottomSheetType by remember { mutableStateOf(BottomSheetType.INIT) }
                 var showBottomSheet by remember { mutableStateOf(false) }
                 val coroutineScope = rememberCoroutineScope()
@@ -134,7 +125,7 @@ fun SettingScreen(
                                         modifier = Modifier.fillMaxWidth(),
                                     ) {
                                         Text(
-                                            text = "몇 학년으로 변경하시겠어요?",
+                                            text = stringResource(id = R.string.please_input_grade),
                                             style = BaekyoungTheme.typography.labelBold.copy(
                                                 fontSize = 14.sp,
                                             ),
@@ -176,7 +167,7 @@ fun SettingScreen(
                                             ),
                                         ) {
                                             Text(
-                                                text = "완료",
+                                                text = stringResource(id = R.string.complete),
                                                 style = BaekyoungTheme.typography.labelBold,
                                                 color = BaekyoungTheme.colors.white,
                                                 textAlign = TextAlign.Center,
@@ -201,7 +192,7 @@ fun SettingScreen(
                                         modifier = Modifier.fillMaxWidth(),
                                     ) {
                                         Text(
-                                            text = "학과를 입력해주세요.",
+                                            text = stringResource(id = R.string.please_input_major),
                                             style = BaekyoungTheme.typography.labelBold.copy(
                                                 fontSize = 14.sp,
                                             ),
@@ -213,12 +204,12 @@ fun SettingScreen(
                                             text = newNickname,
                                             onTextChanged = onNewNicknameChanged,
                                             onConfirm = { },
-                                            hint = "백경이학과",
+                                            hint = stringResource(id = R.string.hint_major),
                                             modifier = Modifier.padding(horizontal = 20.dp),
                                         )
 
                                         Text(
-                                            text = "언제든지 다시 바꿀 수 있어요.",
+                                            text = stringResource(id = R.string.change_it_again_at_any_time),
                                             style = BaekyoungTheme.typography.labelBold.copy(
                                                 fontSize = 10.sp,
                                             ),
@@ -245,7 +236,7 @@ fun SettingScreen(
                                             ),
                                         ) {
                                             Text(
-                                                text = "완료",
+                                                text = stringResource(id = R.string.complete),
                                                 style = BaekyoungTheme.typography.labelBold,
                                                 color = BaekyoungTheme.colors.white,
                                                 textAlign = TextAlign.Center,
@@ -270,7 +261,7 @@ fun SettingScreen(
                                         modifier = Modifier.fillMaxWidth(),
                                     ) {
                                         Text(
-                                            text = "새로운 닉네임을 입력해주세요.",
+                                            text = stringResource(id = R.string.please_input_nickname),
                                             style = BaekyoungTheme.typography.labelBold.copy(
                                                 fontSize = 14.sp,
                                             ),
@@ -282,12 +273,12 @@ fun SettingScreen(
                                             text = newMajor,
                                             onTextChanged = onNewMajorChanged,
                                             onConfirm = { },
-                                            hint = "최대 12글자까지 입력할 수 있어요!",
+                                            hint = stringResource(id = R.string.hint_nickname),
                                             modifier = Modifier.padding(horizontal = 20.dp),
                                         )
 
                                         Text(
-                                            text = "언제든지 다시 바꿀 수 있어요.",
+                                            text = stringResource(id = R.string.change_it_again_at_any_time),
                                             style = BaekyoungTheme.typography.labelBold.copy(
                                                 fontSize = 10.sp,
                                             ),
@@ -314,7 +305,7 @@ fun SettingScreen(
                                             ),
                                         ) {
                                             Text(
-                                                text = "완료",
+                                                text = stringResource(id = R.string.complete),
                                                 style = BaekyoungTheme.typography.labelBold,
                                                 color = BaekyoungTheme.colors.white,
                                                 textAlign = TextAlign.Center,
