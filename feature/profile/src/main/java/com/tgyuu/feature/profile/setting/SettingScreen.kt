@@ -5,7 +5,6 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -32,6 +31,8 @@ import androidx.compose.runtime.setValue
 import androidx.compose.runtime.snapshotFlow
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.focus.FocusRequester
+import androidx.compose.ui.focus.focusRequester
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
@@ -105,7 +106,6 @@ fun SettingScreen(
                 var showBottomSheet by remember { mutableStateOf(false) }
                 val coroutineScope = rememberCoroutineScope()
                 val sheetState = rememberModalBottomSheetState()
-
 
                 Scaffold(
                     snackbarHost = { SnackbarHost(snackbarHostState) },
@@ -191,6 +191,12 @@ fun SettingScreen(
                                         verticalArrangement = Arrangement.spacedBy(12.dp),
                                         modifier = Modifier.fillMaxWidth(),
                                     ) {
+                                        val focusRequester = remember { FocusRequester() }
+
+                                        LaunchedEffect(true) {
+                                            focusRequester.requestFocus()
+                                        }
+
                                         Text(
                                             text = stringResource(id = R.string.please_input_major),
                                             style = BaekyoungTheme.typography.labelBold.copy(
@@ -205,7 +211,9 @@ fun SettingScreen(
                                             onTextChanged = onNewNicknameChanged,
                                             onConfirm = { },
                                             hint = stringResource(id = R.string.hint_major),
-                                            modifier = Modifier.padding(horizontal = 20.dp),
+                                            modifier = Modifier
+                                                .padding(horizontal = 20.dp)
+                                                .focusRequester(focusRequester),
                                         )
 
                                         Text(
@@ -260,6 +268,12 @@ fun SettingScreen(
                                         verticalArrangement = Arrangement.spacedBy(12.dp),
                                         modifier = Modifier.fillMaxWidth(),
                                     ) {
+                                        val focusRequester = remember { FocusRequester() }
+
+                                        LaunchedEffect(true) {
+                                            focusRequester.requestFocus()
+                                        }
+
                                         Text(
                                             text = stringResource(id = R.string.please_input_nickname),
                                             style = BaekyoungTheme.typography.labelBold.copy(
@@ -274,7 +288,9 @@ fun SettingScreen(
                                             onTextChanged = onNewMajorChanged,
                                             onConfirm = { },
                                             hint = stringResource(id = R.string.hint_nickname),
-                                            modifier = Modifier.padding(horizontal = 20.dp),
+                                            modifier = Modifier
+                                                .padding(horizontal = 20.dp)
+                                                .focusRequester(focusRequester),
                                         )
 
                                         Text(
