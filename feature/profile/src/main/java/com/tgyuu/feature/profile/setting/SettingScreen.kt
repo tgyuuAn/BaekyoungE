@@ -82,7 +82,9 @@ internal fun SettingRoute(
         gradePickerState = gradePickerState,
         popBackStack = popBackStack,
         onNewNicknameChanged = viewModel::setNewNickname,
+        clearNewNickname = viewModel::clearNewNickname,
         onNewMajorChanged = viewModel::setNewMajor,
+        clearNewMajor = viewModel::clearNewMajor,
     )
 }
 
@@ -96,7 +98,9 @@ fun SettingScreen(
     gradePickerState: FWheelPickerState,
     popBackStack: () -> Unit,
     onNewNicknameChanged: (String) -> Unit,
+    clearNewNickname: () -> Unit,
     onNewMajorChanged: (String) -> Unit,
+    clearNewMajor: () -> Unit,
 ) {
     Box(modifier = Modifier.fillMaxSize()) {
         when (userInformationState) {
@@ -118,7 +122,10 @@ fun SettingScreen(
 
                             BottomSheetType.CHANGE_GRADE -> {
                                 SettingModalBottomSheet(
-                                    onDissmissRequest = { showBottomSheet = false },
+                                    onDissmissRequest = {
+                                        showBottomSheet = false
+                                        clearNewNickname()
+                                    },
                                     sheetState = sheetState,
                                 ) {
                                     Column(
@@ -185,7 +192,10 @@ fun SettingScreen(
 
                             BottomSheetType.CHANGE_MAJOR -> {
                                 SettingModalBottomSheet(
-                                    onDissmissRequest = { showBottomSheet = false },
+                                    onDissmissRequest = {
+                                        showBottomSheet = false
+                                        clearNewMajor()
+                                    },
                                     sheetState = sheetState,
                                 ) {
                                     Column(
@@ -209,16 +219,9 @@ fun SettingScreen(
                                         )
 
                                         SettingTextField(
-                                            text = newNickname,
-                                            onTextChanged = onNewNicknameChanged,
-                                            onConfirm = {
-                                                coroutineScope.launch { sheetState.hide() }
-                                                    .invokeOnCompletion {
-                                                        if (!sheetState.isVisible) {
-                                                            showBottomSheet = false
-                                                        }
-                                                    }
-                                            },
+                                            text = newMajor,
+                                            onTextChanged = onNewMajorChanged,
+                                            clearText = { clearNewMajor() },
                                             hint = stringResource(id = R.string.hint_major),
                                             modifier = Modifier
                                                 .padding(horizontal = 20.dp)
@@ -293,16 +296,9 @@ fun SettingScreen(
                                         )
 
                                         SettingTextField(
-                                            text = newMajor,
-                                            onTextChanged = onNewMajorChanged,
-                                            onConfirm = {
-                                                coroutineScope.launch { sheetState.hide() }
-                                                    .invokeOnCompletion {
-                                                        if (!sheetState.isVisible) {
-                                                            showBottomSheet = false
-                                                        }
-                                                    }
-                                            },
+                                            text = newNickname,
+                                            onTextChanged = onNewNicknameChanged,
+                                            clearText = { clearNewNickname() },
                                             hint = stringResource(id = R.string.hint_nickname),
                                             modifier = Modifier
                                                 .padding(horizontal = 20.dp)
@@ -394,6 +390,7 @@ fun SettingScreen(
                             showContentText = true,
                             showRightArrow = true,
                             onClick = {
+                                clearNewNickname()
                                 bottomSheetType = BottomSheetType.CHANGE_NICKNAME
                                 if (!showBottomSheet) {
                                     showBottomSheet = true
@@ -407,6 +404,7 @@ fun SettingScreen(
                             showContentText = true,
                             showRightArrow = true,
                             onClick = {
+                                clearNewMajor()
                                 bottomSheetType = BottomSheetType.CHANGE_MAJOR
                                 if (!showBottomSheet) {
                                     showBottomSheet = true

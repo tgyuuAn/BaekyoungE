@@ -1,5 +1,6 @@
 package com.tgyuu.feature.profile.setting
 
+import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.kakao.sdk.auth.AuthApiClient
@@ -27,7 +28,6 @@ class SettingViewModel @Inject constructor(
     val newMajor = _newMajor.asStateFlow()
 
     private val _newGrade = MutableStateFlow(1)
-    val newGrade = _newMajor.asStateFlow()
 
     init {
         checkTokenExists()
@@ -37,8 +37,18 @@ class SettingViewModel @Inject constructor(
         _newNickname.value = nickname
     }
 
+    fun clearNewNickname(){
+        Log.d("test", "호출 ${_newNickname.value}")
+        _newNickname.value = ""
+    }
+
     fun setNewMajor(major: String) {
         _newMajor.value = major
+    }
+
+    fun clearNewMajor(){
+        Log.d("test", "호출 ${_newMajor.value}")
+        _newMajor.value = ""
     }
 
     fun setNewGrade(grade: Int) {

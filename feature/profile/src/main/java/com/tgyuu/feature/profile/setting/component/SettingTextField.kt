@@ -30,7 +30,7 @@ import com.tgyuu.designsystem.theme.BaekyoungTheme
 internal fun SettingTextField(
     text: String,
     onTextChanged: (String) -> Unit,
-    onConfirm: () -> Unit,
+    clearText: () -> Unit,
     hint: String,
     modifier: Modifier = Modifier,
 ) {
@@ -48,7 +48,7 @@ internal fun SettingTextField(
         keyboardActions = KeyboardActions(
             onDone = {
                 keyboardController?.hide()
-                onConfirm()
+                clearText()
             },
         ),
         modifier = modifier
@@ -88,7 +88,7 @@ internal fun SettingTextField(
                     modifier = Modifier
                         .align(Alignment.CenterEnd)
                         .padding(start = 10.dp)
-                        .clickable { onConfirm() },
+                        .clickable { clearText() },
                 )
             }
         }
@@ -102,7 +102,7 @@ fun SettingTextFieldPreview() {
         SettingTextField(
             text = "",
             onTextChanged = {},
-            onConfirm = { /*TODO*/ },
+            clearText = { /*TODO*/ },
             hint = "최대 12글자",
         )
     }
