@@ -14,4 +14,13 @@ interface AuthRepository {
         major: String,
         grade: Int,
     ): Result<Unit>
+
+    suspend fun updateUserInformation(
+        userId: String,
+        nickName: String,
+        gender: String,
+        major: String,
+        grade: Int,
+        registrationDate: String,
+    ): Result<Unit>
 }

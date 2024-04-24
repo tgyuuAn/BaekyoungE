@@ -41,4 +41,22 @@ class AuthRepositoryImpl @Inject constructor(
             registrationDate = generateNowDateTime().toISOLocalDateTimeString(),
         ),
     )
+
+    override suspend fun updateUserInformation(
+        userId: String,
+        nickName: String,
+        gender: String,
+        major: String,
+        grade: Int,
+        registrationDate: String,
+    ): Result<Unit> = authDataSource.postUserInformation(
+        UserInformationRequest(
+            userId = userId,
+            nickName = nickName,
+            gender = gender,
+            major = major,
+            grade = grade,
+            registrationDate = registrationDate,
+        ),
+    )
 }

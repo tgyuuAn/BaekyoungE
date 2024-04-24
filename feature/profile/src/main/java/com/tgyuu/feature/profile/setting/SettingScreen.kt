@@ -54,6 +54,8 @@ import com.tgyuu.feature.profile.setting.component.SettingModalBottomSheet
 import com.tgyuu.feature.profile.setting.component.SettingRow
 import com.tgyuu.feature.profile.setting.component.SettingTextField
 import com.tgyuu.model.auth.UserInformation
+import kotlinx.coroutines.flow.SharedFlow
+import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 
 @Composable
@@ -80,11 +82,15 @@ internal fun SettingRoute(
         userInformationState = userInformationState,
         snackbarHostState = snackbarHostState,
         gradePickerState = gradePickerState,
+        eventFlow = viewModel.eventFlow,
         popBackStack = popBackStack,
         onNewNicknameChanged = viewModel::setNewNickname,
         clearNewNickname = viewModel::clearNewNickname,
         onNewMajorChanged = viewModel::setNewMajor,
         clearNewMajor = viewModel::clearNewMajor,
+        updateNewNickname = viewModel::updateNewNickname,
+        updateNewMajor = viewModel::updateNewMajor,
+        updateNewGrade = viewModel::updateNewGrade,
     )
 }
 
@@ -96,11 +102,15 @@ fun SettingScreen(
     userInformationState: UiState<UserInformation>,
     snackbarHostState: SnackbarHostState,
     gradePickerState: FWheelPickerState,
+    eventFlow: SharedFlow<SettingViewModel.SettingEvent>,
     popBackStack: () -> Unit,
     onNewNicknameChanged: (String) -> Unit,
     clearNewNickname: () -> Unit,
     onNewMajorChanged: (String) -> Unit,
     clearNewMajor: () -> Unit,
+    updateNewNickname: () -> Unit,
+    updateNewMajor: () -> Unit,
+    updateNewGrade: () -> Unit,
 ) {
     Box(modifier = Modifier.fillMaxSize()) {
         when (userInformationState) {
@@ -109,8 +119,29 @@ fun SettingScreen(
                 val userInformation = userInformationState.data
                 var bottomSheetType by remember { mutableStateOf(BottomSheetType.INIT) }
                 var showBottomSheet by remember { mutableStateOf(false) }
-                val coroutineScope = rememberCoroutineScope()
                 val sheetState = rememberModalBottomSheetState()
+                val coroutineScope = rememberCoroutineScope()
+
+                LaunchedEffect(true) {
+                    eventFlow.collectLatest { event ->
+                        when (event) {
+                            is SettingViewModel.SettingEvent.UpdateSuccess -> {
+                                coroutineScope.launch { sheetState.hide() }
+                                    .invokeOnCompletion {
+                                        if (!sheetState.isVisible) {
+                                            showBottomSheet = false
+                                        }
+                                    }
+                            }
+
+                            is SettingViewModel.SettingEvent.UpdateFailed -> {
+                                coroutineScope.launch {
+                                    snackbarHostState.showSnackbar("정보 업데이트에 실패하였습니다!")
+                                }
+                            }
+                        }
+                    }
+                }
 
                 Scaffold(
                     contentWindowInsets = WindowInsets(0.dp),
@@ -158,6 +189,7 @@ fun SettingScreen(
 
                                         Button(
                                             onClick = {
+                                                updateNewGrade()
                                                 coroutineScope.launch { sheetState.hide() }
                                                     .invokeOnCompletion {
                                                         if (!sheetState.isVisible) {
@@ -238,12 +270,7 @@ fun SettingScreen(
 
                                         Button(
                                             onClick = {
-                                                coroutineScope.launch { sheetState.hide() }
-                                                    .invokeOnCompletion {
-                                                        if (!sheetState.isVisible) {
-                                                            showBottomSheet = false
-                                                        }
-                                                    }
+                                                updateNewMajor()
                                             },
                                             colors = ButtonDefaults.buttonColors(
                                                 containerColor = BaekyoungTheme.colors.gray95,
@@ -315,6 +342,7 @@ fun SettingScreen(
 
                                         Button(
                                             onClick = {
+                                                updateNewNickname()
                                                 coroutineScope.launch { sheetState.hide() }
                                                     .invokeOnCompletion {
                                                         if (!sheetState.isVisible) {
