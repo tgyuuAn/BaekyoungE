@@ -51,7 +51,6 @@ class SettingViewModel @Inject constructor(
     }
 
     fun clearNewNickname() {
-        Log.d("test", "호출 ${_newNickname.value}")
         _newNickname.value = ""
     }
 
@@ -60,7 +59,6 @@ class SettingViewModel @Inject constructor(
     }
 
     fun clearNewMajor() {
-        Log.d("test", "호출 ${_newMajor.value}")
         _newMajor.value = ""
     }
 

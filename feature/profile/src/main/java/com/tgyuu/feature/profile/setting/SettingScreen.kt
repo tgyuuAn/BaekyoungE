@@ -121,17 +121,23 @@ fun SettingScreen(
                 var showBottomSheet by remember { mutableStateOf(false) }
                 val sheetState = rememberModalBottomSheetState()
                 val coroutineScope = rememberCoroutineScope()
+                val snackBarCoroutineScope = rememberCoroutineScope()
 
                 LaunchedEffect(true) {
                     eventFlow.collectLatest { event ->
                         when (event) {
                             is SettingViewModel.SettingEvent.UpdateSuccess -> {
-                                coroutineScope.launch { sheetState.hide() }
-                                    .invokeOnCompletion {
-                                        if (!sheetState.isVisible) {
-                                            showBottomSheet = false
-                                        }
+                                coroutineScope.launch {
+                                    sheetState.hide()
+                                }.invokeOnCompletion {
+                                    if (!sheetState.isVisible) {
+                                        showBottomSheet = false
                                     }
+                                }
+
+                                snackBarCoroutineScope.launch {
+                                    snackbarHostState.showSnackbar("업데이트가 완료되었습니다!")
+                                }
                             }
 
                             is SettingViewModel.SettingEvent.UpdateFailed -> {
