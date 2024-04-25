@@ -61,6 +61,7 @@ import kotlinx.coroutines.launch
 @Composable
 internal fun SettingRoute(
     popBackStack: () -> Unit,
+    navigateToAuth: () -> Unit,
     viewModel: SettingViewModel = hiltViewModel(),
 ) {
     val snackbarHostState = remember { SnackbarHostState() }
@@ -91,6 +92,8 @@ internal fun SettingRoute(
         updateNewNickname = viewModel::updateNewNickname,
         updateNewMajor = viewModel::updateNewMajor,
         updateNewGrade = viewModel::updateNewGrade,
+        logoutKakao = viewModel::logoutKakao,
+        navigateToAuth = navigateToAuth,
     )
 }
 
@@ -111,6 +114,8 @@ fun SettingScreen(
     updateNewNickname: () -> Unit,
     updateNewMajor: () -> Unit,
     updateNewGrade: () -> Unit,
+    logoutKakao: () -> Unit,
+    navigateToAuth: () -> Unit,
 ) {
     Box(modifier = Modifier.fillMaxSize()) {
         when (userInformationState) {
@@ -126,25 +131,31 @@ fun SettingScreen(
                 LaunchedEffect(true) {
                     eventFlow.collectLatest { event ->
                         when (event) {
-                            is SettingViewModel.SettingEvent.UpdateSuccess -> {
+                            is SettingViewModel.SettingEvent.UpdateSuccess ->
                                 coroutineScope.launch {
                                     sheetState.hide()
                                 }.invokeOnCompletion {
                                     if (!sheetState.isVisible) {
                                         showBottomSheet = false
                                     }
+
+                                    snackBarCoroutineScope.launch {
+                                        snackbarHostState.showSnackbar("업데이트가 완료되었습니다!")
+                                    }
                                 }
 
+                            is SettingViewModel.SettingEvent.UpdateFailed ->
                                 snackBarCoroutineScope.launch {
-                                    snackbarHostState.showSnackbar("업데이트가 완료되었습니다!")
+                                    snackbarHostState.showSnackbar(event.message)
                                 }
-                            }
 
-                            is SettingViewModel.SettingEvent.UpdateFailed -> {
-                                coroutineScope.launch {
-                                    snackbarHostState.showSnackbar("정보 업데이트에 실패하였습니다!")
+
+                            is SettingViewModel.SettingEvent.LogoutFailed ->
+                                snackBarCoroutineScope.launch {
+                                    snackbarHostState.showSnackbar(event.message)
                                 }
-                            }
+
+                            is SettingViewModel.SettingEvent.LogoutSuccess -> navigateToAuth()
                         }
                     }
                 }
@@ -469,7 +480,7 @@ fun SettingScreen(
                             titleTextId = R.string.logout,
                             showContentText = false,
                             showRightArrow = true,
-                            onClick = { },
+                            onClick = { logoutKakao() },
                         )
 
                         SettingRow(

@@ -25,6 +25,7 @@ import com.tgyuu.feature.home.navigation.homeScreen
 import com.tgyuu.feature.home.navigation.navigateToHome
 import com.tgyuu.feature.profile.navigation.profileScreen
 import com.tgyuu.feature.profile.setting.navigation.navigateToSetting
+import com.tgyuu.feature.profile.setting.navigation.settingNavigationRoute
 import com.tgyuu.feature.profile.setting.navigation.settingScreen
 import com.tgyuu.feature.shop.navigation.shopScreen
 import com.tgyuu.feature.splash.navigation.splashNavigationRoute
@@ -116,6 +117,15 @@ fun BaekyoungNavHost(
         aiChattingScreen(popBackStack = { navController.popBackStack() })
         communityScreen()
         profileScreen(navigateToSetting = navController::navigateToSetting)
-        settingScreen(popBackStack = { navController.popBackStack() })
+        settingScreen(
+            popBackStack = { navController.popBackStack() },
+            navigateToAuth = {
+                navController.navigateToAuth(
+                    navOptions {
+                        popUpTo(settingNavigationRoute) { inclusive = true }
+                    },
+                )
+            },
+        )
     }
 }

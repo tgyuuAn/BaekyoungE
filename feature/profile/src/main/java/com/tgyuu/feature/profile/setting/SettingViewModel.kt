@@ -125,8 +125,18 @@ class SettingViewModel @Inject constructor(
             .onFailure { _userInformation.value = UiState.Error("유저 정보가 없습니다.") }
     }
 
+    fun logoutKakao() = UserApiClient.instance.logout { error ->
+        if (error != null) {
+            event(SettingEvent.LogoutFailed("로그아웃에 실패하였습니다."))
+        } else {
+            event(SettingEvent.LogoutSuccess)
+        }
+    }
+
     sealed class SettingEvent {
         data object UpdateSuccess : SettingEvent()
         data class UpdateFailed(val message: String) : SettingEvent()
+        data class LogoutFailed(val message: String) : SettingEvent()
+        data object LogoutSuccess : SettingEvent()
     }
 }
