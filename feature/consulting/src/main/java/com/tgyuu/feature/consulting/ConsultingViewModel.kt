@@ -4,41 +4,69 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.kakao.sdk.auth.AuthApiClient
 import com.kakao.sdk.user.UserApiClient
+import com.tgyuu.common.util.UiState
+import com.tgyuu.domain.usecase.auth.GetUserInformationUseCase
 import com.tgyuu.domain.usecase.auth.VerifyMemberIdUseCase
+import com.tgyuu.model.auth.UserInformation
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableSharedFlow
+import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asSharedFlow
+import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
 class ConsultingViewModel @Inject constructor(
-    private val verifyMemberIdUseCase: VerifyMemberIdUseCase,
+    private val getUserInformationUseCase: GetUserInformationUseCase,
 ) : ViewModel() {
     private val _eventFlow: MutableSharedFlow<ConsultingEvent> = MutableSharedFlow()
     val eventFlow get() = _eventFlow.asSharedFlow()
 
+    private val _userInformation = MutableStateFlow<UiState<UserInformation>>(UiState.Loading)
+    val userInformation = _userInformation.asStateFlow()
+
+    init {
+        checkTokenExists()
+    }
+
     fun event(event: ConsultingEvent) = viewModelScope.launch { _eventFlow.emit(event) }
 
-    fun navigateToChatting() {
-        // 토큰이 없을 경우 바로 Auth 페이지로 이동
+    fun checkTokenExists() = viewModelScope.launch {
         if (!AuthApiClient.instance.hasToken()) {
-            event(ConsultingEvent.ShowSnackBar(ERROR_USER_MESSAGE))
-            return
+            _userInformation.value = UiState.Error("유저 정보가 없습니다.")
+            return@launch
         }
 
         UserApiClient.instance.accessTokenInfo { tokenInfo, error ->
-            if (error == null) {
-                verifyMemberId(tokenInfo?.id ?: -1)
+            if (error != null) {
+                _userInformation.value = UiState.Error("유저 정보가 없습니다.")
+            }
+
+            getUserInformation(tokenInfo?.id ?: -1)
+            return@accessTokenInfo
+        }
+    }
+
+    fun getUserInformation(userId: Long) = viewModelScope.launch {
+        getUserInformationUseCase(userId.toString())
+            .onSuccess { _userInformation.value = UiState.Success(it) }
+            .onFailure { _userInformation.value = UiState.Error("유저 정보가 없습니다.") }
+    }
+
+    fun navigateToChatting() = viewModelScope.launch {
+        when (val uiState = _userInformation.value) {
+            is UiState.Success -> {
+                val userId = uiState.data.userId
+                event(ConsultingEvent.NavigateToChatting(userId))
+            }
+
+            else -> {
+                event(ConsultingEvent.ShowSnackBar(ERROR_USER_MESSAGE))
             }
         }
     }
 
-    fun verifyMemberId(userId: Long) = viewModelScope.launch {
-        verifyMemberIdUseCase(userId)
-            .onSuccess { event(ConsultingEvent.NavigateToChatting(userId.toString())) }
-            .onFailure { event(ConsultingEvent.ShowSnackBar(ERROR_USER_MESSAGE)) }
-    }
 
     sealed class ConsultingEvent {
         data class NavigateToChatting(val userId: String) : ConsultingEvent()

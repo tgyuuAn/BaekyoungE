@@ -60,7 +60,7 @@ dependencies {
     implementation(project(":feature:community"))
     implementation(project(":feature:storage"))
     implementation(project(":feature:shop"))
-    implementation(project(":feature:etc"))
+    implementation(project(":feature:profile"))
 
     implementation(libs.kakao.user)
 

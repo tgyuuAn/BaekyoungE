@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="suggestion_box">건의함</string>
+    <string name="completed_consulation">완료한 상담</string>
+
+    <string name="cancel">취소</string>
+    <string name="complete">완료</string>
+    <string name="change_it_again_at_any_time">언제든지 다시 바꿀 수 있어요.</string>
+    <string name="please_input_major">학과를 입력해주세요.</string>
+    <string name="please_input_nickname">새로운 닉네임을 입력해주세요.</string>
+    <string name="hint_nickname">"최대 12글자까지 입력할 수 있어요!"</string>
+    <string name="please_input_grade">몇 학년으로 변경하시겠어요?</string>
+    <string name="my_account">내 계정</string>
+    <string name="change_nickname">닉네임 변경</string>
+    <string name="change_major">학과 변경</string>
+    <string name="change_grade">학년 변경</string>
+    <string name="hint_major">백경이학과</string>
+    <string name="open_source_license">오픈소스 라이센스</string>
+    <string name="privacy_policy">개인정보처리방침</string>
+    <string name="logout">로그아웃</string>
+    <string name="withdrawal">계정탈퇴</string>
+
+    <string name="logout_dialog_title">로그아웃 하시겠어요?</string>
+    <string name="withdrawal_dialog_title">정말로 탈퇴 하시겠어요?</string>
+    <string name="withdrawal_dialog_description">모든 정보가 삭제되며, 되돌릴 수 없습니다.</string>
+    <string name="withdrawal2">탈퇴하기</string>
+</resources>

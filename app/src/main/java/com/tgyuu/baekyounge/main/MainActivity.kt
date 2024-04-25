@@ -40,6 +40,7 @@ import com.tgyuu.baekyounge.main.navigation.TopLevelDestination
 import com.tgyuu.feature.shop.navigation.shopNavigationRoute
 import com.tgyuu.feature.splash.navigation.splashNavigationRoute
 import com.tgyuu.designsystem.theme.BaekyoungTheme
+import com.tgyuu.feature.profile.setting.navigation.settingNavigationRoute
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -98,6 +99,7 @@ private fun handleBottomBarState(
     authNavigationRoute -> setBottomBarState(false)
     aiChattingNavigationRoute() -> setBottomBarState(false)
     signUpNavigationRoute() -> setBottomBarState(false)
+    settingNavigationRoute -> setBottomBarState(false)
     else -> setBottomBarState(true)
 }
 

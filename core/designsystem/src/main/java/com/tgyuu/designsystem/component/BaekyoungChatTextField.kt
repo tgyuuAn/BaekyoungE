@@ -31,6 +31,7 @@ fun BaekyoungChatTextField(
     modifier: Modifier = Modifier,
 ) {
     val keyboardController = LocalSoftwareKeyboardController.current
+
     BasicTextField(
         value = chatText,
         onValueChange = onTextChanged,

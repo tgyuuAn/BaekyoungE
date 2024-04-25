@@ -58,8 +58,14 @@ fun BaekyoungCenterTopBar(
             .background(Color.Transparent),
     ) {
         if (showBackButton) {
+            val arrow_left_res = if (textColor == BaekyoungTheme.colors.black) {
+                R.drawable.ic_arrow_left_black
+            } else {
+                R.drawable.ic_arrow_left_white
+            }
+
             Image(
-                painter = painterResource(id = R.drawable.ic_arrow_left),
+                painter = painterResource(id = arrow_left_res),
                 contentDescription = null,
                 modifier = Modifier
                     .align(Alignment.CenterStart)

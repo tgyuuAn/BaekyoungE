@@ -5,7 +5,7 @@ import androidx.annotation.StringRes
 import com.tgyuu.baekyounge.R
 import com.tgyuu.feature.community.navigation.communityNavigationRoute
 import com.tgyuu.feature.consulting.consultinginformation.navigation.consultingNavigationRoute
-import com.tgyuu.feature.etc.navigation.profileNavigationRoute
+import com.tgyuu.feature.profile.navigation.profileNavigationRoute
 import com.tgyuu.feature.shop.navigation.shopNavigationRoute
 import com.tgyuu.feature.storage.navigation.storageNavigationRoute
 
