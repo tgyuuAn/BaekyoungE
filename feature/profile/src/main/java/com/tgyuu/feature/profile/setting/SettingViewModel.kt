@@ -1,13 +1,11 @@
 package com.tgyuu.feature.profile.setting
 
-import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.kakao.sdk.auth.AuthApiClient
 import com.kakao.sdk.user.UserApiClient
 import com.tgyuu.common.util.UiState
 import com.tgyuu.domain.usecase.auth.GetUserInformationUseCase
-import com.tgyuu.domain.usecase.auth.PostUserInformationUseCase
 import com.tgyuu.domain.usecase.auth.UpdateUserInformationUseCase
 import com.tgyuu.model.auth.UserInformation
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -74,7 +72,19 @@ class SettingViewModel @Inject constructor(
             grade = _newGrade.value,
             major = userInfo.value.major,
             registrationDate = userInfo.value.registrationDate,
-        ).onSuccess { event(SettingEvent.UpdateSuccess) }
+        ).onSuccess {
+            event(SettingEvent.UpdateSuccess)
+            _userInformation.value = UiState.Success(
+                UserInformation(
+                    userId = userInfo.value.userId,
+                    nickName = userInfo.value.nickName,
+                    gender = userInfo.value.gender,
+                    grade = _newGrade.value,
+                    major = userInfo.value.major,
+                    registrationDate = userInfo.value.registrationDate,
+                ),
+            )
+        }
             .onFailure { event(SettingEvent.UpdateFailed("학년 업데이트에 실패하였습니다.")) }
     }
 
@@ -86,7 +96,19 @@ class SettingViewModel @Inject constructor(
             grade = userInfo.value.grade,
             major = userInfo.value.major,
             registrationDate = userInfo.value.registrationDate,
-        ).onSuccess { event(SettingEvent.UpdateSuccess) }
+        ).onSuccess {
+            event(SettingEvent.UpdateSuccess)
+            _userInformation.value = UiState.Success(
+                UserInformation(
+                    userId = userInfo.value.userId,
+                    nickName = _newNickname.value,
+                    gender = userInfo.value.gender,
+                    grade = userInfo.value.grade,
+                    major = userInfo.value.major,
+                    registrationDate = userInfo.value.registrationDate,
+                ),
+            )
+        }
             .onFailure { event(SettingEvent.UpdateFailed("닉네임 업데이트에 실패하였습니다.")) }
     }
 
@@ -98,7 +120,19 @@ class SettingViewModel @Inject constructor(
             grade = userInfo.value.grade,
             major = _newMajor.value,
             registrationDate = userInfo.value.registrationDate,
-        ).onSuccess { event(SettingEvent.UpdateSuccess) }
+        ).onSuccess {
+            event(SettingEvent.UpdateSuccess)
+            _userInformation.value = UiState.Success(
+                UserInformation(
+                    userId = userInfo.value.userId,
+                    nickName = userInfo.value.nickName,
+                    gender = userInfo.value.gender,
+                    grade = userInfo.value.grade,
+                    major = _newMajor.value,
+                    registrationDate = userInfo.value.registrationDate,
+                ),
+            )
+        }
             .onFailure { event(SettingEvent.UpdateFailed("학과 업데이트에 실패하였습니다.")) }
     }
 
