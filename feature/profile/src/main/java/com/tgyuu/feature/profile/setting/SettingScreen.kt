@@ -97,6 +97,7 @@ internal fun SettingRoute(
         updateNewMajor = viewModel::updateNewMajor,
         updateNewGrade = viewModel::updateNewGrade,
         logoutKakao = viewModel::logoutKakao,
+        withdrawalKakao = viewModel::withdrawalKakao,
         navigateToAuth = navigateToAuth,
     )
 }
@@ -119,6 +120,7 @@ fun SettingScreen(
     updateNewMajor: () -> Unit,
     updateNewGrade: () -> Unit,
     logoutKakao: () -> Unit,
+    withdrawalKakao: () -> Unit,
     navigateToAuth: () -> Unit,
 ) {
     Box(modifier = Modifier.fillMaxSize()) {
@@ -249,7 +251,7 @@ fun SettingScreen(
                                         text = R.string.withdrawal2,
                                         textColor = BaekyoungTheme.colors.white,
                                         buttonColor = BaekyoungTheme.colors.red,
-                                        onButtonClick = { },
+                                        onButtonClick = { withdrawalKakao() },
                                         modifier = Modifier.weight(1f),
                                     )
                                 }

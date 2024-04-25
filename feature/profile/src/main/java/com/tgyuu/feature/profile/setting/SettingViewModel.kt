@@ -5,6 +5,7 @@ import androidx.lifecycle.viewModelScope
 import com.kakao.sdk.auth.AuthApiClient
 import com.kakao.sdk.user.UserApiClient
 import com.tgyuu.common.util.UiState
+import com.tgyuu.domain.usecase.auth.DeleteUserInformationUseCase
 import com.tgyuu.domain.usecase.auth.GetUserInformationUseCase
 import com.tgyuu.domain.usecase.auth.UpdateUserInformationUseCase
 import com.tgyuu.model.auth.UserInformation
@@ -20,6 +21,7 @@ import javax.inject.Inject
 class SettingViewModel @Inject constructor(
     private val getUserInformationUseCase: GetUserInformationUseCase,
     private val updateUserInformationUseCase: UpdateUserInformationUseCase,
+    private val deleteUserInformationUseCase: DeleteUserInformationUseCase,
 ) : ViewModel() {
     private val _eventFlow = MutableSharedFlow<SettingEvent>()
     val eventFlow = _eventFlow.asSharedFlow()
@@ -133,12 +135,18 @@ class SettingViewModel @Inject constructor(
         }
     }
 
-    fun withdrawalKakao() = UserApiClient.instance.unlink { error ->
-        if (error != null) {
-            event(SettingEvent.LogoutFailed("회원 탈퇴에 실패하였습니다."))
-        } else {
-            event(SettingEvent.LogoutSuccess)
-        }
+    fun withdrawalKakao() = viewModelScope.launch {
+        deleteUserInformationUseCase(userInfo.value.userId)
+            .onSuccess {
+                UserApiClient.instance.unlink { error ->
+                    if (error != null) {
+                        event(SettingEvent.LogoutFailed("회원 탈퇴에 실패하였습니다."))
+                    } else {
+                        event(SettingEvent.LogoutSuccess)
+                    }
+                }
+            }
+            .onFailure { event(SettingEvent.LogoutFailed("회원 탈퇴에 실패하였습니다.")) }
     }
 
     sealed class SettingEvent {
