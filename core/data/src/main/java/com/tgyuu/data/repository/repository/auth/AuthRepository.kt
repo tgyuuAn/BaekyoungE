@@ -23,4 +23,6 @@ interface AuthRepository {
         grade: Int,
         registrationDate: String,
     ): Result<Unit>
+
+    suspend fun deleteUserInformation(userId: String): Result<Unit>
 }

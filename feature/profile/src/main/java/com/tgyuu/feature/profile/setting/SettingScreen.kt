@@ -178,7 +178,7 @@ fun SettingScreen(
                                 horizontalAlignment = Alignment.CenterHorizontally,
                                 modifier = Modifier
                                     .background(BaekyoungTheme.colors.white)
-                                    .padding(vertical = 12.dp, horizontal = 20.dp),
+                                    .padding(vertical = 16.dp, horizontal = 20.dp),
                             ) {
                                 Text(
                                     text = stringResource(id = R.string.logout_dialog_title),
@@ -217,7 +217,7 @@ fun SettingScreen(
                                 horizontalAlignment = Alignment.CenterHorizontally,
                                 modifier = Modifier
                                     .background(BaekyoungTheme.colors.white)
-                                    .padding(vertical = 12.dp, horizontal = 20.dp),
+                                    .padding(vertical = 16.dp, horizontal = 20.dp),
                             ) {
                                 Text(
                                     text = stringResource(id = R.string.withdrawal_dialog_title),

@@ -59,4 +59,7 @@ class AuthRepositoryImpl @Inject constructor(
             registrationDate = registrationDate,
         ),
     )
+
+    override suspend fun deleteUserInformation(userId: String): Result<Unit> =
+        authDataSource.deleteUserInformation(userId)
 }

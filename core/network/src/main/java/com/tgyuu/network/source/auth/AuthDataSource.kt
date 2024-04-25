@@ -8,5 +8,7 @@ interface AuthDataSource {
 
     suspend fun getUserInformation(userId: String): Result<UserInformationResponse>
 
+    suspend fun deleteUserInformation(userId: String) : Result<Unit>
+
     suspend fun postUserInformation(userInformationRequest: UserInformationRequest): Result<Unit>
 }

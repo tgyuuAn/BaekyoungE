@@ -133,6 +133,14 @@ class SettingViewModel @Inject constructor(
         }
     }
 
+    fun withdrawalKakao() = UserApiClient.instance.unlink { error ->
+        if (error != null) {
+            event(SettingEvent.LogoutFailed("회원 탈퇴에 실패하였습니다."))
+        } else {
+            event(SettingEvent.LogoutSuccess)
+        }
+    }
+
     sealed class SettingEvent {
         data object UpdateSuccess : SettingEvent()
         data class UpdateFailed(val message: String) : SettingEvent()

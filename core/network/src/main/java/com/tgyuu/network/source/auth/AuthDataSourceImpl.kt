@@ -21,13 +21,21 @@ class AuthDataSourceImpl @Inject constructor(
         document.toObject<UserInformationResponse>() != null
     }
 
-    override suspend fun getUserInformation(userId: String): Result<UserInformationResponse> = runCatching {
-        val document = firebaseFirestore.collection(USER_INFORMATION_COLLECTION)
-            .document(userId)
-            .get()
-            .await()
+    override suspend fun getUserInformation(userId: String): Result<UserInformationResponse> =
+        runCatching {
+            val document = firebaseFirestore.collection(USER_INFORMATION_COLLECTION)
+                .document(userId)
+                .get()
+                .await()
 
-        checkNotNull(document.toObject<UserInformationResponse>())
+            checkNotNull(document.toObject<UserInformationResponse>())
+        }
+
+    override suspend fun deleteUserInformation(userId: String): Result<Unit> = runCatching {
+        firebaseFirestore.collection(USER_INFORMATION_COLLECTION)
+            .document(userId)
+            .delete()
+            .await()
     }
 
     override suspend fun postUserInformation(userInformationRequest: UserInformationRequest):
