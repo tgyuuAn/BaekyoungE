@@ -64,76 +64,40 @@ class SettingViewModel @Inject constructor(
         _newGrade.value = grade
     }
 
-    fun updateNewGrade() = viewModelScope.launch {
-        updateUserInformationUseCase(
-            userId = userInfo.value.userId,
-            nickName = userInfo.value.nickName,
-            gender = userInfo.value.gender,
-            grade = _newGrade.value,
-            major = userInfo.value.major,
-            registrationDate = userInfo.value.registrationDate,
-        ).onSuccess {
-            event(SettingEvent.UpdateSuccess)
-            _userInformation.value = UiState.Success(
-                UserInformation(
-                    userId = userInfo.value.userId,
-                    nickName = userInfo.value.nickName,
-                    gender = userInfo.value.gender,
-                    grade = _newGrade.value,
-                    major = userInfo.value.major,
-                    registrationDate = userInfo.value.registrationDate,
-                ),
-            )
-        }
-            .onFailure { event(SettingEvent.UpdateFailed("학년 업데이트에 실패하였습니다.")) }
-    }
+    fun updateNewGrade() = updateUserInfo(newGrade = _newGrade.value)
 
-    fun updateNewNickname() = viewModelScope.launch {
-        updateUserInformationUseCase(
-            userId = userInfo.value.userId,
-            nickName = _newNickname.value,
-            gender = userInfo.value.gender,
-            grade = userInfo.value.grade,
-            major = userInfo.value.major,
-            registrationDate = userInfo.value.registrationDate,
-        ).onSuccess {
-            event(SettingEvent.UpdateSuccess)
-            _userInformation.value = UiState.Success(
-                UserInformation(
-                    userId = userInfo.value.userId,
-                    nickName = _newNickname.value,
-                    gender = userInfo.value.gender,
-                    grade = userInfo.value.grade,
-                    major = userInfo.value.major,
-                    registrationDate = userInfo.value.registrationDate,
-                ),
-            )
-        }
-            .onFailure { event(SettingEvent.UpdateFailed("닉네임 업데이트에 실패하였습니다.")) }
-    }
+    fun updateNewNickname() = updateUserInfo(newNickname = _newNickname.value)
 
-    fun updateNewMajor() = viewModelScope.launch {
-        updateUserInformationUseCase(
+    fun updateNewMajor() = updateUserInfo(newMajor = _newMajor.value)
+
+    private fun updateUserInfo(
+        newGrade: Int? = null,
+        newNickname: String? = null,
+        newMajor: String? = null,
+    ) = viewModelScope.launch {
+        val updatedUserInformation = UserInformation(
             userId = userInfo.value.userId,
-            nickName = userInfo.value.nickName,
+            nickName = newNickname ?: userInfo.value.nickName,
             gender = userInfo.value.gender,
-            grade = userInfo.value.grade,
-            major = _newMajor.value,
+            grade = newGrade ?: userInfo.value.grade,
+            major = newMajor ?: userInfo.value.major,
             registrationDate = userInfo.value.registrationDate,
+        )
+
+        updateUserInformationUseCase(
+            userId = updatedUserInformation.userId,
+            nickName = updatedUserInformation.nickName,
+            gender = updatedUserInformation.gender,
+            grade = updatedUserInformation.grade,
+            major = updatedUserInformation.major,
+            registrationDate = updatedUserInformation.registrationDate,
         ).onSuccess {
             event(SettingEvent.UpdateSuccess)
-            _userInformation.value = UiState.Success(
-                UserInformation(
-                    userId = userInfo.value.userId,
-                    nickName = userInfo.value.nickName,
-                    gender = userInfo.value.gender,
-                    grade = userInfo.value.grade,
-                    major = _newMajor.value,
-                    registrationDate = userInfo.value.registrationDate,
-                ),
-            )
+            _userInformation.value = UiState.Success(updatedUserInformation)
+            userInfo.value = updatedUserInformation
+        }.onFailure { throwable ->
+            event(SettingEvent.UpdateFailed("정보 업데이트에 실패하였습니다."))
         }
-            .onFailure { event(SettingEvent.UpdateFailed("학과 업데이트에 실패하였습니다.")) }
     }
 
     fun checkTokenExists() = viewModelScope.launch {

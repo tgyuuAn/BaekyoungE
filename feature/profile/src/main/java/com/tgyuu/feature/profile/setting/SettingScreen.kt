@@ -194,15 +194,7 @@ fun SettingScreen(
                                         }
 
                                         Button(
-                                            onClick = {
-                                                updateNewGrade()
-                                                coroutineScope.launch { sheetState.hide() }
-                                                    .invokeOnCompletion {
-                                                        if (!sheetState.isVisible) {
-                                                            showBottomSheet = false
-                                                        }
-                                                    }
-                                            },
+                                            onClick = { updateNewGrade() },
                                             colors = ButtonDefaults.buttonColors(
                                                 containerColor = BaekyoungTheme.colors.gray95,
                                             ),
@@ -275,9 +267,7 @@ fun SettingScreen(
                                         )
 
                                         Button(
-                                            onClick = {
-                                                updateNewMajor()
-                                            },
+                                            onClick = { updateNewMajor() },
                                             colors = ButtonDefaults.buttonColors(
                                                 containerColor = BaekyoungTheme.colors.gray95,
                                             ),
@@ -347,15 +337,7 @@ fun SettingScreen(
                                         )
 
                                         Button(
-                                            onClick = {
-                                                updateNewNickname()
-                                                coroutineScope.launch { sheetState.hide() }
-                                                    .invokeOnCompletion {
-                                                        if (!sheetState.isVisible) {
-                                                            showBottomSheet = false
-                                                        }
-                                                    }
-                                            },
+                                            onClick = { updateNewNickname() },
                                             colors = ButtonDefaults.buttonColors(
                                                 containerColor = BaekyoungTheme.colors.gray95,
                                             ),
