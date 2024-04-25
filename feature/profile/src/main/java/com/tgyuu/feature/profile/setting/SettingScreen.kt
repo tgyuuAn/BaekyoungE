@@ -5,6 +5,7 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.WindowInsets
 import androidx.compose.foundation.layout.fillMaxSize
@@ -15,6 +16,7 @@ import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
+import androidx.compose.material3.Card
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Scaffold
@@ -40,12 +42,14 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.compose.ui.window.Dialog
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.sd.lib.compose.wheel_picker.FVerticalWheelPicker
 import com.sd.lib.compose.wheel_picker.FWheelPickerState
 import com.sd.lib.compose.wheel_picker.rememberFWheelPickerState
 import com.tgyuu.common.util.UiState
+import com.tgyuu.designsystem.component.BaekyoungButton
 import com.tgyuu.designsystem.component.BaekyoungCenterTopBar
 import com.tgyuu.designsystem.component.Loader
 import com.tgyuu.designsystem.theme.BaekyoungTheme
@@ -127,6 +131,8 @@ fun SettingScreen(
                 val sheetState = rememberModalBottomSheetState()
                 val coroutineScope = rememberCoroutineScope()
                 val snackBarCoroutineScope = rememberCoroutineScope()
+                var showLogoutDialog by remember { mutableStateOf(false) }
+                var showWithdrawalDialog by remember { mutableStateOf(false) }
 
                 LaunchedEffect(true) {
                     eventFlow.collectLatest { event ->
@@ -155,10 +161,55 @@ fun SettingScreen(
                                     snackbarHostState.showSnackbar(event.message)
                                 }
 
-                            is SettingViewModel.SettingEvent.LogoutSuccess -> navigateToAuth()
+                            is SettingViewModel.SettingEvent.LogoutSuccess -> {
+                                showLogoutDialog = false
+                                showWithdrawalDialog = false
+                                navigateToAuth()
+                            }
                         }
                     }
                 }
+
+                if (showLogoutDialog) {
+                    Dialog(onDismissRequest = { showLogoutDialog = false }) {
+                        Card(shape = RoundedCornerShape(10.dp)) {
+                            Column(
+                                verticalArrangement = Arrangement.spacedBy(20.dp),
+                                horizontalAlignment = Alignment.CenterHorizontally,
+                                modifier = Modifier
+                                    .background(BaekyoungTheme.colors.white)
+                                    .padding(vertical = 12.dp, horizontal = 20.dp),
+                            ) {
+                                Text(
+                                    text = "로그아웃 하시겠어요?",
+                                    style = BaekyoungTheme.typography.labelBold.copy(fontSize = 15.sp),
+                                )
+
+                                Row(
+                                    horizontalArrangement = Arrangement.spacedBy(12.dp),
+                                    modifier = Modifier.fillMaxWidth(),
+                                ) {
+                                    BaekyoungButton(
+                                        text = R.string.cancel,
+                                        buttonColor = BaekyoungTheme.colors.grayF2,
+                                        textColor = BaekyoungTheme.colors.black,
+                                        onButtonClick = { showLogoutDialog = false },
+                                        modifier = Modifier.weight(1f),
+                                    )
+
+                                    BaekyoungButton(
+                                        text = R.string.logout,
+                                        textColor = BaekyoungTheme.colors.white,
+                                        buttonColor = BaekyoungTheme.colors.black,
+                                        onButtonClick = { logoutKakao() },
+                                        modifier = Modifier.weight(1f),
+                                    )
+                                }
+                            }
+                        }
+                    }
+                }
+
 
                 Scaffold(
                     contentWindowInsets = WindowInsets(0.dp),
@@ -480,7 +531,7 @@ fun SettingScreen(
                             titleTextId = R.string.logout,
                             showContentText = false,
                             showRightArrow = true,
-                            onClick = { logoutKakao() },
+                            onClick = { showLogoutDialog = true },
                         )
 
                         SettingRow(

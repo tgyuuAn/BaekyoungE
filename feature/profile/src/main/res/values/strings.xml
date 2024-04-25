@@ -3,7 +3,7 @@
     <string name="suggestion_box">건의함</string>
     <string name="completed_consulation">완료한 상담</string>
 
-
+    <string name="cancel">취소</string>
     <string name="complete">완료</string>
     <string name="change_it_again_at_any_time">언제든지 다시 바꿀 수 있어요.</string>
     <string name="please_input_major">학과를 입력해주세요.</string>
