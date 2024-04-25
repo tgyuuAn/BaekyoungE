@@ -181,8 +181,8 @@ fun SettingScreen(
                                     .padding(vertical = 12.dp, horizontal = 20.dp),
                             ) {
                                 Text(
-                                    text = "로그아웃 하시겠어요?",
-                                    style = BaekyoungTheme.typography.labelBold.copy(fontSize = 15.sp),
+                                    text = stringResource(id = R.string.logout_dialog_title),
+                                    style = BaekyoungTheme.typography.labelBold.copy(fontSize = 14.sp),
                                 )
 
                                 Row(
@@ -210,6 +210,53 @@ fun SettingScreen(
                     }
                 }
 
+                if (showWithdrawalDialog) {
+                    Dialog(onDismissRequest = { showWithdrawalDialog = false }) {
+                        Card(shape = RoundedCornerShape(10.dp)) {
+                            Column(
+                                horizontalAlignment = Alignment.CenterHorizontally,
+                                modifier = Modifier
+                                    .background(BaekyoungTheme.colors.white)
+                                    .padding(vertical = 12.dp, horizontal = 20.dp),
+                            ) {
+                                Text(
+                                    text = stringResource(id = R.string.withdrawal_dialog_title),
+                                    style = BaekyoungTheme.typography.labelBold.copy(fontSize = 14.sp),
+                                    modifier = Modifier.padding(bottom = 2.dp),
+                                )
+
+                                Text(
+                                    text = stringResource(id = R.string.withdrawal_dialog_description),
+                                    style = BaekyoungTheme.typography.labelRegular.copy(fontSize = 10.sp),
+                                    color = BaekyoungTheme.colors.red,
+                                )
+
+                                Row(
+                                    horizontalArrangement = Arrangement.spacedBy(12.dp),
+                                    modifier = Modifier
+                                        .fillMaxWidth()
+                                        .padding(top = 20.dp),
+                                ) {
+                                    BaekyoungButton(
+                                        text = R.string.cancel,
+                                        buttonColor = BaekyoungTheme.colors.grayF2,
+                                        textColor = BaekyoungTheme.colors.black,
+                                        onButtonClick = { showWithdrawalDialog = false },
+                                        modifier = Modifier.weight(1f),
+                                    )
+
+                                    BaekyoungButton(
+                                        text = R.string.withdrawal2,
+                                        textColor = BaekyoungTheme.colors.white,
+                                        buttonColor = BaekyoungTheme.colors.red,
+                                        onButtonClick = { },
+                                        modifier = Modifier.weight(1f),
+                                    )
+                                }
+                            }
+                        }
+                    }
+                }
 
                 Scaffold(
                     contentWindowInsets = WindowInsets(0.dp),
@@ -539,7 +586,7 @@ fun SettingScreen(
                             showContentText = false,
                             showRightArrow = true,
                             titleTextColor = Color.Red,
-                            onClick = { },
+                            onClick = { showWithdrawalDialog = true },
                         )
                     }
                 }

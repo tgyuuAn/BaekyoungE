@@ -19,4 +19,9 @@
     <string name="privacy_policy">개인정보처리방침</string>
     <string name="logout">로그아웃</string>
     <string name="withdrawal">계정탈퇴</string>
+
+    <string name="logout_dialog_title">로그아웃 하시겠어요?</string>
+    <string name="withdrawal_dialog_title">정말로 탈퇴 하시겠어요?</string>
+    <string name="withdrawal_dialog_description">모든 정보가 삭제되며, 되돌릴 수 없습니다.</string>
+    <string name="withdrawal2">탈퇴하기</string>
 </resources>
