@@ -10,5 +10,4 @@ class PostChatMessageUseCase @Inject constructor(
 ) {
     suspend operator fun invoke(chatLog: List<Message>): Result<ChatLog> =
         consultingRepository.postChatMessage(chatLog)
-
 }

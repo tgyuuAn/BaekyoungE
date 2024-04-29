@@ -6,10 +6,9 @@ import androidx.room.OnConflictStrategy
 import androidx.room.Query
 import com.tgyuu.database.model.MessageEntity
 import com.tgyuu.database.model.ChattingRoomEntity
-import kotlinx.coroutines.flow.Flow
 
 @Dao
-interface ChattingLogDao {
+interface ChattingDao {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insertMessage(message: MessageEntity)
 
@@ -17,8 +16,8 @@ interface ChattingLogDao {
     suspend fun insertChattingRoom(chattingRoom: ChattingRoomEntity)
 
     @Query("SELECT * FROM message WHERE chatting_room_id MATCH :roomId ORDER BY created_at DESC")
-    fun getAllChattingRoomMessages(roomId: String): Flow<List<MessageEntity>>
+    suspend fun getAllChattingRoomMessages(roomId: String): List<MessageEntity>
 
     @Query("SELECT * FROM chatting_room ORDER BY created_at DESC")
-    fun getAllChattingRoom(): Flow<List<ChattingRoomEntity>>
+    suspend fun getAllChattingRoom(): List<ChattingRoomEntity>
 }
