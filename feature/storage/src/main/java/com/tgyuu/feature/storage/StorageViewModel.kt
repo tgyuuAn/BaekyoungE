@@ -8,9 +8,6 @@ import javax.inject.Inject
 
 @HiltViewModel
 class StorageViewModel @Inject constructor() : ViewModel() {
-    private val _yearList = MutableStateFlow(listOf("2024"))
-    val yearList = _yearList.asStateFlow()
-
     private val _selectedYear = MutableStateFlow("2024")
     val selectedYear = _selectedYear.asStateFlow()
 

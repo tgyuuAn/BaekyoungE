@@ -47,25 +47,20 @@ import com.tgyuu.designsystem.theme.BaekyoungTheme
 
 @Composable
 internal fun StorageRoute(viewModel: StorageViewModel = hiltViewModel()) {
-    val yearList by viewModel.yearList.collectAsStateWithLifecycle()
     val selectedYear by viewModel.selectedYear.collectAsStateWithLifecycle()
     val yearPickerState = rememberFWheelPickerState()
 
     StorageScreen(
-        yearList = yearList,
         selectedYear = selectedYear,
         yearPickerState = yearPickerState,
-        setSelectedYear = viewModel::setSelectedYear,
     )
 }
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 internal fun StorageScreen(
-    yearList: List<String>,
     selectedYear: String,
     yearPickerState: FWheelPickerState,
-    setSelectedYear: (String) -> Unit,
 ) {
     val sheetState = rememberModalBottomSheetState()
     var showBottomSheet by remember { mutableStateOf(false) }
@@ -73,7 +68,7 @@ internal fun StorageScreen(
     Scaffold(
         topBar = { BaekyoungTopBar(titleTextId = R.string.storage) },
         containerColor = BaekyoungTheme.colors.grayF5,
-        modifier = Modifier.fillMaxSize()
+        modifier = Modifier.fillMaxSize(),
     ) { paddingValues ->
         if (showBottomSheet) {
             BaekyoungModalBottomSheet(
@@ -167,43 +162,45 @@ internal fun StorageScreen(
                 item {
                     Column(
                         modifier = Modifier
-                            .shadow(elevation = 5.dp, shape = RoundedCornerShape(10.dp))
+                            .shadow(elevation = 2.dp, shape = RoundedCornerShape(10.dp))
                             .clip(RoundedCornerShape(10.dp))
                             .background(BaekyoungTheme.colors.white),
                     ) {
-                        Row(
-                            modifier = Modifier
-                                .fillMaxWidth()
-                                .wrapContentHeight()
-                                .padding(horizontal = 20.dp, vertical = 15.dp),
-                        ) {
-                            Column(verticalArrangement = Arrangement.spacedBy(10.dp)) {
-                                Text(
-                                    text = "3월 8일 오후 04:35",
-                                    style = BaekyoungTheme.typography.labelRegular.copy(fontSize = 10.sp),
-                                    color = BaekyoungTheme.colors.gray95,
-                                    textAlign = TextAlign.Center,
-                                )
+                        Column(modifier = Modifier.padding(2.dp)) {
+                            Row(
+                                modifier = Modifier
+                                    .fillMaxWidth()
+                                    .wrapContentHeight()
+                                    .padding(horizontal = 20.dp, vertical = 15.dp),
+                            ) {
+                                Column(verticalArrangement = Arrangement.spacedBy(10.dp)) {
+                                    Text(
+                                        text = "3월 8일 오후 04:35",
+                                        style = BaekyoungTheme.typography.labelRegular.copy(fontSize = 10.sp),
+                                        color = BaekyoungTheme.colors.gray95,
+                                        textAlign = TextAlign.Center,
+                                    )
 
-                                Text(
-                                    text = "지금 머릿속에 떠오르는 모든 고민을 의식의 \n" +
-                                        "흐름대로 적어보기",
-                                    style = BaekyoungTheme.typography.labelBold,
-                                    color = BaekyoungTheme.colors.black,
-                                )
+                                    Text(
+                                        text = "지금 머릿속에 떠오르는 모든 고민을 의식의 \n" +
+                                            "흐름대로 적어보기",
+                                        style = BaekyoungTheme.typography.labelBold,
+                                        color = BaekyoungTheme.colors.black,
+                                    )
 
-                                Text(
-                                    text = " ",
+                                    Text(
+                                        text = " ",
+                                    )
+                                }
+
+                                Spacer(modifier = Modifier.weight(0.2f))
+
+                                Image(
+                                    painter = painterResource(id = R.drawable.ic_trash_can),
+                                    contentDescription = null,
+                                    modifier = Modifier.align(Alignment.CenterVertically),
                                 )
                             }
-
-                            Spacer(modifier = Modifier.weight(0.2f))
-
-                            Image(
-                                painter = painterResource(id = R.drawable.ic_trash_can),
-                                contentDescription = null,
-                                modifier = Modifier.align(Alignment.CenterVertically),
-                            )
                         }
                     }
                 }
