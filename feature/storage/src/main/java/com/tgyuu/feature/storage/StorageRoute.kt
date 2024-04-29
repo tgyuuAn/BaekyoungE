@@ -13,6 +13,7 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.layout.wrapContentHeight
 import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
@@ -44,14 +45,17 @@ import com.tgyuu.designsystem.R.drawable
 import com.tgyuu.designsystem.component.BaekyoungModalBottomSheet
 import com.tgyuu.designsystem.component.BaekyoungTopBar
 import com.tgyuu.designsystem.theme.BaekyoungTheme
+import com.tgyuu.model.storage.ChattingLog
 
 @Composable
 internal fun StorageRoute(viewModel: StorageViewModel = hiltViewModel()) {
     val selectedYear by viewModel.selectedYear.collectAsStateWithLifecycle()
+    val chattingLogs by viewModel.chattingLogs.collectAsStateWithLifecycle()
     val yearPickerState = rememberFWheelPickerState()
 
     StorageScreen(
         selectedYear = selectedYear,
+        chattingLogs = chattingLogs,
         yearPickerState = yearPickerState,
     )
 }
@@ -60,6 +64,7 @@ internal fun StorageRoute(viewModel: StorageViewModel = hiltViewModel()) {
 @Composable
 internal fun StorageScreen(
     selectedYear: String,
+    chattingLogs: List<ChattingLog>,
     yearPickerState: FWheelPickerState,
 ) {
     val sheetState = rememberModalBottomSheetState()
@@ -159,7 +164,7 @@ internal fun StorageScreen(
                 verticalArrangement = Arrangement.spacedBy(20.dp),
                 modifier = Modifier.padding(start = 20.dp, end = 20.dp, top = 20.dp),
             ) {
-                item {
+                items(chattingLogs) { chatLog ->
                     Column(
                         modifier = Modifier
                             .shadow(elevation = 2.dp, shape = RoundedCornerShape(10.dp))
@@ -173,17 +178,19 @@ internal fun StorageScreen(
                                     .wrapContentHeight()
                                     .padding(horizontal = 20.dp, vertical = 15.dp),
                             ) {
-                                Column(verticalArrangement = Arrangement.spacedBy(10.dp)) {
+                                Column(
+                                    verticalArrangement = Arrangement.spacedBy(10.dp),
+                                    modifier = Modifier.weight(0.7f),
+                                ) {
                                     Text(
-                                        text = "3월 8일 오후 04:35",
+                                        text = chatLog.chattingDate,
                                         style = BaekyoungTheme.typography.labelRegular.copy(fontSize = 10.sp),
                                         color = BaekyoungTheme.colors.gray95,
                                         textAlign = TextAlign.Center,
                                     )
 
                                     Text(
-                                        text = "지금 머릿속에 떠오르는 모든 고민을 의식의 \n" +
-                                            "흐름대로 적어보기",
+                                        text = chatLog.lastChatting,
                                         style = BaekyoungTheme.typography.labelBold,
                                         color = BaekyoungTheme.colors.black,
                                     )
