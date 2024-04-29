@@ -7,6 +7,7 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
@@ -17,6 +18,7 @@ import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
+import androidx.compose.material3.Card
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Scaffold
@@ -36,12 +38,14 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.compose.ui.window.Dialog
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.sd.lib.compose.wheel_picker.FVerticalWheelPicker
 import com.sd.lib.compose.wheel_picker.FWheelPickerState
 import com.sd.lib.compose.wheel_picker.rememberFWheelPickerState
 import com.tgyuu.designsystem.R.drawable
+import com.tgyuu.designsystem.component.BaekyoungButton
 import com.tgyuu.designsystem.component.BaekyoungModalBottomSheet
 import com.tgyuu.designsystem.component.BaekyoungTopBar
 import com.tgyuu.designsystem.theme.BaekyoungTheme
@@ -69,6 +73,55 @@ internal fun StorageScreen(
 ) {
     val sheetState = rememberModalBottomSheetState()
     var showBottomSheet by remember { mutableStateOf(false) }
+    var showChatLogDeleteDialog by remember { mutableStateOf(false) }
+
+    if (showChatLogDeleteDialog) {
+        Dialog(onDismissRequest = { showChatLogDeleteDialog = false }) {
+            Card(shape = RoundedCornerShape(10.dp)) {
+                Column(
+                    horizontalAlignment = Alignment.CenterHorizontally,
+                    modifier = Modifier
+                        .background(BaekyoungTheme.colors.white)
+                        .padding(vertical = 16.dp, horizontal = 20.dp),
+                ) {
+                    Text(
+                        text = stringResource(id = R.string.delete_chatlog_dialog_title),
+                        style = BaekyoungTheme.typography.labelBold.copy(fontSize = 14.sp),
+                        modifier = Modifier.padding(bottom = 2.dp),
+                    )
+
+                    Text(
+                        text = stringResource(id = R.string.delete_chatlog_dialog_description),
+                        style = BaekyoungTheme.typography.labelRegular.copy(fontSize = 10.sp),
+                        color = BaekyoungTheme.colors.red,
+                    )
+
+                    Row(
+                        horizontalArrangement = Arrangement.spacedBy(12.dp),
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .padding(top = 20.dp),
+                    ) {
+                        BaekyoungButton(
+                            text = R.string.cancel,
+                            buttonColor = BaekyoungTheme.colors.grayF2,
+                            textColor = BaekyoungTheme.colors.black,
+                            onButtonClick = { showChatLogDeleteDialog = false },
+                            modifier = Modifier.weight(1f),
+                        )
+
+                        BaekyoungButton(
+                            text = R.string.complete,
+                            textColor = BaekyoungTheme.colors.white,
+                            buttonColor = BaekyoungTheme.colors.red,
+                            onButtonClick = { },
+                            modifier = Modifier.weight(1f),
+                        )
+                    }
+                }
+            }
+        }
+    }
 
     Scaffold(
         topBar = { BaekyoungTopBar(titleTextId = R.string.storage) },
@@ -205,7 +258,9 @@ internal fun StorageScreen(
                                 Image(
                                     painter = painterResource(id = R.drawable.ic_trash_can),
                                     contentDescription = null,
-                                    modifier = Modifier.align(Alignment.CenterVertically),
+                                    modifier = Modifier
+                                        .align(Alignment.CenterVertically)
+                                        .clickable { showChatLogDeleteDialog = true },
                                 )
                             }
                         }

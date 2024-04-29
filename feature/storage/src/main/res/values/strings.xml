@@ -1,5 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <string name="cancel">취소</string>
     <string name="complete">완료</string>
     <string name="storage">저장소</string>
+    <string name="delete_chatlog_dialog_title">상담기록을 삭제하시겠어요?</string>
+    <string name="delete_chatlog_dialog_description">해당 채팅 기록이 삭제되며, 다시 되돌릴 수 없습니다.</string>
 </resources>
