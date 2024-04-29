@@ -7,10 +7,13 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.IntrinsicSize
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.requiredWidth
 import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.layout.wrapContentHeight
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.itemsIndexed
 import androidx.compose.foundation.shape.RoundedCornerShape
@@ -54,9 +57,14 @@ internal fun StorageScreen(
     selectedYear: String,
     setSelectedYear: (String) -> Unit,
 ) {
+    var showBottomSheet by remember { mutableStateOf(false) }
+
     Scaffold(
         topBar = { BaekyoungTopBar(titleTextId = R.string.storage) },
         containerColor = BaekyoungTheme.colors.grayF5,
+        modifier = Modifier
+            .fillMaxSize()
+            .clickable { showBottomSheet = false },
     ) { paddingValues ->
         Column(
             modifier = Modifier
@@ -64,8 +72,6 @@ internal fun StorageScreen(
                 .padding(paddingValues),
         ) {
             HorizontalDivider(color = BaekyoungTheme.colors.grayDC)
-
-            var showSpinner by remember { mutableStateOf(false) }
 
             Row(
                 verticalAlignment = Alignment.CenterVertically,
@@ -81,44 +87,62 @@ internal fun StorageScreen(
                 Image(
                     painter = painterResource(id = drawable.ic_spinner_arrow),
                     contentDescription = null,
-                    modifier = Modifier.clickable { showSpinner = !showSpinner },
+                    modifier = Modifier.clickable { showBottomSheet = !showBottomSheet },
                 )
             }
 
-            if (showSpinner) {
-                LazyColumn(
-                    modifier = Modifier
-                        .padding(start = 20.dp, top = 5.dp)
-                        .shadow(elevation = 10.dp, shape = RoundedCornerShape(8.dp))
-                        .clip(RoundedCornerShape(8.dp))
-                        .background(BaekyoungTheme.colors.white),
-                ) {
-                    itemsIndexed(yearList) { index, year ->
-                        Column(
+            LazyColumn(
+                verticalArrangement = Arrangement.spacedBy(20.dp),
+                modifier = Modifier.padding(start = 20.dp, end = 20.dp, top = 20.dp),
+            ) {
+                item {
+                    Column(
+                        modifier = Modifier
+                            .shadow(elevation = 5.dp, shape = RoundedCornerShape(10.dp))
+                            .clip(RoundedCornerShape(10.dp))
+                            .background(BaekyoungTheme.colors.white),
+                    ) {
+                        Row(
                             modifier = Modifier
-                                .width(IntrinsicSize.Min)
-                                .clickable {
-                                    setSelectedYear(year)
-                                    showSpinner = false
-                                },
+                                .fillMaxWidth()
+                                .wrapContentHeight()
+                                .padding(horizontal = 20.dp, vertical = 15.dp),
                         ) {
-                            Text(
-                                text = "$year 년",
-                                style = BaekyoungTheme.typography.labelRegular.copy(fontSize = 13.sp),
-                                color = BaekyoungTheme.colors.gray95,
-                                textAlign = TextAlign.Center,
-                                modifier = Modifier
-                                    .padding(horizontal = 20.dp, vertical = 6.dp)
-                                    .requiredWidth(IntrinsicSize.Max),
-                            )
+                            Column(verticalArrangement = Arrangement.spacedBy(10.dp)) {
+                                Text(
+                                    text = "3월 8일 오후 04:35",
+                                    style = BaekyoungTheme.typography.labelRegular.copy(fontSize = 10.sp),
+                                    color = BaekyoungTheme.colors.gray95,
+                                    textAlign = TextAlign.Center,
+                                )
 
-                            if (index < yearList.size - 1) {
-                                HorizontalDivider(color = BaekyoungTheme.colors.grayAC)
+                                Text(
+                                    text = "지금 머릿속에 떠오르는 모든 고민을 의식의 \n" +
+                                        "흐름대로 적어보기",
+                                    style = BaekyoungTheme.typography.labelBold,
+                                    color = BaekyoungTheme.colors.black,
+                                )
+
+                                Text(
+                                    text = " ",
+                                )
                             }
+
+                            Spacer(modifier = Modifier.weight(0.2f))
+
+                            Image(
+                                painter = painterResource(id = R.drawable.ic_trash_can),
+                                contentDescription = null,
+                                modifier = Modifier.align(Alignment.CenterVertically),
+                            )
                         }
                     }
                 }
             }
+        }
+
+        if (showBottomSheet) {
+
         }
     }
 }

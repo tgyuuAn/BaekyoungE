@@ -1,4 +1,4 @@
-package com.tgyuu.feature.profile.setting.component
+package com.tgyuu.designsystem.component
 
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.ColumnScope
@@ -15,10 +15,10 @@ import com.tgyuu.designsystem.theme.BaekyoungTheme
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-internal fun SettingModalBottomSheet(
+fun BaekyoungModalBottomSheet(
     sheetState: SheetState,
     onDissmissRequest: () -> Unit,
-    innerContent: @Composable ColumnScope.() -> Unit,
+    content: @Composable ColumnScope.() -> Unit,
 ) {
     val focusManager = LocalFocusManager.current
 
@@ -30,7 +30,7 @@ internal fun SettingModalBottomSheet(
         shape = RoundedCornerShape(topStart = 10.dp, topEnd = 10.dp),
     ) {
         Column(modifier = Modifier.addFocusCleaner(focusManager)) {
-            innerContent()
+            content()
         }
     }
 }
