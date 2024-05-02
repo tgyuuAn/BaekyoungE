@@ -2,6 +2,8 @@ package com.tgyuu.data.repository.di
 
 import com.tgyuu.data.repository.repository.auth.AuthRepository
 import com.tgyuu.data.repository.repository.auth.AuthRepositoryImpl
+import com.tgyuu.data.repository.repository.chatting.ChattingRepository
+import com.tgyuu.data.repository.repository.chatting.ChattingRepositoryImpl
 import com.tgyuu.data.repository.repository.consulting.ConsultingRepository
 import com.tgyuu.data.repository.repository.consulting.ConsultingRepositoryImpl
 import dagger.Binds
@@ -25,4 +27,10 @@ abstract class DataModule {
     abstract fun bindsAuthRepository(
         authRepositoryImpl: AuthRepositoryImpl,
     ): AuthRepository
+
+    @Binds
+    @Singleton
+    abstract fun bindsChattingRepository(
+        chattingRepositoryImpl: ChattingRepositoryImpl,
+    ): ChattingRepository
 }

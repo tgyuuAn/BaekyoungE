@@ -6,6 +6,8 @@ import androidx.compose.runtime.snapshots.SnapshotStateList
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.tgyuu.common.util.UiState
+import com.tgyuu.common.util.generateNowDateTime
+import com.tgyuu.common.util.toISOLocalDateTimeString
 import com.tgyuu.domain.usecase.consulting.ai.PostChatMessageUseCase
 import com.tgyuu.model.consulting.ChattingRole
 import com.tgyuu.model.consulting.Message
@@ -34,6 +36,9 @@ class AiChattingViewModel @Inject constructor(
 
     private val _userId: MutableStateFlow<String> = MutableStateFlow("")
 
+    private val _roomId: MutableStateFlow<String> =
+        MutableStateFlow(generateNowDateTime().toISOLocalDateTimeString())
+
     fun setChatText(chatText: String) {
         _chatText.value = chatText
     }
@@ -60,7 +65,9 @@ class AiChattingViewModel @Inject constructor(
         _chatText.value = ""
         _chatState.value = UiState.Loading
 
-        postChatMessageUseCase(chatLog.toList())
+        Log.d("test", chatLog.toString())
+
+        postChatMessageUseCase(chatLog = chatLog.toList(), roomId = _roomId.value)
             .onSuccess { chatLog.addAll(it.messages) }
             .onFailure { Log.d("test", "onFailure : " + it.toString()) }
             .also { _chatState.value = UiState.Success(Unit) }
