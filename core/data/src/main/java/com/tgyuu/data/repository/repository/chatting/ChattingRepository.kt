@@ -1,7 +1,7 @@
 package com.tgyuu.data.repository.repository.chatting
 
-import com.tgyuu.database.model.ChattingRoomEntity
-import com.tgyuu.database.model.MessageEntity
+import com.tgyuu.model.storage.ChattingRoom
+import com.tgyuu.model.storage.Message
 
 interface ChattingRepository {
     suspend fun insertMessage(
@@ -18,7 +18,7 @@ interface ChattingRepository {
         createdAt: String,
     )
 
-    suspend fun getAllChattingRoomMessages(roomId: String): List<MessageEntity>
+    suspend fun getAllChattingRoomMessages(roomId: String): List<Message>
 
-    suspend fun getAllChattingRoom(): List<ChattingRoomEntity>
+    suspend fun getAllChattingRoom(): List<ChattingRoom>
 }
