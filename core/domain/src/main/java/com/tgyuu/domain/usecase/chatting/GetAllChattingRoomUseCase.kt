@@ -7,6 +7,6 @@ import javax.inject.Inject
 class GetAllChattingRoomUseCase @Inject constructor(
     private val chattingRepository: ChattingRepository,
 ) {
-    suspend operator fun invoke(): Result<ChattingRoom> =
+    suspend operator fun invoke(): Result<List<ChattingRoom>> =
         chattingRepository.getAllChattingRoom()
 }

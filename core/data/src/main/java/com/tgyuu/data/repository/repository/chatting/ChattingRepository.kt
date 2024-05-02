@@ -18,7 +18,7 @@ interface ChattingRepository {
         createdAt: String,
     )
 
-    suspend fun getAllChattingRoomMessages(roomId: String): List<Message>
+    suspend fun getAllChattingRoomMessages(roomId: String): Result<List<Message>>
 
-    suspend fun getAllChattingRoom(): List<ChattingRoom>
+    suspend fun getAllChattingRoom(): Result<List<ChattingRoom>>
 }
