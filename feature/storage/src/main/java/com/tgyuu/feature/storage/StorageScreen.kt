@@ -164,7 +164,7 @@ internal fun StorageScreen(
                     modifier = Modifier.fillMaxWidth(),
                 ) {
                     Text(
-                        text = "기록을 보고싶은 년도를 선택하세요.",
+                        text = stringResource(id = R.string.change_year_bottom_sheet_title),
                         style = BaekyoungTheme.typography.labelBold.copy(
                             fontSize = 14.sp,
                         ),
