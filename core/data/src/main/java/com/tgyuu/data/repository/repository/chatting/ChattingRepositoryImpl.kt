@@ -53,6 +53,8 @@ class ChattingRepositoryImpl @Inject constructor(
                     updatedAt,
                 ),
             )
+
+            chattingDao.deleteAllMessages(roomId = id)
         }
 
     override suspend fun getChattingRoom(roomId: String): Result<ChattingRoom> = runCatching {

@@ -7,6 +7,7 @@ import androidx.room.OnConflictStrategy
 import androidx.room.Query
 import com.tgyuu.database.model.MessageEntity
 import com.tgyuu.database.model.ChattingRoomEntity
+import com.tgyuu.model.storage.ChattingRoom
 
 @Dao
 interface ChattingDao {
@@ -18,6 +19,9 @@ interface ChattingDao {
 
     @Delete
     suspend fun deleteChattingRoom(chattingRoom: ChattingRoomEntity)
+
+    @Query("DELETE FROM message WHERE chatting_room_id = :roomId")
+    suspend fun deleteAllChattingRoomMessages(roomId: String)
 
     @Query("SELECT * FROM message WHERE chatting_room_id = :roomId ORDER BY created_at DESC")
     suspend fun getAllChattingRoomMessages(roomId: String): List<MessageEntity>
