@@ -54,7 +54,7 @@ import com.tgyuu.designsystem.component.BaekyoungCenterTopBar
 import com.tgyuu.designsystem.component.Loader
 import com.tgyuu.designsystem.theme.BaekyoungTheme
 import com.tgyuu.feature.profile.R
-import com.tgyuu.feature.profile.setting.component.SettingModalBottomSheet
+import com.tgyuu.designsystem.component.BaekyoungModalBottomSheet
 import com.tgyuu.feature.profile.setting.component.SettingRow
 import com.tgyuu.feature.profile.setting.component.SettingTextField
 import com.tgyuu.model.auth.UserInformation
@@ -156,7 +156,6 @@ fun SettingScreen(
                                 snackBarCoroutineScope.launch {
                                     snackbarHostState.showSnackbar(event.message)
                                 }
-
 
                             is SettingViewModel.SettingEvent.LogoutFailed ->
                                 snackBarCoroutineScope.launch {
@@ -269,7 +268,7 @@ fun SettingScreen(
                             BottomSheetType.INIT -> Unit
 
                             BottomSheetType.CHANGE_GRADE -> {
-                                SettingModalBottomSheet(
+                                BaekyoungModalBottomSheet(
                                     onDissmissRequest = {
                                         showBottomSheet = false
                                         clearNewNickname()
@@ -332,7 +331,7 @@ fun SettingScreen(
                             }
 
                             BottomSheetType.CHANGE_MAJOR -> {
-                                SettingModalBottomSheet(
+                                BaekyoungModalBottomSheet(
                                     onDissmissRequest = {
                                         showBottomSheet = false
                                         clearNewMajor()
@@ -405,7 +404,7 @@ fun SettingScreen(
                             }
 
                             BottomSheetType.CHANGE_NICKNAME -> {
-                                SettingModalBottomSheet(
+                                BaekyoungModalBottomSheet(
                                     onDissmissRequest = { showBottomSheet = false },
                                     sheetState = sheetState,
                                 ) {

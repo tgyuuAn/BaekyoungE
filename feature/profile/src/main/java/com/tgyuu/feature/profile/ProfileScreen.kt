@@ -35,6 +35,7 @@ import com.tgyuu.designsystem.theme.BaekyoungTheme
 import com.tgyuu.feature.profile.R.drawable
 import com.tgyuu.feature.profile.R.string
 import com.tgyuu.model.auth.UserInformation
+import com.tgyuu.model.storage.ChattingRoom
 
 @Composable
 internal fun ProfileRoute(
@@ -42,9 +43,11 @@ internal fun ProfileRoute(
     viewModel: ProfileViewModel = hiltViewModel(),
 ) {
     val userInformationState by viewModel.userInformation.collectAsStateWithLifecycle()
+    val chattingRooms by viewModel.chattingLogs.collectAsStateWithLifecycle()
 
     ProfileScreen(
         userInformationState = userInformationState,
+        chattingRooms = chattingRooms,
         navigateToSetting = navigateToSetting,
     )
 }
@@ -52,6 +55,7 @@ internal fun ProfileRoute(
 @Composable
 fun ProfileScreen(
     userInformationState: UiState<UserInformation>,
+    chattingRooms: List<ChattingRoom>,
     navigateToSetting: () -> Unit,
 ) {
     Column(
@@ -116,7 +120,7 @@ fun ProfileScreen(
                             )
 
                             Text(
-                                text = "2",
+                                text = chattingRooms.size.toString(),
                                 style = BaekyoungTheme.typography.contentBold,
                                 modifier = Modifier.padding(start = 5.dp),
                             )

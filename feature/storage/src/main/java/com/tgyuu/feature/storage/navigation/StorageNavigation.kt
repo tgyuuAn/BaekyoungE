@@ -13,8 +13,8 @@ fun NavController.navigateToStorage(navOptions: NavOptions? = navOptions {}) {
     this.navigate(storageNavigationRoute, navOptions)
 }
 
-fun NavGraphBuilder.storageScreen() {
+fun NavGraphBuilder.storageScreen(navigateToChatting: (String) -> Unit) {
     composable(route = storageNavigationRoute) {
-        StorageRoute()
+        StorageRoute(navigateToChatting)
     }
 }

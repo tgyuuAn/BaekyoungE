@@ -6,7 +6,6 @@ import com.kakao.sdk.auth.AuthApiClient
 import com.kakao.sdk.user.UserApiClient
 import com.tgyuu.common.util.UiState
 import com.tgyuu.domain.usecase.auth.GetUserInformationUseCase
-import com.tgyuu.domain.usecase.auth.VerifyMemberIdUseCase
 import com.tgyuu.model.auth.UserInformation
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableSharedFlow
@@ -66,7 +65,6 @@ class ConsultingViewModel @Inject constructor(
             }
         }
     }
-
 
     sealed class ConsultingEvent {
         data class NavigateToChatting(val userId: String) : ConsultingEvent()

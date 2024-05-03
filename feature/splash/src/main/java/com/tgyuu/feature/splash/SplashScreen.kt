@@ -1,6 +1,5 @@
 package com.tgyuu.feature.splash
 
-import android.util.Log
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.core.animateOffsetAsState
 import androidx.compose.animation.core.tween

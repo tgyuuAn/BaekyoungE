@@ -153,11 +153,11 @@ fun BaekKyoungTypoGraphy(): BaekKyoungTypogrphy {
         ),
         labelRegular = TextStyle(
             fontSize = 12.sp,
-            fontFamily = notoSansKrMedium,
+            fontFamily = notoSansKrRegular,
         ),
         labelBold = TextStyle(
             fontSize = 12.sp,
-            fontFamily = notoSansKrMedium,
+            fontFamily = notoSansKrBold,
         ),
         splashBold = TextStyle(
             fontSize = 20.sp,

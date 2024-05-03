@@ -30,6 +30,7 @@ import com.tgyuu.feature.profile.setting.navigation.settingScreen
 import com.tgyuu.feature.shop.navigation.shopScreen
 import com.tgyuu.feature.splash.navigation.splashNavigationRoute
 import com.tgyuu.feature.splash.navigation.splashScreen
+import com.tgyuu.feature.storage.navigation.storageNavigationRoute
 import com.tgyuu.feature.storage.navigation.storageScreen
 
 @Composable
@@ -103,11 +104,20 @@ fun BaekyoungNavHost(
         )
         homeScreen()
         shopScreen()
-        storageScreen()
+        storageScreen(
+            navigateToChatting = {
+                navController.navigateToAiChatting(
+                    roomId = it,
+                    navOptions {
+                        popUpTo(storageNavigationRoute)
+                    },
+                )
+            },
+        )
         consultingScreen(
             navigateToChatting = {
                 navController.navigateToAiChatting(
-                    userId = it,
+                    roomId = it,
                     navOptions {
                         popUpTo(consultingNavigationRoute)
                     },

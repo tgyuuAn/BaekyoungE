@@ -9,23 +9,23 @@ import androidx.navigation.navArgument
 import androidx.navigation.navOptions
 import com.tgyuu.aichat.AiChattingRoute
 
-fun aiChattingNavigationRoute(userId: String = "{userId}") = "ai_chatting_route/$userId"
+fun aiChattingNavigationRoute(roomId: String = "{roomId}") = "ai_chatting_route/$roomId"
 
 fun NavController.navigateToAiChatting(
-    userId: String,
+    roomId: String,
     navOptions: NavOptions? = navOptions {},
 ) {
-    this.navigate(aiChattingNavigationRoute(userId), navOptions)
+    this.navigate(aiChattingNavigationRoute(roomId), navOptions)
 }
 
 fun NavGraphBuilder.aiChattingScreen(popBackStack: () -> Unit) {
     composable(
         route = aiChattingNavigationRoute(),
-        arguments = listOf(navArgument("userId") { type = NavType.StringType }),
+        arguments = listOf(navArgument("roomId") { type = NavType.StringType }),
     ) { navBackStackEntry ->
-        val userId = navBackStackEntry.arguments?.getString("userId") ?: ""
+        val roomId = navBackStackEntry.arguments?.getString("roomId") ?: ""
         AiChattingRoute(
-            userId = userId,
+            roomId = roomId,
             popBackStack = popBackStack,
         )
     }

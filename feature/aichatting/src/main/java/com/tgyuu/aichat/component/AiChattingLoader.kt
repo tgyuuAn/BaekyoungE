@@ -21,7 +21,7 @@ internal fun AiChattingLoader(modifier: Modifier = Modifier) {
 
     Box(
         contentAlignment = Alignment.Center,
-        modifier = modifier.size(width = 100.dp, height=60.dp),
+        modifier = modifier.size(width = 100.dp, height = 60.dp),
     ) {
         LottieAnimation(
             composition = composition,
