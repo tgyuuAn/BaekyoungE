@@ -11,13 +11,19 @@ interface ChattingRepository {
         messageTo: String,
         content: String,
         createdAt: String,
-    )
+    ): Result<Unit>
 
     suspend fun insertChattingRoom(
         id: String,
         lastChatting: String,
         updatedAt: String,
-    )
+    ): Result<Unit>
+
+    suspend fun deleteChattingRoom(
+        id: String,
+        lastChatting: String,
+        updatedAt: String,
+    ): Result<Unit>
 
     suspend fun getChattingRoom(roomId: String): Result<ChattingRoom>
 

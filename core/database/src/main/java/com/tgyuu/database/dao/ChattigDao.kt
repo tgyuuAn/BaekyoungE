@@ -1,6 +1,7 @@
 package com.tgyuu.database.dao
 
 import androidx.room.Dao
+import androidx.room.Delete
 import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.Query
@@ -14,6 +15,9 @@ interface ChattingDao {
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insertChattingRoom(chattingRoom: ChattingRoomEntity)
+
+    @Delete
+    suspend fun deleteChattingRoom(chattingRoom: ChattingRoomEntity)
 
     @Query("SELECT * FROM message WHERE chatting_room_id = :roomId ORDER BY created_at DESC")
     suspend fun getAllChattingRoomMessages(roomId: String): List<MessageEntity>

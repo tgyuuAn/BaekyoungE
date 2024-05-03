@@ -27,8 +27,6 @@ class PostChatMessageUseCase @Inject constructor(
 
         val chattingRoom = chattingRepository.getChattingRoom(roomId).getOrThrow()
 
-        Log.d("test", chattingRoom.toString())
-
         chattingRepository.insertChattingRoom(
             id = chattingRoom.id,
             lastChatting = chatLog.get(chatLog.size - 1).content,

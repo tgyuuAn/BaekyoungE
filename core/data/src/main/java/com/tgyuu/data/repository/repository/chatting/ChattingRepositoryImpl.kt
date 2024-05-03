@@ -20,25 +20,40 @@ class ChattingRepositoryImpl @Inject constructor(
         messageTo: String,
         content: String,
         createdAt: String,
-    ) = chattingDao.insertMessage(
-        MessageEntity(
-            id,
-            chattingRoomId,
-            messageFrom,
-            messageTo,
-            content,
-            createdAt,
-        ),
-    )
-
-    override suspend fun insertChattingRoom(id: String, lastChatting: String, updatedAt: String) =
-        chattingDao.insertChattingRoom(
-            ChattingRoomEntity(
+    ) = runCatching {
+        chattingDao.insertMessage(
+            MessageEntity(
                 id,
-                lastChatting,
-                updatedAt,
+                chattingRoomId,
+                messageFrom,
+                messageTo,
+                content,
+                createdAt,
             ),
         )
+    }
+
+    override suspend fun insertChattingRoom(id: String, lastChatting: String, updatedAt: String) =
+        runCatching {
+            chattingDao.insertChattingRoom(
+                ChattingRoomEntity(
+                    id,
+                    lastChatting,
+                    updatedAt,
+                ),
+            )
+        }
+
+    override suspend fun deleteChattingRoom(id: String, lastChatting: String, updatedAt: String) =
+        runCatching {
+            chattingDao.deleteChattingRoom(
+                ChattingRoomEntity(
+                    id,
+                    lastChatting,
+                    updatedAt,
+                ),
+            )
+        }
 
     override suspend fun getChattingRoom(roomId: String): Result<ChattingRoom> = runCatching {
         val chattingRoomEntity = chattingDao.getChattingRoom(roomId)

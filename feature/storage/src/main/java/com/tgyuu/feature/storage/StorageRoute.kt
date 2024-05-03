@@ -243,15 +243,11 @@ internal fun StorageScreen(
                                     )
 
                                     Text(
-                                        text = chattingRoom.lastMessage,
+                                        text = chattingRoom.lastMessage+"\n\n",
                                         style = BaekyoungTheme.typography.labelBold,
                                         color = BaekyoungTheme.colors.black,
                                         maxLines = 3,
                                         overflow = TextOverflow.Ellipsis,
-                                    )
-
-                                    Text(
-                                        text = " ",
                                     )
                                 }
 

@@ -9,6 +9,4 @@ class GetAllChattingLogUseCase @Inject constructor(
 ) {
     suspend operator fun invoke(): Result<List<ChattingRoom>> =
         chattingRepository.getAllChattingRoom()
-
-
 }
