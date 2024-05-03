@@ -21,9 +21,12 @@ import androidx.compose.material3.Card
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Scaffold
+import androidx.compose.material3.SnackbarHost
+import androidx.compose.material3.SnackbarHostState
 import androidx.compose.material3.Text
 import androidx.compose.material3.rememberModalBottomSheetState
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -50,17 +53,33 @@ import com.tgyuu.designsystem.component.BaekyoungModalBottomSheet
 import com.tgyuu.designsystem.component.BaekyoungTopBar
 import com.tgyuu.designsystem.theme.BaekyoungTheme
 import com.tgyuu.model.storage.ChattingRoom
+import kotlinx.coroutines.flow.collectLatest
 
 @Composable
 internal fun StorageRoute(viewModel: StorageViewModel = hiltViewModel()) {
     val selectedYear by viewModel.selectedYear.collectAsStateWithLifecycle()
     val chattingRooms by viewModel.chattingLogs.collectAsStateWithLifecycle()
     val yearPickerState = rememberFWheelPickerState()
+    val (showChatLogDeleteDialog, setChatLogDeleteDialog) = remember { mutableStateOf(false) }
+    val snackbarHostState = remember { SnackbarHostState() }
+
+    LaunchedEffect(true) {
+        viewModel.eventFlow.collectLatest { event ->
+            when (event) {
+                is StorageViewModel.StorageEvent.DeleteSuccess -> setChatLogDeleteDialog(false)
+                is StorageViewModel.StorageEvent.EventFailed ->
+                    snackbarHostState.showSnackbar(event.message)
+            }
+        }
+    }
 
     StorageScreen(
+        snackbarHostState = snackbarHostState,
         selectedYear = selectedYear,
         chattingRooms = chattingRooms,
         yearPickerState = yearPickerState,
+        showChatLogDeleteDialog = showChatLogDeleteDialog,
+        setChatLogDeleteDialog = setChatLogDeleteDialog,
         deleteChattingRoom = viewModel::deleteChattingRoom,
     )
 }
@@ -68,18 +87,20 @@ internal fun StorageRoute(viewModel: StorageViewModel = hiltViewModel()) {
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 internal fun StorageScreen(
+    snackbarHostState: SnackbarHostState,
     selectedYear: String,
     chattingRooms: List<ChattingRoom>,
     yearPickerState: FWheelPickerState,
+    showChatLogDeleteDialog: Boolean,
+    setChatLogDeleteDialog: (Boolean) -> Unit,
     deleteChattingRoom: (String) -> Unit,
 ) {
     val sheetState = rememberModalBottomSheetState()
     var showBottomSheet by remember { mutableStateOf(false) }
-    var showChatLogDeleteDialog by remember { mutableStateOf(false) }
     var selectedRoomId by remember { mutableStateOf("") }
 
     if (showChatLogDeleteDialog) {
-        Dialog(onDismissRequest = { showChatLogDeleteDialog = false }) {
+        Dialog(onDismissRequest = { setChatLogDeleteDialog(false) }) {
             Card(shape = RoundedCornerShape(10.dp)) {
                 Column(
                     horizontalAlignment = Alignment.CenterHorizontally,
@@ -109,7 +130,7 @@ internal fun StorageScreen(
                             text = R.string.cancel,
                             buttonColor = BaekyoungTheme.colors.grayF2,
                             textColor = BaekyoungTheme.colors.black,
-                            onButtonClick = { showChatLogDeleteDialog = false },
+                            onButtonClick = { setChatLogDeleteDialog(false) },
                             modifier = Modifier.weight(1f),
                         )
 
@@ -128,6 +149,7 @@ internal fun StorageScreen(
 
     Scaffold(
         topBar = { BaekyoungTopBar(titleTextId = R.string.storage) },
+        snackbarHost = { SnackbarHost(snackbarHostState) },
         containerColor = BaekyoungTheme.colors.grayF5,
         modifier = Modifier.fillMaxSize(),
     ) { paddingValues ->
@@ -263,7 +285,7 @@ internal fun StorageScreen(
                                         .align(Alignment.CenterVertically)
                                         .clickable {
                                             selectedRoomId = chattingRoom.id
-                                            showChatLogDeleteDialog = true
+                                            setChatLogDeleteDialog(true)
                                         },
                                 )
                             }

@@ -1,13 +1,14 @@
 package com.tgyuu.feature.storage
 
-import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.tgyuu.domain.usecase.chatting.DeleteChattingRoomUseCase
 import com.tgyuu.domain.usecase.chatting.GetAllChattingLogUseCase
 import com.tgyuu.model.storage.ChattingRoom
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.asSharedFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
 import javax.inject.Inject
@@ -17,6 +18,9 @@ class StorageViewModel @Inject constructor(
     private val getAllChattingLogUseCase: GetAllChattingLogUseCase,
     private val deleteChattingRoomUseCase: DeleteChattingRoomUseCase,
 ) : ViewModel() {
+    private val _eventFlow = MutableSharedFlow<StorageEvent>()
+    val eventFlow = _eventFlow.asSharedFlow()
+
     private val _selectedYear = MutableStateFlow("2024")
     val selectedYear = _selectedYear.asStateFlow()
 
@@ -27,15 +31,25 @@ class StorageViewModel @Inject constructor(
         getAllChattingLogs()
     }
 
-    fun getAllChattingLogs() = viewModelScope.launch {
+    fun event(event: StorageEvent) = viewModelScope.launch { _eventFlow.emit(event) }
+
+    private fun getAllChattingLogs() = viewModelScope.launch {
         getAllChattingLogUseCase()
             .onSuccess { _chattingLogs.value = it }
-            .onFailure { Log.d("test", "로컬 데이터 호출 실패") }
+            .onFailure { event(StorageEvent.EventFailed(it.toString())) }
     }
 
     fun deleteChattingRoom(roomId: String) = viewModelScope.launch {
         deleteChattingRoomUseCase(roomId)
-            .onSuccess { }
-            .onFailure { Log.d("test", "로컬 데이터 삭제 실패") }
+            .onSuccess {
+                getAllChattingLogs()
+                event(StorageEvent.DeleteSuccess)
+            }
+            .onFailure { event(StorageEvent.EventFailed(it.toString())) }
+    }
+
+    sealed class StorageEvent {
+        data object DeleteSuccess : StorageEvent()
+        data class EventFailed(val message: String) : StorageEvent()
     }
 }

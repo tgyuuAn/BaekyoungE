@@ -1,13 +1,11 @@
 package com.tgyuu.database.dao
 
 import androidx.room.Dao
-import androidx.room.Delete
 import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.Query
-import com.tgyuu.database.model.MessageEntity
 import com.tgyuu.database.model.ChattingRoomEntity
-import com.tgyuu.model.storage.ChattingRoom
+import com.tgyuu.database.model.MessageEntity
 
 @Dao
 interface ChattingDao {
