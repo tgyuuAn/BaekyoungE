@@ -51,7 +51,7 @@ import kotlinx.coroutines.launch
 
 @Composable
 internal fun AiChattingRoute(
-    userId: String,
+    roomId: String,
     popBackStack: () -> Unit,
     viewModel: AiChattingViewModel = hiltViewModel(),
 ) {
@@ -61,7 +61,7 @@ internal fun AiChattingRoute(
     val chatState by viewModel.chatState.collectAsStateWithLifecycle()
 
     LaunchedEffect(true) {
-        viewModel.setUserId(userId)
+        viewModel.setRoomId(roomId)
     }
 
     AiChattingScreen(

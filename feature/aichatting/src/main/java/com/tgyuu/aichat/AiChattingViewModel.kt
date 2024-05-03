@@ -34,8 +34,6 @@ class AiChattingViewModel @Inject constructor(
     val _chatState: MutableStateFlow<UiState<Unit>> = MutableStateFlow(UiState.Success(Unit))
     val chatState = _chatState.asStateFlow()
 
-    private val _userId: MutableStateFlow<String> = MutableStateFlow("")
-
     private val _roomId: MutableStateFlow<String> =
         MutableStateFlow(generateNowDateTime().toISOLocalDateTimeString())
 
@@ -47,8 +45,10 @@ class AiChattingViewModel @Inject constructor(
         _searchText.value = searchText
     }
 
-    fun setUserId(userId: String) {
-        _userId.value = userId
+    fun setRoomId(roomId: String) {
+        if (roomId.isNotEmpty()) {
+            _roomId.value = roomId
+        }
     }
 
     fun postUserChatting() = viewModelScope.launch {
