@@ -3,6 +3,7 @@ package com.tgyuu.feature.storage
 import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.tgyuu.domain.usecase.chatting.DeleteChattingRoomUseCase
 import com.tgyuu.domain.usecase.chatting.GetAllChattingLogUseCase
 import com.tgyuu.model.storage.ChattingRoom
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -14,6 +15,7 @@ import javax.inject.Inject
 @HiltViewModel
 class StorageViewModel @Inject constructor(
     private val getAllChattingLogUseCase: GetAllChattingLogUseCase,
+    private val deleteChattingRoomUseCase: DeleteChattingRoomUseCase,
 ) : ViewModel() {
     private val _selectedYear = MutableStateFlow("2024")
     val selectedYear = _selectedYear.asStateFlow()
@@ -31,7 +33,9 @@ class StorageViewModel @Inject constructor(
             .onFailure { Log.d("test", "로컬 데이터 호출 실패") }
     }
 
-    fun setSelectedYear(year: String) {
-        _selectedYear.value = year
+    fun deleteChattingRoom(roomId: String) = viewModelScope.launch {
+        deleteChattingRoomUseCase(roomId)
+            .onSuccess { }
+            .onFailure { Log.d("test", "로컬 데이터 삭제 실패") }
     }
 }

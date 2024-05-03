@@ -17,8 +17,8 @@ interface ChattingDao {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insertChattingRoom(chattingRoom: ChattingRoomEntity)
 
-    @Delete
-    suspend fun deleteChattingRoom(chattingRoom: ChattingRoomEntity)
+    @Query("DELETE FROM chatting_room WHERE id = :roomId")
+    suspend fun deleteChattingRoom(roomId: String)
 
     @Query("DELETE FROM message WHERE chatting_room_id = :roomId")
     suspend fun deleteAllChattingRoomMessages(roomId: String)

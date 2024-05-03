@@ -61,6 +61,7 @@ internal fun StorageRoute(viewModel: StorageViewModel = hiltViewModel()) {
         selectedYear = selectedYear,
         chattingRooms = chattingRooms,
         yearPickerState = yearPickerState,
+        deleteChattingRoom = viewModel::deleteChattingRoom,
     )
 }
 
@@ -70,10 +71,12 @@ internal fun StorageScreen(
     selectedYear: String,
     chattingRooms: List<ChattingRoom>,
     yearPickerState: FWheelPickerState,
+    deleteChattingRoom: (String) -> Unit,
 ) {
     val sheetState = rememberModalBottomSheetState()
     var showBottomSheet by remember { mutableStateOf(false) }
     var showChatLogDeleteDialog by remember { mutableStateOf(false) }
+    var selectedRoomId by remember { mutableStateOf("") }
 
     if (showChatLogDeleteDialog) {
         Dialog(onDismissRequest = { showChatLogDeleteDialog = false }) {
@@ -114,7 +117,7 @@ internal fun StorageScreen(
                             text = R.string.complete,
                             textColor = BaekyoungTheme.colors.white,
                             buttonColor = BaekyoungTheme.colors.red,
-                            onButtonClick = { },
+                            onButtonClick = { deleteChattingRoom(selectedRoomId) },
                             modifier = Modifier.weight(1f),
                         )
                     }
@@ -243,7 +246,7 @@ internal fun StorageScreen(
                                     )
 
                                     Text(
-                                        text = chattingRoom.lastMessage+"\n\n",
+                                        text = chattingRoom.lastMessage + "\n\n",
                                         style = BaekyoungTheme.typography.labelBold,
                                         color = BaekyoungTheme.colors.black,
                                         maxLines = 3,
@@ -258,7 +261,10 @@ internal fun StorageScreen(
                                     contentDescription = null,
                                     modifier = Modifier
                                         .align(Alignment.CenterVertically)
-                                        .clickable { showChatLogDeleteDialog = true },
+                                        .clickable {
+                                            selectedRoomId = chattingRoom.id
+                                            showChatLogDeleteDialog = true
+                                        },
                                 )
                             }
                         }

@@ -19,11 +19,7 @@ interface ChattingRepository {
         updatedAt: String,
     ): Result<Unit>
 
-    suspend fun deleteChattingRoom(
-        id: String,
-        lastChatting: String,
-        updatedAt: String,
-    ): Result<Unit>
+    suspend fun deleteChattingRoom(id: String): Result<Unit>
 
     suspend fun getChattingRoom(roomId: String): Result<ChattingRoom>
 

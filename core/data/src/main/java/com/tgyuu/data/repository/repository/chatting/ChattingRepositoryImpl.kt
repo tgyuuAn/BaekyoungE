@@ -44,18 +44,10 @@ class ChattingRepositoryImpl @Inject constructor(
             )
         }
 
-    override suspend fun deleteChattingRoom(id: String, lastChatting: String, updatedAt: String) =
-        runCatching {
-            chattingDao.deleteChattingRoom(
-                ChattingRoomEntity(
-                    id,
-                    lastChatting,
-                    updatedAt,
-                ),
-            )
-
-            chattingDao.deleteAllMessages(roomId = id)
-        }
+    override suspend fun deleteChattingRoom(id: String) = runCatching {
+        chattingDao.deleteChattingRoom(roomId = id)
+        chattingDao.deleteAllChattingRoomMessages(roomId = id)
+    }
 
     override suspend fun getChattingRoom(roomId: String): Result<ChattingRoom> = runCatching {
         val chattingRoomEntity = chattingDao.getChattingRoom(roomId)
