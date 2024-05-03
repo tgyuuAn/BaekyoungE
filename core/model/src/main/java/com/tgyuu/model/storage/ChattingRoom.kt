@@ -24,4 +24,3 @@ data class ChattingRoom(
     private fun String.parseAsLocalDateTime(): LocalDateTime =
         LocalDateTime.parse(this, DateTimeFormatter.ISO_LOCAL_DATE_TIME)
 }
-

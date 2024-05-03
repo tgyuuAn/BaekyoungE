@@ -12,10 +12,10 @@ import com.tgyuu.aichat.AiChattingRoute
 fun aiChattingNavigationRoute(roomId: String = "{roomId}") = "ai_chatting_route/$roomId"
 
 fun NavController.navigateToAiChatting(
-    userId: String,
+    roomId: String,
     navOptions: NavOptions? = navOptions {},
 ) {
-    this.navigate(aiChattingNavigationRoute(userId), navOptions)
+    this.navigate(aiChattingNavigationRoute(roomId), navOptions)
 }
 
 fun NavGraphBuilder.aiChattingScreen(popBackStack: () -> Unit) {

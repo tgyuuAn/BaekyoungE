@@ -56,7 +56,10 @@ import com.tgyuu.model.storage.ChattingRoom
 import kotlinx.coroutines.flow.collectLatest
 
 @Composable
-internal fun StorageRoute(viewModel: StorageViewModel = hiltViewModel()) {
+internal fun StorageRoute(
+    navigateToChatting: (String) -> Unit,
+    viewModel: StorageViewModel = hiltViewModel(),
+) {
     val selectedYear by viewModel.selectedYear.collectAsStateWithLifecycle()
     val chattingRooms by viewModel.chattingLogs.collectAsStateWithLifecycle()
     val yearPickerState = rememberFWheelPickerState()
@@ -81,6 +84,7 @@ internal fun StorageRoute(viewModel: StorageViewModel = hiltViewModel()) {
         showChatLogDeleteDialog = showChatLogDeleteDialog,
         setChatLogDeleteDialog = setChatLogDeleteDialog,
         deleteChattingRoom = viewModel::deleteChattingRoom,
+        navigateToChatting = navigateToChatting,
     )
 }
 
@@ -94,6 +98,7 @@ internal fun StorageScreen(
     showChatLogDeleteDialog: Boolean,
     setChatLogDeleteDialog: (Boolean) -> Unit,
     deleteChattingRoom: (String) -> Unit,
+    navigateToChatting: (String) -> Unit,
 ) {
     val sheetState = rememberModalBottomSheetState()
     var showBottomSheet by remember { mutableStateOf(false) }
@@ -247,7 +252,8 @@ internal fun StorageScreen(
                         modifier = Modifier
                             .shadow(elevation = 2.dp, shape = RoundedCornerShape(10.dp))
                             .clip(RoundedCornerShape(10.dp))
-                            .background(BaekyoungTheme.colors.white),
+                            .background(BaekyoungTheme.colors.white)
+                            .clickable { navigateToChatting(chattingRoom.id) },
                     ) {
                         Column(modifier = Modifier.padding(2.dp)) {
                             Row(

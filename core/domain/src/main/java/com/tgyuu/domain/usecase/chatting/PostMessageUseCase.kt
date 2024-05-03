@@ -1,6 +1,5 @@
 package com.tgyuu.domain.usecase.chatting
 
-import android.util.Log
 import com.tgyuu.data.repository.repository.chatting.ChattingRepository
 import com.tgyuu.data.repository.repository.consulting.ConsultingRepository
 import com.tgyuu.model.consulting.ChatLog
@@ -11,7 +10,7 @@ import java.time.ZoneId
 import java.time.format.DateTimeFormatter
 import javax.inject.Inject
 
-class PostChatMessageUseCase @Inject constructor(
+class PostMessageUseCase @Inject constructor(
     private val consultingRepository: ConsultingRepository,
     private val chattingRepository: ChattingRepository,
 ) {
@@ -25,10 +24,8 @@ class PostChatMessageUseCase @Inject constructor(
             createdAt = generateNowDateTime().toISOLocalDateTimeString(),
         )
 
-        val chattingRoom = chattingRepository.getChattingRoom(roomId).getOrThrow()
-
         chattingRepository.insertChattingRoom(
-            id = chattingRoom.id,
+            id = roomId,
             lastChatting = chatLog.get(chatLog.size - 1).content,
             updatedAt = generateNowDateTime().toISOLocalDateTimeString(),
         )
@@ -39,14 +36,14 @@ class PostChatMessageUseCase @Inject constructor(
                     id = generateNowDateTime().toISOLocalDateTimeString(),
                     chattingRoomId = roomId,
                     messageFrom = ChattingRole.ASSISTANT.name,
-                    messageTo =ChattingRole.USER.name,
-                    content = it.messages.get(it.messages.size-1).content,
-                    createdAt = generateNowDateTime().toISOLocalDateTimeString(),
+                    messageTo = ChattingRole.USER.name,
+                    content = it.messages.get(it.messages.size - 1).content,
+                    createdAt = generateNowDateTime().plusSeconds(1).toISOLocalDateTimeString(),
                 )
 
                 chattingRepository.insertChattingRoom(
-                    id = chattingRoom.id,
-                    lastChatting = it.messages.get(it.messages.size-1).content,
+                    id = roomId,
+                    lastChatting = it.messages.get(it.messages.size - 1).content,
                     updatedAt = generateNowDateTime().toISOLocalDateTimeString(),
                 )
             }

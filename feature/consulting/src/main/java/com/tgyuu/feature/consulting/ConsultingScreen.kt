@@ -47,7 +47,7 @@ internal fun ConsultingRoute(
     LaunchedEffect(true) {
         viewModel.eventFlow.collect { event ->
             when (event) {
-                is ConsultingEvent.NavigateToChatting -> navigateToChatting("")
+                is ConsultingEvent.NavigateToChatting -> navigateToChatting("EMPTY")
                 is ConsultingEvent.ShowSnackBar -> showToast(event.message, context)
             }
         }

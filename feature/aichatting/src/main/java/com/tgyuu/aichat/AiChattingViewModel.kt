@@ -8,7 +8,8 @@ import androidx.lifecycle.viewModelScope
 import com.tgyuu.common.util.UiState
 import com.tgyuu.common.util.generateNowDateTime
 import com.tgyuu.common.util.toISOLocalDateTimeString
-import com.tgyuu.domain.usecase.chatting.PostChatMessageUseCase
+import com.tgyuu.domain.usecase.chatting.GetAllChattingRoomMessagesUseCase
+import com.tgyuu.domain.usecase.chatting.PostMessageUseCase
 import com.tgyuu.model.consulting.ChattingRole
 import com.tgyuu.model.consulting.Message
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -19,7 +20,8 @@ import javax.inject.Inject
 
 @HiltViewModel
 class AiChattingViewModel @Inject constructor(
-    private val postChatMessageUseCase: PostChatMessageUseCase,
+    private val postMessageUseCase: PostMessageUseCase,
+    private val getAllChattingRoomMessagesUseCase: GetAllChattingRoomMessagesUseCase,
 ) : ViewModel() {
     private val _chatText: MutableStateFlow<String> = MutableStateFlow("")
     val chatText get() = _chatText.asStateFlow()
@@ -28,7 +30,7 @@ class AiChattingViewModel @Inject constructor(
     val searchText get() = _searchText.asStateFlow()
 
     val chatLog: SnapshotStateList<Message> = mutableStateListOf(
-        Message(content = "안녕하세요!무엇을 도와드릴까요 ?", role = ChattingRole.ASSISTANT),
+        Message(content = "안녕하세요! 무엇을 도와드릴까요 ?", role = ChattingRole.ASSISTANT),
     )
 
     val _chatState: MutableStateFlow<UiState<Unit>> = MutableStateFlow(UiState.Success(Unit))
@@ -45,9 +47,22 @@ class AiChattingViewModel @Inject constructor(
         _searchText.value = searchText
     }
 
-    fun setRoomId(roomId: String) {
-        if (roomId.isNotEmpty()) {
+    fun setRoomId(roomId: String) = viewModelScope.launch {
+        if (roomId != "EMPTY") {
             _roomId.value = roomId
+            getAllChattingRoomMessagesUseCase(_roomId.value).onSuccess {
+                val messages = it.map {
+                    Message(
+                        content = it.content,
+                        role = when (it.messageFrom) {
+                            "USER" -> ChattingRole.USER
+                            "ASSISTANT" -> ChattingRole.ASSISTANT
+                            else -> ChattingRole.ASSISTANT
+                        },
+                    )
+                }
+                chatLog.addAll(messages)
+            }.onFailure { }
         }
     }
 
@@ -65,9 +80,7 @@ class AiChattingViewModel @Inject constructor(
         _chatText.value = ""
         _chatState.value = UiState.Loading
 
-        Log.d("test", chatLog.toString())
-
-        postChatMessageUseCase(chatLog = chatLog.toList(), roomId = _roomId.value)
+        postMessageUseCase(chatLog = chatLog.toList(), roomId = _roomId.value)
             .onSuccess { chatLog.addAll(it.messages) }
             .onFailure { Log.d("test", "onFailure : " + it.toString()) }
             .also { _chatState.value = UiState.Success(Unit) }

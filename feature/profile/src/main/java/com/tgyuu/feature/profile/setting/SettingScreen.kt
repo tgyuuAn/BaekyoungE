@@ -157,7 +157,6 @@ fun SettingScreen(
                                     snackbarHostState.showSnackbar(event.message)
                                 }
 
-
                             is SettingViewModel.SettingEvent.LogoutFailed ->
                                 snackBarCoroutineScope.launch {
                                     snackbarHostState.showSnackbar(event.message)

@@ -5,7 +5,8 @@ import java.time.ZoneId
 import java.time.format.DateTimeFormatter
 
 fun String.toISOLocalDateTime(): LocalDateTime = LocalDateTime.parse(
-    this, DateTimeFormatter.ISO_LOCAL_DATE_TIME,
+    this,
+    DateTimeFormatter.ISO_LOCAL_DATE_TIME,
 )
 
 fun LocalDateTime.toISOLocalDateTimeString(): String =

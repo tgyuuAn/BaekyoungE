@@ -21,7 +21,7 @@ interface ChattingDao {
     @Query("DELETE FROM message WHERE chatting_room_id = :roomId")
     suspend fun deleteAllChattingRoomMessages(roomId: String)
 
-    @Query("SELECT * FROM message WHERE chatting_room_id = :roomId ORDER BY created_at DESC")
+    @Query("SELECT * FROM message WHERE chatting_room_id = :roomId ORDER BY created_at")
     suspend fun getAllChattingRoomMessages(roomId: String): List<MessageEntity>
 
     @Query("SELECT * FROM chatting_room ORDER BY last_updated DESC")

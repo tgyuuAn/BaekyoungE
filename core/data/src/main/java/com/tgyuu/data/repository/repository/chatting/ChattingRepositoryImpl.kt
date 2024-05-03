@@ -1,6 +1,5 @@
 package com.tgyuu.data.repository.repository.chatting
 
-import android.util.Log
 import com.tgyuu.data.util.generateNowDateTime
 import com.tgyuu.data.util.toISOLocalDateTimeString
 import com.tgyuu.database.dao.ChattingDao
@@ -56,8 +55,6 @@ class ChattingRepositoryImpl @Inject constructor(
                 lastMessage = "",
                 lastUpdated = "",
             )
-
-        Log.d("test", chattingRoomEntity.toString())
 
         ChattingRoom(
             id = chattingRoomEntity.id,
