@@ -8,8 +8,8 @@ import androidx.room.PrimaryKey
 data class ChattingRoomEntity(
     @PrimaryKey
     val id: String,
-    @ColumnInfo(name = "last_chatting")
-    val lastChatting: String,
-    @ColumnInfo(name = "created_at")
-    val createdAt: String,
+    @ColumnInfo(name = "last_message")
+    val lastMessage: String,
+    @ColumnInfo(name = "last_updated")
+    val lastUpdated: String,
 )

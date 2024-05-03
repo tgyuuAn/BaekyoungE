@@ -1,5 +1,8 @@
 package com.tgyuu.data.repository.repository.chatting
 
+import android.util.Log
+import com.tgyuu.data.util.generateNowDateTime
+import com.tgyuu.data.util.toISOLocalDateTimeString
 import com.tgyuu.database.dao.ChattingDao
 import com.tgyuu.database.model.ChattingRoomEntity
 import com.tgyuu.database.model.MessageEntity
@@ -28,33 +31,53 @@ class ChattingRepositoryImpl @Inject constructor(
         ),
     )
 
-    override suspend fun insertChattingRoom(id: String, lastChatting: String, createdAt: String) =
+    override suspend fun insertChattingRoom(id: String, lastChatting: String, updatedAt: String) =
         chattingDao.insertChattingRoom(
             ChattingRoomEntity(
                 id,
                 lastChatting,
-                createdAt,
+                updatedAt,
             ),
         )
 
-    override suspend fun getAllChattingRoomMessages(roomId: String): List<Message> =
-        chattingDao.getAllChattingRoomMessages(roomId).map {
-            Message(
-                id = it.id,
-                chattingRoomId = it.chattingRoomId,
-                messageFrom = it.messageFrom,
-                messageTo = it.messageTo,
-                content = it.content,
-                createdAt = it.createdAt,
+    override suspend fun getChattingRoom(roomId: String): Result<ChattingRoom> = runCatching {
+        val chattingRoomEntity = chattingDao.getChattingRoom(roomId)
+            ?: ChattingRoomEntity(
+                id = generateNowDateTime().toISOLocalDateTimeString(),
+                lastMessage = "",
+                lastUpdated = "",
             )
+
+        Log.d("test", chattingRoomEntity.toString())
+
+        ChattingRoom(
+            id = chattingRoomEntity.id,
+            lastMessage = chattingRoomEntity.lastMessage,
+            lastUpdated = chattingRoomEntity.lastUpdated,
+        )
+    }
+
+    override suspend fun getAllChattingRoomMessages(roomId: String): Result<List<Message>> =
+        runCatching {
+            chattingDao.getAllChattingRoomMessages(roomId).map {
+                Message(
+                    id = it.id,
+                    chattingRoomId = it.chattingRoomId,
+                    messageFrom = it.messageFrom,
+                    messageTo = it.messageTo,
+                    content = it.content,
+                    createdAt = it.createdAt,
+                )
+            }
         }
 
-    override suspend fun getAllChattingRoom(): List<ChattingRoom> =
+    override suspend fun getAllChattingRoom(): Result<List<ChattingRoom>> = runCatching {
         chattingDao.getAllChattingRoom().map {
             ChattingRoom(
                 id = it.id,
-                lastChatting = it.lastChatting,
-                createdAt = it.createdAt,
+                lastMessage = it.lastMessage,
+                lastUpdated = it.lastUpdated,
             )
         }
+    }
 }

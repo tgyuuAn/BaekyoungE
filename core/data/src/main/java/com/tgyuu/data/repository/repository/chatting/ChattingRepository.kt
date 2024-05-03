@@ -12,11 +12,14 @@ interface ChattingRepository {
         content: String,
         createdAt: String,
     )
+
     suspend fun insertChattingRoom(
         id: String,
         lastChatting: String,
-        createdAt: String,
+        updatedAt: String,
     )
+
+    suspend fun getChattingRoom(roomId: String): Result<ChattingRoom>
 
     suspend fun getAllChattingRoomMessages(roomId: String): Result<List<Message>>
 

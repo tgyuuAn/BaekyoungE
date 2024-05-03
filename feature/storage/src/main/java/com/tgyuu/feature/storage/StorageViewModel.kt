@@ -1,32 +1,35 @@
 package com.tgyuu.feature.storage
 
+import android.util.Log
 import androidx.lifecycle.ViewModel
-import com.tgyuu.model.storage.ChattingLog
+import androidx.lifecycle.viewModelScope
+import com.tgyuu.domain.usecase.chatting.GetAllChattingLogUseCase
+import com.tgyuu.model.storage.ChattingRoom
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
-class StorageViewModel @Inject constructor() : ViewModel() {
+class StorageViewModel @Inject constructor(
+    private val getAllChattingLogUseCase: GetAllChattingLogUseCase,
+) : ViewModel() {
     private val _selectedYear = MutableStateFlow("2024")
     val selectedYear = _selectedYear.asStateFlow()
 
-    private val _chattingLogs = MutableStateFlow(
-        listOf(
-            ChattingLog(
-                "3월 8일 오후 04:35",
-                "지금 머릿속에 떠오르는 모든 고민을 의식의 " +
-                    "흐름대로 적어보기",
-            ),
-            ChattingLog(
-                "4월 22일 오후 01:35",
-                "지금 머릿속에 떠오르는 모든 고민을 의식의 " +
-                    "흐름대로 적어보기",
-            ),
-        ),
-    )
+    private val _chattingLogs = MutableStateFlow<List<ChattingRoom>>(listOf())
     val chattingLogs = _chattingLogs.asStateFlow()
+
+    init {
+        getAllChattingLogs()
+    }
+
+    fun getAllChattingLogs() = viewModelScope.launch {
+        getAllChattingLogUseCase()
+            .onSuccess { _chattingLogs.value = it }
+            .onFailure { Log.d("test", "로컬 데이터 호출 실패") }
+    }
 
     fun setSelectedYear(year: String) {
         _selectedYear.value = year

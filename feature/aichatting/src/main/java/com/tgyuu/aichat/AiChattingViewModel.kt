@@ -8,7 +8,7 @@ import androidx.lifecycle.viewModelScope
 import com.tgyuu.common.util.UiState
 import com.tgyuu.common.util.generateNowDateTime
 import com.tgyuu.common.util.toISOLocalDateTimeString
-import com.tgyuu.domain.usecase.consulting.ai.PostChatMessageUseCase
+import com.tgyuu.domain.usecase.chatting.PostChatMessageUseCase
 import com.tgyuu.model.consulting.ChattingRole
 import com.tgyuu.model.consulting.Message
 import dagger.hilt.android.lifecycle.HiltViewModel

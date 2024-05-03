@@ -1,5 +1,6 @@
-package com.tgyuu.domain.usecase.consulting.ai
+package com.tgyuu.domain.usecase.chatting
 
+import android.util.Log
 import com.tgyuu.data.repository.repository.chatting.ChattingRepository
 import com.tgyuu.data.repository.repository.consulting.ConsultingRepository
 import com.tgyuu.model.consulting.ChatLog
@@ -24,6 +25,16 @@ class PostChatMessageUseCase @Inject constructor(
             createdAt = generateNowDateTime().toISOLocalDateTimeString(),
         )
 
+        val chattingRoom = chattingRepository.getChattingRoom(roomId).getOrThrow()
+
+        Log.d("test", chattingRoom.toString())
+
+        chattingRepository.insertChattingRoom(
+            id = chattingRoom.id,
+            lastChatting = chatLog.get(chatLog.size - 1).content,
+            updatedAt = generateNowDateTime().toISOLocalDateTimeString(),
+        )
+
         return consultingRepository.postChatMessage(chatLog).let {
             it.onSuccess {
                 chattingRepository.insertMessage(
@@ -33,6 +44,12 @@ class PostChatMessageUseCase @Inject constructor(
                     messageTo =ChattingRole.USER.name,
                     content = it.messages.get(it.messages.size-1).content,
                     createdAt = generateNowDateTime().toISOLocalDateTimeString(),
+                )
+
+                chattingRepository.insertChattingRoom(
+                    id = chattingRoom.id,
+                    lastChatting = it.messages.get(it.messages.size-1).content,
+                    updatedAt = generateNowDateTime().toISOLocalDateTimeString(),
                 )
             }
         }

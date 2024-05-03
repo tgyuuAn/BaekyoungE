@@ -7,7 +7,6 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
-import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
@@ -36,6 +35,7 @@ import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
+import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.compose.ui.window.Dialog
@@ -49,17 +49,17 @@ import com.tgyuu.designsystem.component.BaekyoungButton
 import com.tgyuu.designsystem.component.BaekyoungModalBottomSheet
 import com.tgyuu.designsystem.component.BaekyoungTopBar
 import com.tgyuu.designsystem.theme.BaekyoungTheme
-import com.tgyuu.model.storage.ChattingLog
+import com.tgyuu.model.storage.ChattingRoom
 
 @Composable
 internal fun StorageRoute(viewModel: StorageViewModel = hiltViewModel()) {
     val selectedYear by viewModel.selectedYear.collectAsStateWithLifecycle()
-    val chattingLogs by viewModel.chattingLogs.collectAsStateWithLifecycle()
+    val chattingRooms by viewModel.chattingLogs.collectAsStateWithLifecycle()
     val yearPickerState = rememberFWheelPickerState()
 
     StorageScreen(
         selectedYear = selectedYear,
-        chattingLogs = chattingLogs,
+        chattingRooms = chattingRooms,
         yearPickerState = yearPickerState,
     )
 }
@@ -68,7 +68,7 @@ internal fun StorageRoute(viewModel: StorageViewModel = hiltViewModel()) {
 @Composable
 internal fun StorageScreen(
     selectedYear: String,
-    chattingLogs: List<ChattingLog>,
+    chattingRooms: List<ChattingRoom>,
     yearPickerState: FWheelPickerState,
 ) {
     val sheetState = rememberModalBottomSheetState()
@@ -217,7 +217,7 @@ internal fun StorageScreen(
                 verticalArrangement = Arrangement.spacedBy(20.dp),
                 modifier = Modifier.padding(start = 20.dp, end = 20.dp, top = 20.dp),
             ) {
-                items(chattingLogs) { chatLog ->
+                items(chattingRooms) { chattingRoom ->
                     Column(
                         modifier = Modifier
                             .shadow(elevation = 2.dp, shape = RoundedCornerShape(10.dp))
@@ -236,16 +236,18 @@ internal fun StorageScreen(
                                     modifier = Modifier.weight(0.7f),
                                 ) {
                                     Text(
-                                        text = chatLog.chattingDate,
+                                        text = chattingRoom.getFormattedUpdateTime(),
                                         style = BaekyoungTheme.typography.labelRegular.copy(fontSize = 10.sp),
                                         color = BaekyoungTheme.colors.gray95,
                                         textAlign = TextAlign.Center,
                                     )
 
                                     Text(
-                                        text = chatLog.lastChatting,
+                                        text = chattingRoom.lastMessage,
                                         style = BaekyoungTheme.typography.labelBold,
                                         color = BaekyoungTheme.colors.black,
+                                        maxLines = 3,
+                                        overflow = TextOverflow.Ellipsis,
                                     )
 
                                     Text(
