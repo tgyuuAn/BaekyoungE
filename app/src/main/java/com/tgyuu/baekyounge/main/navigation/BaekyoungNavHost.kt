@@ -18,11 +18,14 @@ import com.tgyuu.feature.auth.navigation.navigateToAuth
 import com.tgyuu.feature.auth.signup.navigation.navigateToSignUp
 import com.tgyuu.feature.auth.signup.navigation.signUpNavigationRoute
 import com.tgyuu.feature.auth.signup.navigation.signUpScreen
-import com.tgyuu.feature.mentoring.navigation.mentoringScreen
 import com.tgyuu.feature.consulting.consultinginformation.navigation.consultingNavigationRoute
 import com.tgyuu.feature.consulting.consultinginformation.navigation.consultingScreen
 import com.tgyuu.feature.home.navigation.homeScreen
 import com.tgyuu.feature.home.navigation.navigateToHome
+import com.tgyuu.feature.mentoring.navigation.mentoringNavigationRoute
+import com.tgyuu.feature.mentoring.navigation.mentoringScreen
+import com.tgyuu.feature.mentoring_mentee.navigation.mentoringMenteeScreen
+import com.tgyuu.feature.mentoring_mentee.navigation.navigateToMentoringMentee
 import com.tgyuu.feature.profile.navigation.profileScreen
 import com.tgyuu.feature.profile.setting.navigation.navigateToSetting
 import com.tgyuu.feature.profile.setting.navigation.settingNavigationRoute
@@ -125,7 +128,14 @@ fun BaekyoungNavHost(
             },
         )
         aiChattingScreen(popBackStack = { navController.popBackStack() })
-        mentoringScreen()
+        mentoringScreen(
+            navigateToMentoringMentee = {
+                navController.navigateToMentoringMentee(
+                    navOptions { popUpTo(mentoringNavigationRoute) },
+                )
+            },
+        )
+        mentoringMenteeScreen(popBackStack = { navController.popBackStack() })
         profileScreen(navigateToSetting = navController::navigateToSetting)
         settingScreen(
             popBackStack = { navController.popBackStack() },

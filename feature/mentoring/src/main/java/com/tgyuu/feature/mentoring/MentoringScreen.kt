@@ -38,7 +38,10 @@ import com.tgyuu.designsystem.component.BaekyoungTopBar
 import com.tgyuu.designsystem.theme.BaekyoungTheme
 
 @Composable
-internal fun MentoringRoute(viewModel: MentoringViewModel = hiltViewModel()) {
+internal fun MentoringRoute(
+    navigateToMentoringMentee: () -> Unit,
+    viewModel: MentoringViewModel = hiltViewModel(),
+) {
     val selectedRule by viewModel.selectedRule.collectAsStateWithLifecycle()
     val snackbarHostState = remember { SnackbarHostState() }
 
@@ -46,6 +49,7 @@ internal fun MentoringRoute(viewModel: MentoringViewModel = hiltViewModel()) {
         selectedRule = selectedRule,
         setSelectedRule = viewModel::setSelectedRule,
         snackbarHostState = snackbarHostState,
+        navigateToMentoringMentee = navigateToMentoringMentee,
     )
 }
 
@@ -54,6 +58,7 @@ fun MentoringScreen(
     selectedRule: MentorMenteeRule,
     setSelectedRule: (MentorMenteeRule) -> Unit,
     snackbarHostState: SnackbarHostState,
+    navigateToMentoringMentee: () -> Unit,
 ) {
     Scaffold(
         topBar = { BaekyoungTopBar(titleTextId = R.string.mentoring) },
@@ -163,7 +168,12 @@ fun MentoringScreen(
             ) {
                 BaekyoungButton(
                     text = R.string.go_to_mentoring,
-                    onButtonClick = { },
+                    onButtonClick = {
+                        when (selectedRule) {
+                            MentorMenteeRule.MENTEE -> navigateToMentoringMentee()
+                            else -> Unit
+                        }
+                    },
                     buttonColor = BaekyoungTheme.colors.black,
                     modifier = Modifier
                         .fillMaxWidth()
