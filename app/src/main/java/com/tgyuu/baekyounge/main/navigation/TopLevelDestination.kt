@@ -3,7 +3,7 @@ package com.tgyuu.baekyounge.main.navigation
 import androidx.annotation.DrawableRes
 import androidx.annotation.StringRes
 import com.tgyuu.baekyounge.R
-import com.tgyuu.feature.community.navigation.communityNavigationRoute
+import com.tgyuu.feature.mentoring.navigation.mentoringNavigationRoute
 import com.tgyuu.feature.consulting.consultinginformation.navigation.consultingNavigationRoute
 import com.tgyuu.feature.profile.navigation.profileNavigationRoute
 import com.tgyuu.feature.shop.navigation.shopNavigationRoute
@@ -50,7 +50,7 @@ enum class TopLevelDestination(
         titleTextId = R.string.home,
     ),
     COMMUNITY(
-        route = communityNavigationRoute,
+        route = mentoringNavigationRoute,
         homeIcon = R.drawable.ic_home_community,
         selectedIcon = R.drawable.ic_selected_community,
         unselectedIcon = R.drawable.ic_community,

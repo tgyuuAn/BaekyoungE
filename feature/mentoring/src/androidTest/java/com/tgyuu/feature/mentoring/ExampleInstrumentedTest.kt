@@ -1,4 +1,4 @@
-package com.tgyuu.feature.community
+package com.tgyuu.feature.mentoring
 
 import androidx.test.platform.app.InstrumentationRegistry
 import androidx.test.ext.junit.runners.AndroidJUnit4

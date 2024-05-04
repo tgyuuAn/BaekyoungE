@@ -1,4 +1,4 @@
-package com.tgyuu.feature.community
+package com.tgyuu.feature.mentoring
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Column
@@ -8,12 +8,12 @@ import androidx.compose.ui.Modifier
 import com.tgyuu.designsystem.theme.BaekyoungTheme
 
 @Composable
-internal fun CommunityRoute() {
-    CommunityScreen()
+internal fun MentoringRoute() {
+    MentoringScreen()
 }
 
 @Composable
-fun CommunityScreen() {
+fun MentoringScreen() {
     Column(
         modifier = Modifier
             .fillMaxSize()

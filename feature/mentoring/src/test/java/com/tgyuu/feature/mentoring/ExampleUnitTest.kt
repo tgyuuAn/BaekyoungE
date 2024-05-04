@@ -1,4 +1,4 @@
-package com.tgyuu.feature.community
+package com.tgyuu.feature.mentoring
 
 import org.junit.Assert.assertEquals
 import org.junit.Test

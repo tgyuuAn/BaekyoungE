@@ -4,7 +4,7 @@ plugins {
 }
 
 android {
-    namespace = "com.tgyuu.feature.community"
+    namespace = "com.tgyuu.feature.mentoring"
 
     defaultConfig {
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"

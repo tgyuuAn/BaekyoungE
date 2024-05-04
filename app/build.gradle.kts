@@ -57,7 +57,7 @@ dependencies {
     implementation(project(":feature:splash"))
     implementation(project(":feature:consulting"))
     implementation(project(":feature:aichatting"))
-    implementation(project(":feature:community"))
+    implementation(project(":feature:mentoring"))
     implementation(project(":feature:storage"))
     implementation(project(":feature:shop"))
     implementation(project(":feature:profile"))

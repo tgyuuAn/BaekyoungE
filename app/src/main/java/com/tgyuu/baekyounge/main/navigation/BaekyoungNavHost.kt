@@ -18,7 +18,7 @@ import com.tgyuu.feature.auth.navigation.navigateToAuth
 import com.tgyuu.feature.auth.signup.navigation.navigateToSignUp
 import com.tgyuu.feature.auth.signup.navigation.signUpNavigationRoute
 import com.tgyuu.feature.auth.signup.navigation.signUpScreen
-import com.tgyuu.feature.community.navigation.communityScreen
+import com.tgyuu.feature.mentoring.navigation.mentoringScreen
 import com.tgyuu.feature.consulting.consultinginformation.navigation.consultingNavigationRoute
 import com.tgyuu.feature.consulting.consultinginformation.navigation.consultingScreen
 import com.tgyuu.feature.home.navigation.homeScreen
@@ -125,7 +125,7 @@ fun BaekyoungNavHost(
             },
         )
         aiChattingScreen(popBackStack = { navController.popBackStack() })
-        communityScreen()
+        mentoringScreen()
         profileScreen(navigateToSetting = navController::navigateToSetting)
         settingScreen(
             popBackStack = { navController.popBackStack() },
