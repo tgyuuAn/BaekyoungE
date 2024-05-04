@@ -1,5 +1,10 @@
 package com.tgyuu.feature.mentoring
 
+import androidx.compose.animation.AnimatedVisibility
+import androidx.compose.animation.fadeIn
+import androidx.compose.animation.fadeOut
+import androidx.compose.animation.slideInVertically
+import androidx.compose.animation.slideOutVertically
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
@@ -10,6 +15,7 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.SnackbarHost
 import androidx.compose.material3.SnackbarHostState
@@ -27,6 +33,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import com.tgyuu.designsystem.component.BaekyoungButton
 import com.tgyuu.designsystem.component.BaekyoungTopBar
 import com.tgyuu.designsystem.theme.BaekyoungTheme
 
@@ -55,16 +62,18 @@ fun MentoringScreen(
         modifier = Modifier.fillMaxSize(),
     ) { paddingValues ->
         Column(
-            verticalArrangement = Arrangement.spacedBy(30.dp),
+            verticalArrangement = Arrangement.spacedBy(20.dp),
             modifier = Modifier
                 .fillMaxSize()
                 .padding(paddingValues),
         ) {
+            HorizontalDivider(color = BaekyoungTheme.colors.grayDC)
+
             Text(
                 text = "역할 선택하기",
                 style = BaekyoungTheme.typography.labelBold.copy(fontSize = 13.sp),
                 color = BaekyoungTheme.colors.black,
-                modifier = Modifier.padding(start = 20.dp, top = 35.dp, bottom = 30.dp),
+                modifier = Modifier.padding(start = 20.dp, bottom = 30.dp),
             )
 
             Column(
@@ -112,7 +121,7 @@ fun MentoringScreen(
                 verticalArrangement = Arrangement.spacedBy(10.dp),
                 modifier = Modifier
                     .fillMaxWidth()
-                    .padding(horizontal = 20.dp)
+                    .padding(horizontal = 20.dp, vertical = 10.dp)
                     .shadow(elevation = 2.dp, shape = RoundedCornerShape(20.dp))
                     .clip(RoundedCornerShape(20.dp))
                     .border(
@@ -144,6 +153,21 @@ fun MentoringScreen(
                     style = BaekyoungTheme.typography.labelBold.copy(fontSize = 13.sp),
                     color = BaekyoungTheme.colors.gray95,
                     modifier = Modifier.padding(bottom = 20.dp),
+                )
+            }
+
+            AnimatedVisibility(
+                visible = selectedRule != MentorMenteeRule.NOTHING,
+                enter = slideInVertically(initialOffsetY = { it / 2 }) + fadeIn(),
+                exit = slideOutVertically() + fadeOut(),
+            ) {
+                BaekyoungButton(
+                    text = R.string.go_to_mentoring,
+                    onButtonClick = { },
+                    buttonColor = BaekyoungTheme.colors.black,
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(horizontal = 20.dp, vertical = 10.dp),
                 )
             }
         }

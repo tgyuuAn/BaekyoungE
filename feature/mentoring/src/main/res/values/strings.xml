@@ -1,4 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="mentoring">선배와의 소통</string>
+    <string name="go_to_mentoring">소통하러 가기</string>
 </resources>
