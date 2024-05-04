@@ -2,6 +2,8 @@ package com.tgyuu.feature.mentoring
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
+import androidx.compose.foundation.border
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
@@ -13,26 +15,39 @@ import androidx.compose.material3.SnackbarHost
 import androidx.compose.material3.SnackbarHostState
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.draw.shadow
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.tgyuu.designsystem.component.BaekyoungTopBar
 import com.tgyuu.designsystem.theme.BaekyoungTheme
 
 @Composable
-internal fun MentoringRoute() {
+internal fun MentoringRoute(viewModel: MentoringViewModel = hiltViewModel()) {
+    val selectedRule by viewModel.selectedRule.collectAsStateWithLifecycle()
     val snackbarHostState = remember { SnackbarHostState() }
 
-    MentoringScreen(snackbarHostState = snackbarHostState)
+    MentoringScreen(
+        selectedRule = selectedRule,
+        setSelectedRule = viewModel::setSelectedRule,
+        snackbarHostState = snackbarHostState,
+    )
 }
 
 @Composable
-fun MentoringScreen(snackbarHostState: SnackbarHostState) {
+fun MentoringScreen(
+    selectedRule: MentorMenteeRule,
+    setSelectedRule: (MentorMenteeRule) -> Unit,
+    snackbarHostState: SnackbarHostState,
+) {
     Scaffold(
         topBar = { BaekyoungTopBar(titleTextId = R.string.mentoring) },
         snackbarHost = { SnackbarHost(snackbarHostState) },
@@ -60,7 +75,17 @@ fun MentoringScreen(snackbarHostState: SnackbarHostState) {
                     .padding(horizontal = 20.dp)
                     .shadow(elevation = 2.dp, shape = RoundedCornerShape(20.dp))
                     .clip(RoundedCornerShape(20.dp))
-                    .background(BaekyoungTheme.colors.white),
+                    .border(
+                        width = 4.dp,
+                        color = if (selectedRule == MentorMenteeRule.MENTOR) {
+                            BaekyoungTheme.colors.blueEDFF.copy(alpha = 0.4f)
+                        } else {
+                            Color.Transparent
+                        },
+                        shape = RoundedCornerShape(20.dp),
+                    )
+                    .background(BaekyoungTheme.colors.white)
+                    .clickable { setSelectedRule(MentorMenteeRule.MENTOR) },
             ) {
                 Image(
                     painter = painterResource(id = R.drawable.ic_mentor),
@@ -90,7 +115,17 @@ fun MentoringScreen(snackbarHostState: SnackbarHostState) {
                     .padding(horizontal = 20.dp)
                     .shadow(elevation = 2.dp, shape = RoundedCornerShape(20.dp))
                     .clip(RoundedCornerShape(20.dp))
-                    .background(BaekyoungTheme.colors.white),
+                    .border(
+                        width = 4.dp,
+                        color = if (selectedRule == MentorMenteeRule.MENTEE) {
+                            BaekyoungTheme.colors.blueEDFF.copy(alpha = 0.4f)
+                        } else {
+                            Color.Transparent
+                        },
+                        shape = RoundedCornerShape(20.dp),
+                    )
+                    .background(BaekyoungTheme.colors.white)
+                    .clickable { setSelectedRule(MentorMenteeRule.MENTEE) },
             ) {
                 Image(
                     painter = painterResource(id = R.drawable.ic_mentee),
