@@ -7,6 +7,7 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.WindowInsets
 import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
@@ -59,7 +60,9 @@ fun MentoringMenteeScreen(popBackStack: () -> Unit) {
 
             LazyColumn(
                 verticalArrangement = Arrangement.spacedBy(10.dp),
-                modifier = Modifier.padding(horizontal = 20.dp),
+                modifier = Modifier
+                    .padding(horizontal = 20.dp)
+                    .weight(1f),
             ) {
                 item {
                     Text(
@@ -154,6 +157,27 @@ fun MentoringMenteeScreen(popBackStack: () -> Unit) {
                         }
                     }
                 }
+            }
+            Spacer(modifier = Modifier.weight(1f))
+
+            Column(
+                horizontalAlignment = Alignment.CenterHorizontally,
+                modifier = Modifier.fillMaxWidth(),
+            ) {
+                Image(
+                    painter = painterResource(id = R.drawable.ic_find_mentor),
+                    contentDescription = null,
+                    modifier = Modifier.align(Alignment.CenterHorizontally),
+                )
+
+                Text(
+                    text = "멘토 찾으러 가기",
+                    style = BaekyoungTheme.typography.labelRegular,
+                    color = BaekyoungTheme.colors.black,
+                    modifier = Modifier
+                        .padding(bottom = 80.dp)
+                        .align(Alignment.CenterHorizontally),
+                )
             }
         }
     }
