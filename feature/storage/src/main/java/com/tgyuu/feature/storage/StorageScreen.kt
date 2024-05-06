@@ -67,6 +67,8 @@ internal fun StorageRoute(
     val snackbarHostState = remember { SnackbarHostState() }
 
     LaunchedEffect(true) {
+        viewModel.getAllChattingLogs()
+
         viewModel.eventFlow.collectLatest { event ->
             when (event) {
                 is StorageViewModel.StorageEvent.DeleteSuccess -> setChatLogDeleteDialog(false)
