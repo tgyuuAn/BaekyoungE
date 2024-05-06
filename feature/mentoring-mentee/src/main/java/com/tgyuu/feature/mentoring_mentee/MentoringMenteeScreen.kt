@@ -3,11 +3,11 @@ package com.tgyuu.feature.mentoring_mentee
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.WindowInsets
 import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
@@ -60,9 +60,7 @@ fun MentoringMenteeScreen(popBackStack: () -> Unit) {
 
             LazyColumn(
                 verticalArrangement = Arrangement.spacedBy(10.dp),
-                modifier = Modifier
-                    .padding(horizontal = 20.dp)
-                    .weight(1f),
+                modifier = Modifier.padding(horizontal = 20.dp),
             ) {
                 item {
                     Text(
@@ -158,11 +156,13 @@ fun MentoringMenteeScreen(popBackStack: () -> Unit) {
                     }
                 }
             }
-            Spacer(modifier = Modifier.weight(1f))
 
             Column(
                 horizontalAlignment = Alignment.CenterHorizontally,
-                modifier = Modifier.fillMaxWidth(),
+                modifier = Modifier
+                    .align(Alignment.CenterHorizontally)
+                    .clickable { }
+                    .padding(20.dp),
             ) {
                 Image(
                     painter = painterResource(id = R.drawable.ic_find_mentor),
@@ -175,7 +175,7 @@ fun MentoringMenteeScreen(popBackStack: () -> Unit) {
                     style = BaekyoungTheme.typography.labelRegular,
                     color = BaekyoungTheme.colors.black,
                     modifier = Modifier
-                        .padding(bottom = 80.dp)
+                        .padding(top = 5.dp)
                         .align(Alignment.CenterHorizontally),
                 )
             }
