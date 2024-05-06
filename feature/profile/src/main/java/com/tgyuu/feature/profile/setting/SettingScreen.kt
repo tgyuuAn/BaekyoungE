@@ -361,7 +361,7 @@ fun SettingScreen(
                                         SettingTextField(
                                             text = newMajor,
                                             onTextChanged = onNewMajorChanged,
-                                            clearText = { clearNewMajor() },
+                                            onConfirm = { updateNewMajor() },
                                             hint = stringResource(id = R.string.hint_major),
                                             modifier = Modifier
                                                 .padding(horizontal = 20.dp)
@@ -431,7 +431,7 @@ fun SettingScreen(
                                         SettingTextField(
                                             text = newNickname,
                                             onTextChanged = onNewNicknameChanged,
-                                            clearText = { clearNewNickname() },
+                                            onConfirm = { updateNewNickname() },
                                             hint = stringResource(id = R.string.hint_nickname),
                                             modifier = Modifier
                                                 .padding(horizontal = 20.dp)
