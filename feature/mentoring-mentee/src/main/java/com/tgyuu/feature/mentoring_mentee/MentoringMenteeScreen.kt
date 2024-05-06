@@ -34,12 +34,21 @@ import com.tgyuu.designsystem.theme.BaekyoungTheme
 import com.tgyuu.feature.mentoring.mentee.R
 
 @Composable
-internal fun MentoringMenteeRoute(popBackStack: () -> Unit) {
-    MentoringMenteeScreen(popBackStack = popBackStack)
+internal fun MentoringMenteeRoute(
+    navigateToFindMentor: () -> Unit,
+    popBackStack: () -> Unit,
+) {
+    MentoringMenteeScreen(
+        navigateToFindMentor = navigateToFindMentor,
+        popBackStack = popBackStack,
+    )
 }
 
 @Composable
-fun MentoringMenteeScreen(popBackStack: () -> Unit) {
+fun MentoringMenteeScreen(
+    navigateToFindMentor: () -> Unit,
+    popBackStack: () -> Unit,
+) {
     Scaffold(
         contentWindowInsets = WindowInsets(0.dp),
         containerColor = BaekyoungTheme.colors.grayF5,
@@ -161,7 +170,7 @@ fun MentoringMenteeScreen(popBackStack: () -> Unit) {
                 horizontalAlignment = Alignment.CenterHorizontally,
                 modifier = Modifier
                     .align(Alignment.CenterHorizontally)
-                    .clickable { }
+                    .clickable { navigateToFindMentor() }
                     .padding(20.dp),
             ) {
                 Image(
