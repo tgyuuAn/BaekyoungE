@@ -4,7 +4,7 @@ plugins {
 }
 
 android {
-    namespace = "com.tgyuu.feature.mentoring-mentee"
+    namespace = "com.tgyuu.feature.mentoring.mentee"
 
     defaultConfig {
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
