@@ -5,11 +5,10 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.WindowInsets
-import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
@@ -24,9 +23,7 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.draw.clip
 import androidx.compose.ui.res.painterResource
-import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.tgyuu.designsystem.component.BaekyoungCenterTopBar
@@ -41,143 +38,151 @@ internal fun FindMentorRoute(popBackStack: () -> Unit) {
 @Composable
 fun FindMentorScreen(popBackStack: () -> Unit) {
     Scaffold(
-        contentWindowInsets = WindowInsets(0.dp),
         containerColor = BaekyoungTheme.colors.grayF5,
-        modifier = Modifier.fillMaxSize(),
+        contentWindowInsets = WindowInsets(0.dp),
     ) { paddingValues ->
         Column(
-            verticalArrangement = Arrangement.spacedBy(30.dp),
             modifier = Modifier
                 .fillMaxSize()
                 .padding(paddingValues)
                 .background(BaekyoungTheme.colors.white),
         ) {
             BaekyoungCenterTopBar(
-                titleTextId = R.string.chatting_room,
+                titleTextId = R.string.find_mentor,
                 showBackButton = true,
                 onClickBackButton = popBackStack,
             )
 
             LazyColumn(
+                horizontalAlignment = Alignment.CenterHorizontally,
                 verticalArrangement = Arrangement.spacedBy(10.dp),
                 modifier = Modifier.padding(horizontal = 20.dp),
             ) {
-                item {
-                    Text(
-                        text = "진행중인 채팅방",
-                        style = BaekyoungTheme.typography.contentBold,
-                        color = BaekyoungTheme.colors.black,
-                    )
-                }
-
                 items(listOf("종디기", "안태규")) {
                     Card(
-                        shape = RoundedCornerShape(10.dp),
+                        shape = RoundedCornerShape(20.dp),
                         colors = CardDefaults.cardColors(containerColor = BaekyoungTheme.colors.white),
                         onClick = { /*TODO*/ },
                         modifier = Modifier
                             .fillMaxWidth()
                             .border(
                                 width = 1.dp,
-                                shape = RoundedCornerShape(10.dp),
+                                shape = RoundedCornerShape(20.dp),
                                 color = BaekyoungTheme.colors.grayDC,
                             ),
                     ) {
-                        Row(
-                            horizontalArrangement = Arrangement.spacedBy(10.dp),
-                            verticalAlignment = Alignment.CenterVertically,
-                            modifier = Modifier
-                                .fillMaxWidth()
-                                .padding(horizontal = 10.dp, vertical = 15.dp),
+                        Column(
+                            verticalArrangement = Arrangement.spacedBy(20.dp),
+                            modifier = Modifier.padding(20.dp),
                         ) {
-                            Image(
-                                painter = painterResource(id = R.drawable.ic_user_default),
-                                contentDescription = null,
-                                modifier = Modifier.size(40.dp),
-                            )
-
-                            Column(
-                                modifier = Modifier
-                                    .fillMaxHeight()
-                                    .weight(1f),
+                            Row(
+                                verticalAlignment = Alignment.CenterVertically,
+                                modifier = Modifier.fillMaxWidth(),
                             ) {
-                                Row(
-                                    horizontalArrangement = Arrangement.spacedBy(4.dp),
-                                    verticalAlignment = Alignment.Bottom,
-                                ) {
-                                    Text(
-                                        text = it,
-                                        style = BaekyoungTheme.typography.contentBold,
-                                        color = BaekyoungTheme.colors.black,
-                                    )
-
-                                    Text(
-                                        text = "멘토",
-                                        style = BaekyoungTheme.typography.labelRegular,
-                                        color = BaekyoungTheme.colors.gray95,
-                                    )
-                                }
+                                Image(
+                                    painter = painterResource(id = R.drawable.ic_user_default),
+                                    contentDescription = null,
+                                    modifier = Modifier.size(40.dp),
+                                )
 
                                 Text(
-                                    text = "안녕하세요",
+                                    text = it,
+                                    style = BaekyoungTheme.typography.contentBold,
+                                    color = BaekyoungTheme.colors.black,
+                                    modifier = Modifier.padding(start = 20.dp),
+                                )
+
+                                Text(
+                                    text = "멘토",
                                     style = BaekyoungTheme.typography.labelRegular,
                                     color = BaekyoungTheme.colors.gray95,
+                                    modifier = Modifier.padding(start = 5.dp),
                                 )
-                            }
 
-                            Column(
-                                verticalArrangement = Arrangement.spacedBy(4.dp),
-                                horizontalAlignment = Alignment.CenterHorizontally,
-                                modifier = Modifier.fillMaxHeight(),
-                            ) {
+                                Spacer(modifier = Modifier.weight(1f))
+
                                 Text(
                                     text = "오후 6:29",
                                     style = BaekyoungTheme.typography.labelRegular.copy(fontSize = 10.sp),
                                     color = BaekyoungTheme.colors.gray95,
+                                    modifier = Modifier.align(Alignment.Top),
                                 )
+                            }
 
-                                Box(
-                                    modifier = Modifier
-                                        .clip(RoundedCornerShape(30.dp))
-                                        .background(BaekyoungTheme.colors.red),
-                                ) {
+                            Row(
+                                horizontalArrangement = Arrangement.SpaceEvenly,
+                                modifier = Modifier.fillMaxWidth(),
+                            ) {
+                                Row(horizontalArrangement = Arrangement.spacedBy(5.dp)) {
                                     Text(
-                                        text = "99+",
+                                        text = "회사",
                                         style = BaekyoungTheme.typography.labelBold,
-                                        color = BaekyoungTheme.colors.white,
-                                        textAlign = TextAlign.Center,
-                                        modifier = Modifier
-                                            .align(Alignment.Center)
-                                            .padding(horizontal = 8.dp, vertical = 1.dp),
+                                        color = BaekyoungTheme.colors.black,
+                                        modifier = Modifier.align(Alignment.Top),
+                                    )
+
+                                    Text(
+                                        text = "|",
+                                        style = BaekyoungTheme.typography.labelRegular.copy(fontSize = 10.sp),
+                                        color = BaekyoungTheme.colors.gray95,
+                                        modifier = Modifier.align(Alignment.Top),
+                                    )
+
+                                    Text(
+                                        text = "삼성전자",
+                                        style = BaekyoungTheme.typography.labelRegular.copy(fontSize = 10.sp),
+                                        color = BaekyoungTheme.colors.gray95,
+                                        modifier = Modifier.align(Alignment.Top),
+                                    )
+                                }
+
+                                Row(horizontalArrangement = Arrangement.spacedBy(5.dp)) {
+                                    Text(
+                                        text = "직무",
+                                        style = BaekyoungTheme.typography.labelBold,
+                                        color = BaekyoungTheme.colors.black,
+                                        modifier = Modifier.align(Alignment.Top),
+                                    )
+
+                                    Text(
+                                        text = "|",
+                                        style = BaekyoungTheme.typography.labelRegular.copy(fontSize = 10.sp),
+                                        color = BaekyoungTheme.colors.gray95,
+                                        modifier = Modifier.align(Alignment.Top),
+                                    )
+
+                                    Text(
+                                        text = "전산",
+                                        style = BaekyoungTheme.typography.labelRegular.copy(fontSize = 10.sp),
+                                        color = BaekyoungTheme.colors.gray95,
+                                        modifier = Modifier.align(Alignment.Top),
                                     )
                                 }
                             }
                         }
                     }
                 }
-            }
 
-            Column(
-                horizontalAlignment = Alignment.CenterHorizontally,
-                modifier = Modifier
-                    .align(Alignment.CenterHorizontally)
-                    .clickable { }
-                    .padding(20.dp),
-            ) {
-                Image(
-                    painter = painterResource(id = R.drawable.ic_find_mentor),
-                    contentDescription = null,
-                    modifier = Modifier.align(Alignment.CenterHorizontally),
-                )
+                item {
+                    Column(
+                        horizontalAlignment = Alignment.CenterHorizontally,
+                        modifier = Modifier
+                            .padding(top = 30.dp)
+                            .fillMaxWidth()
+                            .clickable {},
+                    ) {
+                        Image(
+                            painter = painterResource(id = R.drawable.ic_re_search),
+                            contentDescription = null,
+                        )
 
-                Text(
-                    text = "멘토 찾으러 가기",
-                    style = BaekyoungTheme.typography.labelRegular,
-                    color = BaekyoungTheme.colors.black,
-                    modifier = Modifier
-                        .padding(top = 5.dp)
-                        .align(Alignment.CenterHorizontally),
-                )
+                        Text(
+                            text = "다시 찾으시겠어요?",
+                            style = BaekyoungTheme.typography.labelRegular,
+                            color = BaekyoungTheme.colors.black,
+                        )
+                    }
+                }
             }
         }
     }

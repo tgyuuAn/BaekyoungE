@@ -1,4 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="chatting_room">채팅방</string>
+    <string name="start">시작하기</string>
+    <string name="find_mentor">멘토 찾기</string>
 </resources>
