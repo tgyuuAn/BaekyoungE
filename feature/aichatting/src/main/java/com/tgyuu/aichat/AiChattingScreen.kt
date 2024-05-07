@@ -169,7 +169,7 @@ internal fun AiChattingScreen(
                     val speechBubbleType = when (message.role) {
                         ChattingRole.USER -> SpeechBubbleType.AI_USER
                         ChattingRole.ASSISTANT -> SpeechBubbleType.AI_CHAT
-                        else -> SpeechBubbleType.AI_USER
+                        ChattingRole.SYSTEM, ChattingRole.FUNCTION -> return@items
                     }
 
                     BaekyoungSpeechBubble(

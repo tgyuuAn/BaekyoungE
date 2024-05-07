@@ -180,7 +180,7 @@ internal fun StorageScreen(
                     )
 
                     FVerticalWheelPicker(
-                        modifier = Modifier.width(50.dp),
+                        modifier = Modifier.width(70.dp),
                         count = 1,
                         state = yearPickerState,
                     ) { year ->
@@ -230,7 +230,9 @@ internal fun StorageScreen(
             Row(
                 verticalAlignment = Alignment.CenterVertically,
                 horizontalArrangement = Arrangement.spacedBy(5.dp),
-                modifier = Modifier.padding(start = 20.dp, end = 20.dp, top = 20.dp),
+                modifier = Modifier
+                    .padding(start = 20.dp, end = 20.dp, top = 20.dp)
+                    .clickable { showBottomSheet = !showBottomSheet },
             ) {
                 Text(
                     text = "$selectedYear 년",
@@ -241,7 +243,6 @@ internal fun StorageScreen(
                 Image(
                     painter = painterResource(id = drawable.ic_spinner_arrow),
                     contentDescription = null,
-                    modifier = Modifier.clickable { showBottomSheet = !showBottomSheet },
                 )
             }
 
