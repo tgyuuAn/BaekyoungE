@@ -1,4 +1,4 @@
-package com.tgyuu.feature.profile.setting.component
+package com.tgyuu.designsystem.component
 
 import androidx.annotation.StringRes
 import androidx.compose.foundation.Image
@@ -16,11 +16,11 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import com.tgyuu.designsystem.R
 import com.tgyuu.designsystem.theme.BaekyoungTheme
-import com.tgyuu.feature.profile.R
 
 @Composable
-internal fun SettingRow(
+fun BaekyoungRow(
     @StringRes titleTextId: Int,
     titleTextColor: Color = BaekyoungTheme.colors.black56,
     showContentText: Boolean = false,

@@ -55,7 +55,7 @@ import com.tgyuu.designsystem.component.Loader
 import com.tgyuu.designsystem.theme.BaekyoungTheme
 import com.tgyuu.feature.profile.R
 import com.tgyuu.designsystem.component.BaekyoungModalBottomSheet
-import com.tgyuu.feature.profile.setting.component.SettingRow
+import com.tgyuu.designsystem.component.BaekyoungRow
 import com.tgyuu.feature.profile.setting.component.SettingTextField
 import com.tgyuu.model.auth.UserInformation
 import kotlinx.coroutines.flow.SharedFlow
@@ -510,7 +510,7 @@ fun SettingScreen(
                                 .height(20.dp),
                         )
 
-                        SettingRow(
+                        BaekyoungRow(
                             titleTextId = R.string.change_nickname,
                             contentText = userInformation.nickName,
                             showContentText = true,
@@ -524,7 +524,7 @@ fun SettingScreen(
                             },
                         )
 
-                        SettingRow(
+                        BaekyoungRow(
                             titleTextId = R.string.change_major,
                             contentText = userInformation.major,
                             showContentText = true,
@@ -538,7 +538,7 @@ fun SettingScreen(
                             },
                         )
 
-                        SettingRow(
+                        BaekyoungRow(
                             titleTextId = R.string.change_grade,
                             contentText = "${userInformation.grade}학년",
                             showContentText = true,
@@ -556,14 +556,14 @@ fun SettingScreen(
                             color = BaekyoungTheme.colors.grayF0,
                         )
 
-                        SettingRow(
+                        BaekyoungRow(
                             titleTextId = R.string.open_source_license,
                             showContentText = false,
                             showRightArrow = true,
                             onClick = { },
                         )
 
-                        SettingRow(
+                        BaekyoungRow(
                             titleTextId = R.string.privacy_policy,
                             showContentText = false,
                             showRightArrow = true,
@@ -575,14 +575,14 @@ fun SettingScreen(
                             color = BaekyoungTheme.colors.grayF0,
                         )
 
-                        SettingRow(
+                        BaekyoungRow(
                             titleTextId = R.string.logout,
                             showContentText = false,
                             showRightArrow = true,
                             onClick = { showLogoutDialog = true },
                         )
 
-                        SettingRow(
+                        BaekyoungRow(
                             titleTextId = R.string.withdrawal,
                             showContentText = false,
                             showRightArrow = true,

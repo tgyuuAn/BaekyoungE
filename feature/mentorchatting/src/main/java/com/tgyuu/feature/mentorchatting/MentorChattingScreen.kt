@@ -37,7 +37,6 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.layout.layout
 import androidx.compose.ui.platform.LocalConfiguration
-import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.platform.LocalFocusManager
 import androidx.compose.ui.platform.LocalLayoutDirection
 import androidx.compose.ui.res.painterResource
@@ -50,6 +49,7 @@ import com.tgyuu.common.util.addFocusCleaner
 import com.tgyuu.designsystem.R.string
 import com.tgyuu.designsystem.component.BaekyoungCenterTopBar
 import com.tgyuu.designsystem.component.BaekyoungChatTextField
+import com.tgyuu.designsystem.component.BaekyoungRow
 import com.tgyuu.designsystem.component.BaekyoungSpeechBubble
 import com.tgyuu.designsystem.component.ChattingLoader
 import com.tgyuu.designsystem.component.SpeechBubbleType
@@ -109,14 +109,15 @@ internal fun MentorChattingScreen(
             drawerContent = {
                 CompositionLocalProvider(LocalLayoutDirection provides LayoutDirection.Ltr) {
                     Column(
+                        verticalArrangement = Arrangement.spacedBy(15.dp),
                         modifier = Modifier
                             .background(BaekyoungTheme.colors.white)
-                            .width((localConfiguration.screenWidthDp.dp * 2) / 3),
+                            .width((localConfiguration.screenWidthDp.dp * 3) / 4),
                     ) {
                         Text(
                             text = "채팅방 서랍",
                             style = BaekyoungTheme.typography.contentBold,
-                            modifier = Modifier.padding(20.dp),
+                            modifier = Modifier.padding(top = 20.dp, start = 20.dp, end = 20.dp),
                         )
 
                         Spacer(modifier = Modifier.weight(1f))
