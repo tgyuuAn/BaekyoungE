@@ -1,4 +1,4 @@
-package com.tgyuu.aichat.component
+package com.tgyuu.designsystem.component
 
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.size
@@ -11,12 +11,12 @@ import com.airbnb.lottie.compose.LottieAnimation
 import com.airbnb.lottie.compose.LottieCompositionSpec
 import com.airbnb.lottie.compose.LottieConstants
 import com.airbnb.lottie.compose.rememberLottieComposition
-import com.tgyuu.feature.aichatting.R
+import com.tgyuu.designsystem.R
 
 @Composable
-internal fun AiChattingLoader(modifier: Modifier = Modifier) {
+fun ChattingLoader(modifier: Modifier = Modifier) {
     val composition by rememberLottieComposition(
-        LottieCompositionSpec.RawRes(R.raw.anim_ai_chatting_loading),
+        LottieCompositionSpec.RawRes(R.raw.anim_chatting_loading),
     )
 
     Box(

@@ -1,14 +1,12 @@
-package com.tgyuu.aichat
+package com.tgyuu.feature.mentorchatting
 
 import androidx.compose.foundation.Canvas
-import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.WindowInsets
 import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.offset
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
@@ -27,64 +25,54 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.blur
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.layout.layout
 import androidx.compose.ui.platform.LocalConfiguration
 import androidx.compose.ui.platform.LocalFocusManager
-import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
-import com.tgyuu.designsystem.component.ChattingLoader
 import com.tgyuu.common.util.UiState
 import com.tgyuu.common.util.addFocusCleaner
 import com.tgyuu.designsystem.R.string
 import com.tgyuu.designsystem.component.BaekyoungCenterTopBar
 import com.tgyuu.designsystem.component.BaekyoungChatTextField
 import com.tgyuu.designsystem.component.BaekyoungSpeechBubble
+import com.tgyuu.designsystem.component.ChattingLoader
 import com.tgyuu.designsystem.component.SpeechBubbleType
 import com.tgyuu.designsystem.theme.BaekyoungTheme
-import com.tgyuu.feature.aichatting.R
 import com.tgyuu.model.consulting.ChattingRole
 import com.tgyuu.model.consulting.Message
 import kotlinx.coroutines.launch
 
 @Composable
-internal fun AiChattingRoute(
-    roomId: String,
+internal fun MentorChattingRoute(
     popBackStack: () -> Unit,
-    viewModel: AiChattingViewModel = hiltViewModel(),
+    viewModel: MentorChattingViewModel = hiltViewModel(),
 ) {
     val chatText by viewModel.chatText.collectAsStateWithLifecycle()
     val chatLog = viewModel.chatLog.toList()
     val searchText by viewModel.searchText.collectAsStateWithLifecycle()
     val chatState by viewModel.chatState.collectAsStateWithLifecycle()
 
-    LaunchedEffect(true) {
-        viewModel.setRoomId(roomId)
-    }
-
-    AiChattingScreen(
+    MentorChattingScreen(
         chatText = chatText,
         searchText = searchText,
         chatLog = chatLog,
         chatState = chatState,
         onChatTextChanged = viewModel::setChatText,
         onSearchTextChanged = viewModel::setSearchText,
-        postUserChatting = viewModel::postUserChatting,
         popBackStack = popBackStack,
     )
 }
 
 @Composable
-internal fun AiChattingScreen(
+internal fun MentorChattingScreen(
     chatText: String,
     searchText: String,
     chatLog: List<Message>,
     chatState: UiState<Unit>,
     onChatTextChanged: (String) -> Unit,
     onSearchTextChanged: (String) -> Unit,
-    postUserChatting: () -> Unit,
     popBackStack: () -> Unit,
 ) {
     var textFieldHeight by remember { mutableStateOf(0.dp) }
@@ -95,8 +83,8 @@ internal fun AiChattingScreen(
     val coroutineScope = rememberCoroutineScope()
     val backgroundColor = Brush.verticalGradient(
         listOf(
-            BaekyoungTheme.colors.blue4E,
-            BaekyoungTheme.colors.blue4E.copy(alpha = 0.66f),
+            Color(0xFF0E1B45),
+            Color(0xFFF2F5FF),
         ),
     )
 
@@ -121,7 +109,7 @@ internal fun AiChattingScreen(
             ConsultingChattingBackground()
 
             BaekyoungCenterTopBar(
-                titleTextId = string.consulting,
+                titleTextId = string.chatting,
                 textColor = BaekyoungTheme.colors.white,
                 showSearchButton = true,
                 searchText = searchText,
@@ -137,24 +125,6 @@ internal fun AiChattingScreen(
                         placeable.placeRelative(0, 0)
                     }
                 },
-            )
-
-            Image(
-                painter = painterResource(id = R.drawable.ic_ai_chat_background),
-                contentDescription = null,
-                contentScale = ContentScale.FillWidth,
-                modifier = Modifier
-                    .align(Alignment.BottomCenter)
-                    .fillMaxWidth(),
-            )
-
-            Image(
-                painter = painterResource(id = R.drawable.ic_consulting_baekgyoung),
-                contentDescription = null,
-                contentScale = ContentScale.FillWidth,
-                modifier = Modifier
-                    .align(Alignment.BottomCenter)
-                    .padding(start = 20.dp, bottom = 80.dp),
             )
 
             LazyColumn(
@@ -192,7 +162,7 @@ internal fun AiChattingScreen(
             BaekyoungChatTextField(
                 chatText = chatText,
                 onTextChanged = onChatTextChanged,
-                sendMessage = postUserChatting,
+                sendMessage = {},
                 textColor = BaekyoungTheme.colors.white,
                 modifier = Modifier
                     .align(Alignment.BottomCenter)
