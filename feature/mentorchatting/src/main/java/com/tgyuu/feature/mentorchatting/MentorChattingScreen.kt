@@ -3,10 +3,12 @@ package com.tgyuu.feature.mentorchatting
 import androidx.compose.foundation.Canvas
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
+import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.WindowInsets
 import androidx.compose.foundation.layout.fillMaxSize
@@ -17,6 +19,8 @@ import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.lazy.rememberLazyListState
+import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material3.Card
 import androidx.compose.material3.DrawerValue
 import androidx.compose.material3.ModalNavigationDrawer
 import androidx.compose.material3.Scaffold
@@ -40,13 +44,17 @@ import androidx.compose.ui.platform.LocalConfiguration
 import androidx.compose.ui.platform.LocalFocusManager
 import androidx.compose.ui.platform.LocalLayoutDirection
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.LayoutDirection
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
+import androidx.compose.ui.window.Dialog
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.tgyuu.common.util.UiState
 import com.tgyuu.common.util.addFocusCleaner
 import com.tgyuu.designsystem.R.string
+import com.tgyuu.designsystem.component.BaekyoungButton
 import com.tgyuu.designsystem.component.BaekyoungCenterTopBar
 import com.tgyuu.designsystem.component.BaekyoungChatTextField
 import com.tgyuu.designsystem.component.BaekyoungRow
@@ -67,12 +75,15 @@ internal fun MentorChattingRoute(
     val chatLog = viewModel.chatLog.toList()
     val searchText by viewModel.searchText.collectAsStateWithLifecycle()
     val chatState by viewModel.chatState.collectAsStateWithLifecycle()
+    val (showExitChattingRoomDialog, setExitChattingRoom) = remember { mutableStateOf(false) }
 
     MentorChattingScreen(
         chatText = chatText,
         searchText = searchText,
         chatLog = chatLog,
         chatState = chatState,
+        showExitChattingRoomDialog = showExitChattingRoomDialog,
+        setExitChattingRoom = setExitChattingRoom,
         onChatTextChanged = viewModel::setChatText,
         onSearchTextChanged = viewModel::setSearchText,
         popBackStack = popBackStack,
@@ -85,6 +96,8 @@ internal fun MentorChattingScreen(
     searchText: String,
     chatLog: List<Message>,
     chatState: UiState<Unit>,
+    showExitChattingRoomDialog: Boolean,
+    setExitChattingRoom: (Boolean) -> Unit,
     onChatTextChanged: (String) -> Unit,
     onSearchTextChanged: (String) -> Unit,
     popBackStack: () -> Unit,
@@ -107,6 +120,56 @@ internal fun MentorChattingScreen(
         ModalNavigationDrawer(
             drawerState = drawerState,
             drawerContent = {
+                if (showExitChattingRoomDialog) {
+                    CompositionLocalProvider(LocalLayoutDirection provides LayoutDirection.Ltr) {
+                        Dialog(onDismissRequest = { setExitChattingRoom(false) }) {
+                            Card(shape = RoundedCornerShape(10.dp)) {
+                                Column(
+                                    horizontalAlignment = Alignment.CenterHorizontally,
+                                    modifier = Modifier
+                                        .background(BaekyoungTheme.colors.white)
+                                        .padding(vertical = 16.dp, horizontal = 20.dp),
+                                ) {
+                                    Text(
+                                        text = stringResource(id = R.string.exit_chattingroom_dialog_title),
+                                        style = BaekyoungTheme.typography.labelBold.copy(fontSize = 14.sp),
+                                        modifier = Modifier.padding(bottom = 2.dp),
+                                    )
+
+                                    Text(
+                                        text = stringResource(id = R.string.exit_chattingroom_dialog_description),
+                                        style = BaekyoungTheme.typography.labelRegular.copy(fontSize = 10.sp),
+                                        color = BaekyoungTheme.colors.red,
+                                    )
+
+                                    Row(
+                                        horizontalArrangement = Arrangement.spacedBy(12.dp),
+                                        modifier = Modifier
+                                            .fillMaxWidth()
+                                            .padding(top = 20.dp),
+                                    ) {
+                                        BaekyoungButton(
+                                            text = R.string.cancel,
+                                            buttonColor = BaekyoungTheme.colors.grayF2,
+                                            textColor = BaekyoungTheme.colors.black,
+                                            onButtonClick = { setExitChattingRoom(false) },
+                                            modifier = Modifier.weight(1f),
+                                        )
+
+                                        BaekyoungButton(
+                                            text = R.string.exit,
+                                            textColor = BaekyoungTheme.colors.white,
+                                            buttonColor = BaekyoungTheme.colors.red,
+                                            onButtonClick = { setExitChattingRoom(false) },
+                                            modifier = Modifier.weight(1f),
+                                        )
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+
                 CompositionLocalProvider(LocalLayoutDirection provides LayoutDirection.Ltr) {
                     Column(
                         modifier = Modifier
@@ -152,7 +215,8 @@ internal fun MentorChattingScreen(
                                 color = BaekyoungTheme.colors.gray95,
                                 modifier = Modifier
                                     .align(Alignment.CenterStart)
-                                    .padding(vertical = 15.dp, horizontal = 10.dp),
+                                    .padding(vertical = 15.dp, horizontal = 10.dp)
+                                    .clickable { setExitChattingRoom(true) },
                             )
 
                             Image(
@@ -160,7 +224,8 @@ internal fun MentorChattingScreen(
                                 contentDescription = null,
                                 modifier = Modifier
                                     .align(Alignment.CenterEnd)
-                                    .padding(vertical = 15.dp, horizontal = 10.dp),
+                                    .padding(vertical = 15.dp, horizontal = 10.dp)
+                                    .clickable { },
                             )
                         }
                     }
