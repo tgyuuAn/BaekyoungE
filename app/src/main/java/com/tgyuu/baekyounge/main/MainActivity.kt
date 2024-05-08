@@ -39,8 +39,8 @@ import com.tgyuu.designsystem.theme.BaekyoungTheme
 import com.tgyuu.feature.auth.navigation.authNavigationRoute
 import com.tgyuu.feature.auth.signup.navigation.signUpNavigationRoute
 import com.tgyuu.feature.mentorchatting.navigation.mentorChattingNavigationRoute
-import com.tgyuu.feature.mentoring_mentee.navigation.findMentorNavigationRoute
-import com.tgyuu.feature.mentoring_mentee.navigation.mentoringMenteeNavigationRoute
+import com.tgyuu.feature.mentoringmentee.navigation.findMentorNavigationRoute
+import com.tgyuu.feature.mentoringmentee.navigation.mentoringMenteeNavigationRoute
 import com.tgyuu.feature.profile.setting.navigation.settingNavigationRoute
 import com.tgyuu.feature.shop.navigation.shopNavigationRoute
 import com.tgyuu.feature.splash.navigation.splashNavigationRoute

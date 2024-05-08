@@ -109,7 +109,6 @@ internal fun MentorChattingScreen(
             drawerContent = {
                 CompositionLocalProvider(LocalLayoutDirection provides LayoutDirection.Ltr) {
                     Column(
-                        verticalArrangement = Arrangement.spacedBy(15.dp),
                         modifier = Modifier
                             .background(BaekyoungTheme.colors.white)
                             .width((localConfiguration.screenWidthDp.dp * 3) / 4),
@@ -117,7 +116,28 @@ internal fun MentorChattingScreen(
                         Text(
                             text = "채팅방 서랍",
                             style = BaekyoungTheme.typography.contentBold,
-                            modifier = Modifier.padding(top = 20.dp, start = 20.dp, end = 20.dp),
+                            modifier = Modifier.padding(20.dp),
+                        )
+
+                        BaekyoungRow(
+                            titleTextId = R.string.gallery,
+                            showRightArrow = true,
+                            onClick = { },
+                            modifier = Modifier.fillMaxWidth(),
+                        )
+
+                        BaekyoungRow(
+                            titleTextId = R.string.file,
+                            showRightArrow = true,
+                            onClick = { },
+                            modifier = Modifier.fillMaxWidth(),
+                        )
+
+                        BaekyoungRow(
+                            titleTextId = R.string.link,
+                            showRightArrow = true,
+                            onClick = { },
+                            modifier = Modifier.fillMaxWidth(),
                         )
 
                         Spacer(modifier = Modifier.weight(1f))
@@ -209,7 +229,6 @@ internal fun MentorChattingScreen(
                                 painter = painterResource(id = R.drawable.ic_marker),
                                 contentDescription = null,
                             )
-
                         }
 
                         BaekyoungCenterTopBar(

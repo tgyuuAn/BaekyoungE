@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="gallery">사진/동영상</string>
+    <string name="file">파일</string>
+    <string name="link">링크</string>
+
+</resources>

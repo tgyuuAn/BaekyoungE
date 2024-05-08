@@ -1,18 +1,13 @@
 package com.tgyuu.feature.mentorchatting
 
-import android.util.Log
 import androidx.compose.runtime.mutableStateListOf
 import androidx.compose.runtime.snapshots.SnapshotStateList
 import androidx.lifecycle.ViewModel
-import androidx.lifecycle.viewModelScope
 import com.tgyuu.common.util.UiState
-import com.tgyuu.domain.usecase.chatting.PostMessageUseCase
-import com.tgyuu.model.consulting.ChattingRole
 import com.tgyuu.model.consulting.Message
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
-import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel

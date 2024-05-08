@@ -1,4 +1,4 @@
-package com.tgyuu.feature.mentoring_mentee
+package com.tgyuu.feature.mentoringmentee
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background

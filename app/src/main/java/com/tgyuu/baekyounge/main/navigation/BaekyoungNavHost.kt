@@ -26,11 +26,11 @@ import com.tgyuu.feature.mentorchatting.navigation.mentorChattingScreen
 import com.tgyuu.feature.mentorchatting.navigation.navigateToMentorChatting
 import com.tgyuu.feature.mentoring.navigation.mentoringNavigationRoute
 import com.tgyuu.feature.mentoring.navigation.mentoringScreen
-import com.tgyuu.feature.mentoring_mentee.navigation.findMentorNavigationRoute
-import com.tgyuu.feature.mentoring_mentee.navigation.findMentorScreen
-import com.tgyuu.feature.mentoring_mentee.navigation.mentoringMenteeScreen
-import com.tgyuu.feature.mentoring_mentee.navigation.navigateToFindMentor
-import com.tgyuu.feature.mentoring_mentee.navigation.navigateToMentoringMentee
+import com.tgyuu.feature.mentoringmentee.navigation.findMentorNavigationRoute
+import com.tgyuu.feature.mentoringmentee.navigation.findMentorScreen
+import com.tgyuu.feature.mentoringmentee.navigation.mentoringMenteeScreen
+import com.tgyuu.feature.mentoringmentee.navigation.navigateToFindMentor
+import com.tgyuu.feature.mentoringmentee.navigation.navigateToMentoringMentee
 import com.tgyuu.feature.profile.navigation.profileScreen
 import com.tgyuu.feature.profile.setting.navigation.navigateToSetting
 import com.tgyuu.feature.profile.setting.navigation.settingNavigationRoute
