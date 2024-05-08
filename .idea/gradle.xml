@@ -37,6 +37,7 @@
             <option value="$PROJECT_DIR$/feature/auth" />
             <option value="$PROJECT_DIR$/feature/consulting" />
             <option value="$PROJECT_DIR$/feature/home" />
+            <option value="$PROJECT_DIR$/feature/mentorchatting" />
             <option value="$PROJECT_DIR$/feature/mentoring" />
             <option value="$PROJECT_DIR$/feature/mentoring-mentee" />
             <option value="$PROJECT_DIR$/feature/profile" />
