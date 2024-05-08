@@ -38,6 +38,7 @@ import com.tgyuu.baekyounge.main.navigation.TopLevelDestination
 import com.tgyuu.designsystem.theme.BaekyoungTheme
 import com.tgyuu.feature.auth.navigation.authNavigationRoute
 import com.tgyuu.feature.auth.signup.navigation.signUpNavigationRoute
+import com.tgyuu.feature.mentorchatting.navigation.mentorChattingNavigationRoute
 import com.tgyuu.feature.mentoring_mentee.navigation.findMentorNavigationRoute
 import com.tgyuu.feature.mentoring_mentee.navigation.mentoringMenteeNavigationRoute
 import com.tgyuu.feature.profile.setting.navigation.settingNavigationRoute
@@ -104,6 +105,7 @@ private fun handleBottomBarState(
     settingNavigationRoute -> setBottomBarState(false)
     mentoringMenteeNavigationRoute -> setBottomBarState(false)
     findMentorNavigationRoute -> setBottomBarState(false)
+    mentorChattingNavigationRoute -> setBottomBarState(false)
     else -> setBottomBarState(true)
 }
 

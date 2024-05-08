@@ -47,7 +47,7 @@ fun BaekyoungChatTextField(
         modifier = modifier
             .fillMaxWidth()
             .background(
-                color = BaekyoungTheme.colors.white.copy(alpha = 0.4f),
+                color = BaekyoungTheme.colors.white.copy(alpha = 0.93f),
                 shape = RoundedCornerShape(3.dp),
             ),
     ) { innerTextField ->

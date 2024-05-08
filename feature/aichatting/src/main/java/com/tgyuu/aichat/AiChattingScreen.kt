@@ -193,7 +193,7 @@ internal fun AiChattingScreen(
                 chatText = chatText,
                 onTextChanged = onChatTextChanged,
                 sendMessage = postUserChatting,
-                textColor = BaekyoungTheme.colors.white,
+                textColor = BaekyoungTheme.colors.black,
                 modifier = Modifier
                     .align(Alignment.BottomCenter)
                     .padding(start = 8.dp, end = 8.dp, bottom = 8.dp)

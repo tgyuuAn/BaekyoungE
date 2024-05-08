@@ -31,12 +31,21 @@ import com.tgyuu.designsystem.theme.BaekyoungTheme
 import com.tgyuu.feature.mentoring.mentee.R
 
 @Composable
-internal fun FindMentorRoute(popBackStack: () -> Unit) {
-    FindMentorScreen(popBackStack = popBackStack)
+internal fun FindMentorRoute(
+    popBackStack: () -> Unit,
+    navigateToMentorChatting: () -> Unit,
+) {
+    FindMentorScreen(
+        popBackStack = popBackStack,
+        navigateToMentorChatting = navigateToMentorChatting,
+    )
 }
 
 @Composable
-fun FindMentorScreen(popBackStack: () -> Unit) {
+fun FindMentorScreen(
+    popBackStack: () -> Unit,
+    navigateToMentorChatting: () -> Unit,
+) {
     Scaffold(
         containerColor = BaekyoungTheme.colors.grayF5,
         contentWindowInsets = WindowInsets(0.dp),
@@ -62,7 +71,7 @@ fun FindMentorScreen(popBackStack: () -> Unit) {
                     Card(
                         shape = RoundedCornerShape(20.dp),
                         colors = CardDefaults.cardColors(containerColor = BaekyoungTheme.colors.white),
-                        onClick = { /*TODO*/ },
+                        onClick = { navigateToMentorChatting() },
                         modifier = Modifier
                             .fillMaxWidth()
                             .border(
@@ -123,14 +132,18 @@ fun FindMentorScreen(popBackStack: () -> Unit) {
 
                                     Text(
                                         text = "|",
-                                        style = BaekyoungTheme.typography.labelRegular.copy(fontSize = 10.sp),
+                                        style = BaekyoungTheme.typography.labelRegular.copy(
+                                            fontSize = 10.sp,
+                                        ),
                                         color = BaekyoungTheme.colors.gray95,
                                         modifier = Modifier.align(Alignment.Top),
                                     )
 
                                     Text(
                                         text = "삼성전자",
-                                        style = BaekyoungTheme.typography.labelRegular.copy(fontSize = 10.sp),
+                                        style = BaekyoungTheme.typography.labelRegular.copy(
+                                            fontSize = 10.sp,
+                                        ),
                                         color = BaekyoungTheme.colors.gray95,
                                         modifier = Modifier.align(Alignment.Top),
                                     )
@@ -146,14 +159,18 @@ fun FindMentorScreen(popBackStack: () -> Unit) {
 
                                     Text(
                                         text = "|",
-                                        style = BaekyoungTheme.typography.labelRegular.copy(fontSize = 10.sp),
+                                        style = BaekyoungTheme.typography.labelRegular.copy(
+                                            fontSize = 10.sp,
+                                        ),
                                         color = BaekyoungTheme.colors.gray95,
                                         modifier = Modifier.align(Alignment.Top),
                                     )
 
                                     Text(
                                         text = "전산",
-                                        style = BaekyoungTheme.typography.labelRegular.copy(fontSize = 10.sp),
+                                        style = BaekyoungTheme.typography.labelRegular.copy(
+                                            fontSize = 10.sp,
+                                        ),
                                         color = BaekyoungTheme.colors.gray95,
                                         modifier = Modifier.align(Alignment.Top),
                                     )
@@ -165,6 +182,7 @@ fun FindMentorScreen(popBackStack: () -> Unit) {
 
                 item {
                     Column(
+                        verticalArrangement = Arrangement.spacedBy(10.dp),
                         horizontalAlignment = Alignment.CenterHorizontally,
                         modifier = Modifier
                             .padding(top = 30.dp)

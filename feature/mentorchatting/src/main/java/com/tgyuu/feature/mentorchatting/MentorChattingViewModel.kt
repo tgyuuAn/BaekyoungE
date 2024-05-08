@@ -16,9 +16,7 @@ import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
-class MentorChattingViewModel @Inject constructor(
-    private val postMessageUseCase: PostMessageUseCase,
-) : ViewModel() {
+class MentorChattingViewModel @Inject constructor() : ViewModel() {
     private val _chatText: MutableStateFlow<String> = MutableStateFlow("")
     val chatText get() = _chatText.asStateFlow()
 

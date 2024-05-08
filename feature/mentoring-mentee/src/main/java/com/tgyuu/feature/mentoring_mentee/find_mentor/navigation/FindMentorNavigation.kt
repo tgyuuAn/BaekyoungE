@@ -13,8 +13,14 @@ fun NavController.navigateToFindMentor(navOptions: NavOptions? = navOptions {}) 
     this.navigate(findMentorNavigationRoute, navOptions)
 }
 
-fun NavGraphBuilder.findMentorScreen(popBackStack: () -> Unit) {
+fun NavGraphBuilder.findMentorScreen(
+    popBackStack: () -> Unit,
+    navigateToMentorChatting: () -> Unit,
+) {
     composable(route = findMentorNavigationRoute) {
-        FindMentorRoute(popBackStack = popBackStack)
+        FindMentorRoute(
+            popBackStack = popBackStack,
+            navigateToMentorChatting = navigateToMentorChatting,
+        )
     }
 }
