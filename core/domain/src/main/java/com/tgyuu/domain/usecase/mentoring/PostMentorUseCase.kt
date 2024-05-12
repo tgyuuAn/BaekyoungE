@@ -6,7 +6,7 @@ import javax.inject.Inject
 class PostMentorUseCase @Inject constructor(
     private val mentoringRepository: MentoringRepository,
 ) {
-    suspend fun invoke(
+    suspend operator fun invoke(
         userId: String,
         nickName: String,
         registrationDate: String,

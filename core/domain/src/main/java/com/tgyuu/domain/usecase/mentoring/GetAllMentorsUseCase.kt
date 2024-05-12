@@ -6,5 +6,5 @@ import javax.inject.Inject
 class GetAllMentorsUseCase @Inject constructor(
     private val mentoringRepository: MentoringRepository,
 ) {
-    suspend fun invoke() = mentoringRepository.getAllMentors()
+    suspend operator fun invoke() = mentoringRepository.getAllMentors()
 }
