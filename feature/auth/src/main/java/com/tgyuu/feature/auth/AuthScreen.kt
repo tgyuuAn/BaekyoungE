@@ -4,6 +4,7 @@ import android.content.Context
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
+import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -68,7 +69,6 @@ internal fun AuthRoute(
 
     AuthScreen(
         snackbarHostState = snackbarHostState,
-        navigateToSignUp = navigateToSignUp,
         verifyMemberId = viewModel::verifyMemberId,
     )
 }
@@ -76,7 +76,6 @@ internal fun AuthRoute(
 @Composable
 fun AuthScreen(
     snackbarHostState: SnackbarHostState,
-    navigateToSignUp: (String) -> Unit,
     verifyMemberId: () -> Unit,
     coroutineScope: CoroutineScope = rememberCoroutineScope(),
 ) {
@@ -111,16 +110,6 @@ fun AuthScreen(
                 modifier = Modifier
                     .align(Alignment.TopStart)
                     .padding(start = 20.dp, top = 16.dp),
-            )
-
-            Text(
-                text = stringResource(id = R.string.login),
-                style = BaekyoungTheme.typography.titleBold.copy(fontSize = 20.sp),
-                color = BaekyoungTheme.colors.blueF8,
-                modifier = Modifier
-                    .align(Alignment.TopEnd)
-                    .padding(end = 20.dp, top = 16.dp)
-                    .clickable { navigateToSignUp("atg0614") },
             )
 
             Column(

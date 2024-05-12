@@ -1,6 +1,6 @@
 package com.tgyuu.domain.usecase.auth
 
-import com.tgyuu.data.repository.repository.auth.AuthRepository
+import com.tgyuu.domain.repository.auth.AuthRepository
 import com.tgyuu.model.auth.UserInformation
 import javax.inject.Inject
 

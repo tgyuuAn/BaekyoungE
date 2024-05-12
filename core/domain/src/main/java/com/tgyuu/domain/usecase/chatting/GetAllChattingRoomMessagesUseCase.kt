@@ -1,6 +1,6 @@
 package com.tgyuu.domain.usecase.chatting
 
-import com.tgyuu.data.repository.repository.chatting.ChattingRepository
+import com.tgyuu.domain.repository.chatting.ChattingRepository
 import com.tgyuu.model.storage.Message
 import javax.inject.Inject
 

@@ -3,6 +3,7 @@ package com.tgyuu.feature.profile.setting.component
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
+import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
@@ -12,6 +13,7 @@ import androidx.compose.foundation.text.KeyboardActions
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -30,7 +32,7 @@ import com.tgyuu.designsystem.theme.BaekyoungTheme
 internal fun SettingTextField(
     text: String,
     onTextChanged: (String) -> Unit,
-    clearText: () -> Unit,
+    onConfirm: () -> Unit,
     hint: String,
     modifier: Modifier = Modifier,
 ) {
@@ -48,7 +50,7 @@ internal fun SettingTextField(
         keyboardActions = KeyboardActions(
             onDone = {
                 keyboardController?.hide()
-                clearText()
+                onConfirm()
             },
         ),
         modifier = modifier
@@ -88,7 +90,10 @@ internal fun SettingTextField(
                     modifier = Modifier
                         .align(Alignment.CenterEnd)
                         .padding(start = 10.dp)
-                        .clickable { clearText() },
+                        .clickable(
+                            interactionSource = remember { MutableInteractionSource() },
+                            indication = null,
+                        ) {  onConfirm() },
                 )
             }
         }
@@ -102,7 +107,7 @@ fun SettingTextFieldPreview() {
         SettingTextField(
             text = "",
             onTextChanged = {},
-            clearText = { /*TODO*/ },
+            onConfirm = { /*TODO*/ },
             hint = "최대 12글자",
         )
     }

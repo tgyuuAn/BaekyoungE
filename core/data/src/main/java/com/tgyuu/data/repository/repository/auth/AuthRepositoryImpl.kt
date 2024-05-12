@@ -2,6 +2,7 @@ package com.tgyuu.data.repository.repository.auth
 
 import com.tgyuu.data.util.generateNowDateTime
 import com.tgyuu.data.util.toISOLocalDateTimeString
+import com.tgyuu.domain.repository.auth.AuthRepository
 import com.tgyuu.model.auth.UserInformation
 import com.tgyuu.network.model.auth.UserInformationRequest
 import com.tgyuu.network.source.auth.AuthDataSource

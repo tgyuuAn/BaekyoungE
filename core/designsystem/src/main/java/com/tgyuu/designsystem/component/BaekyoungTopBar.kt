@@ -49,7 +49,7 @@ fun BaekyoungTopBar(
 
             Text(
                 text = stringResource(id = titleTextId),
-                style = BaekyoungTheme.typography.labelBold.copy(fontSize = 13.sp),
+                style = BaekyoungTheme.typography.labelBold.copy(fontSize = 15.sp),
                 color = textColor,
             )
         }

@@ -27,13 +27,9 @@ class StorageViewModel @Inject constructor(
     private val _chattingLogs = MutableStateFlow<List<ChattingRoom>>(listOf())
     val chattingLogs = _chattingLogs.asStateFlow()
 
-    init {
-        getAllChattingLogs()
-    }
-
     fun event(event: StorageEvent) = viewModelScope.launch { _eventFlow.emit(event) }
 
-    private fun getAllChattingLogs() = viewModelScope.launch {
+    fun getAllChattingLogs() = viewModelScope.launch {
         getAllChattingLogUseCase()
             .onSuccess { _chattingLogs.value = it }
             .onFailure { event(StorageEvent.EventFailed(it.toString())) }

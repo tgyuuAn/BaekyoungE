@@ -33,11 +33,14 @@
             <option value="$PROJECT_DIR$/core/model" />
             <option value="$PROJECT_DIR$/core/network" />
             <option value="$PROJECT_DIR$/feature" />
-            <option value="$PROJECT_DIR$/feature/aichatting" />
             <option value="$PROJECT_DIR$/feature/auth" />
-            <option value="$PROJECT_DIR$/feature/community" />
+            <option value="$PROJECT_DIR$/feature/chatting-ai" />
+            <option value="$PROJECT_DIR$/feature/chatting-mentoring" />
             <option value="$PROJECT_DIR$/feature/consulting" />
             <option value="$PROJECT_DIR$/feature/home" />
+            <option value="$PROJECT_DIR$/feature/mentoring" />
+            <option value="$PROJECT_DIR$/feature/mentoring-mentee" />
+            <option value="$PROJECT_DIR$/feature/mentoring-mentor" />
             <option value="$PROJECT_DIR$/feature/profile" />
             <option value="$PROJECT_DIR$/feature/shop" />
             <option value="$PROJECT_DIR$/feature/splash" />

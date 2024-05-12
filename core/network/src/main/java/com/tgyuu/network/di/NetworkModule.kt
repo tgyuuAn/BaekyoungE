@@ -4,6 +4,8 @@ import com.tgyuu.network.source.auth.AuthDataSource
 import com.tgyuu.network.source.auth.AuthDataSourceImpl
 import com.tgyuu.network.source.consulting.AiConsultingDataSource
 import com.tgyuu.network.source.consulting.AiConsultingDataSourceImpl
+import com.tgyuu.network.source.mentoring.MentoringDataSource
+import com.tgyuu.network.source.mentoring.MentoringDataSourceImpl
 import dagger.Binds
 import dagger.Module
 import dagger.hilt.InstallIn
@@ -25,4 +27,10 @@ abstract class NetworkModule {
     abstract fun bindsAuthDataSource(
         authDataSourceImpl: AuthDataSourceImpl,
     ): AuthDataSource
+
+    @Binds
+    @Singleton
+    abstract fun bindsMentoringDataSource(
+        mentoringDataSourceImpl: MentoringDataSourceImpl,
+    ): MentoringDataSource
 }

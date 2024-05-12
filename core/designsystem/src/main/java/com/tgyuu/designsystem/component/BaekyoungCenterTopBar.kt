@@ -5,6 +5,7 @@ import androidx.compose.animation.AnimatedContent
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
+import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Row
@@ -70,8 +71,11 @@ fun BaekyoungCenterTopBar(
                 modifier = Modifier
                     .align(Alignment.CenterStart)
                     .padding(20.dp)
-                    .clickable {
-                        if (showSearchBar) {
+                    .clickable(
+                        interactionSource = remember { MutableInteractionSource() },
+                        indication = null,
+                    ) {
+                    if (showSearchBar) {
                             onShowSearchBarChanged()
                         } else {
                             onClickBackButton()
@@ -131,7 +135,10 @@ fun BaekyoungCenterTopBar(
                                         modifier = Modifier
                                             .align(Alignment.CenterEnd)
                                             .padding(start = 10.dp)
-                                            .clickable { clearSearchText() },
+                                            .clickable(
+                                                interactionSource = remember { MutableInteractionSource() },
+                                                indication = null,
+                                            ) {  clearSearchText() },
                                     )
                                 }
                             }
@@ -156,7 +163,10 @@ fun BaekyoungCenterTopBar(
                             Image(
                                 painter = painterResource(id = R.drawable.ic_search),
                                 contentDescription = null,
-                                modifier = Modifier.clickable { onShowSearchBarChanged() },
+                                modifier = Modifier.clickable(
+                                    interactionSource = remember { MutableInteractionSource() },
+                                    indication = null,
+                                ) {  onShowSearchBarChanged() },
                             )
                         }
 

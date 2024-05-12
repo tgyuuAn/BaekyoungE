@@ -1,6 +1,6 @@
 package com.tgyuu.data.repository.repository.consulting
 
-import android.util.Log
+import com.tgyuu.domain.repository.consulting.ConsultingRepository
 import com.tgyuu.model.consulting.ChatLog
 import com.tgyuu.model.consulting.ChattingRole
 import com.tgyuu.model.consulting.Message

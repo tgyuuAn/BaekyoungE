@@ -9,7 +9,7 @@ data class AiChatResponse(
     @SerialName("object") val _object: String,
     val created: Long,
     val model: String,
-    val system_fingerprint: String,
+    val system_fingerprint: String?,
     val choices: List<Choice>,
     val usage: Usage,
 )
