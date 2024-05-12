@@ -41,6 +41,7 @@ import com.tgyuu.feature.auth.signup.navigation.signUpNavigationRoute
 import com.tgyuu.feature.chatting.mentoring.navigation.mentorChattingNavigationRoute
 import com.tgyuu.feature.mentee.navigation.findMentorNavigationRoute
 import com.tgyuu.feature.mentoring.mentee.navigation.mentoringMenteeNavigationRoute
+import com.tgyuu.feature.mentoring.mentor.navigation.mentoringMentorNavigationRoute
 import com.tgyuu.feature.profile.setting.navigation.settingNavigationRoute
 import com.tgyuu.feature.shop.navigation.shopNavigationRoute
 import com.tgyuu.feature.splash.navigation.splashNavigationRoute
@@ -106,6 +107,7 @@ private fun handleBottomBarState(
     mentoringMenteeNavigationRoute -> setBottomBarState(false)
     findMentorNavigationRoute -> setBottomBarState(false)
     mentorChattingNavigationRoute -> setBottomBarState(false)
+    mentoringMentorNavigationRoute -> setBottomBarState(false)
     else -> setBottomBarState(true)
 }
 

@@ -13,8 +13,13 @@ fun NavController.navigateToMentoring(navOptions: NavOptions? = navOptions {}) {
     this.navigate(mentoringNavigationRoute, navOptions)
 }
 
-fun NavGraphBuilder.mentoringScreen(navigateToMentoringMentee: () -> Unit) {
+fun NavGraphBuilder.mentoringScreen(
+    navigateToMentoringMentor: () -> Unit,
+    navigateToMentoringMentee: () -> Unit,
+) {
     composable(route = mentoringNavigationRoute) {
-        MentoringRoute(navigateToMentoringMentee = navigateToMentoringMentee)
+        MentoringRoute(
+            navigateToMentoringMentor = navigateToMentoringMentor,
+            navigateToMentoringMentee = navigateToMentoringMentee)
     }
 }

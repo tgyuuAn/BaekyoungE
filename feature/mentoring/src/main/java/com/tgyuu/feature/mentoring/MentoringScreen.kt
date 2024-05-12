@@ -40,6 +40,7 @@ import com.tgyuu.designsystem.theme.BaekyoungTheme
 
 @Composable
 internal fun MentoringRoute(
+    navigateToMentoringMentor: () -> Unit,
     navigateToMentoringMentee: () -> Unit,
     viewModel: MentoringViewModel = hiltViewModel(),
 ) {
@@ -50,6 +51,7 @@ internal fun MentoringRoute(
         selectedRule = selectedRule,
         setSelectedRule = viewModel::setSelectedRule,
         snackbarHostState = snackbarHostState,
+        navigateToMentoringMentor = navigateToMentoringMentor,
         navigateToMentoringMentee = navigateToMentoringMentee,
     )
 }
@@ -59,6 +61,7 @@ fun MentoringScreen(
     selectedRule: MentorMenteeRule,
     setSelectedRule: (MentorMenteeRule) -> Unit,
     snackbarHostState: SnackbarHostState,
+    navigateToMentoringMentor: () -> Unit,
     navigateToMentoringMentee: () -> Unit,
 ) {
     Scaffold(
@@ -178,7 +181,8 @@ fun MentoringScreen(
                     onButtonClick = {
                         when (selectedRule) {
                             MentorMenteeRule.MENTEE -> navigateToMentoringMentee()
-                            else -> Unit
+                            MentorMenteeRule.MENTOR -> navigateToMentoringMentor()
+                            MentorMenteeRule.NOTHING -> Unit
                         }
                     },
                     buttonColor = BaekyoungTheme.colors.black,

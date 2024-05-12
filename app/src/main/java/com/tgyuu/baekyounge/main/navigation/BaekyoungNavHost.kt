@@ -32,6 +32,8 @@ import com.tgyuu.feature.mentoring.mentee.navigation.mentoringMenteeNavigationRo
 import com.tgyuu.feature.mentoring.mentee.navigation.mentoringMenteeScreen
 import com.tgyuu.feature.mentee.navigation.navigateToFindMentor
 import com.tgyuu.feature.mentoring.mentee.navigation.navigateToMentoringMentee
+import com.tgyuu.feature.mentoring.mentor.navigation.mentoringMentorScreen
+import com.tgyuu.feature.mentoring.mentor.navigation.navigateToMentoringMentor
 import com.tgyuu.feature.profile.navigation.profileScreen
 import com.tgyuu.feature.profile.setting.navigation.navigateToSetting
 import com.tgyuu.feature.profile.setting.navigation.settingNavigationRoute
@@ -135,6 +137,11 @@ fun BaekyoungNavHost(
         )
         aiChattingScreen(popBackStack = { navController.popBackStack() })
         mentoringScreen(
+            navigateToMentoringMentor = {
+                navController.navigateToMentoringMentor(
+                    navOptions { popUpTo(mentoringNavigationRoute) },
+                )
+            },
             navigateToMentoringMentee = {
                 navController.navigateToMentoringMentee(
                     navOptions { popUpTo(mentoringNavigationRoute) },
@@ -157,6 +164,7 @@ fun BaekyoungNavHost(
                 )
             },
         )
+        mentoringMentorScreen(popBackStack = { navController.popBackStack() })
         mentorChattingScreen(popBackStack = { navController.popBackStack() })
         profileScreen(navigateToSetting = navController::navigateToSetting)
         settingScreen(
