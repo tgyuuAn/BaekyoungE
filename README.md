@@ -53,18 +53,17 @@ _추후 디자인 리팩토링, 채팅 기능 이외 기능 추가_
 <br><br><br>
 ## 🏗️ Android 앱 아키텍처
 
-- **MVVM** _(추후 MVI로 변경)_
-  
-- **AAC**
-  
+- **MVVM**
+
+- **Clean Architecture**
+
 - **Modularization**
-  
+
 <br><br><br>
 
 ## 📊 모듈 의존성 그래프
-![Baekyoung 모듈 의존성 그래프](https://github.com/tgyuuAn/Baekyoung-i/assets/116813010/6aa7cc8a-c4ab-4a76-a7be-14e07e8aee2a)
 
-_(feature쪽은 아직 각각의 패키지가 비대해지지 않아 분리하지 않았습니다. 추후 비대해지면 분리 예정)_
+![Baekyounge 모듈 의존성 그래프 drawio](https://github.com/tgyuuAn/BaekyoungE/assets/116813010/3f49d5b7-e58f-4d6f-bad3-4a68536c5f66)
 
 <br><br><br>
 
@@ -75,19 +74,17 @@ _(feature쪽은 아직 각각의 패키지가 비대해지지 않아 분리하�
 - **DI** : hilt
 
 - **Local** : Room + Prefrences dataStore
-  
+
 - **Remote** : Retrofit2 + OkHttp3 + Kotlinx Serialization
 
-- **Test** : Junit + mockk
+- **Firebase** : Analytics + Crashlytics + Authentication + RealtimeDatabase
 
-- **Firebase** : Analytics + Crashlytics + Authentication + FireStoreDatabase
- 
 <br><br><br>
 
  ## 🤝 Git Convention
- 
+
  ### 📤Commit Convention
- 
+
 - ```chore``` : 동작에 영향 없는 코드 or 변경 없는 변경사항(주석 추가 등)
 - ```feat``` : 새로운 기능 구현
 - ```add``` : Feat 이외의 부수적인 코드 추가, 라이브러리 추가, 새로운 파일 생성
@@ -98,7 +95,7 @@ _(feature쪽은 아직 각각의 패키지가 비대해지지 않아 분리하�
 - ```rename``` : 파일 이름 변경시
 - ```refactor``` : 전면 수정
 - ```merge```: 다른 브랜치와 병합
-  
+
 ex ) ```git commit -m "feat/#1 : 회원가입 기능 완료"```
 
 <br>
@@ -113,7 +110,7 @@ ex ) ```git commit -m "feat/#1 : 회원가입 기능 완료"```
 - ```[modify]``` : 코드 수정 (기능의 변화가 있을 때)
 - ```[chore]``` : gradle 세팅, 위의 것 이외에 거의 모든 것
 
-ex) ```feature/#issue-user-api```
+ex) ```feature/#issue```
 
 <br>
 
