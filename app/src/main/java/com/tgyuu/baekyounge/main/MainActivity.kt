@@ -32,13 +32,13 @@ import androidx.navigation.NavController
 import androidx.navigation.NavGraph.Companion.findStartDestination
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
-import com.tgyuu.aichat.navigation.aiChattingNavigationRoute
+import com.tgyuu.chatting.ai.navigation.aiChattingNavigationRoute
 import com.tgyuu.baekyounge.main.navigation.BaekyoungNavHost
 import com.tgyuu.baekyounge.main.navigation.TopLevelDestination
 import com.tgyuu.designsystem.theme.BaekyoungTheme
 import com.tgyuu.feature.auth.navigation.authNavigationRoute
 import com.tgyuu.feature.auth.signup.navigation.signUpNavigationRoute
-import com.tgyuu.feature.mentorchatting.navigation.mentorChattingNavigationRoute
+import com.tgyuu.feature.chatting.mentoring.navigation.mentorChattingNavigationRoute
 import com.tgyuu.feature.mentee.navigation.findMentorNavigationRoute
 import com.tgyuu.feature.mentoring.mentee.navigation.mentoringMenteeNavigationRoute
 import com.tgyuu.feature.profile.setting.navigation.settingNavigationRoute

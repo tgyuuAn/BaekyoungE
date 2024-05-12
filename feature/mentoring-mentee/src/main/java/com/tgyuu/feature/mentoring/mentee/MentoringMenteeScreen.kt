@@ -33,7 +33,6 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.tgyuu.designsystem.component.BaekyoungCenterTopBar
 import com.tgyuu.designsystem.theme.BaekyoungTheme
-import com.tgyuu.feature.mentoring.mentee.R
 
 @Composable
 internal fun MentoringMenteeRoute(

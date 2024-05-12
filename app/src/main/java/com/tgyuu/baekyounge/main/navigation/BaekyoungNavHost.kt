@@ -10,8 +10,8 @@ import androidx.compose.ui.Modifier
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.navOptions
-import com.tgyuu.aichat.navigation.aiChattingScreen
-import com.tgyuu.aichat.navigation.navigateToAiChatting
+import com.tgyuu.chatting.ai.navigation.aiChattingScreen
+import com.tgyuu.chatting.ai.navigation.navigateToAiChatting
 import com.tgyuu.feature.auth.navigation.authNavigationRoute
 import com.tgyuu.feature.auth.navigation.authScreen
 import com.tgyuu.feature.auth.navigation.navigateToAuth
@@ -22,8 +22,8 @@ import com.tgyuu.feature.consulting.consultinginformation.navigation.consultingN
 import com.tgyuu.feature.consulting.consultinginformation.navigation.consultingScreen
 import com.tgyuu.feature.home.navigation.homeScreen
 import com.tgyuu.feature.home.navigation.navigateToHome
-import com.tgyuu.feature.mentorchatting.navigation.mentorChattingScreen
-import com.tgyuu.feature.mentorchatting.navigation.navigateToMentorChatting
+import com.tgyuu.feature.chatting.mentoring.navigation.mentorChattingScreen
+import com.tgyuu.feature.chatting.mentoring.navigation.navigateToMentorChatting
 import com.tgyuu.feature.mentoring.navigation.mentoringNavigationRoute
 import com.tgyuu.feature.mentoring.navigation.mentoringScreen
 import com.tgyuu.feature.mentee.navigation.findMentorNavigationRoute
