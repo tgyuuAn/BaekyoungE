@@ -19,7 +19,7 @@ class MentoringDataSourceImpl @Inject constructor(
                 .await()
         }
 
-    override suspend fun getAllMentors(mentorInfoRequest: MentorInfoRequest): Result<List<MentorInfoResponse>> =
+    override suspend fun getAllMentors(): Result<List<MentorInfoResponse>> =
         runCatching {
             firebaseFirestore.collection(RECRUTING_MENTOR_COLLECTION)
                 .get()
