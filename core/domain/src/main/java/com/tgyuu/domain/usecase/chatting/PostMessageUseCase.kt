@@ -1,7 +1,7 @@
 package com.tgyuu.domain.usecase.chatting
 
-import com.tgyuu.data.repository.repository.chatting.ChattingRepository
-import com.tgyuu.data.repository.repository.consulting.ConsultingRepository
+import com.tgyuu.domain.repository.chatting.ChattingRepository
+import com.tgyuu.domain.repository.consulting.ConsultingRepository
 import com.tgyuu.model.consulting.ChatLog
 import com.tgyuu.model.consulting.ChattingRole
 import com.tgyuu.model.consulting.Message

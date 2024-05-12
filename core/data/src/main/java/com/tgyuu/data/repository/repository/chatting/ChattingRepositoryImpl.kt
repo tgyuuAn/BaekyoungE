@@ -5,6 +5,7 @@ import com.tgyuu.data.util.toISOLocalDateTimeString
 import com.tgyuu.database.dao.ChattingDao
 import com.tgyuu.database.model.ChattingRoomEntity
 import com.tgyuu.database.model.MessageEntity
+import com.tgyuu.domain.repository.chatting.ChattingRepository
 import com.tgyuu.model.storage.ChattingRoom
 import com.tgyuu.model.storage.Message
 import javax.inject.Inject

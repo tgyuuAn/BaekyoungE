@@ -1,4 +1,4 @@
-package com.tgyuu.data.repository.repository.mentoring
+package com.tgyuu.domain.repository.mentoring
 
 import com.tgyuu.model.mentoring.MentorInfo
 

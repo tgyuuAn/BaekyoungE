@@ -1,4 +1,4 @@
-package com.tgyuu.data.repository.repository.auth
+package com.tgyuu.domain.repository.auth
 
 import com.tgyuu.model.auth.UserInformation
 

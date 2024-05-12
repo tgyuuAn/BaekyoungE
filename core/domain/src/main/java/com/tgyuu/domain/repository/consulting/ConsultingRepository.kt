@@ -1,4 +1,4 @@
-package com.tgyuu.data.repository.repository.consulting
+package com.tgyuu.domain.repository.consulting
 
 import com.tgyuu.model.consulting.ChatLog
 import com.tgyuu.model.consulting.Message

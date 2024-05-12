@@ -1,4 +1,4 @@
-package com.tgyuu.data.repository.repository.chatting
+package com.tgyuu.domain.repository.chatting
 
 import com.tgyuu.model.storage.ChattingRoom
 import com.tgyuu.model.storage.Message
