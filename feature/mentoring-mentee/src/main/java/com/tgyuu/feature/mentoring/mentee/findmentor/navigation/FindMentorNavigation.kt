@@ -1,11 +1,11 @@
-package com.tgyuu.feature.mentoringmentee.navigation
+package com.tgyuu.feature.mentee.navigation
 
 import androidx.navigation.NavController
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.NavOptions
 import androidx.navigation.compose.composable
 import androidx.navigation.navOptions
-import com.tgyuu.feature.mentoringmentee.findmentor.FindMentorRoute
+import com.tgyuu.feature.mentoring.mentee.findmentor.FindMentorRoute
 
 const val findMentorNavigationRoute = "find_mentor_route"
 
