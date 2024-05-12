@@ -28,6 +28,7 @@ import com.tgyuu.feature.mentoring.navigation.mentoringNavigationRoute
 import com.tgyuu.feature.mentoring.navigation.mentoringScreen
 import com.tgyuu.feature.mentoringmentee.navigation.findMentorNavigationRoute
 import com.tgyuu.feature.mentoringmentee.navigation.findMentorScreen
+import com.tgyuu.feature.mentoringmentee.navigation.mentoringMenteeNavigationRoute
 import com.tgyuu.feature.mentoringmentee.navigation.mentoringMenteeScreen
 import com.tgyuu.feature.mentoringmentee.navigation.navigateToFindMentor
 import com.tgyuu.feature.mentoringmentee.navigation.navigateToMentoringMentee
@@ -143,7 +144,7 @@ fun BaekyoungNavHost(
         mentoringMenteeScreen(
             navigateToFindMentor = {
                 navController.navigateToFindMentor(
-                    navOptions { popUpTo(mentoringNavigationRoute) },
+                    navOptions { popUpTo(mentoringMenteeNavigationRoute) },
                 )
             },
             popBackStack = { navController.popBackStack() },
