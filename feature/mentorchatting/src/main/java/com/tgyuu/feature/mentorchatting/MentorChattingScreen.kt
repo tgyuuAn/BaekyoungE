@@ -75,7 +75,7 @@ internal fun MentorChattingRoute(
     val chatLog = viewModel.chatLog.toList()
     val searchText by viewModel.searchText.collectAsStateWithLifecycle()
     val chatState by viewModel.chatState.collectAsStateWithLifecycle()
-    val (showExitChattingRoomDialog, setExitChattingRoom) = remember { mutableStateOf(false) }
+    val (showExitChattingRoomDialog, setExitChattingRoomDialog) = remember { mutableStateOf(false) }
 
     MentorChattingScreen(
         chatText = chatText,
@@ -83,7 +83,7 @@ internal fun MentorChattingRoute(
         chatLog = chatLog,
         chatState = chatState,
         showExitChattingRoomDialog = showExitChattingRoomDialog,
-        setExitChattingRoom = setExitChattingRoom,
+        setExitChattingRoomDialog = setExitChattingRoomDialog,
         onChatTextChanged = viewModel::setChatText,
         onSearchTextChanged = viewModel::setSearchText,
         popBackStack = popBackStack,
@@ -97,7 +97,7 @@ internal fun MentorChattingScreen(
     chatLog: List<Message>,
     chatState: UiState<Unit>,
     showExitChattingRoomDialog: Boolean,
-    setExitChattingRoom: (Boolean) -> Unit,
+    setExitChattingRoomDialog: (Boolean) -> Unit,
     onChatTextChanged: (String) -> Unit,
     onSearchTextChanged: (String) -> Unit,
     popBackStack: () -> Unit,
@@ -122,7 +122,7 @@ internal fun MentorChattingScreen(
             drawerContent = {
                 if (showExitChattingRoomDialog) {
                     CompositionLocalProvider(LocalLayoutDirection provides LayoutDirection.Ltr) {
-                        Dialog(onDismissRequest = { setExitChattingRoom(false) }) {
+                        Dialog(onDismissRequest = { setExitChattingRoomDialog(false) }) {
                             Card(shape = RoundedCornerShape(10.dp)) {
                                 Column(
                                     horizontalAlignment = Alignment.CenterHorizontally,
@@ -149,18 +149,18 @@ internal fun MentorChattingScreen(
                                             .padding(top = 20.dp),
                                     ) {
                                         BaekyoungButton(
-                                            text = R.string.cancel,
+                                            text = string.cancel,
                                             buttonColor = BaekyoungTheme.colors.grayF2,
                                             textColor = BaekyoungTheme.colors.black,
-                                            onButtonClick = { setExitChattingRoom(false) },
+                                            onButtonClick = { setExitChattingRoomDialog(false) },
                                             modifier = Modifier.weight(1f),
                                         )
 
                                         BaekyoungButton(
-                                            text = R.string.exit,
+                                            text = string.exit,
                                             textColor = BaekyoungTheme.colors.white,
                                             buttonColor = BaekyoungTheme.colors.red,
-                                            onButtonClick = { setExitChattingRoom(false) },
+                                            onButtonClick = { setExitChattingRoomDialog(false) },
                                             modifier = Modifier.weight(1f),
                                         )
                                     }
@@ -216,7 +216,7 @@ internal fun MentorChattingScreen(
                                 modifier = Modifier
                                     .align(Alignment.CenterStart)
                                     .padding(vertical = 15.dp, horizontal = 10.dp)
-                                    .clickable { setExitChattingRoom(true) },
+                                    .clickable { setExitChattingRoomDialog(true) },
                             )
 
                             Image(

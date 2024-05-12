@@ -21,11 +21,18 @@ import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.compose.ui.window.Dialog
+import com.tgyuu.designsystem.R.string
+import com.tgyuu.designsystem.component.BaekyoungButton
 import com.tgyuu.designsystem.component.BaekyoungCenterTopBar
 import com.tgyuu.designsystem.theme.BaekyoungTheme
 import com.tgyuu.feature.mentoring.mentee.R
@@ -46,6 +53,54 @@ fun FindMentorScreen(
     popBackStack: () -> Unit,
     navigateToMentorChatting: () -> Unit,
 ) {
+    val (showEnterChattingRoomDialog, setEnterChattingRoomDialog) = remember { mutableStateOf(false) }
+    var selectedMentor by remember { mutableStateOf("") }
+
+    if (showEnterChattingRoomDialog) {
+        Dialog(onDismissRequest = { setEnterChattingRoomDialog(false) }) {
+            Card(shape = RoundedCornerShape(10.dp)) {
+                Column(
+                    verticalArrangement = Arrangement.spacedBy(15.dp),
+                    horizontalAlignment = Alignment.CenterHorizontally,
+                    modifier = Modifier
+                        .background(BaekyoungTheme.colors.white)
+                        .padding(vertical = 16.dp, horizontal = 20.dp),
+                ) {
+                    Text(
+                        text = "$selectedMentor 님과 대화를 시작하시겠어요?",
+                        style = BaekyoungTheme.typography.contentBold,
+                    )
+
+                    Row(
+                        horizontalArrangement = Arrangement.spacedBy(12.dp),
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .padding(top = 15.dp),
+                    ) {
+                        BaekyoungButton(
+                            text = string.cancel,
+                            buttonColor = BaekyoungTheme.colors.grayF2,
+                            textColor = BaekyoungTheme.colors.black,
+                            onButtonClick = { setEnterChattingRoomDialog(false) },
+                            modifier = Modifier.weight(1f),
+                        )
+
+                        BaekyoungButton(
+                            text = string.confirm,
+                            textColor = BaekyoungTheme.colors.white,
+                            buttonColor = BaekyoungTheme.colors.black,
+                            onButtonClick = {
+                                setEnterChattingRoomDialog(false)
+                                navigateToMentorChatting()
+                            },
+                            modifier = Modifier.weight(1f),
+                        )
+                    }
+                }
+            }
+        }
+    }
+
     Scaffold(
         containerColor = BaekyoungTheme.colors.grayF5,
         contentWindowInsets = WindowInsets(0.dp),
@@ -67,11 +122,14 @@ fun FindMentorScreen(
                 verticalArrangement = Arrangement.spacedBy(10.dp),
                 modifier = Modifier.padding(horizontal = 20.dp),
             ) {
-                items(listOf("종디기", "안태규")) {
+                items(listOf("종디기", "안태규")) { mentor ->
                     Card(
                         shape = RoundedCornerShape(20.dp),
                         colors = CardDefaults.cardColors(containerColor = BaekyoungTheme.colors.white),
-                        onClick = { navigateToMentorChatting() },
+                        onClick = {
+                            selectedMentor = mentor
+                            setEnterChattingRoomDialog(true)
+                        },
                         modifier = Modifier
                             .fillMaxWidth()
                             .border(
@@ -95,7 +153,7 @@ fun FindMentorScreen(
                                 )
 
                                 Text(
-                                    text = it,
+                                    text = mentor,
                                     style = BaekyoungTheme.typography.contentBold,
                                     color = BaekyoungTheme.colors.black,
                                     modifier = Modifier.padding(start = 20.dp),
