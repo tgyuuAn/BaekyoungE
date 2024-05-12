@@ -9,6 +9,7 @@ import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
+import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
@@ -99,7 +100,10 @@ fun MentoringScreen(
                         shape = RoundedCornerShape(20.dp),
                     )
                     .background(BaekyoungTheme.colors.white)
-                    .clickable { setSelectedRule(MentorMenteeRule.MENTOR) },
+                    .clickable(
+                        interactionSource = remember { MutableInteractionSource() },
+                        indication = null,
+                    ) {  setSelectedRule(MentorMenteeRule.MENTOR) },
             ) {
                 Image(
                     painter = painterResource(id = R.drawable.ic_mentor),
@@ -139,7 +143,10 @@ fun MentoringScreen(
                         shape = RoundedCornerShape(20.dp),
                     )
                     .background(BaekyoungTheme.colors.white)
-                    .clickable { setSelectedRule(MentorMenteeRule.MENTEE) },
+                    .clickable(
+                        interactionSource = remember { MutableInteractionSource() },
+                        indication = null,
+                    ) {  setSelectedRule(MentorMenteeRule.MENTEE) },
             ) {
                 Image(
                     painter = painterResource(id = R.drawable.ic_mentee),

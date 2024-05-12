@@ -4,6 +4,7 @@ import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
+import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -245,7 +246,10 @@ fun FindMentorScreen(
                         modifier = Modifier
                             .padding(top = 30.dp)
                             .fillMaxWidth()
-                            .clickable {},
+                            .clickable(
+                                interactionSource = remember { MutableInteractionSource() },
+                                indication = null,
+                            ) { },
                     ) {
                         Image(
                             painter = painterResource(id = R.drawable.ic_re_search),
