@@ -2,8 +2,6 @@ package com.tgyuu.feature.profile
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.kakao.sdk.auth.AuthApiClient
-import com.kakao.sdk.user.UserApiClient
 import com.tgyuu.common.util.UiState
 import com.tgyuu.domain.usecase.auth.GetUserInformationUseCase
 import com.tgyuu.domain.usecase.chatting.GetAllChattingLogUseCase
@@ -27,24 +25,8 @@ class ProfileViewModel @Inject constructor(
     val chattingLogs = _chattingLogs.asStateFlow()
 
     init {
-        checkTokenExists()
+        getUserInformation(-1)
         getAllChattingLogs()
-    }
-
-    fun checkTokenExists() = viewModelScope.launch {
-        if (!AuthApiClient.instance.hasToken()) {
-            _userInformation.value = UiState.Error("유저 정보가 없습니다.")
-            return@launch
-        }
-
-        UserApiClient.instance.accessTokenInfo { tokenInfo, error ->
-            if (error != null) {
-                _userInformation.value = UiState.Error("유저 정보가 없습니다.")
-            }
-
-            getUserInformation(tokenInfo?.id ?: -1)
-            return@accessTokenInfo
-        }
     }
 
     private fun getAllChattingLogs() = viewModelScope.launch {
@@ -55,9 +37,7 @@ class ProfileViewModel @Inject constructor(
 
     fun getUserInformation(userId: Long) = viewModelScope.launch {
         getUserInformationUseCase(userId.toString())
-            .onSuccess {
-                _userInformation.value = UiState.Success(it)
-            }
+            .onSuccess { _userInformation.value = UiState.Success(it) }
             .onFailure { _userInformation.value = UiState.Error("유저 정보가 없습니다.") }
     }
 }

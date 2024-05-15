@@ -103,7 +103,7 @@ class AuthRepositoryImpl @Inject constructor(
                 gender = gender,
                 major = major,
                 grade = grade,
-                registrationDate = generateNowDateTime().toISOLocalDateTimeString(),
+                registrationDate = registrationDate,
             ),
         )
     }

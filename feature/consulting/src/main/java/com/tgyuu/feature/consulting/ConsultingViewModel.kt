@@ -26,26 +26,10 @@ class ConsultingViewModel @Inject constructor(
     val userInformation = _userInformation.asStateFlow()
 
     init {
-        checkTokenExists()
+        getUserInformation(-1)
     }
 
     fun event(event: ConsultingEvent) = viewModelScope.launch { _eventFlow.emit(event) }
-
-    fun checkTokenExists() = viewModelScope.launch {
-        if (!AuthApiClient.instance.hasToken()) {
-            _userInformation.value = UiState.Error("유저 정보가 없습니다.")
-            return@launch
-        }
-
-        UserApiClient.instance.accessTokenInfo { tokenInfo, error ->
-            if (error != null) {
-                _userInformation.value = UiState.Error("유저 정보가 없습니다.")
-            }
-
-            getUserInformation(tokenInfo?.id ?: -1)
-            return@accessTokenInfo
-        }
-    }
 
     fun getUserInformation(userId: Long) = viewModelScope.launch {
         getUserInformationUseCase(userId.toString())
