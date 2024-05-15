@@ -158,9 +158,10 @@ fun BaekyoungNavHost(
         )
         findMentorScreen(
             popBackStack = { navController.popBackStack() },
-            navigateToMentorChatting = {
+            navigateToMentorChatting = { roomId ->
                 navController.navigateToMentorChatting(
-                    navOptions { popUpTo(findMentorNavigationRoute) },
+                    roomId = roomId,
+                    navOptions = navOptions { popUpTo(findMentorNavigationRoute) },
                 )
             },
         )

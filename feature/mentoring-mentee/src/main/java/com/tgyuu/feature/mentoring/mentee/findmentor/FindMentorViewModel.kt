@@ -3,7 +3,9 @@ package com.tgyuu.feature.mentoring.mentee.findmentor
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.tgyuu.common.util.UiState
+import com.tgyuu.domain.usecase.auth.GetUserInformationUseCase
 import com.tgyuu.domain.usecase.mentoring.GetAllMentorsInfoUseCase
+import com.tgyuu.model.auth.UserInformation
 import com.tgyuu.model.mentoring.MentorInfo
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -13,13 +15,24 @@ import javax.inject.Inject
 
 @HiltViewModel
 class FindMentorViewModel @Inject constructor(
+    private val getUserInformationUseCase: GetUserInformationUseCase,
     private val getAllMentorsInfoUseCase: GetAllMentorsInfoUseCase,
 ) : ViewModel() {
+    private val _userInformation = MutableStateFlow(UserInformation())
+    val userInformation = _userInformation.asStateFlow()
+
     private val _mentorsInfo = MutableStateFlow<UiState<List<MentorInfo>>>(UiState.Loading)
     val mentorsInfo = _mentorsInfo.asStateFlow()
 
     init {
+        getUserInformation(-1)
         getAllMentorsInfo()
+    }
+
+    fun getUserInformation(userId: Long) = viewModelScope.launch {
+        getUserInformationUseCase(userId.toString())
+            .onSuccess { _userInformation.value = it }
+            .onFailure { }
     }
 
     fun getAllMentorsInfo() = viewModelScope.launch {

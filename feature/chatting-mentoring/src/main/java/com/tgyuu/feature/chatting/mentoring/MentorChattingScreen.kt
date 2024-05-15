@@ -1,5 +1,6 @@
 package com.tgyuu.feature.chatting.mentoring
 
+import android.util.Log
 import androidx.compose.foundation.Canvas
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
@@ -29,6 +30,7 @@ import androidx.compose.material3.Text
 import androidx.compose.material3.rememberDrawerState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.CompositionLocalProvider
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -69,6 +71,7 @@ import kotlinx.coroutines.launch
 
 @Composable
 internal fun MentorChattingRoute(
+    roomId: String,
     popBackStack: () -> Unit,
     viewModel: MentorChattingViewModel = hiltViewModel(),
 ) {
@@ -77,6 +80,11 @@ internal fun MentorChattingRoute(
     val searchText by viewModel.searchText.collectAsStateWithLifecycle()
     val chatState by viewModel.chatState.collectAsStateWithLifecycle()
     val (showExitChattingRoomDialog, setExitChattingRoomDialog) = remember { mutableStateOf(false) }
+
+    LaunchedEffect(true) {
+        Log.d("test", "roomId : $roomId")
+        viewModel.roomId.value = roomId
+    }
 
     MentorChattingScreen(
         chatText = chatText,
@@ -220,7 +228,7 @@ internal fun MentorChattingScreen(
                                     .clickable(
                                         interactionSource = remember { MutableInteractionSource() },
                                         indication = null,
-                                    ) {  setExitChattingRoomDialog(true) },
+                                    ) { setExitChattingRoomDialog(true) },
                             )
 
                             Image(
@@ -232,7 +240,7 @@ internal fun MentorChattingScreen(
                                     .clickable(
                                         interactionSource = remember { MutableInteractionSource() },
                                         indication = null,
-                                    ) {  },
+                                    ) { },
                             )
                         }
                     }

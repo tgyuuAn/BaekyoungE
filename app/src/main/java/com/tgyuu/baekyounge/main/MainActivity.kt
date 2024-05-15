@@ -106,7 +106,7 @@ private fun handleBottomBarState(
     settingNavigationRoute -> setBottomBarState(false)
     mentoringMenteeNavigationRoute -> setBottomBarState(false)
     findMentorNavigationRoute -> setBottomBarState(false)
-    mentorChattingNavigationRoute -> setBottomBarState(false)
+    mentorChattingNavigationRoute() -> setBottomBarState(false)
     mentoringMentorNavigationRoute -> setBottomBarState(false)
     else -> setBottomBarState(true)
 }

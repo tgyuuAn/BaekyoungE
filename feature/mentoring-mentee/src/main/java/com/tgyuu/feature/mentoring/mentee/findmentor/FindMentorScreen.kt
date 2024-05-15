@@ -41,18 +41,21 @@ import com.tgyuu.designsystem.component.BaekyoungCenterTopBar
 import com.tgyuu.designsystem.component.Loader
 import com.tgyuu.designsystem.theme.BaekyoungTheme
 import com.tgyuu.feature.mentoring.mentee.R
+import com.tgyuu.model.auth.UserInformation
 import com.tgyuu.model.mentoring.MentorInfo
 
 @Composable
 internal fun FindMentorRoute(
     popBackStack: () -> Unit,
-    navigateToMentorChatting: () -> Unit,
+    navigateToMentorChatting: (String) -> Unit,
     viewModel: FindMentorViewModel = hiltViewModel(),
 ) {
     val mentorsInfo by viewModel.mentorsInfo.collectAsStateWithLifecycle()
+    val userInformation by viewModel.userInformation.collectAsStateWithLifecycle()
 
     FindMentorScreen(
         mentorsInfo = mentorsInfo,
+        userInformation = userInformation,
         getAllMentorsInfo = viewModel::getAllMentorsInfo,
         popBackStack = popBackStack,
         navigateToMentorChatting = navigateToMentorChatting,
@@ -62,12 +65,13 @@ internal fun FindMentorRoute(
 @Composable
 fun FindMentorScreen(
     mentorsInfo: UiState<List<MentorInfo>>,
+    userInformation: UserInformation,
     getAllMentorsInfo: () -> Unit,
     popBackStack: () -> Unit,
-    navigateToMentorChatting: () -> Unit,
+    navigateToMentorChatting: (String) -> Unit,
 ) {
     val (showEnterChattingRoomDialog, setEnterChattingRoomDialog) = remember { mutableStateOf(false) }
-    var selectedMentor by remember { mutableStateOf("") }
+    var selectedMentor by remember { mutableStateOf(MentorInfo("", "", "")) }
 
     if (showEnterChattingRoomDialog) {
         Dialog(onDismissRequest = { setEnterChattingRoomDialog(false) }) {
@@ -80,7 +84,7 @@ fun FindMentorScreen(
                         .padding(vertical = 16.dp, horizontal = 20.dp),
                 ) {
                     Text(
-                        text = "$selectedMentor 님과 대화를 시작하시겠어요?",
+                        text = "${selectedMentor.nickName} 님과 대화를 시작하시겠어요?",
                         style = BaekyoungTheme.typography.contentBold,
                     )
 
@@ -104,7 +108,7 @@ fun FindMentorScreen(
                             buttonColor = BaekyoungTheme.colors.black,
                             onButtonClick = {
                                 setEnterChattingRoomDialog(false)
-                                navigateToMentorChatting()
+                                navigateToMentorChatting(selectedMentor.userId+"-"+userInformation.userId)
                             },
                             modifier = Modifier.weight(1f),
                         )
@@ -147,7 +151,7 @@ fun FindMentorScreen(
                                 shape = RoundedCornerShape(20.dp),
                                 colors = CardDefaults.cardColors(containerColor = BaekyoungTheme.colors.white),
                                 onClick = {
-                                    selectedMentor = mentor.nickName
+                                    selectedMentor = mentor
                                     setEnterChattingRoomDialog(true)
                                 },
                                 modifier = Modifier

@@ -20,8 +20,10 @@ class MentorChattingViewModel @Inject constructor() : ViewModel() {
 
     val chatLog: SnapshotStateList<Message> = mutableStateListOf()
 
-    val _chatState: MutableStateFlow<UiState<Unit>> = MutableStateFlow(UiState.Success(Unit))
+    private val _chatState: MutableStateFlow<UiState<Unit>> = MutableStateFlow(UiState.Success(Unit))
     val chatState = _chatState.asStateFlow()
+
+    val roomId: MutableStateFlow<String> = MutableStateFlow("")
 
     fun setChatText(chatText: String) {
         _chatText.value = chatText
