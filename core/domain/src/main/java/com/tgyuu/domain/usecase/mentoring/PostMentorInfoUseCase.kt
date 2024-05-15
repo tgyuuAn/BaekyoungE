@@ -3,7 +3,7 @@ package com.tgyuu.domain.usecase.mentoring
 import com.tgyuu.domain.repository.mentoring.MentoringRepository
 import javax.inject.Inject
 
-class PostMentorUseCase @Inject constructor(
+class PostMentorInfoUseCase @Inject constructor(
     private val mentoringRepository: MentoringRepository,
 ) {
     suspend operator fun invoke(

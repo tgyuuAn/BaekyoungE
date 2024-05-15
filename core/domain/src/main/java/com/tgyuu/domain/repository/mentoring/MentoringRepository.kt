@@ -9,5 +9,13 @@ interface MentoringRepository {
         registrationDate: String,
     ): Result<Unit>
 
+    suspend fun deleteMentorInfo(
+        userId: String,
+    ): Result<Unit>
+
+    suspend fun getMentorInfo(
+        userId: String,
+    ): Result<MentorInfo>
+
     suspend fun getAllMentors(): Result<List<MentorInfo>>
 }

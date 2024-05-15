@@ -33,6 +33,7 @@ internal fun MentoringMentorRoute(
     MentoringMentorScreen(
         checked = checked,
         registerMentorInfo = viewModel::registerMentorInfo,
+        deleteMentorInfo = viewModel::deleteMentorInfo,
         popBackStack = popBackStack,
     )
 }
@@ -41,6 +42,7 @@ internal fun MentoringMentorRoute(
 fun MentoringMentorScreen(
     checked: Boolean,
     registerMentorInfo: () -> Unit,
+    deleteMentorInfo: () -> Unit,
     popBackStack: () -> Unit,
 ) {
     Scaffold(
@@ -84,7 +86,12 @@ fun MentoringMentorScreen(
 
                 Switch(
                     checked = checked,
-                    onCheckedChange = { registerMentorInfo() },
+                    onCheckedChange = {
+                        when (checked) {
+                            false -> registerMentorInfo()
+                            true -> deleteMentorInfo()
+                        }
+                    },
                     colors = SwitchDefaults.colors(
                         checkedThumbColor = BaekyoungTheme.colors.blueFF,
                         checkedTrackColor = BaekyoungTheme.colors.blue5FF,

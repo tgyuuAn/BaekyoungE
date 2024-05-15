@@ -13,7 +13,7 @@ class MentoringRepositoryImpl @Inject constructor(
         userId: String,
         nickName: String,
         registrationDate: String,
-    ): Result<Unit> = mentoringDataSource.postMentor(
+    ): Result<Unit> = mentoringDataSource.postMentorInfo(
         MentorInfoRequest(
             userId = userId,
             nickName = nickName,
@@ -21,8 +21,20 @@ class MentoringRepositoryImpl @Inject constructor(
         ),
     )
 
+    override suspend fun deleteMentorInfo(userId: String): Result<Unit> =
+        mentoringDataSource.deleteMentorInfo(userId = userId)
+
+    override suspend fun getMentorInfo(userId: String): Result<MentorInfo> =
+        mentoringDataSource.getMentorInfo(userId = userId).mapCatching {
+            MentorInfo(
+                userId = it.userId,
+                nickName = it.nickName,
+                registrationDate = it.registrationDate,
+            )
+        }
+
     override suspend fun getAllMentors(): Result<List<MentorInfo>> =
-        mentoringDataSource.getAllMentors().mapCatching {
+        mentoringDataSource.getAllMentorsInfo().mapCatching {
             it.map {
                 MentorInfo(
                     userId = it.userId,

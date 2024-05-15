@@ -11,7 +11,7 @@ import javax.inject.Inject
 class MentoringDataSourceImpl @Inject constructor(
     private val firebaseFirestore: FirebaseFirestore,
 ) : MentoringDataSource {
-    override suspend fun postMentor(mentorInfoRequest: MentorInfoRequest): Result<Unit> =
+    override suspend fun postMentorInfo(mentorInfoRequest: MentorInfoRequest): Result<Unit> =
         runCatching {
             firebaseFirestore.collection(RECRUITING_MENTOR_COLLECTION)
                 .document(mentorInfoRequest.userId)
@@ -19,14 +19,33 @@ class MentoringDataSourceImpl @Inject constructor(
                 .await()
         }
 
-    override suspend fun getAllMentors(): Result<List<MentorInfoResponse>> =
+    override suspend fun deleteMentorInfo(userId: String): Result<Unit> =
+        runCatching {
+            firebaseFirestore.collection(RECRUITING_MENTOR_COLLECTION)
+                .document(userId)
+                .delete()
+                .await()
+        }
+
+    override suspend fun getMentorInfo(userId: String): Result<MentorInfoResponse> =
+        runCatching {
+            val document = firebaseFirestore.collection(RECRUITING_MENTOR_COLLECTION)
+                .document(userId)
+                .get()
+                .await()
+
+            checkNotNull(document.toObject<MentorInfoResponse>())
+        }
+
+    override suspend fun getAllMentorsInfo(): Result<List<MentorInfoResponse>> =
         runCatching {
             firebaseFirestore.collection(RECRUITING_MENTOR_COLLECTION)
                 .get()
                 .await()
                 .documents
                 .map { document ->
-                    document.toObject<MentorInfoResponse>() ?: throw IllegalArgumentException("Invalid mentor info")
+                    document.toObject<MentorInfoResponse>()
+                        ?: throw IllegalArgumentException("Invalid mentor info")
                 }
         }
 }
