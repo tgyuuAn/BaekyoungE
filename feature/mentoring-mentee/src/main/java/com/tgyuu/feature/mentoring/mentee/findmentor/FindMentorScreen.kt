@@ -32,18 +32,25 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.compose.ui.window.Dialog
+import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.tgyuu.designsystem.R.string
 import com.tgyuu.designsystem.component.BaekyoungButton
 import com.tgyuu.designsystem.component.BaekyoungCenterTopBar
 import com.tgyuu.designsystem.theme.BaekyoungTheme
 import com.tgyuu.feature.mentoring.mentee.R
+import com.tgyuu.model.mentoring.MentorInfo
 
 @Composable
 internal fun FindMentorRoute(
     popBackStack: () -> Unit,
     navigateToMentorChatting: () -> Unit,
+    viewModel: FindMentorViewModel = hiltViewModel(),
 ) {
+    val mentorsInfo by viewModel.mentorsInfo.collectAsStateWithLifecycle()
+
     FindMentorScreen(
+        mentorsInfo = mentorsInfo,
         popBackStack = popBackStack,
         navigateToMentorChatting = navigateToMentorChatting,
     )
@@ -51,6 +58,7 @@ internal fun FindMentorRoute(
 
 @Composable
 fun FindMentorScreen(
+    mentorsInfo: List<MentorInfo>?,
     popBackStack: () -> Unit,
     navigateToMentorChatting: () -> Unit,
 ) {
@@ -123,12 +131,12 @@ fun FindMentorScreen(
                 verticalArrangement = Arrangement.spacedBy(10.dp),
                 modifier = Modifier.padding(horizontal = 20.dp),
             ) {
-                items(listOf("종디기", "안태규")) { mentor ->
+                items(mentorsInfo ?: listOf()) { mentor ->
                     Card(
                         shape = RoundedCornerShape(20.dp),
                         colors = CardDefaults.cardColors(containerColor = BaekyoungTheme.colors.white),
                         onClick = {
-                            selectedMentor = mentor
+                            selectedMentor = mentor.nickName
                             setEnterChattingRoomDialog(true)
                         },
                         modifier = Modifier
@@ -154,7 +162,7 @@ fun FindMentorScreen(
                                 )
 
                                 Text(
-                                    text = mentor,
+                                    text = mentor.nickName,
                                     style = BaekyoungTheme.typography.contentBold,
                                     color = BaekyoungTheme.colors.black,
                                     modifier = Modifier.padding(start = 20.dp),

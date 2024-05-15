@@ -46,7 +46,7 @@ class MentoringMentorViewModel @Inject constructor(
     }
 
     fun getMentorInfo() = viewModelScope.launch {
-        deleteMentorInfoUseCase(userId = "test")
+        getMentorInfoUseCase(userId = "test")
             .onSuccess { setChecked(true) }
             .onFailure { setChecked(false) }
     }
