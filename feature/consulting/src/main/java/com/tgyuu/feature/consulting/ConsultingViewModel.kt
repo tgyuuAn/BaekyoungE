@@ -50,7 +50,7 @@ class ConsultingViewModel @Inject constructor(
     fun getUserInformation(userId: Long) = viewModelScope.launch {
         getUserInformationUseCase(userId.toString())
             .onSuccess { _userInformation.value = UiState.Success(it) }
-            .onFailure { _userInformation.value = UiState.Error("유저 정보가 없습니다.") }
+            .onFailure { _userInformation.value = UiState.Error(it.message ?: "유저 정보가 없습니다.") }
     }
 
     fun navigateToChatting() = viewModelScope.launch {

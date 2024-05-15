@@ -1,6 +1,7 @@
 package com.tgyuu.feature.consulting
 
 import android.content.Context
+import android.util.Log
 import android.widget.Toast
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Box
@@ -126,8 +127,7 @@ internal fun ConsultingScreen(
                     }
                 }
             }
-
-            else -> Unit
+            is UiState.Error -> Log.d("test", userInformationState.message)
         }
     }
 }
