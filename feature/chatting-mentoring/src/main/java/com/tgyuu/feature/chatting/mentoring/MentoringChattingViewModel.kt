@@ -67,16 +67,14 @@ class MentoringChattingViewModel @Inject constructor(
                 role = ChattingRole.USER,
             ),
         )
-        _chatText.value = ""
         _chatState.value = UiState.Loading
 
         postMentoringMessageUseCase(
             roomId = roomId.value,
-            messageId = "",
             userId = _userInformation.value.userId,
             content = _chatText.value,
         )
-            .onSuccess { }
+            .onSuccess { _chatText.value = "" }
             .onFailure { Log.d("test", "onFailure : " + it.toString()) }
             .also { _chatState.value = UiState.Success(Unit) }
     }

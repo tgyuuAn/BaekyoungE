@@ -64,8 +64,8 @@ import com.tgyuu.designsystem.component.BaekyoungSpeechBubble
 import com.tgyuu.designsystem.component.ChattingLoader
 import com.tgyuu.designsystem.component.SpeechBubbleType
 import com.tgyuu.designsystem.theme.BaekyoungTheme
-import com.tgyuu.model.chatting.ChattingRole
 import com.tgyuu.model.chatting.AiMessage
+import com.tgyuu.model.chatting.ChattingRole
 import kotlinx.coroutines.launch
 
 @Composable
@@ -93,6 +93,7 @@ internal fun MentoringChattingRoute(
         setExitChattingRoomDialog = setExitChattingRoomDialog,
         onChatTextChanged = viewModel::setChatText,
         onSearchTextChanged = viewModel::setSearchText,
+        sendMessage = viewModel::sendMessage,
         popBackStack = popBackStack,
     )
 }
@@ -107,6 +108,7 @@ internal fun MentoringChattingScreen(
     setExitChattingRoomDialog: (Boolean) -> Unit,
     onChatTextChanged: (String) -> Unit,
     onSearchTextChanged: (String) -> Unit,
+    sendMessage: () -> Unit,
     popBackStack: () -> Unit,
 ) {
     val localConfiguration = LocalConfiguration.current
@@ -369,7 +371,7 @@ internal fun MentoringChattingScreen(
                         BaekyoungChatTextField(
                             chatText = chatText,
                             onTextChanged = onChatTextChanged,
-                            sendMessage = {},
+                            sendMessage = { sendMessage() },
                             textColor = BaekyoungTheme.colors.black,
                             modifier = Modifier
                                 .align(Alignment.BottomCenter)

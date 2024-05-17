@@ -19,7 +19,9 @@ class ChattingDataSourceImpl @Inject constructor(
     override suspend fun postMentoringMessage(mentoringChatRequest: MentoringChatRequest): Result<Unit> =
         runCatching {
             firebaseFirestore.collection(CHATTING_ROOM_COLLECTION)
-                .document(mentoringChatRequest.roomId)
+                .document(CHATTING_ROOM_COLLECTION)
+                .collection(mentoringChatRequest.roomId)
+                .document(mentoringChatRequest.createdAt + "-" + mentoringChatRequest.userId)
                 .set(mentoringChatRequest)
                 .await()
         }

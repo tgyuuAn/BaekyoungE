@@ -47,17 +47,16 @@ class RemoteChattingRepositoryImpl @Inject constructor(
 
     override suspend fun postMentoringChatMessage(
         roomId: String,
-        messageId: String,
         userId: String,
         content: String,
         createdAt: String,
     ): Result<Unit> = chattingDataSource.postMentoringMessage(
         MentoringChatRequest(
             roomId = roomId,
-            messageId = messageId,
             userId = userId,
             content = content,
             createdAt = createdAt,
+            isChecked = false,
         ),
     )
 }
