@@ -1,12 +1,12 @@
 package com.tgyuu.data.repository.di
 
 import com.tgyuu.data.repository.repository.auth.AuthRepositoryImpl
-import com.tgyuu.data.repository.repository.chatting.ChattingRepositoryImpl
-import com.tgyuu.data.repository.repository.consulting.ConsultingRepositoryImpl
+import com.tgyuu.data.repository.repository.chatting.LocalChattingRepositoryImpl
+import com.tgyuu.data.repository.repository.chatting.RemoteChattingRepositoryImpl
 import com.tgyuu.data.repository.repository.mentoring.MentoringRepositoryImpl
 import com.tgyuu.domain.repository.auth.AuthRepository
-import com.tgyuu.domain.repository.chatting.ChattingRepository
-import com.tgyuu.domain.repository.consulting.ConsultingRepository
+import com.tgyuu.domain.repository.chatting.LocalChattingRepository
+import com.tgyuu.domain.repository.chatting.RemoteChattingRepository
 import com.tgyuu.domain.repository.mentoring.MentoringRepository
 import dagger.Binds
 import dagger.Module
@@ -20,9 +20,9 @@ abstract class DataModule {
 
     @Binds
     @Singleton
-    abstract fun bindsConsultingRepository(
-        consultingRepositoryImpl: ConsultingRepositoryImpl,
-    ): ConsultingRepository
+    abstract fun bindsRemoteChattingRepository(
+        remoteChattingRepositoryImpl: RemoteChattingRepositoryImpl,
+    ): RemoteChattingRepository
 
     @Binds
     @Singleton
@@ -32,9 +32,9 @@ abstract class DataModule {
 
     @Binds
     @Singleton
-    abstract fun bindsChattingRepository(
-        chattingRepositoryImpl: ChattingRepositoryImpl,
-    ): ChattingRepository
+    abstract fun bindsLocalChattingRepository(
+        localChattingRepositoryImpl: LocalChattingRepositoryImpl,
+    ): LocalChattingRepository
 
     @Binds
     @Singleton

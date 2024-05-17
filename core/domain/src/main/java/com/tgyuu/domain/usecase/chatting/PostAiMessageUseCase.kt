@@ -1,21 +1,21 @@
 package com.tgyuu.domain.usecase.chatting
 
-import com.tgyuu.domain.repository.chatting.ChattingRepository
-import com.tgyuu.domain.repository.consulting.ConsultingRepository
-import com.tgyuu.model.consulting.ChatLog
-import com.tgyuu.model.consulting.ChattingRole
-import com.tgyuu.model.consulting.Message
+import com.tgyuu.domain.repository.chatting.LocalChattingRepository
+import com.tgyuu.domain.repository.chatting.RemoteChattingRepository
+import com.tgyuu.model.chatting.AiMessages
+import com.tgyuu.model.chatting.ChattingRole
+import com.tgyuu.model.chatting.AiMessage
 import java.time.LocalDateTime
 import java.time.ZoneId
 import java.time.format.DateTimeFormatter
 import javax.inject.Inject
 
-class PostMessageUseCase @Inject constructor(
-    private val consultingRepository: ConsultingRepository,
-    private val chattingRepository: ChattingRepository,
+class PostAiMessageUseCase @Inject constructor(
+    private val remoteChattingRepository: RemoteChattingRepository,
+    private val localChattingRepository: LocalChattingRepository,
 ) {
-    suspend operator fun invoke(chatLog: List<Message>, roomId: String): Result<ChatLog> {
-        chattingRepository.insertMessage(
+    suspend operator fun invoke(chatLog: List<AiMessage>, roomId: String): Result<AiMessages> {
+        localChattingRepository.insertLocalMessage(
             id = generateNowDateTime().toISOLocalDateTimeString(),
             chattingRoomId = roomId,
             messageFrom = ChattingRole.USER.name,
@@ -24,26 +24,26 @@ class PostMessageUseCase @Inject constructor(
             createdAt = generateNowDateTime().toISOLocalDateTimeString(),
         )
 
-        chattingRepository.insertChattingRoom(
+        localChattingRepository.insertLocalChattingRoom(
             id = roomId,
             lastChatting = chatLog.get(chatLog.size - 1).content,
             updatedAt = generateNowDateTime().toISOLocalDateTimeString(),
         )
 
-        return consultingRepository.postChatMessage(chatLog).let {
+        return remoteChattingRepository.postAiMessage(chatLog).let {
             it.onSuccess {
-                chattingRepository.insertMessage(
+                localChattingRepository.insertLocalMessage(
                     id = generateNowDateTime().toISOLocalDateTimeString(),
                     chattingRoomId = roomId,
                     messageFrom = ChattingRole.ASSISTANT.name,
                     messageTo = ChattingRole.USER.name,
-                    content = it.messages.get(it.messages.size - 1).content,
+                    content = it.aiMessages.get(it.aiMessages.size - 1).content,
                     createdAt = generateNowDateTime().plusSeconds(1).toISOLocalDateTimeString(),
                 )
 
-                chattingRepository.insertChattingRoom(
+                localChattingRepository.insertLocalChattingRoom(
                     id = roomId,
-                    lastChatting = it.messages.get(it.messages.size - 1).content,
+                    lastChatting = it.aiMessages.get(it.aiMessages.size - 1).content,
                     updatedAt = generateNowDateTime().toISOLocalDateTimeString(),
                 )
             }

@@ -3,8 +3,8 @@ package com.tgyuu.domain.repository.chatting
 import com.tgyuu.model.storage.ChattingRoom
 import com.tgyuu.model.storage.Message
 
-interface ChattingRepository {
-    suspend fun insertMessage(
+interface LocalChattingRepository {
+    suspend fun insertLocalMessage(
         id: String,
         chattingRoomId: String,
         messageFrom: String,
@@ -13,17 +13,17 @@ interface ChattingRepository {
         createdAt: String,
     ): Result<Unit>
 
-    suspend fun insertChattingRoom(
+    suspend fun insertLocalChattingRoom(
         id: String,
         lastChatting: String,
         updatedAt: String,
     ): Result<Unit>
 
-    suspend fun deleteChattingRoom(id: String): Result<Unit>
+    suspend fun deleteLocalChattingRoom(id: String): Result<Unit>
 
-    suspend fun getChattingRoom(roomId: String): Result<ChattingRoom>
+    suspend fun getLocalChattingRoom(roomId: String): Result<ChattingRoom>
 
-    suspend fun getAllChattingRoomMessages(roomId: String): Result<List<Message>>
+    suspend fun getLocalAllChattingRoomMessages(roomId: String): Result<List<Message>>
 
     suspend fun getAllChattingRoom(): Result<List<ChattingRoom>>
 }

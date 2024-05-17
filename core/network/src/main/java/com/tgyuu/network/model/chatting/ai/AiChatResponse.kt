@@ -1,4 +1,4 @@
-package com.tgyuu.network.model.consulting
+package com.tgyuu.network.model.chatting.ai
 
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable

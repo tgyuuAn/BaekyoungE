@@ -5,15 +5,15 @@ import com.tgyuu.data.util.toISOLocalDateTimeString
 import com.tgyuu.database.dao.ChattingDao
 import com.tgyuu.database.model.ChattingRoomEntity
 import com.tgyuu.database.model.MessageEntity
-import com.tgyuu.domain.repository.chatting.ChattingRepository
+import com.tgyuu.domain.repository.chatting.LocalChattingRepository
 import com.tgyuu.model.storage.ChattingRoom
 import com.tgyuu.model.storage.Message
 import javax.inject.Inject
 
-class ChattingRepositoryImpl @Inject constructor(
+class LocalChattingRepositoryImpl @Inject constructor(
     private val chattingDao: ChattingDao,
-) : ChattingRepository {
-    override suspend fun insertMessage(
+) : LocalChattingRepository {
+    override suspend fun insertLocalMessage(
         id: String,
         chattingRoomId: String,
         messageFrom: String,
@@ -33,7 +33,7 @@ class ChattingRepositoryImpl @Inject constructor(
         )
     }
 
-    override suspend fun insertChattingRoom(id: String, lastChatting: String, updatedAt: String) =
+    override suspend fun insertLocalChattingRoom(id: String, lastChatting: String, updatedAt: String) =
         runCatching {
             chattingDao.insertChattingRoom(
                 ChattingRoomEntity(
@@ -44,12 +44,12 @@ class ChattingRepositoryImpl @Inject constructor(
             )
         }
 
-    override suspend fun deleteChattingRoom(id: String) = runCatching {
+    override suspend fun deleteLocalChattingRoom(id: String) = runCatching {
         chattingDao.deleteChattingRoom(roomId = id)
         chattingDao.deleteAllChattingRoomMessages(roomId = id)
     }
 
-    override suspend fun getChattingRoom(roomId: String): Result<ChattingRoom> = runCatching {
+    override suspend fun getLocalChattingRoom(roomId: String): Result<ChattingRoom> = runCatching {
         val chattingRoomEntity = chattingDao.getChattingRoom(roomId)
             ?: ChattingRoomEntity(
                 id = generateNowDateTime().toISOLocalDateTimeString(),
@@ -64,7 +64,7 @@ class ChattingRepositoryImpl @Inject constructor(
         )
     }
 
-    override suspend fun getAllChattingRoomMessages(roomId: String): Result<List<Message>> =
+    override suspend fun getLocalAllChattingRoomMessages(roomId: String): Result<List<Message>> =
         runCatching {
             chattingDao.getAllChattingRoomMessages(roomId).map {
                 Message(

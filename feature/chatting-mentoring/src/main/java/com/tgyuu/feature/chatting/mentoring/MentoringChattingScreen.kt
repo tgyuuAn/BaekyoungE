@@ -1,6 +1,5 @@
 package com.tgyuu.feature.chatting.mentoring
 
-import android.util.Log
 import androidx.compose.foundation.Canvas
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
@@ -65,15 +64,15 @@ import com.tgyuu.designsystem.component.BaekyoungSpeechBubble
 import com.tgyuu.designsystem.component.ChattingLoader
 import com.tgyuu.designsystem.component.SpeechBubbleType
 import com.tgyuu.designsystem.theme.BaekyoungTheme
-import com.tgyuu.model.consulting.ChattingRole
-import com.tgyuu.model.consulting.Message
+import com.tgyuu.model.chatting.ChattingRole
+import com.tgyuu.model.chatting.AiMessage
 import kotlinx.coroutines.launch
 
 @Composable
-internal fun MentorChattingRoute(
+internal fun MentoringChattingRoute(
     roomId: String,
     popBackStack: () -> Unit,
-    viewModel: MentorChattingViewModel = hiltViewModel(),
+    viewModel: MentoringChattingViewModel = hiltViewModel(),
 ) {
     val chatText by viewModel.chatText.collectAsStateWithLifecycle()
     val chatLog = viewModel.chatLog.toList()
@@ -82,11 +81,10 @@ internal fun MentorChattingRoute(
     val (showExitChattingRoomDialog, setExitChattingRoomDialog) = remember { mutableStateOf(false) }
 
     LaunchedEffect(true) {
-        Log.d("test", "roomId : $roomId")
         viewModel.roomId.value = roomId
     }
 
-    MentorChattingScreen(
+    MentoringChattingScreen(
         chatText = chatText,
         searchText = searchText,
         chatLog = chatLog,
@@ -100,10 +98,10 @@ internal fun MentorChattingRoute(
 }
 
 @Composable
-internal fun MentorChattingScreen(
+internal fun MentoringChattingScreen(
     chatText: String,
     searchText: String,
-    chatLog: List<Message>,
+    chatLog: List<AiMessage>,
     chatState: UiState<Unit>,
     showExitChattingRoomDialog: Boolean,
     setExitChattingRoomDialog: (Boolean) -> Unit,

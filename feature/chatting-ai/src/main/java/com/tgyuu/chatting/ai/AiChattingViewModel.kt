@@ -9,9 +9,9 @@ import com.tgyuu.common.util.UiState
 import com.tgyuu.common.util.generateNowDateTime
 import com.tgyuu.common.util.toISOLocalDateTimeString
 import com.tgyuu.domain.usecase.chatting.GetAllChattingRoomMessagesUseCase
-import com.tgyuu.domain.usecase.chatting.PostMessageUseCase
-import com.tgyuu.model.consulting.ChattingRole
-import com.tgyuu.model.consulting.Message
+import com.tgyuu.domain.usecase.chatting.PostAiMessageUseCase
+import com.tgyuu.model.chatting.ChattingRole
+import com.tgyuu.model.chatting.AiMessage
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
@@ -20,7 +20,7 @@ import javax.inject.Inject
 
 @HiltViewModel
 class AiChattingViewModel @Inject constructor(
-    private val postMessageUseCase: PostMessageUseCase,
+    private val postAiMessageUseCase: PostAiMessageUseCase,
     private val getAllChattingRoomMessagesUseCase: GetAllChattingRoomMessagesUseCase,
 ) : ViewModel() {
     private val _chatText: MutableStateFlow<String> = MutableStateFlow("")
@@ -29,8 +29,8 @@ class AiChattingViewModel @Inject constructor(
     private val _searchText: MutableStateFlow<String> = MutableStateFlow("")
     val searchText get() = _searchText.asStateFlow()
 
-    val chatLog: SnapshotStateList<Message> = mutableStateListOf(
-        Message(
+    val chatLog: SnapshotStateList<AiMessage> = mutableStateListOf(
+        AiMessage(
             content = "너는 대한민국 부경대학교 대학생들의 진로 상담 질문에 답하는 사실형 AI 챗봇 '백경이'야.\n" +
                 "\n" +
                 "['백경이' 소개]\n" +
@@ -72,8 +72,8 @@ class AiChattingViewModel @Inject constructor(
         if (roomId != "EMPTY") {
             _roomId.value = roomId
             getAllChattingRoomMessagesUseCase(_roomId.value).onSuccess {
-                val messages = it.map {
-                    Message(
+                val aiMessages = it.map {
+                    AiMessage(
                         content = it.content,
                         role = when (it.messageFrom) {
                             "USER" -> ChattingRole.USER
@@ -82,7 +82,7 @@ class AiChattingViewModel @Inject constructor(
                         },
                     )
                 }
-                chatLog.addAll(messages)
+                chatLog.addAll(aiMessages)
             }.onFailure { }
         }
     }
@@ -93,7 +93,7 @@ class AiChattingViewModel @Inject constructor(
         }
 
         chatLog.add(
-            Message(
+            AiMessage(
                 content = _chatText.value,
                 role = ChattingRole.USER,
             ),
@@ -101,8 +101,8 @@ class AiChattingViewModel @Inject constructor(
         _chatText.value = ""
         _chatState.value = UiState.Loading
 
-        postMessageUseCase(chatLog = chatLog.toList(), roomId = _roomId.value)
-            .onSuccess { chatLog.addAll(it.messages) }
+        postAiMessageUseCase(chatLog = chatLog.toList(), roomId = _roomId.value)
+            .onSuccess { chatLog.addAll(it.aiMessages) }
             .onFailure { Log.d("test", "onFailure : " + it.toString()) }
             .also { _chatState.value = UiState.Success(Unit) }
     }

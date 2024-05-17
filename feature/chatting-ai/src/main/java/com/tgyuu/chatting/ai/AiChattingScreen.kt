@@ -45,8 +45,8 @@ import com.tgyuu.designsystem.component.BaekyoungSpeechBubble
 import com.tgyuu.designsystem.component.SpeechBubbleType
 import com.tgyuu.designsystem.theme.BaekyoungTheme
 import com.tgyuu.feature.chatting.ai.R
-import com.tgyuu.model.consulting.ChattingRole
-import com.tgyuu.model.consulting.Message
+import com.tgyuu.model.chatting.ChattingRole
+import com.tgyuu.model.chatting.AiMessage
 import kotlinx.coroutines.launch
 
 @Composable
@@ -80,7 +80,7 @@ internal fun AiChattingRoute(
 internal fun AiChattingScreen(
     chatText: String,
     searchText: String,
-    chatLog: List<Message>,
+    chatLog: List<AiMessage>,
     chatState: UiState<Unit>,
     onChatTextChanged: (String) -> Unit,
     onSearchTextChanged: (String) -> Unit,

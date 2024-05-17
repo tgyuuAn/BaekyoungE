@@ -1,10 +1,10 @@
-package com.tgyuu.model.consulting
+package com.tgyuu.model.chatting
 
-data class ChatLog(
-    val messages: MutableList<Message>,
+data class AiMessages(
+    val aiMessages: MutableList<AiMessage>,
 )
 
-data class Message(
+data class AiMessage(
     val content: String,
     val role: ChattingRole,
 )
