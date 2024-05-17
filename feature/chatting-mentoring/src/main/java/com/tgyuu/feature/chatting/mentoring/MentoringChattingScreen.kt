@@ -297,25 +297,6 @@ internal fun MentoringChattingScreen(
                                 .padding(bottom = 70.dp),
                         )
 
-                        Column(
-                            horizontalAlignment = Alignment.CenterHorizontally,
-                            verticalArrangement = Arrangement.spacedBy(6.dp),
-                            modifier = Modifier
-                                .align(Alignment.BottomCenter)
-                                .padding(bottom = 125.dp),
-                        ) {
-                            Text(
-                                text = "무엇이 궁금한가요?",
-                                style = BaekyoungTheme.typography.labelRegular,
-                                color = BaekyoungTheme.colors.white,
-                            )
-
-                            Image(
-                                painter = painterResource(id = R.drawable.ic_marker),
-                                contentDescription = null,
-                            )
-                        }
-
                         BaekyoungCenterTopBar(
                             titleTextId = string.chatting,
                             textColor = BaekyoungTheme.colors.white,
@@ -373,7 +354,24 @@ internal fun MentoringChattingScreen(
                                     .padding(bottom = 135.dp),
                             )
 
-                            else -> Unit
+                            else -> Column(
+                                horizontalAlignment = Alignment.CenterHorizontally,
+                                verticalArrangement = Arrangement.spacedBy(6.dp),
+                                modifier = Modifier
+                                    .align(Alignment.BottomCenter)
+                                    .padding(bottom = 125.dp),
+                            ) {
+                                Text(
+                                    text = "무엇이 궁금한가요?",
+                                    style = BaekyoungTheme.typography.labelRegular,
+                                    color = BaekyoungTheme.colors.white,
+                                )
+
+                                Image(
+                                    painter = painterResource(id = R.drawable.ic_marker),
+                                    contentDescription = null,
+                                )
+                            }
                         }
 
                         BaekyoungChatTextField(
