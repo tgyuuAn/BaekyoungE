@@ -8,7 +8,7 @@ import androidx.lifecycle.viewModelScope
 import com.tgyuu.common.util.UiState
 import com.tgyuu.common.util.generateNowDateTime
 import com.tgyuu.common.util.toISOLocalDateTimeString
-import com.tgyuu.domain.usecase.chatting.GetAllChattingRoomMessagesUseCase
+import com.tgyuu.domain.usecase.chatting.GetLocalAllChattingRoomMessagesUseCase
 import com.tgyuu.domain.usecase.chatting.PostAiMessageUseCase
 import com.tgyuu.model.chatting.ChattingRole
 import com.tgyuu.model.chatting.AiMessage
@@ -21,7 +21,7 @@ import javax.inject.Inject
 @HiltViewModel
 class AiChattingViewModel @Inject constructor(
     private val postAiMessageUseCase: PostAiMessageUseCase,
-    private val getAllChattingRoomMessagesUseCase: GetAllChattingRoomMessagesUseCase,
+    private val getLocalAllChattingRoomMessagesUseCase: GetLocalAllChattingRoomMessagesUseCase,
 ) : ViewModel() {
     private val _chatText: MutableStateFlow<String> = MutableStateFlow("")
     val chatText get() = _chatText.asStateFlow()
@@ -71,7 +71,7 @@ class AiChattingViewModel @Inject constructor(
     fun setRoomId(roomId: String) = viewModelScope.launch {
         if (roomId != "EMPTY") {
             _roomId.value = roomId
-            getAllChattingRoomMessagesUseCase(_roomId.value).onSuccess {
+            getLocalAllChattingRoomMessagesUseCase(_roomId.value).onSuccess {
                 val aiMessages = it.map {
                     AiMessage(
                         content = it.content,

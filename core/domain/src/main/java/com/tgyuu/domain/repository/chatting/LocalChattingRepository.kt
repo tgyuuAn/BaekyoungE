@@ -25,5 +25,5 @@ interface LocalChattingRepository {
 
     suspend fun getLocalAllChattingRoomMessages(roomId: String): Result<List<Message>>
 
-    suspend fun getAllChattingRoom(): Result<List<ChattingRoom>>
+    suspend fun getLocalAllChattingRoom(): Result<List<ChattingRoom>>
 }

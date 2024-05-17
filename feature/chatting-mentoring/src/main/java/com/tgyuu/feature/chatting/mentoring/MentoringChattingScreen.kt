@@ -1,5 +1,6 @@
 package com.tgyuu.feature.chatting.mentoring
 
+import android.util.Log
 import androidx.compose.foundation.Canvas
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
@@ -64,8 +65,8 @@ import com.tgyuu.designsystem.component.BaekyoungSpeechBubble
 import com.tgyuu.designsystem.component.ChattingLoader
 import com.tgyuu.designsystem.component.SpeechBubbleType
 import com.tgyuu.designsystem.theme.BaekyoungTheme
-import com.tgyuu.model.chatting.AiMessage
-import com.tgyuu.model.chatting.ChattingRole
+import com.tgyuu.model.auth.UserInformation
+import com.tgyuu.model.chatting.MentoringMessage
 import kotlinx.coroutines.launch
 
 @Composable
@@ -79,9 +80,11 @@ internal fun MentoringChattingRoute(
     val searchText by viewModel.searchText.collectAsStateWithLifecycle()
     val chatState by viewModel.chatState.collectAsStateWithLifecycle()
     val (showExitChattingRoomDialog, setExitChattingRoomDialog) = remember { mutableStateOf(false) }
+    val userInformation by viewModel.userInformation.collectAsStateWithLifecycle()
 
     LaunchedEffect(true) {
         viewModel.roomId.value = roomId
+        viewModel.getMessages()
     }
 
     MentoringChattingScreen(
@@ -89,6 +92,7 @@ internal fun MentoringChattingRoute(
         searchText = searchText,
         chatLog = chatLog,
         chatState = chatState,
+        userInformation = userInformation,
         showExitChattingRoomDialog = showExitChattingRoomDialog,
         setExitChattingRoomDialog = setExitChattingRoomDialog,
         onChatTextChanged = viewModel::setChatText,
@@ -102,8 +106,9 @@ internal fun MentoringChattingRoute(
 internal fun MentoringChattingScreen(
     chatText: String,
     searchText: String,
-    chatLog: List<AiMessage>,
+    chatLog: List<MentoringMessage>,
     chatState: UiState<Unit>,
+    userInformation: UserInformation,
     showExitChattingRoomDialog: Boolean,
     setExitChattingRoomDialog: (Boolean) -> Unit,
     onChatTextChanged: (String) -> Unit,
@@ -345,11 +350,14 @@ internal fun MentoringChattingScreen(
                                 .padding(top = topBarHeight, bottom = 220.dp),
                         ) {
                             items(items = chatLog) { message ->
-                                val speechBubbleType = when (message.role) {
-                                    ChattingRole.USER -> SpeechBubbleType.AI_USER
-                                    ChattingRole.ASSISTANT -> SpeechBubbleType.AI_CHAT
-                                    ChattingRole.SYSTEM, ChattingRole.FUNCTION -> return@items
-                                }
+                                Log.d("test", userInformation.userId)
+
+                                val speechBubbleType =
+                                    if (message.userId == userInformation.userId) {
+                                        SpeechBubbleType.MENTOR_MENTI_USER
+                                    } else {
+                                        SpeechBubbleType.MENTOR_MENTI_OPPONENT
+                                    }
 
                                 BaekyoungSpeechBubble(
                                     type = speechBubbleType,

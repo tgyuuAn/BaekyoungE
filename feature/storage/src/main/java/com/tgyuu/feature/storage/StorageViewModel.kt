@@ -2,8 +2,8 @@ package com.tgyuu.feature.storage
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.tgyuu.domain.usecase.chatting.DeleteChattingRoomUseCase
-import com.tgyuu.domain.usecase.chatting.GetAllChattingLogUseCase
+import com.tgyuu.domain.usecase.chatting.DeleteLocalChattingRoomUseCase
+import com.tgyuu.domain.usecase.chatting.GetLocalAllChattingLogUseCase
 import com.tgyuu.model.storage.ChattingRoom
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableSharedFlow
@@ -15,8 +15,8 @@ import javax.inject.Inject
 
 @HiltViewModel
 class StorageViewModel @Inject constructor(
-    private val getAllChattingLogUseCase: GetAllChattingLogUseCase,
-    private val deleteChattingRoomUseCase: DeleteChattingRoomUseCase,
+    private val getLocalAllChattingLogUseCase: GetLocalAllChattingLogUseCase,
+    private val deleteLocalChattingRoomUseCase: DeleteLocalChattingRoomUseCase,
 ) : ViewModel() {
     private val _eventFlow = MutableSharedFlow<StorageEvent>()
     val eventFlow = _eventFlow.asSharedFlow()
@@ -30,13 +30,13 @@ class StorageViewModel @Inject constructor(
     fun event(event: StorageEvent) = viewModelScope.launch { _eventFlow.emit(event) }
 
     fun getAllChattingLogs() = viewModelScope.launch {
-        getAllChattingLogUseCase()
+        getLocalAllChattingLogUseCase()
             .onSuccess { _chattingLogs.value = it }
             .onFailure { event(StorageEvent.EventFailed(it.toString())) }
     }
 
     fun deleteChattingRoom(roomId: String) = viewModelScope.launch {
-        deleteChattingRoomUseCase(roomId)
+        deleteLocalChattingRoomUseCase(roomId)
             .onSuccess {
                 getAllChattingLogs()
                 event(StorageEvent.DeleteSuccess)

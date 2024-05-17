@@ -4,10 +4,13 @@ import com.tgyuu.domain.repository.chatting.RemoteChattingRepository
 import com.tgyuu.model.chatting.AiMessage
 import com.tgyuu.model.chatting.AiMessages
 import com.tgyuu.model.chatting.ChattingRole
+import com.tgyuu.model.chatting.MentoringMessage
 import com.tgyuu.network.model.chatting.ai.AiChatRequest
 import com.tgyuu.network.model.chatting.ai.MessageDTO
 import com.tgyuu.network.model.chatting.mentoring.MentoringChatRequest
 import com.tgyuu.network.source.chatting.ChattingDataSource
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.map
 import javax.inject.Inject
 
 class RemoteChattingRepositoryImpl @Inject constructor(
@@ -59,4 +62,15 @@ class RemoteChattingRepositoryImpl @Inject constructor(
             isChecked = false,
         ),
     )
+
+    override suspend fun getAllMessage(roomId: String): Flow<MentoringMessage> =
+        chattingDataSource.getAllMessage(roomId).map {
+            MentoringMessage(
+                roomId = it.roomId,
+                userId = it.userId,
+                content = it.content,
+                createdAt = it.createdAt,
+                isChecked = it.isChecked,
+            )
+        }
 }

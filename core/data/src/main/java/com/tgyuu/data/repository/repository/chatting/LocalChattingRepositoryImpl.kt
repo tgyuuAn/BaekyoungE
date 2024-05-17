@@ -78,7 +78,7 @@ class LocalChattingRepositoryImpl @Inject constructor(
             }
         }
 
-    override suspend fun getAllChattingRoom(): Result<List<ChattingRoom>> = runCatching {
+    override suspend fun getLocalAllChattingRoom(): Result<List<ChattingRoom>> = runCatching {
         chattingDao.getAllChattingRoom().map {
             ChattingRoom(
                 id = it.id,

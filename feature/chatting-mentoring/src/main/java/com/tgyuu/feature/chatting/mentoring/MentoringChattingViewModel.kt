@@ -7,10 +7,10 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.tgyuu.common.util.UiState
 import com.tgyuu.domain.usecase.auth.GetUserInformationUseCase
+import com.tgyuu.domain.usecase.chatting.GetMentoringChattingMessagesUseCase
 import com.tgyuu.domain.usecase.chatting.PostMentoringMessageUseCase
 import com.tgyuu.model.auth.UserInformation
-import com.tgyuu.model.chatting.AiMessage
-import com.tgyuu.model.chatting.ChattingRole
+import com.tgyuu.model.chatting.MentoringMessage
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
@@ -21,6 +21,7 @@ import javax.inject.Inject
 class MentoringChattingViewModel @Inject constructor(
     private val getUserInformationUseCase: GetUserInformationUseCase,
     private val postMentoringMessageUseCase: PostMentoringMessageUseCase,
+    private val getMentoringChattingMessagesUseCase: GetMentoringChattingMessagesUseCase,
 ) : ViewModel() {
     private val _chatText: MutableStateFlow<String> = MutableStateFlow("")
     val chatText get() = _chatText.asStateFlow()
@@ -28,7 +29,7 @@ class MentoringChattingViewModel @Inject constructor(
     private val _searchText: MutableStateFlow<String> = MutableStateFlow("")
     val searchText get() = _searchText.asStateFlow()
 
-    val chatLog: SnapshotStateList<AiMessage> = mutableStateListOf()
+    val chatLog: SnapshotStateList<MentoringMessage> = mutableStateListOf()
 
     private val _chatState: MutableStateFlow<UiState<Unit>> =
         MutableStateFlow(UiState.Success(Unit))
@@ -36,7 +37,7 @@ class MentoringChattingViewModel @Inject constructor(
 
     val roomId: MutableStateFlow<String> = MutableStateFlow("")
 
-    private val _userInformation = MutableStateFlow(UserInformation())
+    val userInformation = MutableStateFlow(UserInformation())
 
     init {
         getUserInformation(-1)
@@ -52,7 +53,7 @@ class MentoringChattingViewModel @Inject constructor(
 
     fun getUserInformation(userId: Long) = viewModelScope.launch {
         getUserInformationUseCase(userId.toString())
-            .onSuccess { _userInformation.value = it }
+            .onSuccess { userInformation.value = it }
             .onFailure { }
     }
 
@@ -61,21 +62,19 @@ class MentoringChattingViewModel @Inject constructor(
             return@launch
         }
 
-        chatLog.add(
-            AiMessage(
-                content = _chatText.value,
-                role = ChattingRole.USER,
-            ),
-        )
         _chatState.value = UiState.Loading
 
         postMentoringMessageUseCase(
             roomId = roomId.value,
-            userId = _userInformation.value.userId,
+            userId = userInformation.value.userId,
             content = _chatText.value,
         )
             .onSuccess { _chatText.value = "" }
             .onFailure { Log.d("test", "onFailure : " + it.toString()) }
             .also { _chatState.value = UiState.Success(Unit) }
+    }
+
+    fun getMessages() = viewModelScope.launch {
+        getMentoringChattingMessagesUseCase(roomId.value).collect { chatLog.add(it) }
     }
 }
