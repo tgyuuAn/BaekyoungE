@@ -14,7 +14,7 @@ interface MentoringChattingRepository {
 
     suspend fun getAllMessage(roomId: String): Flow<MentoringMessage>
 
-    suspend fun getAllMentorChattingRoom(userId: String): Result<List<JoinChat>>
+    suspend fun getMentorChattingRoom(userId: String): Result<List<JoinChat>>
 
-    suspend fun getAllMenteeChattingRoom(userId: String): Result<List<JoinChat>>
+    suspend fun getMenteeChattingRoom(userId: String): Result<List<JoinChat>>
 }

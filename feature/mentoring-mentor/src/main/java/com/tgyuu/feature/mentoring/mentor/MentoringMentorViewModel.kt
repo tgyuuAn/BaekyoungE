@@ -5,7 +5,7 @@ import androidx.lifecycle.viewModelScope
 import com.tgyuu.common.util.generateNowDateTime
 import com.tgyuu.common.util.toISOLocalDateTimeString
 import com.tgyuu.domain.usecase.auth.GetUserInformationUseCase
-import com.tgyuu.domain.usecase.chatting.GetRemoteAllChattingRoomUseCase
+import com.tgyuu.domain.usecase.chatting.GetMentorChattingRoomUseCase
 import com.tgyuu.domain.usecase.mentoring.DeleteMentorInfoUseCase
 import com.tgyuu.domain.usecase.mentoring.GetMentorInfoUseCase
 import com.tgyuu.domain.usecase.mentoring.PostMentorInfoUseCase
@@ -23,7 +23,7 @@ class MentoringMentorViewModel @Inject constructor(
     private val postMentorInfoUseCase: PostMentorInfoUseCase,
     private val deleteMentorInfoUseCase: DeleteMentorInfoUseCase,
     private val getMentorInfoUseCase: GetMentorInfoUseCase,
-    private val getRemoteAllChattingRoomUseCase: GetRemoteAllChattingRoomUseCase,
+    private val getMentorChattingRoomUseCase: GetMentorChattingRoomUseCase,
 ) : ViewModel() {
     private val _userInformation = MutableStateFlow(UserInformation())
 
@@ -54,7 +54,7 @@ class MentoringMentorViewModel @Inject constructor(
     }
 
     fun getAllChattingRoom() = viewModelScope.launch {
-        getRemoteAllChattingRoomUseCase(userId = _userInformation.value.userId)
+        getMentorChattingRoomUseCase(userId = _userInformation.value.userId)
             .onSuccess { _chattingRooms.value = it }
             .onFailure { }
     }

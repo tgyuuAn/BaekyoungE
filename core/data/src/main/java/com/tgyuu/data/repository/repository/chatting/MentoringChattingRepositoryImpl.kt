@@ -44,8 +44,8 @@ class MentoringChattingRepositoryImpl @Inject constructor(
             )
         }
 
-    override suspend fun getAllMentorChattingRoom(userId: String): Result<List<JoinChat>> =
-        chattingDataSource.getAllMentorChattingRoom(userId).mapCatching {
+    override suspend fun getMentorChattingRoom(userId: String): Result<List<JoinChat>> =
+        chattingDataSource.getMentorChattingRoom(userId).mapCatching {
             it.map {
                 JoinChat(
                     roomId = it.roomId,
@@ -55,8 +55,8 @@ class MentoringChattingRepositoryImpl @Inject constructor(
             }
         }
 
-    override suspend fun getAllMenteeChattingRoom(userId: String): Result<List<JoinChat>> =
-        chattingDataSource.getAllMenteeChattingRoom(userId).mapCatching {
+    override suspend fun getMenteeChattingRoom(userId: String): Result<List<JoinChat>> =
+        chattingDataSource.getMenteeChattingRoom(userId).mapCatching {
             it.map {
                 JoinChat(
                     roomId = it.roomId,

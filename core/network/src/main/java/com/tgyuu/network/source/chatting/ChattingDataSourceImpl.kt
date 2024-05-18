@@ -70,7 +70,7 @@ class ChattingDataSourceImpl @Inject constructor(
         awaitClose { listenerRegistration.remove() }
     }
 
-    override suspend fun getAllMentorChattingRoom(userId: String): Result<List<JoinChatResponse>> =
+    override suspend fun getMentorChattingRoom(userId: String): Result<List<JoinChatResponse>> =
         runCatching {
             firebaseFirestore.collection(JOIN_CHAT_COLLECTION)
                 .whereEqualTo("mentorId", userId)
@@ -83,7 +83,7 @@ class ChattingDataSourceImpl @Inject constructor(
                 }
         }
 
-    override suspend fun getAllMenteeChattingRoom(userId: String): Result<List<JoinChatResponse>> =
+    override suspend fun getMenteeChattingRoom(userId: String): Result<List<JoinChatResponse>> =
         runCatching {
             firebaseFirestore.collection(JOIN_CHAT_COLLECTION)
                 .whereEqualTo("menteeId", userId)

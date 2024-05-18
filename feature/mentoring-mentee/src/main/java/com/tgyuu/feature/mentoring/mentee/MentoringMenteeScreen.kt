@@ -23,6 +23,7 @@ import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -31,16 +32,23 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.tgyuu.common.R.drawable
 import com.tgyuu.designsystem.component.BaekyoungCenterTopBar
 import com.tgyuu.designsystem.theme.BaekyoungTheme
+import com.tgyuu.model.chatting.JoinChat
 
 @Composable
 internal fun MentoringMenteeRoute(
     navigateToFindMentor: () -> Unit,
     popBackStack: () -> Unit,
+    viewModel: MentoringMenteeViewModel = hiltViewModel(),
 ) {
+    val chattingRooms by viewModel.chattingRooms.collectAsStateWithLifecycle()
+
     MentoringMenteeScreen(
+        chattingRooms = chattingRooms,
         navigateToFindMentor = navigateToFindMentor,
         popBackStack = popBackStack,
     )
@@ -48,6 +56,7 @@ internal fun MentoringMenteeRoute(
 
 @Composable
 fun MentoringMenteeScreen(
+    chattingRooms: List<JoinChat>,
     navigateToFindMentor: () -> Unit,
     popBackStack: () -> Unit,
 ) {
@@ -81,7 +90,7 @@ fun MentoringMenteeScreen(
                     )
                 }
 
-                items(listOf("종디기", "안태규")) {
+                items(chattingRooms) { chattingRooms ->
                     Card(
                         shape = RoundedCornerShape(10.dp),
                         colors = CardDefaults.cardColors(containerColor = BaekyoungTheme.colors.white),
@@ -117,7 +126,7 @@ fun MentoringMenteeScreen(
                                     verticalAlignment = Alignment.Bottom,
                                 ) {
                                     Text(
-                                        text = it,
+                                        text = chattingRooms.mentorId,
                                         style = BaekyoungTheme.typography.contentBold,
                                         color = BaekyoungTheme.colors.black,
                                     )
