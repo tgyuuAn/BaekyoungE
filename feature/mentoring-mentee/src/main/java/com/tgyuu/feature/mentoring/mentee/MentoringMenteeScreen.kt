@@ -31,6 +31,7 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import com.tgyuu.common.R.drawable
 import com.tgyuu.designsystem.component.BaekyoungCenterTopBar
 import com.tgyuu.designsystem.theme.BaekyoungTheme
 
@@ -101,7 +102,7 @@ fun MentoringMenteeScreen(
                                 .padding(horizontal = 10.dp, vertical = 15.dp),
                         ) {
                             Image(
-                                painter = painterResource(id = R.drawable.ic_user_default),
+                                painter = painterResource(id = drawable.ic_user_default),
                                 contentDescription = null,
                                 modifier = Modifier.size(40.dp),
                             )

@@ -34,6 +34,7 @@ import androidx.compose.ui.unit.sp
 import androidx.compose.ui.window.Dialog
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import com.tgyuu.common.R.drawable
 import com.tgyuu.common.util.UiState
 import com.tgyuu.designsystem.R.string
 import com.tgyuu.designsystem.component.BaekyoungButton
@@ -108,7 +109,7 @@ fun FindMentorScreen(
                             buttonColor = BaekyoungTheme.colors.black,
                             onButtonClick = {
                                 setEnterChattingRoomDialog(false)
-                                navigateToMentorChatting(selectedMentor.userId+"-"+userInformation.userId)
+                                navigateToMentorChatting(selectedMentor.userId + "-" + userInformation.userId)
                             },
                             modifier = Modifier.weight(1f),
                         )
@@ -148,7 +149,7 @@ fun FindMentorScreen(
                     ) {
                         items(mentorsInfo.data) { mentor ->
                             Card(
-                                shape = RoundedCornerShape(20.dp),
+                                shape = RoundedCornerShape(10.dp),
                                 colors = CardDefaults.cardColors(containerColor = BaekyoungTheme.colors.white),
                                 onClick = {
                                     selectedMentor = mentor
@@ -158,7 +159,7 @@ fun FindMentorScreen(
                                     .fillMaxWidth()
                                     .border(
                                         width = 1.dp,
-                                        shape = RoundedCornerShape(20.dp),
+                                        shape = RoundedCornerShape(10.dp),
                                         color = BaekyoungTheme.colors.grayDC,
                                     ),
                             ) {
@@ -171,7 +172,7 @@ fun FindMentorScreen(
                                         modifier = Modifier.fillMaxWidth(),
                                     ) {
                                         Image(
-                                            painter = painterResource(id = R.drawable.ic_user_default),
+                                            painter = painterResource(id = drawable.ic_user_default),
                                             contentDescription = null,
                                             modifier = Modifier.size(40.dp),
                                         )
