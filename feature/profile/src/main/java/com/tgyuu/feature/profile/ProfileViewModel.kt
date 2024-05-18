@@ -4,7 +4,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.tgyuu.common.util.UiState
 import com.tgyuu.domain.usecase.auth.GetUserInformationUseCase
-import com.tgyuu.domain.usecase.chatting.GetLocalAllChattingLogUseCase
+import com.tgyuu.domain.usecase.chatting.GetAiAllChattingLogUseCase
 import com.tgyuu.model.auth.UserInformation
 import com.tgyuu.model.storage.ChattingRoom
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -16,7 +16,7 @@ import javax.inject.Inject
 @HiltViewModel
 class ProfileViewModel @Inject constructor(
     private val getUserInformationUseCase: GetUserInformationUseCase,
-    private val getLocalAllChattingLogUseCase: GetLocalAllChattingLogUseCase,
+    private val getAiAllChattingLogUseCase: GetAiAllChattingLogUseCase,
 ) : ViewModel() {
     private val _userInformation = MutableStateFlow<UiState<UserInformation>>(UiState.Loading)
     val userInformation = _userInformation.asStateFlow()
@@ -30,7 +30,7 @@ class ProfileViewModel @Inject constructor(
     }
 
     private fun getAllChattingLogs() = viewModelScope.launch {
-        getLocalAllChattingLogUseCase()
+        getAiAllChattingLogUseCase()
             .onSuccess { _chattingLogs.value = it }
             .onFailure { }
     }

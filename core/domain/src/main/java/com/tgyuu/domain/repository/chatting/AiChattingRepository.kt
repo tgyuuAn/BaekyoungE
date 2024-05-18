@@ -1,10 +1,14 @@
 package com.tgyuu.domain.repository.chatting
 
+import com.tgyuu.model.chatting.AiMessage
+import com.tgyuu.model.chatting.AiMessages
 import com.tgyuu.model.storage.ChattingRoom
 import com.tgyuu.model.storage.Message
 
-interface LocalChattingRepository {
-    suspend fun insertLocalMessage(
+interface AiChattingRepository {
+    suspend fun postAiMessage(chatLog: List<AiMessage>): Result<AiMessages>
+
+    suspend fun insertMessage(
         id: String,
         chattingRoomId: String,
         messageFrom: String,
@@ -13,17 +17,17 @@ interface LocalChattingRepository {
         createdAt: String,
     ): Result<Unit>
 
-    suspend fun insertLocalChattingRoom(
+    suspend fun insertChattingRoom(
         id: String,
         lastChatting: String,
         updatedAt: String,
     ): Result<Unit>
 
-    suspend fun deleteLocalChattingRoom(id: String): Result<Unit>
+    suspend fun deleteChattingRoom(id: String): Result<Unit>
 
-    suspend fun getLocalChattingRoom(roomId: String): Result<ChattingRoom>
+    suspend fun getChattingRoom(roomId: String): Result<ChattingRoom>
 
-    suspend fun getLocalAllChattingRoomMessages(roomId: String): Result<List<Message>>
+    suspend fun getAllChattingRoomMessages(roomId: String): Result<List<Message>>
 
     suspend fun getLocalAllChattingRoom(): Result<List<ChattingRoom>>
 }

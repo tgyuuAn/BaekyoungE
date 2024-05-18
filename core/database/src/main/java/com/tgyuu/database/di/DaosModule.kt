@@ -1,7 +1,7 @@
 package com.tgyuu.database.di
 
 import com.tgyuu.database.BaekyoungDatabase
-import com.tgyuu.database.dao.ChattingDao
+import com.tgyuu.database.dao.AiChattingDao
 import com.tgyuu.database.dao.MentorDao
 import com.tgyuu.database.dao.UserDao
 import dagger.Module
@@ -15,7 +15,7 @@ internal object DaosModule {
     @Provides
     fun providesChattingDao(
         database: BaekyoungDatabase,
-    ): ChattingDao = database.ChattingDao()
+    ): AiChattingDao = database.AiChattingDao()
 
     @Provides
     fun providesUserDao(

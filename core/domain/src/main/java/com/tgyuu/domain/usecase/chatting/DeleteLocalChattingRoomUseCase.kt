@@ -1,10 +1,10 @@
 package com.tgyuu.domain.usecase.chatting
 
-import com.tgyuu.domain.repository.chatting.LocalChattingRepository
+import com.tgyuu.domain.repository.chatting.AiChattingRepository
 import javax.inject.Inject
 
 class DeleteLocalChattingRoomUseCase @Inject constructor(
-    private val localChattingRepository: LocalChattingRepository,
+    private val aiChattingRepository: AiChattingRepository,
 ) {
-    suspend operator fun invoke(id: String): Result<Unit> = localChattingRepository.deleteLocalChattingRoom(id = id)
+    suspend operator fun invoke(id: String): Result<Unit> = aiChattingRepository.deleteChattingRoom(id = id)
 }

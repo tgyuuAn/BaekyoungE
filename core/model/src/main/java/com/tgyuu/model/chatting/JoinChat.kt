@@ -1,6 +1,7 @@
 package com.tgyuu.model.chatting
 
 data class JoinChat(
-    val userId: List<String>,
+    val mentorId: String,
+    val menteeId: String,
     val roomId: String,
 )

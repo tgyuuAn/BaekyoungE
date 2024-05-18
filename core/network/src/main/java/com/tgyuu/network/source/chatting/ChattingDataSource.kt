@@ -18,5 +18,5 @@ interface ChattingDataSource {
 
     suspend fun getAllMessage(roomId: String): Flow<MentoringChatResponse>
 
-    suspend fun getRemoteAllChattingRoom(userId: String): Result<List<JoinChatResponse>>
+    suspend fun getAllMentorChattingRoom(userId: String): Result<List<JoinChatResponse>>
 }

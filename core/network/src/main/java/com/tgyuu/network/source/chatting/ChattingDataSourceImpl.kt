@@ -70,10 +70,10 @@ class ChattingDataSourceImpl @Inject constructor(
         awaitClose { listenerRegistration.remove() }
     }
 
-    override suspend fun getRemoteAllChattingRoom(userId: String): Result<List<JoinChatResponse>> =
+    override suspend fun getAllMentorChattingRoom(userId: String): Result<List<JoinChatResponse>> =
         runCatching {
             firebaseFirestore.collection(JOIN_CHAT_COLLECTION)
-                .whereArrayContains("userId", userId)
+                .whereEqualTo("mentorId", userId)
                 .get()
                 .await()
                 .documents

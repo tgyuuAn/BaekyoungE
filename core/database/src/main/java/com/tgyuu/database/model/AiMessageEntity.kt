@@ -4,8 +4,8 @@ import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.PrimaryKey
 
-@Entity(tableName = "message")
-data class MessageEntity(
+@Entity(tableName = "ai_message")
+data class AiMessageEntity(
     @PrimaryKey
     val id: String,
     @ColumnInfo(name = "chatting_room_id")

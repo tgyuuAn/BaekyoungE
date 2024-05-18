@@ -1,14 +1,10 @@
 package com.tgyuu.domain.repository.chatting
 
-import com.tgyuu.model.chatting.AiMessage
-import com.tgyuu.model.chatting.AiMessages
 import com.tgyuu.model.chatting.JoinChat
 import com.tgyuu.model.chatting.MentoringMessage
 import kotlinx.coroutines.flow.Flow
 
-interface RemoteChattingRepository {
-    suspend fun postAiMessage(chatLog: List<AiMessage>): Result<AiMessages>
-
+interface MentoringChattingRepository {
     suspend fun postMentoringChatMessage(
         roomId: String,
         userId: String,
@@ -18,5 +14,5 @@ interface RemoteChattingRepository {
 
     suspend fun getAllMessage(roomId: String): Flow<MentoringMessage>
 
-    suspend fun getRemoteAllChattingRoom(userId: String): Result<List<JoinChat>>
+    suspend fun getAllMentorChattingRoom(userId: String): Result<List<JoinChat>>
 }

@@ -1,21 +1,19 @@
 package com.tgyuu.domain.usecase.chatting
 
-import com.tgyuu.domain.repository.chatting.LocalChattingRepository
-import com.tgyuu.domain.repository.chatting.RemoteChattingRepository
+import com.tgyuu.domain.repository.chatting.AiChattingRepository
+import com.tgyuu.model.chatting.AiMessage
 import com.tgyuu.model.chatting.AiMessages
 import com.tgyuu.model.chatting.ChattingRole
-import com.tgyuu.model.chatting.AiMessage
 import java.time.LocalDateTime
 import java.time.ZoneId
 import java.time.format.DateTimeFormatter
 import javax.inject.Inject
 
 class PostAiMessageUseCase @Inject constructor(
-    private val remoteChattingRepository: RemoteChattingRepository,
-    private val localChattingRepository: LocalChattingRepository,
+    private val aiChattingRepository: AiChattingRepository,
 ) {
     suspend operator fun invoke(chatLog: List<AiMessage>, roomId: String): Result<AiMessages> {
-        localChattingRepository.insertLocalMessage(
+        aiChattingRepository.insertMessage(
             id = generateNowDateTime().toISOLocalDateTimeString(),
             chattingRoomId = roomId,
             messageFrom = ChattingRole.USER.name,
@@ -24,15 +22,15 @@ class PostAiMessageUseCase @Inject constructor(
             createdAt = generateNowDateTime().toISOLocalDateTimeString(),
         )
 
-        localChattingRepository.insertLocalChattingRoom(
+        aiChattingRepository.insertChattingRoom(
             id = roomId,
             lastChatting = chatLog.get(chatLog.size - 1).content,
             updatedAt = generateNowDateTime().toISOLocalDateTimeString(),
         )
 
-        return remoteChattingRepository.postAiMessage(chatLog).let {
+        return aiChattingRepository.postAiMessage(chatLog).let {
             it.onSuccess {
-                localChattingRepository.insertLocalMessage(
+                aiChattingRepository.insertMessage(
                     id = generateNowDateTime().toISOLocalDateTimeString(),
                     chattingRoomId = roomId,
                     messageFrom = ChattingRole.ASSISTANT.name,
@@ -41,7 +39,7 @@ class PostAiMessageUseCase @Inject constructor(
                     createdAt = generateNowDateTime().plusSeconds(1).toISOLocalDateTimeString(),
                 )
 
-                localChattingRepository.insertLocalChattingRoom(
+                aiChattingRepository.insertChattingRoom(
                     id = roomId,
                     lastChatting = it.aiMessages.get(it.aiMessages.size - 1).content,
                     updatedAt = generateNowDateTime().toISOLocalDateTimeString(),
