@@ -56,4 +56,3 @@ internal fun LocalDateTime.toISOLocalDateTimeString(): String =
 
 internal fun generateNowDateTime(zoneId: ZoneId = ZoneId.of("Asia/Seoul")): LocalDateTime =
     LocalDateTime.now(zoneId)
-

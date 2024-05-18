@@ -40,6 +40,6 @@ class FindMentorViewModel @Inject constructor(
 
         getAllMentorsInfoUseCase()
             .onSuccess { _mentorsInfo.value = UiState.Success(it) }
-            .onFailure { _mentorsInfo.value = UiState.Error(it.message ?: "알 수 없는 요청입니다.")}
+            .onFailure { _mentorsInfo.value = UiState.Error(it.message ?: "알 수 없는 요청입니다.") }
     }
 }

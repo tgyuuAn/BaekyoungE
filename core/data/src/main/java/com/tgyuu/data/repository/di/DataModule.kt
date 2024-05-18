@@ -3,11 +3,13 @@ package com.tgyuu.data.repository.di
 import com.tgyuu.data.repository.repository.auth.AuthRepositoryImpl
 import com.tgyuu.data.repository.repository.chatting.LocalChattingRepositoryImpl
 import com.tgyuu.data.repository.repository.chatting.RemoteChattingRepositoryImpl
-import com.tgyuu.data.repository.repository.mentoring.MentoringRepositoryImpl
+import com.tgyuu.data.repository.repository.mentoring.LocalMentoringRepositoryImpl
+import com.tgyuu.data.repository.repository.mentoring.RemoteMentoringRepositoryImpl
 import com.tgyuu.domain.repository.auth.AuthRepository
 import com.tgyuu.domain.repository.chatting.LocalChattingRepository
 import com.tgyuu.domain.repository.chatting.RemoteChattingRepository
-import com.tgyuu.domain.repository.mentoring.MentoringRepository
+import com.tgyuu.domain.repository.mentoring.LocalMentoringRepository
+import com.tgyuu.domain.repository.mentoring.RemoteMentoringRepository
 import dagger.Binds
 import dagger.Module
 import dagger.hilt.InstallIn
@@ -38,7 +40,13 @@ abstract class DataModule {
 
     @Binds
     @Singleton
-    abstract fun bindsMentoringRepository(
-        mentoringRepositoryImpl: MentoringRepositoryImpl,
-    ): MentoringRepository
+    abstract fun bindsRemoteMentoringRepository(
+        remoteMentoringRepositoryImpl: RemoteMentoringRepositoryImpl,
+    ): RemoteMentoringRepository
+
+    @Binds
+    @Singleton
+    abstract fun bindsLocalMentoringRepository(
+        localMentoringRepositoryImpl: LocalMentoringRepositoryImpl,
+    ): LocalMentoringRepository
 }

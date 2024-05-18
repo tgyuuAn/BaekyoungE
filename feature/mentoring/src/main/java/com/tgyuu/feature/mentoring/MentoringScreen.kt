@@ -106,7 +106,7 @@ fun MentoringScreen(
                     .clickable(
                         interactionSource = remember { MutableInteractionSource() },
                         indication = null,
-                    ) {  setSelectedRule(MentorMenteeRule.MENTOR) },
+                    ) { setSelectedRule(MentorMenteeRule.MENTOR) },
             ) {
                 Image(
                     painter = painterResource(id = R.drawable.ic_mentor),
@@ -149,7 +149,7 @@ fun MentoringScreen(
                     .clickable(
                         interactionSource = remember { MutableInteractionSource() },
                         indication = null,
-                    ) {  setSelectedRule(MentorMenteeRule.MENTEE) },
+                    ) { setSelectedRule(MentorMenteeRule.MENTEE) },
             ) {
                 Image(
                     painter = painterResource(id = R.drawable.ic_mentee),

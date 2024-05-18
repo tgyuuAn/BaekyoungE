@@ -88,7 +88,7 @@ fun ProfileScreen(
                             .clickable(
                                 interactionSource = remember { MutableInteractionSource() },
                                 indication = null,
-                            ) {  navigateToSetting() },
+                            ) { navigateToSetting() },
                     )
                 }
 

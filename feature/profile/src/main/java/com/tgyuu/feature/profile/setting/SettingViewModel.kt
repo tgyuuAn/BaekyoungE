@@ -2,7 +2,6 @@ package com.tgyuu.feature.profile.setting
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.kakao.sdk.auth.AuthApiClient
 import com.kakao.sdk.user.UserApiClient
 import com.tgyuu.common.util.UiState
 import com.tgyuu.domain.usecase.auth.DeleteUserInformationUseCase

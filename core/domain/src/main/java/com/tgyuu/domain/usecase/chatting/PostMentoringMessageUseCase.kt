@@ -9,7 +9,7 @@ class PostMentoringMessageUseCase @Inject constructor(
     suspend operator fun invoke(
         roomId: String,
         userId: String,
-      content: String,
+        content: String,
     ): Result<Unit> = remoteChattingRepository.postMentoringChatMessage(
         roomId = roomId,
         userId = userId,

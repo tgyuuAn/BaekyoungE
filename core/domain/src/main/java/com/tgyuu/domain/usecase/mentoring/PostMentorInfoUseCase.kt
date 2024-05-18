@@ -1,16 +1,16 @@
 package com.tgyuu.domain.usecase.mentoring
 
-import com.tgyuu.domain.repository.mentoring.MentoringRepository
+import com.tgyuu.domain.repository.mentoring.RemoteMentoringRepository
 import javax.inject.Inject
 
 class PostMentorInfoUseCase @Inject constructor(
-    private val mentoringRepository: MentoringRepository,
+    private val remoteMentoringRepository: RemoteMentoringRepository,
 ) {
     suspend operator fun invoke(
         userId: String,
         nickName: String,
         registrationDate: String,
-    ) = mentoringRepository.postMentorInfo(
+    ) = remoteMentoringRepository.postMentorInfo(
         userId = userId,
         nickName = nickName,
         registrationDate = registrationDate,

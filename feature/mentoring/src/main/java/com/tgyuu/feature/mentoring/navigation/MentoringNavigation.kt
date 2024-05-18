@@ -20,6 +20,7 @@ fun NavGraphBuilder.mentoringScreen(
     composable(route = mentoringNavigationRoute) {
         MentoringRoute(
             navigateToMentoringMentor = navigateToMentoringMentor,
-            navigateToMentoringMentee = navigateToMentoringMentee)
+            navigateToMentoringMentee = navigateToMentoringMentee,
+        )
     }
 }

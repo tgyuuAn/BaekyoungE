@@ -65,7 +65,7 @@ class RemoteChattingRepositoryImpl @Inject constructor(
         ),
         JoinChatRequest(
             roomId = roomId,
-            userId = userId,
+            userId = roomId.split("-"),
         ),
     )
 
@@ -84,8 +84,8 @@ class RemoteChattingRepositoryImpl @Inject constructor(
         chattingDataSource.getRemoteAllChattingRoom(userId).mapCatching {
             it.map {
                 JoinChat(
-                    it.roomId,
-                    it.userId,
+                    roomId = it.roomId,
+                    userId = it.roomId.split("-"),
                 )
             }
         }

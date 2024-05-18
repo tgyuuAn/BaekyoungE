@@ -4,7 +4,6 @@ import android.util.Log
 import com.google.firebase.firestore.DocumentChange
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.toObject
-import com.tgyuu.network.constant.CHATTING_ROOM_COLLECTION
 import com.tgyuu.network.constant.JOIN_CHAT_COLLECTION
 import com.tgyuu.network.constant.MESSAGE_COLLECTION
 import com.tgyuu.network.di.OpenAiApi
@@ -38,7 +37,7 @@ class ChattingDataSourceImpl @Inject constructor(
                 .await()
 
             firebaseFirestore.collection(JOIN_CHAT_COLLECTION)
-                .document()
+                .document(joinChatRequest.roomId)
                 .set(joinChatRequest)
                 .await()
         }
@@ -74,7 +73,7 @@ class ChattingDataSourceImpl @Inject constructor(
     override suspend fun getRemoteAllChattingRoom(userId: String): Result<List<JoinChatResponse>> =
         runCatching {
             firebaseFirestore.collection(JOIN_CHAT_COLLECTION)
-                .whereEqualTo("userId", userId)
+                .whereArrayContains("userId", userId)
                 .get()
                 .await()
                 .documents

@@ -2,7 +2,7 @@ package com.tgyuu.domain.repository.mentoring
 
 import com.tgyuu.model.mentoring.MentorInfo
 
-interface MentoringRepository {
+interface LocalMentoringRepository {
     suspend fun postMentorInfo(
         userId: String,
         nickName: String,
@@ -15,7 +15,5 @@ interface MentoringRepository {
 
     suspend fun getMentorInfo(
         userId: String,
-    ): Result<MentorInfo>
-
-    suspend fun getAllMentors(): Result<List<MentorInfo>>
+    ): Result<MentorInfo?>
 }

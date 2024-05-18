@@ -70,7 +70,7 @@ fun BaekyoungChatTextField(
                         .clickable(
                             interactionSource = remember { MutableInteractionSource() },
                             indication = null,
-                        ) {  sendMessage() },
+                        ) { sendMessage() },
                 )
             }
         }

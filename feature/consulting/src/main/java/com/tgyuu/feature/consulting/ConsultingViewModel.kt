@@ -2,8 +2,6 @@ package com.tgyuu.feature.consulting
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.kakao.sdk.auth.AuthApiClient
-import com.kakao.sdk.user.UserApiClient
 import com.tgyuu.common.util.UiState
 import com.tgyuu.domain.usecase.auth.GetUserInformationUseCase
 import com.tgyuu.model.auth.UserInformation
