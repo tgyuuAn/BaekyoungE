@@ -82,4 +82,17 @@ class ChattingDataSourceImpl @Inject constructor(
                         ?: throw IllegalArgumentException("Invalid mentor info")
                 }
         }
+
+    override suspend fun getAllMenteeChattingRoom(userId: String): Result<List<JoinChatResponse>> =
+        runCatching {
+            firebaseFirestore.collection(JOIN_CHAT_COLLECTION)
+                .whereEqualTo("menteeId", userId)
+                .get()
+                .await()
+                .documents
+                .map { document ->
+                    document.toObject<JoinChatResponse>()
+                        ?: throw IllegalArgumentException("Invalid mentee info")
+                }
+        }
 }

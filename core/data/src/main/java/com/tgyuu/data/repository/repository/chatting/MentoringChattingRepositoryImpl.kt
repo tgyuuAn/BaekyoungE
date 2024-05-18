@@ -54,4 +54,15 @@ class MentoringChattingRepositoryImpl @Inject constructor(
                 )
             }
         }
+
+    override suspend fun getAllMenteeChattingRoom(userId: String): Result<List<JoinChat>> =
+        chattingDataSource.getAllMenteeChattingRoom(userId).mapCatching {
+            it.map {
+                JoinChat(
+                    roomId = it.roomId,
+                    mentorId = it.roomId.split("-")[0],
+                    menteeId = it.roomId.split("-")[1],
+                )
+            }
+        }
 }
