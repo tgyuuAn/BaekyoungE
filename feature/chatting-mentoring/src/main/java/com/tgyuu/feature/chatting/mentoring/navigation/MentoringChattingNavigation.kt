@@ -11,14 +11,14 @@ import com.tgyuu.feature.chatting.mentoring.MentoringChattingRoute
 
 fun mentorChattingNavigationRoute(roomId: String = "{roomId}") = "mentoring_chatting_route/$roomId"
 
-fun NavController.navigateToMentorChatting(
+fun NavController.navigateToMentoringChatting(
     roomId: String,
     navOptions: NavOptions? = navOptions {},
 ) {
     this.navigate(mentorChattingNavigationRoute(roomId), navOptions)
 }
 
-fun NavGraphBuilder.mentorChattingScreen(popBackStack: () -> Unit) {
+fun NavGraphBuilder.mentoringChattingScreen(popBackStack: () -> Unit) {
     composable(
         route = mentorChattingNavigationRoute(),
         arguments = listOf(navArgument("roomId") { type = NavType.StringType }),

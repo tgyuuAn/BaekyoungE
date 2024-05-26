@@ -34,11 +34,11 @@ class MentoringMentorViewModel @Inject constructor(
     val chattingRooms = _chattingRooms.asStateFlow()
 
     init {
-        getUserInformation(-1)
+        getUserInformation()
     }
 
-    fun getUserInformation(userId: Long) = viewModelScope.launch {
-        getUserInformationUseCase(userId.toString())
+    private fun getUserInformation() = viewModelScope.launch {
+        getUserInformationUseCase("-1")
             .onSuccess {
                 _userInformation.value = it
                 getMentorInfo()

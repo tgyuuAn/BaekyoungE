@@ -48,7 +48,7 @@ import com.tgyuu.model.mentoring.MentorInfo
 @Composable
 internal fun FindMentorRoute(
     popBackStack: () -> Unit,
-    navigateToMentorChatting: (String) -> Unit,
+    navigateToMentoringChatting: (String) -> Unit,
     viewModel: FindMentorViewModel = hiltViewModel(),
 ) {
     val mentorsInfo by viewModel.mentorsInfo.collectAsStateWithLifecycle()
@@ -59,7 +59,7 @@ internal fun FindMentorRoute(
         userInformation = userInformation,
         getAllMentorsInfo = viewModel::getAllMentorsInfo,
         popBackStack = popBackStack,
-        navigateToMentorChatting = navigateToMentorChatting,
+        navigateToMentorChatting = navigateToMentoringChatting,
     )
 }
 

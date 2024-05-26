@@ -42,6 +42,7 @@ import com.tgyuu.model.chatting.JoinChat
 @Composable
 internal fun MentoringMenteeRoute(
     navigateToFindMentor: () -> Unit,
+    navigateToMentoringChatting: (String) -> Unit,
     popBackStack: () -> Unit,
     viewModel: MentoringMenteeViewModel = hiltViewModel(),
 ) {
@@ -50,6 +51,7 @@ internal fun MentoringMenteeRoute(
     MentoringMenteeScreen(
         chattingRooms = chattingRooms,
         navigateToFindMentor = navigateToFindMentor,
+        navigateToMentoringChatting = navigateToMentoringChatting,
         popBackStack = popBackStack,
     )
 }
@@ -58,6 +60,7 @@ internal fun MentoringMenteeRoute(
 fun MentoringMenteeScreen(
     chattingRooms: List<JoinChat>,
     navigateToFindMentor: () -> Unit,
+    navigateToMentoringChatting: (String) -> Unit,
     popBackStack: () -> Unit,
 ) {
     Scaffold(
@@ -84,7 +87,7 @@ fun MentoringMenteeScreen(
             ) {
                 item {
                     Text(
-                        text = "진행중인 채팅방",
+                        text = "진행 중인 채팅방",
                         style = BaekyoungTheme.typography.contentBold,
                         color = BaekyoungTheme.colors.black,
                     )
@@ -94,7 +97,7 @@ fun MentoringMenteeScreen(
                     Card(
                         shape = RoundedCornerShape(10.dp),
                         colors = CardDefaults.cardColors(containerColor = BaekyoungTheme.colors.white),
-                        onClick = { /*TODO*/ },
+                        onClick = { navigateToMentoringChatting(chattingRooms.roomId) },
                         modifier = Modifier
                             .fillMaxWidth()
                             .border(
@@ -126,7 +129,7 @@ fun MentoringMenteeScreen(
                                     verticalAlignment = Alignment.Bottom,
                                 ) {
                                     Text(
-                                        text = chattingRooms.mentorId,
+                                        text = chattingRooms.mentorNickName,
                                         style = BaekyoungTheme.typography.contentBold,
                                         color = BaekyoungTheme.colors.black,
                                     )
@@ -139,7 +142,7 @@ fun MentoringMenteeScreen(
                                 }
 
                                 Text(
-                                    text = "안녕하세요",
+                                    text = chattingRooms.lastChatting,
                                     style = BaekyoungTheme.typography.labelRegular,
                                     color = BaekyoungTheme.colors.gray95,
                                 )
@@ -151,7 +154,7 @@ fun MentoringMenteeScreen(
                                 modifier = Modifier.fillMaxHeight(),
                             ) {
                                 Text(
-                                    text = "오후 6:29",
+                                    text = chattingRooms.getFormattedLastSentTime(),
                                     style = BaekyoungTheme.typography.labelRegular.copy(fontSize = 10.sp),
                                     color = BaekyoungTheme.colors.gray95,
                                 )

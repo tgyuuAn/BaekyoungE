@@ -5,13 +5,18 @@ import com.tgyuu.model.chatting.JoinChat
 import com.tgyuu.model.chatting.MentoringMessage
 import com.tgyuu.network.model.chatting.mentoring.JoinChatRequest
 import com.tgyuu.network.model.chatting.mentoring.MentoringChatRequest
+import com.tgyuu.network.source.auth.AuthDataSource
 import com.tgyuu.network.source.chatting.ChattingDataSource
+import kotlinx.coroutines.async
+import kotlinx.coroutines.awaitAll
+import kotlinx.coroutines.coroutineScope
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
 import javax.inject.Inject
 
 class MentoringChattingRepositoryImpl @Inject constructor(
     private val chattingDataSource: ChattingDataSource,
+    private val authDataSource: AuthDataSource,
 ) : MentoringChattingRepository {
     override suspend fun postMentoringChatMessage(
         roomId: String,
@@ -30,6 +35,8 @@ class MentoringChattingRepositoryImpl @Inject constructor(
             roomId = roomId,
             mentorId = roomId.split("-")[0],
             menteeId = roomId.split("-")[1],
+            lastChatting = content,
+            lastSentTime = createdAt,
         ),
     )
 
@@ -45,24 +52,50 @@ class MentoringChattingRepositoryImpl @Inject constructor(
         }
 
     override suspend fun getMentorChattingRoom(userId: String): Result<List<JoinChat>> =
-        chattingDataSource.getMentorChattingRoom(userId).mapCatching {
-            it.map {
-                JoinChat(
-                    roomId = it.roomId,
-                    mentorId = it.roomId.split("-")[0],
-                    menteeId = it.roomId.split("-")[1],
-                )
+        coroutineScope {
+            chattingDataSource.getMentorChattingRoom(userId).mapCatching { chatRooms ->
+                chatRooms.map {
+                    async {
+                        val mentorInfoDeferred =
+                            async { authDataSource.getUserInformation(it.mentorId) }
+                        val menteeInfoDeferred =
+                            async { authDataSource.getUserInformation(it.menteeId) }
+
+                        JoinChat(
+                            roomId = it.roomId,
+                            mentorId = it.roomId.split("-")[0],
+                            mentorNickName = mentorInfoDeferred.await().getOrThrow().nickName,
+                            menteeId = it.roomId.split("-")[1],
+                            menteeNickName = menteeInfoDeferred.await().getOrThrow().nickName,
+                            lastChatting = it.lastChatting,
+                            lastSentTime = it.lastSentTime,
+                        )
+                    }
+                }.awaitAll()
             }
         }
 
     override suspend fun getMenteeChattingRoom(userId: String): Result<List<JoinChat>> =
-        chattingDataSource.getMenteeChattingRoom(userId).mapCatching {
-            it.map {
-                JoinChat(
-                    roomId = it.roomId,
-                    mentorId = it.roomId.split("-")[0],
-                    menteeId = it.roomId.split("-")[1],
-                )
+        coroutineScope {
+            chattingDataSource.getMenteeChattingRoom(userId).mapCatching { chatRooms ->
+                chatRooms.map {
+                    async {
+                        val mentorInfoDeferred =
+                            async { authDataSource.getUserInformation(it.mentorId) }
+                        val menteeInfoDeferred =
+                            async { authDataSource.getUserInformation(it.menteeId) }
+
+                        JoinChat(
+                            roomId = it.roomId,
+                            mentorId = it.roomId.split("-")[0],
+                            mentorNickName = mentorInfoDeferred.await().getOrThrow().nickName,
+                            menteeId = it.roomId.split("-")[1],
+                            menteeNickName = menteeInfoDeferred.await().getOrThrow().nickName,
+                            lastChatting = it.lastChatting,
+                            lastSentTime = it.lastSentTime,
+                        )
+                    }
+                }.awaitAll()
             }
         }
 }
