@@ -23,10 +23,6 @@ class MentoringMenteeViewModel @Inject constructor(
     private val _chattingRooms = MutableStateFlow<List<JoinChat>>(listOf())
     val chattingRooms = _chattingRooms.asStateFlow()
 
-    init {
-        getUserInformation(-1)
-    }
-
     fun getUserInformation(userId: Long) = viewModelScope.launch {
         getUserInformationUseCase(userId.toString())
             .onSuccess {

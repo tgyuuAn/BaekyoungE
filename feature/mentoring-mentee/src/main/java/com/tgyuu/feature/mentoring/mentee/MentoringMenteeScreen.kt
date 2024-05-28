@@ -23,6 +23,7 @@ import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
@@ -42,11 +43,15 @@ import com.tgyuu.model.chatting.JoinChat
 @Composable
 internal fun MentoringMenteeRoute(
     navigateToFindMentor: () -> Unit,
-    navigateToMentoringChatting: (String) -> Unit,
+    navigateToMentoringChatting: (String, String) -> Unit,
     popBackStack: () -> Unit,
     viewModel: MentoringMenteeViewModel = hiltViewModel(),
 ) {
     val chattingRooms by viewModel.chattingRooms.collectAsStateWithLifecycle()
+
+    LaunchedEffect(true) {
+        viewModel.getUserInformation(-1)
+    }
 
     MentoringMenteeScreen(
         chattingRooms = chattingRooms,
@@ -60,7 +65,7 @@ internal fun MentoringMenteeRoute(
 fun MentoringMenteeScreen(
     chattingRooms: List<JoinChat>,
     navigateToFindMentor: () -> Unit,
-    navigateToMentoringChatting: (String) -> Unit,
+    navigateToMentoringChatting: (String, String) -> Unit,
     popBackStack: () -> Unit,
 ) {
     Scaffold(
@@ -97,7 +102,12 @@ fun MentoringMenteeScreen(
                     Card(
                         shape = RoundedCornerShape(10.dp),
                         colors = CardDefaults.cardColors(containerColor = BaekyoungTheme.colors.white),
-                        onClick = { navigateToMentoringChatting(chattingRooms.roomId) },
+                        onClick = {
+                            navigateToMentoringChatting(
+                                chattingRooms.menteeId,
+                                chattingRooms.roomId,
+                            )
+                        },
                         modifier = Modifier
                             .fillMaxWidth()
                             .border(

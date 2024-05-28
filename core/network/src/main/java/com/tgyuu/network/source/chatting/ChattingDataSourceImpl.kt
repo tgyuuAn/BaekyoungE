@@ -3,6 +3,7 @@ package com.tgyuu.network.source.chatting
 import android.util.Log
 import com.google.firebase.firestore.DocumentChange
 import com.google.firebase.firestore.FirebaseFirestore
+import com.google.firebase.firestore.Query
 import com.google.firebase.firestore.toObject
 import com.tgyuu.network.constant.JOIN_CHAT_COLLECTION
 import com.tgyuu.network.constant.MESSAGE_COLLECTION
@@ -45,6 +46,7 @@ class ChattingDataSourceImpl @Inject constructor(
     override suspend fun getAllMessage(roomId: String): Flow<MentoringChatResponse> = callbackFlow {
         val listenerRegistration = firebaseFirestore.collection(MESSAGE_COLLECTION)
             .whereEqualTo("roomId", roomId)
+            .orderBy("createdAt", Query.Direction.ASCENDING)
             .addSnapshotListener { value, error ->
                 if (error != null) {
                     Log.d("test", "listen:error", error)

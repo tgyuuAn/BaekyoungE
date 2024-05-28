@@ -48,7 +48,7 @@ import com.tgyuu.model.mentoring.MentorInfo
 @Composable
 internal fun FindMentorRoute(
     popBackStack: () -> Unit,
-    navigateToMentoringChatting: (String) -> Unit,
+    navigateToMentoringChatting: (String, String) -> Unit,
     viewModel: FindMentorViewModel = hiltViewModel(),
 ) {
     val mentorsInfo by viewModel.mentorsInfo.collectAsStateWithLifecycle()
@@ -69,7 +69,7 @@ fun FindMentorScreen(
     userInformation: UserInformation,
     getAllMentorsInfo: () -> Unit,
     popBackStack: () -> Unit,
-    navigateToMentorChatting: (String) -> Unit,
+    navigateToMentorChatting: (String, String) -> Unit,
 ) {
     val (showEnterChattingRoomDialog, setEnterChattingRoomDialog) = remember { mutableStateOf(false) }
     var selectedMentor by remember { mutableStateOf(MentorInfo("", "", "")) }
@@ -109,7 +109,10 @@ fun FindMentorScreen(
                             buttonColor = BaekyoungTheme.colors.black,
                             onButtonClick = {
                                 setEnterChattingRoomDialog(false)
-                                navigateToMentorChatting(selectedMentor.userId + "-" + userInformation.userId)
+                                navigateToMentorChatting(
+                                    userInformation.userId,
+                                    selectedMentor.userId + "-" + userInformation.userId,
+                                )
                             },
                             modifier = Modifier.weight(1f),
                         )
@@ -194,7 +197,7 @@ fun FindMentorScreen(
                                         Spacer(modifier = Modifier.weight(1f))
 
                                         Text(
-                                            text = "오후 6:29",
+                                            text = mentor.getFormattedRegistrationDate(),
                                             style = BaekyoungTheme.typography.labelRegular.copy(
                                                 fontSize = 10.sp,
                                             ),

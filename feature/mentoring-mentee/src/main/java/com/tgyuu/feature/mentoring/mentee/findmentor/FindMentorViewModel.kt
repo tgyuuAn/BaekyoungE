@@ -1,5 +1,6 @@
 package com.tgyuu.feature.mentoring.mentee.findmentor
 
+import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.tgyuu.common.util.UiState
@@ -26,19 +27,21 @@ class FindMentorViewModel @Inject constructor(
 
     init {
         getUserInformation(-1)
-        getAllMentorsInfo()
     }
 
     fun getUserInformation(userId: Long) = viewModelScope.launch {
         getUserInformationUseCase(userId.toString())
-            .onSuccess { _userInformation.value = it }
+            .onSuccess {
+                _userInformation.value = it
+                getAllMentorsInfo()
+            }
             .onFailure { }
     }
 
     fun getAllMentorsInfo() = viewModelScope.launch {
         _mentorsInfo.value = UiState.Loading
 
-        getAllMentorsInfoUseCase()
+        getAllMentorsInfoUseCase(_userInformation.value.userId)
             .onSuccess { _mentorsInfo.value = UiState.Success(it) }
             .onFailure { _mentorsInfo.value = UiState.Error(it.message ?: "알 수 없는 요청입니다.") }
     }

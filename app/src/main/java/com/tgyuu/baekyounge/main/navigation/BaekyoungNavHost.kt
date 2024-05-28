@@ -154,9 +154,10 @@ fun BaekyoungNavHost(
                     navOptions { popUpTo(mentoringMenteeNavigationRoute) },
                 )
             },
-            navigateToMentoringChatting = {
+            navigateToMentoringChatting = { userId, roomId ->
                 navController.navigateToMentoringChatting(
-                    roomId = it,
+                    userId = userId,
+                    roomId = roomId,
                     navOptions { popUpTo(mentoringMenteeNavigationRoute) },
                 )
             },
@@ -164,16 +165,18 @@ fun BaekyoungNavHost(
         )
         findMentorScreen(
             popBackStack = { navController.popBackStack() },
-            navigateToMentoringChatting = { roomId ->
+            navigateToMentoringChatting = { userId, roomId ->
                 navController.navigateToMentoringChatting(
+                    userId = userId,
                     roomId = roomId,
                     navOptions { popUpTo(mentoringMenteeNavigationRoute) },
                 )
             },
         )
         mentoringMentorScreen(
-            navigateToMentoringChatting = { roomId ->
+            navigateToMentoringChatting = { userId, roomId ->
                 navController.navigateToMentoringChatting(
+                    userId = userId,
                     roomId = roomId,
                     navOptions { popUpTo(mentoringMentorNavigationRoute) },
                 )

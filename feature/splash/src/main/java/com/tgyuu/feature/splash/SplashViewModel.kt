@@ -1,5 +1,6 @@
 package com.tgyuu.feature.splash
 
+import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.kakao.sdk.auth.AuthApiClient
@@ -56,7 +57,8 @@ class SplashViewModel @Inject constructor(
         verifyMemberIdUseCase(userId)
             .onSuccess {
                 getUserInformationUseCase(userId).onSuccess { event(SplashEvent.NavigateToHome) }
-                    .onFailure { // Todo
+                    .onFailure {
+                        Log.d("test", it.toString())
                     }
             }
             .onFailure { event(SplashEvent.NavigateToAuth) }

@@ -39,7 +39,7 @@ import com.tgyuu.model.chatting.JoinChat
 
 @Composable
 internal fun MentoringMentorRoute(
-    navigateToMentoringChatting: (String) -> Unit,
+    navigateToMentoringChatting: (String, String) -> Unit,
     popBackStack: () -> Unit,
     viewModel: MentoringMentorViewModel = hiltViewModel(),
 ) {
@@ -62,7 +62,7 @@ fun MentoringMentorScreen(
     chattingRooms: List<JoinChat>,
     registerMentorInfo: () -> Unit,
     deleteMentorInfo: () -> Unit,
-    navigateToMentoringChatting: (String) -> Unit,
+    navigateToMentoringChatting: (String, String) -> Unit,
     popBackStack: () -> Unit,
 ) {
     Scaffold(
@@ -140,7 +140,7 @@ fun MentoringMentorScreen(
                 Card(
                     shape = RoundedCornerShape(10.dp),
                     colors = CardDefaults.cardColors(containerColor = BaekyoungTheme.colors.white),
-                    onClick = { navigateToMentoringChatting(it.roomId) },
+                    onClick = { navigateToMentoringChatting(it.mentorId, it.roomId) },
                     modifier = Modifier
                         .fillMaxWidth()
                         .padding(horizontal = 20.dp)

@@ -17,5 +17,5 @@ interface RemoteMentoringRepository {
         userId: String,
     ): Result<MentorInfo>
 
-    suspend fun getAllMentors(): Result<List<MentorInfo>>
+    suspend fun getAllMentors(userId: String): Result<List<MentorInfo>>
 }

@@ -71,6 +71,7 @@ import kotlinx.coroutines.launch
 
 @Composable
 internal fun MentoringChattingRoute(
+    userId: String,
     roomId: String,
     popBackStack: () -> Unit,
     viewModel: MentoringChattingViewModel = hiltViewModel(),
@@ -93,6 +94,7 @@ internal fun MentoringChattingRoute(
         chatLog = chatLog,
         chatState = chatState,
         userInformation = userInformation,
+        isMentor = (userId == roomId.split("-")[0]),
         showExitChattingRoomDialog = showExitChattingRoomDialog,
         setExitChattingRoomDialog = setExitChattingRoomDialog,
         onChatTextChanged = viewModel::setChatText,
@@ -109,6 +111,7 @@ internal fun MentoringChattingScreen(
     chatLog: List<MentoringMessage>,
     chatState: UiState<Unit>,
     userInformation: UserInformation,
+    isMentor: Boolean,
     showExitChattingRoomDialog: Boolean,
     setExitChattingRoomDialog: (Boolean) -> Unit,
     onChatTextChanged: (String) -> Unit,
@@ -289,13 +292,23 @@ internal fun MentoringChattingScreen(
                                 .padding(bottom = 55.dp),
                         )
 
-                        Image(
-                            painter = painterResource(id = R.drawable.ic_mentor_character),
-                            contentDescription = null,
-                            modifier = Modifier
-                                .align(Alignment.BottomCenter)
-                                .padding(bottom = 70.dp),
-                        )
+                        if (isMentor) {
+                            Image(
+                                painter = painterResource(id = R.drawable.ic_mentor_character),
+                                contentDescription = null,
+                                modifier = Modifier
+                                    .align(Alignment.BottomCenter)
+                                    .padding(bottom = 70.dp),
+                            )
+                        } else {
+                            Image(
+                                painter = painterResource(id = R.drawable.ic_mentee_character),
+                                contentDescription = null,
+                                modifier = Modifier
+                                    .align(Alignment.BottomCenter)
+                                    .padding(bottom = 58.dp),
+                            )
+                        }
 
                         BaekyoungCenterTopBar(
                             titleTextId = string.chatting,
@@ -331,7 +344,7 @@ internal fun MentoringChattingScreen(
                                 .padding(top = topBarHeight, bottom = 220.dp),
                         ) {
                             items(items = chatLog) { message ->
-                                Log.d("test", userInformation.userId)
+                                Log.d("test", "새로운 메세지 :" + message.toString())
 
                                 val speechBubbleType =
                                     if (message.userId == userInformation.userId) {
@@ -354,23 +367,46 @@ internal fun MentoringChattingScreen(
                                     .padding(bottom = 135.dp),
                             )
 
-                            else -> Column(
-                                horizontalAlignment = Alignment.CenterHorizontally,
-                                verticalArrangement = Arrangement.spacedBy(6.dp),
-                                modifier = Modifier
-                                    .align(Alignment.BottomCenter)
-                                    .padding(bottom = 125.dp),
-                            ) {
-                                Text(
-                                    text = "무엇이 궁금한가요?",
-                                    style = BaekyoungTheme.typography.labelRegular,
-                                    color = BaekyoungTheme.colors.white,
-                                )
+                            else -> {
+                                if (isMentor) {
+                                    Column(
+                                        horizontalAlignment = Alignment.CenterHorizontally,
+                                        verticalArrangement = Arrangement.spacedBy(6.dp),
+                                        modifier = Modifier
+                                            .align(Alignment.BottomCenter)
+                                            .padding(bottom = 125.dp),
+                                    ) {
+                                        Text(
+                                            text = "무엇이 궁금한가요?",
+                                            style = BaekyoungTheme.typography.labelRegular,
+                                            color = BaekyoungTheme.colors.white,
+                                        )
 
-                                Image(
-                                    painter = painterResource(id = R.drawable.ic_marker),
-                                    contentDescription = null,
-                                )
+                                        Image(
+                                            painter = painterResource(id = R.drawable.ic_marker),
+                                            contentDescription = null,
+                                        )
+                                    }
+                                } else {
+                                    Column(
+                                        horizontalAlignment = Alignment.CenterHorizontally,
+                                        verticalArrangement = Arrangement.spacedBy(6.dp),
+                                        modifier = Modifier
+                                            .align(Alignment.BottomCenter)
+                                            .padding(bottom = 128.dp),
+                                    ) {
+                                        Text(
+                                            text = "도와주세요 !",
+                                            style = BaekyoungTheme.typography.labelRegular,
+                                            color = BaekyoungTheme.colors.white,
+                                        )
+
+                                        Image(
+                                            painter = painterResource(id = R.drawable.ic_marker),
+                                            contentDescription = null,
+                                        )
+                                    }
+                                }
                             }
                         }
 

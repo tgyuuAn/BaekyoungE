@@ -7,5 +7,6 @@ import javax.inject.Inject
 class GetAllMentorsInfoUseCase @Inject constructor(
     private val remoteMentoringRepository: RemoteMentoringRepository,
 ) {
-    suspend operator fun invoke(): Result<List<MentorInfo>> = remoteMentoringRepository.getAllMentors()
+    suspend operator fun invoke(userId: String): Result<List<MentorInfo>> =
+        remoteMentoringRepository.getAllMentors(userId)
 }

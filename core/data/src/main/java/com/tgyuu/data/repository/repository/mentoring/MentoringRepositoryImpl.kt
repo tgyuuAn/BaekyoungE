@@ -1,5 +1,6 @@
 package com.tgyuu.data.repository.repository.mentoring
 
+import android.util.Log
 import com.tgyuu.database.dao.MentorDao
 import com.tgyuu.database.model.MentorEntity
 import com.tgyuu.domain.repository.mentoring.RemoteMentoringRepository
@@ -67,14 +68,15 @@ class MentoringRepositoryImpl @Inject constructor(
         }
     }
 
-    override suspend fun getAllMentors(): Result<List<MentorInfo>> =
+    override suspend fun getAllMentors(userId: String): Result<List<MentorInfo>> =
         mentoringDataSource.getAllMentorsInfo().mapCatching {
-            it.map {
-                MentorInfo(
-                    userId = it.userId,
-                    nickName = it.nickName,
-                    registrationDate = it.registrationDate,
-                )
-            }
+            it.filter { it.userId != userId }
+                .map {
+                    MentorInfo(
+                        userId = it.userId,
+                        nickName = it.nickName,
+                        registrationDate = it.registrationDate,
+                    )
+                }
         }
 }

@@ -15,7 +15,7 @@ fun NavController.navigateToMentoringMentee(navOptions: NavOptions? = navOptions
 
 fun NavGraphBuilder.mentoringMenteeScreen(
     navigateToFindMentor: () -> Unit,
-    navigateToMentoringChatting: (String) -> Unit,
+    navigateToMentoringChatting: (String, String) -> Unit,
     popBackStack: () -> Unit,
 ) {
     composable(route = mentoringMenteeNavigationRoute) {
