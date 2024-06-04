@@ -17,6 +17,7 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.DisposableEffect
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -141,5 +142,5 @@ internal fun HomeScreen() {
     }
 }
 
-private val SEA_IMAGE_HEIGHT = 166
-private val ANIMATION_OFFSET = 1360
+private const val SEA_IMAGE_HEIGHT = 166
+private const val ANIMATION_OFFSET = 1360

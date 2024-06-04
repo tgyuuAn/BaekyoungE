@@ -28,6 +28,7 @@ dependencies {
     implementation(project(":core:model"))
 
     implementation(platform(libs.firebase.bom))
+    implementation(libs.firebase.analytics)
     implementation(libs.firebase.firestore)
     implementation(libs.bundles.retrofit)
     implementation(libs.bundles.okhttp)
