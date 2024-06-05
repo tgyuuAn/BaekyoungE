@@ -35,18 +35,18 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
-import com.tgyuu.designsystem.component.ChattingLoader
 import com.tgyuu.common.util.UiState
 import com.tgyuu.common.util.addFocusCleaner
 import com.tgyuu.designsystem.R.string
 import com.tgyuu.designsystem.component.BaekyoungCenterTopBar
 import com.tgyuu.designsystem.component.BaekyoungChatTextField
 import com.tgyuu.designsystem.component.BaekyoungSpeechBubble
+import com.tgyuu.designsystem.component.ChattingLoader
 import com.tgyuu.designsystem.component.SpeechBubbleType
 import com.tgyuu.designsystem.theme.BaekyoungTheme
 import com.tgyuu.feature.chatting.ai.R
-import com.tgyuu.model.chatting.ChattingRole
 import com.tgyuu.model.chatting.AiMessage
+import com.tgyuu.model.chatting.ChattingRole
 import kotlinx.coroutines.launch
 
 @Composable
@@ -163,7 +163,7 @@ internal fun AiChattingScreen(
                 contentPadding = PaddingValues(horizontal = 25.dp),
                 modifier = Modifier
                     .fillMaxSize()
-                    .padding(top = topBarHeight, bottom = 220.dp),
+                    .padding(top = topBarHeight, bottom = textFieldHeight + 20.dp),
             ) {
                 items(items = chatLog) { message ->
                     val speechBubbleType = when (message.role) {

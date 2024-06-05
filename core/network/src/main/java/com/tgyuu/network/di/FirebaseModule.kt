@@ -16,8 +16,6 @@ object FirebaseModule {
     @Provides
     @Singleton
     fun providesFirebaseStore(): FirebaseFirestore {
-        return Firebase.firestore.apply {
-            persistentCacheIndexManager?.disableIndexAutoCreation()
-        }
+        return Firebase.firestore
     }
 }

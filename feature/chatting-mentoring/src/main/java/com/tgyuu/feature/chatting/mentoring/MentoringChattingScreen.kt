@@ -1,6 +1,5 @@
 package com.tgyuu.feature.chatting.mentoring
 
-import android.util.Log
 import androidx.compose.foundation.Canvas
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
@@ -127,11 +126,19 @@ internal fun MentoringChattingScreen(
     val focusManager = LocalFocusManager.current
     val listState = rememberLazyListState()
     val backgroundColor = Brush.verticalGradient(
-        listOf(
-            Color(0xFF0E1B45),
-            Color(0xFF7C849F),
-        ),
+        listOf(Color(0xFF0E1B45), Color(0xFF7C849F)),
     )
+    var previousChatSize by remember { mutableStateOf(0) }
+
+    LaunchedEffect(chatLog) {
+        if (previousChatSize != chatLog.size) {
+            coroutineScope.launch {
+                listState.animateScrollToItem(chatLog.size - 1)
+            }
+
+            previousChatSize = chatLog.size
+        }
+    }
 
     CompositionLocalProvider(LocalLayoutDirection provides LayoutDirection.Rtl) {
         ModalNavigationDrawer(
@@ -341,11 +348,9 @@ internal fun MentoringChattingScreen(
                             contentPadding = PaddingValues(horizontal = 25.dp),
                             modifier = Modifier
                                 .fillMaxSize()
-                                .padding(top = topBarHeight, bottom = 220.dp),
+                                .padding(top = topBarHeight, bottom = textFieldHeight + 20.dp),
                         ) {
                             items(items = chatLog) { message ->
-                                Log.d("test", "새로운 메세지 :" + message.toString())
-
                                 val speechBubbleType =
                                     if (message.userId == userInformation.userId) {
                                         SpeechBubbleType.MENTOR_MENTI_USER

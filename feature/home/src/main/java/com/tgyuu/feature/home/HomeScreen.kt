@@ -76,7 +76,7 @@ internal fun HomeScreen() {
             modifier = Modifier
                 .fillMaxWidth()
                 .align(Alignment.TopCenter)
-                .offset(y = localConfiguration.screenHeightDp.dp + -SEA_IMAGE_HEIGHT.dp),
+                .offset(y = localConfiguration.screenHeightDp.dp - SEA_IMAGE_HEIGHT.dp),
         )
 
         Image(
@@ -141,5 +141,5 @@ internal fun HomeScreen() {
     }
 }
 
-private val SEA_IMAGE_HEIGHT = 166
+private val SEA_IMAGE_HEIGHT = 156
 private val ANIMATION_OFFSET = 1360
