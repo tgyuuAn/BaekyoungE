@@ -18,6 +18,7 @@ import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
+import java.util.concurrent.atomic.AtomicBoolean
 import javax.inject.Inject
 
 @HiltViewModel
@@ -39,12 +40,24 @@ class MentoringChattingViewModel @Inject constructor(
         MutableStateFlow(UiState.Success(Unit))
     val chatState = _chatState.asStateFlow()
 
-    val roomId: MutableStateFlow<String> = MutableStateFlow("")
+    private val _roomId: MutableStateFlow<String> = MutableStateFlow("")
 
-    val userInformation = MutableStateFlow(UserInformation())
+    private val _userInformation = MutableStateFlow(UserInformation())
+    val userInformation = _userInformation.asStateFlow()
+
+    private val _isFirstPage = MutableStateFlow(false)
+    val isFirstPage = _isFirstPage.asStateFlow()
+
+    val _pagingTimeStamp = MutableStateFlow(generateNowDateTime().toISOLocalDateTimeString())
+
+    val isLoading = AtomicBoolean(false)
 
     init {
         getUserInformation(-1)
+    }
+
+    fun setRoomId(roomId: String) {
+        _roomId.value = roomId
     }
 
     fun setChatText(chatText: String) {
@@ -57,7 +70,7 @@ class MentoringChattingViewModel @Inject constructor(
 
     fun getUserInformation(userId: Long) = viewModelScope.launch {
         getUserInformationUseCase(userId.toString())
-            .onSuccess { userInformation.value = it }
+            .onSuccess { _userInformation.value = it }
             .onFailure { }
     }
 
@@ -69,7 +82,7 @@ class MentoringChattingViewModel @Inject constructor(
         _chatState.value = UiState.Loading
 
         postMentoringMessageUseCase(
-            roomId = roomId.value,
+            roomId = _roomId.value,
             userId = userInformation.value.userId,
             content = _chatText.value,
         )
@@ -78,16 +91,34 @@ class MentoringChattingViewModel @Inject constructor(
             .also { _chatState.value = UiState.Success(Unit) }
     }
 
-    fun getPreviousMessages() = viewModelScope.launch {
-        getPreviousMentoringMessagesUseCase(
-            roomId.value,
-            generateNowDateTime().toISOLocalDateTimeString(),
-        )
-            .onSuccess { chatLog.addAll(it) }
-            .onFailure { Log.d("test", "onFailure : " + it.toString()) }
+    fun getPreviousMessages() {
+        if (!isLoading.get()) {
+            isLoading.getAndSet(true)
+            viewModelScope.launch {
+                getPreviousMentoringMessagesUseCase(
+                    _roomId.value,
+                    _pagingTimeStamp.value,
+                )
+                    .onSuccess {
+                        if (it.size < 30) {
+                            _isFirstPage.value = true
+                        }
+
+                        chatLog.addAll(0, it)
+                        Log.d("test", "chatLog : ${chatLog.toList()}")
+
+                        if (it.size != 0) {
+                            _pagingTimeStamp.value = chatLog[0].createdAt
+                        }
+                    }
+                    .onFailure { Log.d("test", "onFailure : " + it.toString()) }
+                    .also { isLoading.getAndSet(false) }
+
+            }
+        }
     }
 
     fun subscribeMessages() = viewModelScope.launch {
-        subscribeMentoringMessagesUseCase(roomId.value).collect { chatLog.add(it) }
+        subscribeMentoringMessagesUseCase(_roomId.value).collect { chatLog.add(it) }
     }
 }
