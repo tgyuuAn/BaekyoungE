@@ -41,7 +41,7 @@ class MentoringChattingRepositoryImpl @Inject constructor(
     )
 
     override suspend fun getAllMessage(roomId: String): Flow<MentoringMessage> =
-        chattingDataSource.getAllMessage(roomId).map {
+        chattingDataSource.subscribeMessages(roomId).map {
             MentoringMessage(
                 roomId = it.roomId,
                 userId = it.userId,

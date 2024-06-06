@@ -15,7 +15,9 @@ import com.tgyuu.network.model.chatting.mentoring.JoinChatResponse
 import com.tgyuu.network.model.chatting.mentoring.MentoringChatRequest
 import com.tgyuu.network.model.chatting.mentoring.MentoringChatResponse
 import com.tgyuu.network.util.await
+import com.tgyuu.network.util.generateNowDateTime
 import com.tgyuu.network.util.logAnalytics
+import com.tgyuu.network.util.toISOLocalDateTimeString
 import kotlinx.coroutines.channels.awaitClose
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.callbackFlow
@@ -44,9 +46,10 @@ class ChattingDataSourceImpl @Inject constructor(
                 .await()
         }
 
-    override suspend fun getAllMessage(roomId: String): Flow<MentoringChatResponse> = callbackFlow {
+    override suspend fun subscribeMessages(roomId: String): Flow<MentoringChatResponse> = callbackFlow {
         val listenerRegistration = firebaseFirestore.collection(MESSAGE_COLLECTION)
             .whereEqualTo("roomId", roomId)
+            .whereGreaterThan("createdAt", generateNowDateTime().toISOLocalDateTimeString())
             .orderBy("createdAt", Query.Direction.ASCENDING)
             .addSnapshotListener { value, error ->
                 if (error != null) {
@@ -71,6 +74,10 @@ class ChattingDataSourceImpl @Inject constructor(
             }
 
         awaitClose { listenerRegistration.remove() }
+    }
+
+    override suspend fun getPreviousMessages(roomId: String, lastTime: String) {
+        TODO("Not yet implemented")
     }
 
     override suspend fun getMentorChattingRoom(userId: String): Result<List<JoinChatResponse>> =

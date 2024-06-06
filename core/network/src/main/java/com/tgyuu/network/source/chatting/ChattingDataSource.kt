@@ -1,5 +1,6 @@
 package com.tgyuu.network.source.chatting
 
+import com.google.firebase.Timestamp
 import com.tgyuu.network.model.chatting.ai.AiChatRequest
 import com.tgyuu.network.model.chatting.ai.AiChatResponse
 import com.tgyuu.network.model.chatting.mentoring.JoinChatRequest
@@ -16,7 +17,9 @@ interface ChattingDataSource {
         joinChatRequest: JoinChatRequest,
     ): Result<Unit>
 
-    suspend fun getAllMessage(roomId: String): Flow<MentoringChatResponse>
+    suspend fun subscribeMessages(roomId: String): Flow<MentoringChatResponse>
+
+    suspend fun getPreviousMessages(roomId: String, lastTime: String)
 
     suspend fun getMentorChattingRoom(userId: String): Result<List<JoinChatResponse>>
 
