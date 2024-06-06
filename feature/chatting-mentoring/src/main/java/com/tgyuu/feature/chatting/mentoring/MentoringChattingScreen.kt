@@ -1,5 +1,6 @@
 package com.tgyuu.feature.chatting.mentoring
 
+import android.util.Log
 import androidx.compose.foundation.Canvas
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
@@ -83,8 +84,11 @@ internal fun MentoringChattingRoute(
     val userInformation by viewModel.userInformation.collectAsStateWithLifecycle()
 
     LaunchedEffect(true) {
-        viewModel.roomId.value = roomId
-        viewModel.getMessages()
+        viewModel.apply {
+            this.roomId.value = roomId
+            getPreviousMessages()
+            subscribeMessages()
+        }
     }
 
     MentoringChattingScreen(
@@ -130,14 +134,13 @@ internal fun MentoringChattingScreen(
     )
     var previousChatSize by remember { mutableStateOf(0) }
 
-    LaunchedEffect(chatLog) {
-        if (previousChatSize != chatLog.size) {
-            coroutineScope.launch {
-                listState.animateScrollToItem(chatLog.size - 1)
-            }
-
-            previousChatSize = chatLog.size
+    LaunchedEffect(previousChatSize != chatLog.size) {
+        Log.d("test", "스크롤 이벤트 호출")
+        coroutineScope.launch {
+            listState.animateScrollToItem(chatLog.size)
         }
+
+        previousChatSize = chatLog.size
     }
 
     CompositionLocalProvider(LocalLayoutDirection provides LayoutDirection.Rtl) {

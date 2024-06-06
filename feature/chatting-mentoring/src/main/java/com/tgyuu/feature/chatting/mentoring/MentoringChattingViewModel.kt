@@ -6,9 +6,12 @@ import androidx.compose.runtime.snapshots.SnapshotStateList
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.tgyuu.common.util.UiState
+import com.tgyuu.common.util.generateNowDateTime
+import com.tgyuu.common.util.toISOLocalDateTimeString
 import com.tgyuu.domain.usecase.auth.GetUserInformationUseCase
-import com.tgyuu.domain.usecase.chatting.GetMentoringChattingMessagesUseCase
+import com.tgyuu.domain.usecase.chatting.GetPreviousMentoringMessagesUseCase
 import com.tgyuu.domain.usecase.chatting.PostMentoringMessageUseCase
+import com.tgyuu.domain.usecase.chatting.SubscribeMentoringMessagesUseCase
 import com.tgyuu.model.auth.UserInformation
 import com.tgyuu.model.chatting.MentoringMessage
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -21,7 +24,8 @@ import javax.inject.Inject
 class MentoringChattingViewModel @Inject constructor(
     private val getUserInformationUseCase: GetUserInformationUseCase,
     private val postMentoringMessageUseCase: PostMentoringMessageUseCase,
-    private val getMentoringChattingMessagesUseCase: GetMentoringChattingMessagesUseCase,
+    private val getPreviousMentoringMessagesUseCase: GetPreviousMentoringMessagesUseCase,
+    private val subscribeMentoringMessagesUseCase: SubscribeMentoringMessagesUseCase,
 ) : ViewModel() {
     private val _chatText: MutableStateFlow<String> = MutableStateFlow("")
     val chatText get() = _chatText.asStateFlow()
@@ -74,7 +78,16 @@ class MentoringChattingViewModel @Inject constructor(
             .also { _chatState.value = UiState.Success(Unit) }
     }
 
-    fun getMessages() = viewModelScope.launch {
-        getMentoringChattingMessagesUseCase(roomId.value).collect { chatLog.add(it) }
+    fun getPreviousMessages() = viewModelScope.launch {
+        getPreviousMentoringMessagesUseCase(
+            roomId.value,
+            generateNowDateTime().toISOLocalDateTimeString(),
+        )
+            .onSuccess { chatLog.addAll(it) }
+            .onFailure { Log.d("test", "onFailure : " + it.toString()) }
+    }
+
+    fun subscribeMessages() = viewModelScope.launch {
+        subscribeMentoringMessagesUseCase(roomId.value).collect { chatLog.add(it) }
     }
 }

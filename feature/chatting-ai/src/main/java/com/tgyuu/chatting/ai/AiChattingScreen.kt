@@ -1,5 +1,6 @@
 package com.tgyuu.chatting.ai
 
+import android.util.Log
 import androidx.compose.foundation.Canvas
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
@@ -100,14 +101,12 @@ internal fun AiChattingScreen(
         ),
     )
 
-    LaunchedEffect(chatLog) {
-        if (previousChatSize != chatLog.size) {
-            coroutineScope.launch {
-                listState.animateScrollToItem(chatLog.size - 1)
-            }
-
-            previousChatSize = chatLog.size
+    LaunchedEffect(previousChatSize != chatLog.size) {
+        coroutineScope.launch {
+            listState.animateScrollToItem(chatLog.size)
         }
+
+        previousChatSize = chatLog.size
     }
 
     Scaffold(contentWindowInsets = WindowInsets(0.dp)) { paddingValues ->

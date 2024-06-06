@@ -8,6 +8,7 @@ import com.google.firebase.firestore.toObject
 import com.tgyuu.network.constant.JOIN_CHAT_COLLECTION
 import com.tgyuu.network.constant.MESSAGE_COLLECTION
 import com.tgyuu.network.di.OpenAiApi
+import com.tgyuu.network.model.auth.UserInformationResponse
 import com.tgyuu.network.model.chatting.ai.AiChatRequest
 import com.tgyuu.network.model.chatting.ai.AiChatResponse
 import com.tgyuu.network.model.chatting.mentoring.JoinChatRequest
@@ -46,39 +47,52 @@ class ChattingDataSourceImpl @Inject constructor(
                 .await()
         }
 
-    override suspend fun subscribeMessages(roomId: String): Flow<MentoringChatResponse> = callbackFlow {
-        val listenerRegistration = firebaseFirestore.collection(MESSAGE_COLLECTION)
-            .whereEqualTo("roomId", roomId)
-            .whereGreaterThan("createdAt", generateNowDateTime().toISOLocalDateTimeString())
-            .orderBy("createdAt", Query.Direction.ASCENDING)
-            .addSnapshotListener { value, error ->
-                if (error != null) {
-                    logAnalytics(error.stackTraceToString())
-                    return@addSnapshotListener
-                }
+    override suspend fun subscribeMessages(roomId: String): Flow<MentoringChatResponse> =
+        callbackFlow {
+            val listenerRegistration = firebaseFirestore.collection(MESSAGE_COLLECTION)
+                .whereEqualTo("roomId", roomId)
+                .whereGreaterThan("createdAt", generateNowDateTime().toISOLocalDateTimeString())
+                .orderBy("createdAt", Query.Direction.ASCENDING)
+                .addSnapshotListener { value, error ->
+                    if (error != null) {
+                        logAnalytics(error.stackTraceToString())
+                        return@addSnapshotListener
+                    }
 
-                for (dc in value!!.documentChanges) {
-                    when (dc.type) {
-                        DocumentChange.Type.ADDED -> trySend(dc.document.toObject<MentoringChatResponse>())
-                        DocumentChange.Type.MODIFIED -> Log.d(
-                            "test",
-                            "Modified message: ${dc.document.data}",
-                        )
+                    for (dc in value!!.documentChanges) {
+                        when (dc.type) {
+                            DocumentChange.Type.ADDED -> trySend(dc.document.toObject<MentoringChatResponse>())
+                            DocumentChange.Type.MODIFIED -> Log.d(
+                                "test",
+                                "Modified message: ${dc.document.data}",
+                            )
 
-                        DocumentChange.Type.REMOVED -> Log.d(
-                            "test",
-                            "Removed message: ${dc.document.data}",
-                        )
+                            DocumentChange.Type.REMOVED -> Log.d(
+                                "test",
+                                "Removed message: ${dc.document.data}",
+                            )
+                        }
                     }
                 }
-            }
 
-        awaitClose { listenerRegistration.remove() }
-    }
+            awaitClose { listenerRegistration.remove() }
+        }
 
-    override suspend fun getPreviousMessages(roomId: String, lastTime: String) {
-        TODO("Not yet implemented")
-    }
+    override suspend fun getPreviousMessages(
+        roomId: String,
+        lastTime: String,
+    ): Result<List<MentoringChatResponse>> =
+        runCatching {
+            val documents = firebaseFirestore.collection(MESSAGE_COLLECTION)
+                .whereEqualTo("roomId", roomId)
+                .orderBy("createdAt", Query.Direction.DESCENDING)
+                .get()
+                .await()
+
+            documents.map { document ->
+                checkNotNull(document.toObject<MentoringChatResponse>())
+            }.reversed()
+        }
 
     override suspend fun getMentorChattingRoom(userId: String): Result<List<JoinChatResponse>> =
         runCatching {

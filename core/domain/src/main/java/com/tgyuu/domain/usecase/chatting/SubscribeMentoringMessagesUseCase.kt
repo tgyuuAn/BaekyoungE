@@ -5,9 +5,9 @@ import com.tgyuu.model.chatting.MentoringMessage
 import kotlinx.coroutines.flow.Flow
 import javax.inject.Inject
 
-class GetMentoringChattingMessagesUseCase @Inject constructor(
+class SubscribeMentoringMessagesUseCase @Inject constructor(
     private val mentoringChattingRepository: MentoringChattingRepository,
 ) {
     suspend operator fun invoke(roomId: String): Flow<MentoringMessage> =
-        mentoringChattingRepository.getAllMessage(roomId)
+        mentoringChattingRepository.subscribeMessages(roomId)
 }
