@@ -91,7 +91,7 @@ class ChattingDataSourceImpl @Inject constructor(
                 .whereEqualTo("roomId", roomId)
                 .whereLessThan("createdAt", lastTime)
                 .orderBy("createdAt", Query.Direction.DESCENDING)
-                .limit(30)
+                .limit(PAGING_SIZE)
                 .get()
                 .await()
 
@@ -125,4 +125,9 @@ class ChattingDataSourceImpl @Inject constructor(
                         ?: throw IllegalArgumentException("Invalid mentee info")
                 }
         }
+
+
+    companion object{
+        private const val PAGING_SIZE = 30L
+    }
 }

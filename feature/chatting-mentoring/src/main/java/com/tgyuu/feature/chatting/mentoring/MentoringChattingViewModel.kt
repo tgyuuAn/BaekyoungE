@@ -92,20 +92,19 @@ class MentoringChattingViewModel @Inject constructor(
     }
 
     fun getPreviousMessages() {
-        if (!isLoading.get()) {
-            isLoading.getAndSet(true)
-            viewModelScope.launch {
+        viewModelScope.launch {
+            if (!isLoading.get()) {
+                isLoading.getAndSet(true)
                 getPreviousMentoringMessagesUseCase(
                     _roomId.value,
                     _pagingTimeStamp.value,
                 )
                     .onSuccess {
-                        if (it.size < 30) {
+                        if (it.size < PAGING_SIZE) {
                             _isFirstPage.value = true
                         }
 
                         chatLog.addAll(0, it)
-                        Log.d("test", "chatLog : ${chatLog.toList()}")
 
                         if (it.size != 0) {
                             _pagingTimeStamp.value = chatLog[0].createdAt
@@ -121,4 +120,9 @@ class MentoringChattingViewModel @Inject constructor(
     fun subscribeMessages() = viewModelScope.launch {
         subscribeMentoringMessagesUseCase(_roomId.value).collect { chatLog.add(it) }
     }
+
+    companion object{
+        private const val PAGING_SIZE = 30
+    }
+
 }
