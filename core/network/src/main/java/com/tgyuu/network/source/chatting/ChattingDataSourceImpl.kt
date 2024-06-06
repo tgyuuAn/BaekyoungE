@@ -15,6 +15,7 @@ import com.tgyuu.network.model.chatting.mentoring.JoinChatResponse
 import com.tgyuu.network.model.chatting.mentoring.MentoringChatRequest
 import com.tgyuu.network.model.chatting.mentoring.MentoringChatResponse
 import com.tgyuu.network.util.await
+import com.tgyuu.network.util.logAnalytics
 import kotlinx.coroutines.channels.awaitClose
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.callbackFlow
@@ -49,7 +50,7 @@ class ChattingDataSourceImpl @Inject constructor(
             .orderBy("createdAt", Query.Direction.ASCENDING)
             .addSnapshotListener { value, error ->
                 if (error != null) {
-                    Log.d("test", "listen:error", error)
+                    logAnalytics(error.stackTraceToString())
                     return@addSnapshotListener
                 }
 

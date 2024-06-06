@@ -32,9 +32,14 @@ import androidx.navigation.NavController
 import androidx.navigation.NavGraph.Companion.findStartDestination
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
-import com.tgyuu.chatting.ai.navigation.aiChattingNavigationRoute
+import com.google.firebase.Firebase
+import com.google.firebase.analytics.FirebaseAnalytics
+import com.google.firebase.analytics.FirebaseAnalytics.Event.SCREEN_VIEW
+import com.google.firebase.analytics.FirebaseAnalytics.Param.SCREEN_NAME
+import com.google.firebase.analytics.analytics
 import com.tgyuu.baekyounge.main.navigation.BaekyoungNavHost
 import com.tgyuu.baekyounge.main.navigation.TopLevelDestination
+import com.tgyuu.chatting.ai.navigation.aiChattingNavigationRoute
 import com.tgyuu.designsystem.theme.BaekyoungTheme
 import com.tgyuu.feature.auth.navigation.authNavigationRoute
 import com.tgyuu.feature.auth.signup.navigation.signUpNavigationRoute
@@ -49,13 +54,19 @@ import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
 class MainActivity : ComponentActivity() {
+    lateinit var firebaseAnalytics: FirebaseAnalytics
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setSystemBarTransParent()
 
+        firebaseAnalytics = Firebase.analytics
+
         setContent {
             BaekyoungTheme {
                 val navController = rememberNavController()
+
+                logScreenView(navController, firebaseAnalytics)
 
                 Scaffold(
                     bottomBar = {
@@ -91,6 +102,17 @@ class MainActivity : ComponentActivity() {
                 }
             }
         }
+    }
+}
+
+private fun logScreenView(
+    navController: NavController,
+    firebaseAnalytics: FirebaseAnalytics,
+) {
+    navController.addOnDestinationChangedListener { _, destination, _ ->
+        val params = Bundle()
+        params.putString(SCREEN_VIEW, destination.route)
+        firebaseAnalytics.logEvent(SCREEN_NAME, params)
     }
 }
 

@@ -65,6 +65,8 @@ dependencies {
     implementation(project(":feature:shop"))
     implementation(project(":feature:profile"))
 
+    implementation(libs.firebase.analytics)
+    implementation(platform(libs.firebase.bom))
     implementation(libs.kakao.user)
 
     testImplementation("junit:junit:4.13.2")
