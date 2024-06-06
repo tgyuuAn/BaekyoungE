@@ -38,7 +38,7 @@ fun BaekyoungRow(
             .clickable(
                 interactionSource = remember { MutableInteractionSource() },
                 indication = null,
-            ) {  onClick() },
+            ) { onClick() },
     ) {
         Box(
             modifier = modifier

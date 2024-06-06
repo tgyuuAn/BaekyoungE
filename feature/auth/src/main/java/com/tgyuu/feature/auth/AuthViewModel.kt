@@ -4,6 +4,7 @@ import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.kakao.sdk.user.UserApiClient
+import com.tgyuu.domain.usecase.auth.GetUserInformationUseCase
 import com.tgyuu.domain.usecase.auth.VerifyMemberIdUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableSharedFlow
@@ -14,6 +15,7 @@ import javax.inject.Inject
 @HiltViewModel
 class AuthViewModel @Inject constructor(
     private val verifyMemberIdUseCase: VerifyMemberIdUseCase,
+    private val getUserInformationUseCase: GetUserInformationUseCase,
 ) : ViewModel() {
     private val _eventFlow = MutableSharedFlow<AuthEvent>()
     val eventFlow = _eventFlow.asSharedFlow()
@@ -36,19 +38,21 @@ class AuthViewModel @Inject constructor(
                     }
                 }
 
-                excuteMemberIdVerification(tokenInfo.id ?: -1)
+                excuteMemberIdVerification(tokenInfo.id.toString())
             }
         }
     }
 
-    private fun excuteMemberIdVerification(userId: Long) = viewModelScope.launch {
+    private fun excuteMemberIdVerification(userId: String) = viewModelScope.launch {
         verifyMemberIdUseCase(userId).onSuccess { result ->
             if (result) {
-                _eventFlow.emit(AuthEvent.VerifySuccess)
+                getUserInformationUseCase(userId).onSuccess {
+                    _eventFlow.emit(AuthEvent.VerifySuccess)
+                }
                 return@launch
             }
 
-            _eventFlow.emit(AuthEvent.VerifyFailed(userId.toString()))
+            _eventFlow.emit(AuthEvent.VerifyFailed(userId))
         }.onFailure {
             _eventFlow.emit(AuthEvent.Error(it))
         }

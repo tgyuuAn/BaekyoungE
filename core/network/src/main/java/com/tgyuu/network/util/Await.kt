@@ -2,12 +2,12 @@ package com.tgyuu.network.util
 
 import android.os.Bundle
 import com.google.android.gms.tasks.Task
+import com.google.firebase.ktx.Firebase
 import com.tgyuu.network.di.FirebaseModule.firebaseAnalytics
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.suspendCancellableCoroutine
 import retrofit2.Response
 import kotlin.coroutines.resumeWithException
-
 
 @OptIn(ExperimentalCoroutinesApi::class)
 suspend fun <T> Task<T>.await(): T {
@@ -38,8 +38,7 @@ fun <T> Response<T>.await(): Result<T> {
     }
 }
 
-
-private fun logAnalytics(error: String) {
+internal fun logAnalytics(error: String) {
     val params = Bundle()
     params.putString("api_error", error)
     firebaseAnalytics.logEvent("api_error_event", params)

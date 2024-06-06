@@ -21,7 +21,7 @@ class AuthRepositoryImpl @Inject constructor(
         runCatching {
             userDao.getUserInformation()?.let {
                 UserInformation(
-                    userId = userId,
+                    userId = it.id,
                     nickName = it.nickName,
                     gender = it.gender,
                     major = it.major,
@@ -103,7 +103,7 @@ class AuthRepositoryImpl @Inject constructor(
                 gender = gender,
                 major = major,
                 grade = grade,
-                registrationDate = generateNowDateTime().toISOLocalDateTimeString(),
+                registrationDate = registrationDate,
             ),
         )
     }

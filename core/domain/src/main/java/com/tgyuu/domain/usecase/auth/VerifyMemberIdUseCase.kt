@@ -6,6 +6,6 @@ import javax.inject.Inject
 class VerifyMemberIdUseCase @Inject constructor(
     private val authRepository: AuthRepository,
 ) {
-    suspend operator fun invoke(userId: Long): Result<Boolean> =
-        authRepository.verifyUserId(userId.toString())
+    suspend operator fun invoke(userId: String): Result<Boolean> =
+        authRepository.verifyUserId(userId)
 }

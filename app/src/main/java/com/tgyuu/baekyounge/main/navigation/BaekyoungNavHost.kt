@@ -18,22 +18,22 @@ import com.tgyuu.feature.auth.navigation.navigateToAuth
 import com.tgyuu.feature.auth.signup.navigation.navigateToSignUp
 import com.tgyuu.feature.auth.signup.navigation.signUpNavigationRoute
 import com.tgyuu.feature.auth.signup.navigation.signUpScreen
+import com.tgyuu.feature.chatting.mentoring.navigation.mentoringChattingScreen
+import com.tgyuu.feature.chatting.mentoring.navigation.navigateToMentoringChatting
 import com.tgyuu.feature.consulting.consultinginformation.navigation.consultingNavigationRoute
 import com.tgyuu.feature.consulting.consultinginformation.navigation.consultingScreen
 import com.tgyuu.feature.home.navigation.homeScreen
 import com.tgyuu.feature.home.navigation.navigateToHome
-import com.tgyuu.feature.chatting.mentoring.navigation.mentorChattingScreen
-import com.tgyuu.feature.chatting.mentoring.navigation.navigateToMentorChatting
-import com.tgyuu.feature.mentoring.navigation.mentoringNavigationRoute
-import com.tgyuu.feature.mentoring.navigation.mentoringScreen
-import com.tgyuu.feature.mentee.navigation.findMentorNavigationRoute
 import com.tgyuu.feature.mentee.navigation.findMentorScreen
+import com.tgyuu.feature.mentee.navigation.navigateToFindMentor
 import com.tgyuu.feature.mentoring.mentee.navigation.mentoringMenteeNavigationRoute
 import com.tgyuu.feature.mentoring.mentee.navigation.mentoringMenteeScreen
-import com.tgyuu.feature.mentee.navigation.navigateToFindMentor
 import com.tgyuu.feature.mentoring.mentee.navigation.navigateToMentoringMentee
+import com.tgyuu.feature.mentoring.mentor.navigation.mentoringMentorNavigationRoute
 import com.tgyuu.feature.mentoring.mentor.navigation.mentoringMentorScreen
 import com.tgyuu.feature.mentoring.mentor.navigation.navigateToMentoringMentor
+import com.tgyuu.feature.mentoring.navigation.mentoringNavigationRoute
+import com.tgyuu.feature.mentoring.navigation.mentoringScreen
 import com.tgyuu.feature.profile.navigation.profileScreen
 import com.tgyuu.feature.profile.setting.navigation.navigateToSetting
 import com.tgyuu.feature.profile.setting.navigation.settingNavigationRoute
@@ -154,18 +154,36 @@ fun BaekyoungNavHost(
                     navOptions { popUpTo(mentoringMenteeNavigationRoute) },
                 )
             },
+            navigateToMentoringChatting = { userId, roomId ->
+                navController.navigateToMentoringChatting(
+                    userId = userId,
+                    roomId = roomId,
+                    navOptions { popUpTo(mentoringMenteeNavigationRoute) },
+                )
+            },
             popBackStack = { navController.popBackStack() },
         )
         findMentorScreen(
             popBackStack = { navController.popBackStack() },
-            navigateToMentorChatting = {
-                navController.navigateToMentorChatting(
-                    navOptions { popUpTo(findMentorNavigationRoute) },
+            navigateToMentoringChatting = { userId, roomId ->
+                navController.navigateToMentoringChatting(
+                    userId = userId,
+                    roomId = roomId,
+                    navOptions { popUpTo(mentoringMenteeNavigationRoute) },
                 )
             },
         )
-        mentoringMentorScreen(popBackStack = { navController.popBackStack() })
-        mentorChattingScreen(popBackStack = { navController.popBackStack() })
+        mentoringMentorScreen(
+            navigateToMentoringChatting = { userId, roomId ->
+                navController.navigateToMentoringChatting(
+                    userId = userId,
+                    roomId = roomId,
+                    navOptions { popUpTo(mentoringMentorNavigationRoute) },
+                )
+            },
+            popBackStack = { navController.popBackStack() },
+        )
+        mentoringChattingScreen(popBackStack = { navController.popBackStack() })
         profileScreen(navigateToSetting = navController::navigateToSetting)
         settingScreen(
             popBackStack = { navController.popBackStack() },

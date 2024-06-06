@@ -75,7 +75,7 @@ fun BaekyoungCenterTopBar(
                         interactionSource = remember { MutableInteractionSource() },
                         indication = null,
                     ) {
-                    if (showSearchBar) {
+                        if (showSearchBar) {
                             onShowSearchBarChanged()
                         } else {
                             onClickBackButton()
@@ -138,7 +138,7 @@ fun BaekyoungCenterTopBar(
                                             .clickable(
                                                 interactionSource = remember { MutableInteractionSource() },
                                                 indication = null,
-                                            ) {  clearSearchText() },
+                                            ) { clearSearchText() },
                                     )
                                 }
                             }
@@ -166,7 +166,7 @@ fun BaekyoungCenterTopBar(
                                 modifier = Modifier.clickable(
                                     interactionSource = remember { MutableInteractionSource() },
                                     indication = null,
-                                ) {  onShowSearchBarChanged() },
+                                ) { onShowSearchBarChanged() },
                             )
                         }
 

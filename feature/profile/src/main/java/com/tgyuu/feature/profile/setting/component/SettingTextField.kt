@@ -93,7 +93,7 @@ internal fun SettingTextField(
                         .clickable(
                             interactionSource = remember { MutableInteractionSource() },
                             indication = null,
-                        ) {  onConfirm() },
+                        ) { onConfirm() },
                 )
             }
         }

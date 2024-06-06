@@ -1,13 +1,13 @@
 package com.tgyuu.data.repository.di
 
 import com.tgyuu.data.repository.repository.auth.AuthRepositoryImpl
-import com.tgyuu.data.repository.repository.chatting.ChattingRepositoryImpl
-import com.tgyuu.data.repository.repository.consulting.ConsultingRepositoryImpl
+import com.tgyuu.data.repository.repository.chatting.AiChattingRepositoryImpl
+import com.tgyuu.data.repository.repository.chatting.MentoringChattingRepositoryImpl
 import com.tgyuu.data.repository.repository.mentoring.MentoringRepositoryImpl
 import com.tgyuu.domain.repository.auth.AuthRepository
-import com.tgyuu.domain.repository.chatting.ChattingRepository
-import com.tgyuu.domain.repository.consulting.ConsultingRepository
-import com.tgyuu.domain.repository.mentoring.MentoringRepository
+import com.tgyuu.domain.repository.chatting.AiChattingRepository
+import com.tgyuu.domain.repository.chatting.MentoringChattingRepository
+import com.tgyuu.domain.repository.mentoring.RemoteMentoringRepository
 import dagger.Binds
 import dagger.Module
 import dagger.hilt.InstallIn
@@ -20,25 +20,25 @@ abstract class DataModule {
 
     @Binds
     @Singleton
-    abstract fun bindsConsultingRepository(
-        consultingRepositoryImpl: ConsultingRepositoryImpl,
-    ): ConsultingRepository
-
-    @Binds
-    @Singleton
     abstract fun bindsAuthRepository(
         authRepositoryImpl: AuthRepositoryImpl,
     ): AuthRepository
 
     @Binds
     @Singleton
-    abstract fun bindsChattingRepository(
-        chattingRepositoryImpl: ChattingRepositoryImpl,
-    ): ChattingRepository
+    abstract fun bindsAiChattingRepository(
+        aiChattingRepositoryImpl: AiChattingRepositoryImpl,
+    ): AiChattingRepository
+
+    @Binds
+    @Singleton
+    abstract fun bindsMentoringChattingRepository(
+        mentoringChattingRepositoryImpl: MentoringChattingRepositoryImpl,
+    ): MentoringChattingRepository
 
     @Binds
     @Singleton
     abstract fun bindsMentoringRepository(
         mentoringRepositoryImpl: MentoringRepositoryImpl,
-    ): MentoringRepository
+    ): RemoteMentoringRepository
 }

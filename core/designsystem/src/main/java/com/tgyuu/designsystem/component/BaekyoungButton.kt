@@ -33,7 +33,7 @@ fun BaekyoungButton(
             .clickable(
                 interactionSource = remember { MutableInteractionSource() },
                 indication = null,
-            ) {  onButtonClick() },
+            ) { onButtonClick() },
     ) {
         Text(
             text = stringResource(id = text),

@@ -20,7 +20,7 @@ fun NavController.navigateToSignUp(
 
 fun NavGraphBuilder.signUpScreen(navigateToHome: () -> Unit) {
     composable(
-        route = signUpNavigationRoute("{userId}"),
+        route = signUpNavigationRoute(),
         arguments = listOf(navArgument("userId") { type = NavType.StringType }),
     ) { navBackStackEntry ->
         val userId = navBackStackEntry.arguments?.getString("userId") ?: ""

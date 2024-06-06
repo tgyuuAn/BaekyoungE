@@ -5,6 +5,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.kakao.sdk.auth.AuthApiClient
 import com.kakao.sdk.user.UserApiClient
+import com.tgyuu.domain.usecase.auth.GetUserInformationUseCase
 import com.tgyuu.domain.usecase.auth.VerifyMemberIdUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.delay
@@ -18,6 +19,7 @@ import javax.inject.Inject
 @HiltViewModel
 class SplashViewModel @Inject constructor(
     private val verifyMemberIdUseCase: VerifyMemberIdUseCase,
+    private val getUserInformationUseCase: GetUserInformationUseCase,
 ) : ViewModel() {
     private val _eventFlow = MutableSharedFlow<SplashEvent>()
     val eventFlow = _eventFlow.asSharedFlow()
@@ -46,14 +48,19 @@ class SplashViewModel @Inject constructor(
                 event(SplashEvent.NavigateToAuth)
             }
 
-            verifyMemberId(tokenInfo?.id ?: -1)
+            verifyMemberId(tokenInfo?.id.toString())
             return@accessTokenInfo
         }
     }
 
-    fun verifyMemberId(userId: Long) = viewModelScope.launch {
+    fun verifyMemberId(userId: String) = viewModelScope.launch {
         verifyMemberIdUseCase(userId)
-            .onSuccess { event(SplashEvent.NavigateToHome) }
+            .onSuccess {
+                getUserInformationUseCase(userId).onSuccess { event(SplashEvent.NavigateToHome) }
+                    .onFailure {
+                        Log.d("test", it.toString())
+                    }
+            }
             .onFailure { event(SplashEvent.NavigateToAuth) }
     }
 
