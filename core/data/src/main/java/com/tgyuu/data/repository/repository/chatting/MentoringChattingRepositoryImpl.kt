@@ -40,8 +40,8 @@ class MentoringChattingRepositoryImpl @Inject constructor(
         ),
     )
 
-    override suspend fun getAllMessage(roomId: String): Flow<MentoringMessage> =
-        chattingDataSource.getAllMessage(roomId).map {
+    override suspend fun subscribeMessages(roomId: String): Flow<MentoringMessage> =
+        chattingDataSource.subscribeMessages(roomId).map {
             MentoringMessage(
                 roomId = it.roomId,
                 userId = it.userId,
@@ -49,6 +49,22 @@ class MentoringChattingRepositoryImpl @Inject constructor(
                 createdAt = it.createdAt,
                 isChecked = it.isChecked,
             )
+        }
+
+    override suspend fun getPreviousMessages(
+        roomId: String,
+        lastTime: String,
+    ): Result<List<MentoringMessage>> =
+        chattingDataSource.getPreviousMessages(roomId, lastTime).mapCatching {
+            it.map {
+                MentoringMessage(
+                    roomId = it.roomId,
+                    userId = it.userId,
+                    content = it.content,
+                    createdAt = it.createdAt,
+                    isChecked = it.isChecked,
+                )
+            }
         }
 
     override suspend fun getMentorChattingRoom(userId: String): Result<List<JoinChat>> =

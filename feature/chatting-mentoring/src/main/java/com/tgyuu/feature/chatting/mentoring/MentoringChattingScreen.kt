@@ -1,5 +1,6 @@
 package com.tgyuu.feature.chatting.mentoring
 
+import android.util.Log
 import androidx.compose.foundation.Canvas
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
@@ -81,10 +82,13 @@ internal fun MentoringChattingRoute(
     val chatState by viewModel.chatState.collectAsStateWithLifecycle()
     val (showExitChattingRoomDialog, setExitChattingRoomDialog) = remember { mutableStateOf(false) }
     val userInformation by viewModel.userInformation.collectAsStateWithLifecycle()
+    val isFirstPage by viewModel.isFirstPage.collectAsStateWithLifecycle()
 
     LaunchedEffect(true) {
-        viewModel.roomId.value = roomId
-        viewModel.getMessages()
+        viewModel.apply {
+            setRoomId(roomId)
+            subscribeMessages()
+        }
     }
 
     MentoringChattingScreen(
@@ -94,8 +98,10 @@ internal fun MentoringChattingRoute(
         chatState = chatState,
         userInformation = userInformation,
         isMentor = (userId == roomId.split("-")[0]),
+        isFirstPage = isFirstPage,
         showExitChattingRoomDialog = showExitChattingRoomDialog,
         setExitChattingRoomDialog = setExitChattingRoomDialog,
+        getPreviousMessages = viewModel::getPreviousMessages,
         onChatTextChanged = viewModel::setChatText,
         onSearchTextChanged = viewModel::setSearchText,
         sendMessage = viewModel::sendMessage,
@@ -111,8 +117,10 @@ internal fun MentoringChattingScreen(
     chatState: UiState<Unit>,
     userInformation: UserInformation,
     isMentor: Boolean,
+    isFirstPage: Boolean,
     showExitChattingRoomDialog: Boolean,
     setExitChattingRoomDialog: (Boolean) -> Unit,
+    getPreviousMessages: () -> Unit,
     onChatTextChanged: (String) -> Unit,
     onSearchTextChanged: (String) -> Unit,
     sendMessage: () -> Unit,
@@ -128,15 +136,20 @@ internal fun MentoringChattingScreen(
     val backgroundColor = Brush.verticalGradient(
         listOf(Color(0xFF0E1B45), Color(0xFF7C849F)),
     )
-    var previousChatSize by remember { mutableStateOf(0) }
+    var previousChatTime by remember { mutableStateOf("") }
 
-    LaunchedEffect(chatLog) {
-        if (previousChatSize != chatLog.size) {
+    LaunchedEffect(chatLog.size) {
+        if (previousChatTime != (chatLog.lastOrNull()?.createdAt ?: "")) {
             coroutineScope.launch {
-                listState.animateScrollToItem(chatLog.size - 1)
+                listState.scrollToItem(chatLog.size)
+                previousChatTime = chatLog.last().createdAt
             }
+        }
+    }
 
-            previousChatSize = chatLog.size
+    LaunchedEffect(listState.firstVisibleItemIndex) {
+        if (listState.firstVisibleItemIndex <= 3 && !isFirstPage) {
+            getPreviousMessages()
         }
     }
 

@@ -12,7 +12,12 @@ interface MentoringChattingRepository {
         createdAt: String,
     ): Result<Unit>
 
-    suspend fun getAllMessage(roomId: String): Flow<MentoringMessage>
+    suspend fun subscribeMessages(roomId: String): Flow<MentoringMessage>
+
+    suspend fun getPreviousMessages(
+        roomId: String,
+        lastTime: String,
+    ): Result<List<MentoringMessage>>
 
     suspend fun getMentorChattingRoom(userId: String): Result<List<JoinChat>>
 

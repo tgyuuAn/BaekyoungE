@@ -16,7 +16,12 @@ interface ChattingDataSource {
         joinChatRequest: JoinChatRequest,
     ): Result<Unit>
 
-    suspend fun getAllMessage(roomId: String): Flow<MentoringChatResponse>
+    suspend fun subscribeMessages(roomId: String): Flow<MentoringChatResponse>
+
+    suspend fun getPreviousMessages(
+        roomId: String,
+        lastTime: String,
+    ): Result<List<MentoringChatResponse>>
 
     suspend fun getMentorChattingRoom(userId: String): Result<List<JoinChatResponse>>
 
