@@ -12,15 +12,15 @@ data class JoinChat(
     val roomId: String,
     val lastChatting: String,
     val lastSentTime: String,
-){
+) {
     fun getFormattedLastSentTime(): String {
         val localUpdatedTime = lastSentTime.parseAsLocalDateTime()
 
-        if (localUpdatedTime.dayOfYear == generateNowDateTime().dayOfYear-1){
+        if (localUpdatedTime.dayOfYear == generateNowDateTime().dayOfYear - 1) {
             return "어제"
         }
 
-        if (localUpdatedTime.dayOfYear < generateNowDateTime().dayOfYear-1){
+        if (localUpdatedTime.dayOfYear < generateNowDateTime().dayOfYear - 1) {
             return "${localUpdatedTime.monthValue}월 ${localUpdatedTime.dayOfMonth}일"
         }
 

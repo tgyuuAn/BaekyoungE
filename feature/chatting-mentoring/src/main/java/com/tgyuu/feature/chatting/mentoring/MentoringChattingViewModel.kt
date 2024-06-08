@@ -111,7 +111,6 @@ class MentoringChattingViewModel @Inject constructor(
                 }
                 .onFailure { Log.d("test", "onFailure : " + it.toString()) }
                 .also { isLoading.getAndSet(false) }
-
         }
     }
 
@@ -122,5 +121,4 @@ class MentoringChattingViewModel @Inject constructor(
     companion object {
         private const val PAGING_SIZE = 30
     }
-
 }

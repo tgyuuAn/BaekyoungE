@@ -1,6 +1,5 @@
 package com.tgyuu.feature.chatting.mentoring
 
-import android.util.Log
 import androidx.compose.foundation.Canvas
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background

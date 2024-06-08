@@ -8,7 +8,6 @@ import com.google.firebase.firestore.toObject
 import com.tgyuu.network.constant.JOIN_CHAT_COLLECTION
 import com.tgyuu.network.constant.MESSAGE_COLLECTION
 import com.tgyuu.network.di.OpenAiApi
-import com.tgyuu.network.model.auth.UserInformationResponse
 import com.tgyuu.network.model.chatting.ai.AiChatRequest
 import com.tgyuu.network.model.chatting.ai.AiChatResponse
 import com.tgyuu.network.model.chatting.mentoring.JoinChatRequest
@@ -126,8 +125,7 @@ class ChattingDataSourceImpl @Inject constructor(
                 }
         }
 
-
-    companion object{
+    companion object {
         private const val PAGING_SIZE = 30L
     }
 }

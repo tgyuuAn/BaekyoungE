@@ -2,7 +2,6 @@ package com.tgyuu.network.util
 
 import android.os.Bundle
 import com.google.android.gms.tasks.Task
-import com.google.firebase.ktx.Firebase
 import com.tgyuu.network.di.FirebaseModule.firebaseAnalytics
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.suspendCancellableCoroutine

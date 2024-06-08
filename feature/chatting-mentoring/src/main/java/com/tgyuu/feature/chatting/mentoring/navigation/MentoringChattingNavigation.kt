@@ -27,7 +27,7 @@ fun NavGraphBuilder.mentoringChattingScreen(popBackStack: () -> Unit) {
         route = mentorChattingNavigationRoute(),
         arguments = listOf(
             navArgument("roomId") { type = NavType.StringType },
-            navArgument("userId") { type = NavType.StringType }
+            navArgument("userId") { type = NavType.StringType },
         ),
     ) { navBackStackEntry ->
         val roomId = navBackStackEntry.arguments?.getString("roomId") ?: ""

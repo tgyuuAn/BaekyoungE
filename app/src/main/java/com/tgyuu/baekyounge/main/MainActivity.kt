@@ -77,7 +77,7 @@ class MainActivity : ComponentActivity() {
 
                 when (networkState) {
                     NetworkState.CONNECTED -> Log.d("test", "Network가 연결되었습니다.")
-                    NetworkState.NOTCONNECTED -> Log.d("test", "Network가 해제되었습니다.")
+                    NetworkState.NOT_CONNECTED -> Log.d("test", "Network가 해제되었습니다.")
                     else -> {}
                 }
 

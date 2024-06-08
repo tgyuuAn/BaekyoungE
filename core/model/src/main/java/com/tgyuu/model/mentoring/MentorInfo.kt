@@ -8,15 +8,15 @@ data class MentorInfo(
     val userId: String,
     val nickName: String,
     val registrationDate: String,
-){
+) {
     fun getFormattedRegistrationDate(): String {
         val localUpdatedTime = registrationDate.parseAsLocalDateTime()
 
-        if (localUpdatedTime.dayOfYear == generateNowDateTime().dayOfYear-1){
+        if (localUpdatedTime.dayOfYear == generateNowDateTime().dayOfYear - 1) {
             return "어제"
         }
 
-        if (localUpdatedTime.dayOfYear < generateNowDateTime().dayOfYear-1){
+        if (localUpdatedTime.dayOfYear < generateNowDateTime().dayOfYear - 1) {
             return "${localUpdatedTime.monthValue}월 ${localUpdatedTime.dayOfMonth}일"
         }
 

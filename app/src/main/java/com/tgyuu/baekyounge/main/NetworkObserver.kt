@@ -10,9 +10,7 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import javax.inject.Inject
 
-class NetworkObserver @Inject constructor(
-    private val context: Context,
-) {
+class NetworkObserver @Inject constructor(context: Context) {
     private val _networkState = MutableStateFlow<NetworkState>(NetworkState.NONE)
     val networkState = _networkState.asStateFlow()
 
@@ -27,7 +25,7 @@ class NetworkObserver @Inject constructor(
 
         override fun onLost(network: Network) {
             super.onLost(network)
-            _networkState.value = NetworkState.NOTCONNECTED
+            _networkState.value = NetworkState.NOT_CONNECTED
         }
     }
 
@@ -40,7 +38,7 @@ class NetworkObserver @Inject constructor(
         val caps = connectivityManager.getNetworkCapabilities(connectivityManager.activeNetwork)
 
         if (caps == null) {
-            _networkState.value = NetworkState.NOTCONNECTED
+            _networkState.value = NetworkState.NOT_CONNECTED
             return
         }
 
@@ -48,7 +46,7 @@ class NetworkObserver @Inject constructor(
             if (caps.hasTransport(TRANSPORT_WIFI) || caps.hasTransport(TRANSPORT_CELLULAR)) {
                 NetworkState.CONNECTED
             } else {
-                NetworkState.NOTCONNECTED
+                NetworkState.NOT_CONNECTED
             }
     }
 
@@ -66,5 +64,5 @@ class NetworkObserver @Inject constructor(
 }
 
 enum class NetworkState {
-    NONE, CONNECTED, NOTCONNECTED
+    NONE, CONNECTED, NOT_CONNECTED
 }

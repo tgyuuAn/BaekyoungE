@@ -1,6 +1,5 @@
 package com.tgyuu.data.repository.repository.mentoring
 
-import android.util.Log
 import com.tgyuu.database.dao.MentorDao
 import com.tgyuu.database.model.MentorEntity
 import com.tgyuu.domain.repository.mentoring.RemoteMentoringRepository
