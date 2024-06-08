@@ -1,6 +1,7 @@
 package com.tgyuu.baekyounge.main
 
 import android.os.Bundle
+import android.util.Log
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
@@ -28,6 +29,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.navigation.NavController
 import androidx.navigation.NavGraph.Companion.findStartDestination
 import androidx.navigation.compose.currentBackStackEntryAsState
@@ -51,10 +53,14 @@ import com.tgyuu.feature.profile.setting.navigation.settingNavigationRoute
 import com.tgyuu.feature.shop.navigation.shopNavigationRoute
 import com.tgyuu.feature.splash.navigation.splashNavigationRoute
 import dagger.hilt.android.AndroidEntryPoint
+import javax.inject.Inject
 
 @AndroidEntryPoint
 class MainActivity : ComponentActivity() {
     lateinit var firebaseAnalytics: FirebaseAnalytics
+
+    @Inject
+    lateinit var networkObserver: NetworkObserver
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -67,6 +73,13 @@ class MainActivity : ComponentActivity() {
                 val navController = rememberNavController()
 
                 logScreenView(navController, firebaseAnalytics)
+                val networkState by networkObserver.networkState.collectAsStateWithLifecycle()
+
+                when (networkState) {
+                    NetworkState.CONNECTED -> Log.d("test", "Network가 연결되었습니다.")
+                    NetworkState.NOTCONNECTED -> Log.d("test", "Network가 해제되었습니다.")
+                    else -> {}
+                }
 
                 Scaffold(
                     bottomBar = {
@@ -102,6 +115,11 @@ class MainActivity : ComponentActivity() {
                 }
             }
         }
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        networkObserver.unsubscribeNetworkCallback()
     }
 }
 

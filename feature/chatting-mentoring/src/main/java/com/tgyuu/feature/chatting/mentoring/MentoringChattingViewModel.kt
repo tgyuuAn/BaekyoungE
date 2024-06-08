@@ -91,29 +91,27 @@ class MentoringChattingViewModel @Inject constructor(
             .also { _chatState.value = UiState.Success(Unit) }
     }
 
-    fun getPreviousMessages() {
-        viewModelScope.launch {
-            if (!isLoading.get()) {
-                isLoading.getAndSet(true)
-                getPreviousMentoringMessagesUseCase(
-                    _roomId.value,
-                    _pagingTimeStamp.value,
-                )
-                    .onSuccess {
-                        if (it.size < PAGING_SIZE) {
-                            _isFirstPage.value = true
-                        }
-
-                        chatLog.addAll(0, it)
-
-                        if (it.size != 0) {
-                            _pagingTimeStamp.value = chatLog[0].createdAt
-                        }
+    fun getPreviousMessages() = viewModelScope.launch {
+        if (!isLoading.get()) {
+            isLoading.getAndSet(true)
+            getPreviousMentoringMessagesUseCase(
+                _roomId.value,
+                _pagingTimeStamp.value,
+            )
+                .onSuccess {
+                    if (it.size < PAGING_SIZE) {
+                        _isFirstPage.value = true
                     }
-                    .onFailure { Log.d("test", "onFailure : " + it.toString()) }
-                    .also { isLoading.getAndSet(false) }
 
-            }
+                    chatLog.addAll(0, it)
+
+                    if (it.size != 0) {
+                        _pagingTimeStamp.value = chatLog[0].createdAt
+                    }
+                }
+                .onFailure { Log.d("test", "onFailure : " + it.toString()) }
+                .also { isLoading.getAndSet(false) }
+
         }
     }
 
@@ -121,7 +119,7 @@ class MentoringChattingViewModel @Inject constructor(
         subscribeMentoringMessagesUseCase(_roomId.value).collect { chatLog.add(it) }
     }
 
-    companion object{
+    companion object {
         private const val PAGING_SIZE = 30
     }
 
