@@ -20,4 +20,8 @@
 
     <string name="consulting_inforamtion_input">상담 정보 입력</string>
     <string name="start_consulting">상담 시작하기</string>
+
+    <string name="network_dialog_title">네트워크 상태를 확인 해주세요.</string>
+    <string name="network_dialog_description">네트워크 연결에 실패하였습니다. 다시 시도하시겠어요?</string>
+    <string name="setting">설정</string>
 </resources>

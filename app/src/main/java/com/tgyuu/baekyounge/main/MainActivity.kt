@@ -41,6 +41,7 @@ import com.google.firebase.analytics.FirebaseAnalytics
 import com.google.firebase.analytics.FirebaseAnalytics.Event.SCREEN_VIEW
 import com.google.firebase.analytics.FirebaseAnalytics.Param.SCREEN_NAME
 import com.google.firebase.analytics.analytics
+import com.tgyuu.baekyounge.R.string
 import com.tgyuu.baekyounge.main.navigation.BaekyoungNavHost
 import com.tgyuu.baekyounge.main.navigation.TopLevelDestination
 import com.tgyuu.chatting.ai.navigation.aiChattingNavigationRoute
@@ -82,10 +83,10 @@ class MainActivity : ComponentActivity() {
 
                 if (networkState == NetworkState.NOT_CONNECTED) {
                     BaekyoungDialog(
-                        title = "네트워크 상태를 확인 해주세요.",
-                        description = "네트워크 연결에 실패하였습니다. 다시 시도하시겠어요?",
+                        title = stringResource(id = string.network_dialog_title),
+                        description = stringResource(id = string.network_dialog_description),
                         leftButtonText = stringResource(R.string.cancel),
-                        rightButtonText = "설정",
+                        rightButtonText = stringResource(id = string.setting),
                         onLeftButtonClick = { finish() },
                         onRightButtonClick = {
                             val intent = Intent(ACTION_WIFI_SETTINGS)
@@ -128,6 +129,11 @@ class MainActivity : ComponentActivity() {
                 }
             }
         }
+    }
+
+    override fun onResume() {
+        super.onResume()
+        networkObserver.checkNetworkState()
     }
 
     override fun onDestroy() {

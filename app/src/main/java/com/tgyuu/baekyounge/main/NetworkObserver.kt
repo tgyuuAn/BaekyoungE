@@ -30,11 +30,11 @@ class NetworkObserver @Inject constructor(context: Context) {
     }
 
     init {
-        initNetworkState()
+        checkNetworkState()
         subscribeNetworkCallback()
     }
 
-    private fun initNetworkState() {
+    fun checkNetworkState() {
         val caps = connectivityManager.getNetworkCapabilities(connectivityManager.activeNetwork)
 
         if (caps == null) {
