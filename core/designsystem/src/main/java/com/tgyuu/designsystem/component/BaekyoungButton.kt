@@ -1,6 +1,5 @@
 package com.tgyuu.designsystem.component
 
-import androidx.annotation.StringRes
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.interaction.MutableInteractionSource
@@ -20,7 +19,7 @@ import com.tgyuu.designsystem.theme.BaekyoungTheme
 
 @Composable
 fun BaekyoungButton(
-    @StringRes text: Int,
+    text: String,
     buttonColor: Color = BaekyoungTheme.colors.blueD7,
     textColor: Color = BaekyoungTheme.colors.white,
     onButtonClick: () -> Unit,
@@ -36,7 +35,7 @@ fun BaekyoungButton(
             ) { onButtonClick() },
     ) {
         Text(
-            text = stringResource(id = text),
+            text = text,
             style = BaekyoungTheme.typography.contentBold,
             color = textColor,
             modifier = Modifier

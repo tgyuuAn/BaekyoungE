@@ -191,7 +191,7 @@ fun SettingScreen(
                                     modifier = Modifier.fillMaxWidth(),
                                 ) {
                                     BaekyoungButton(
-                                        text = R.string.cancel,
+                                        text = stringResource(R.string.cancel),
                                         buttonColor = BaekyoungTheme.colors.grayF2,
                                         textColor = BaekyoungTheme.colors.black,
                                         onButtonClick = { showLogoutDialog = false },
@@ -199,7 +199,7 @@ fun SettingScreen(
                                     )
 
                                     BaekyoungButton(
-                                        text = R.string.logout,
+                                        text = stringResource(R.string.logout),
                                         textColor = BaekyoungTheme.colors.white,
                                         buttonColor = BaekyoungTheme.colors.black,
                                         onButtonClick = { logoutKakao() },
@@ -239,7 +239,7 @@ fun SettingScreen(
                                         .padding(top = 20.dp),
                                 ) {
                                     BaekyoungButton(
-                                        text = R.string.cancel,
+                                        text = stringResource(R.string.cancel),
                                         buttonColor = BaekyoungTheme.colors.grayF2,
                                         textColor = BaekyoungTheme.colors.black,
                                         onButtonClick = { showWithdrawalDialog = false },
@@ -247,7 +247,7 @@ fun SettingScreen(
                                     )
 
                                     BaekyoungButton(
-                                        text = R.string.withdrawal2,
+                                        text = stringResource(R.string.withdrawal2),
                                         textColor = BaekyoungTheme.colors.white,
                                         buttonColor = BaekyoungTheme.colors.red,
                                         onButtonClick = { withdrawalKakao() },

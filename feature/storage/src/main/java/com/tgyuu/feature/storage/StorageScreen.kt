@@ -134,7 +134,7 @@ internal fun StorageScreen(
                             .padding(top = 20.dp),
                     ) {
                         BaekyoungButton(
-                            text = R.string.cancel,
+                            text = stringResource(R.string.cancel),
                             buttonColor = BaekyoungTheme.colors.grayF2,
                             textColor = BaekyoungTheme.colors.black,
                             onButtonClick = { setChatLogDeleteDialog(false) },
@@ -142,7 +142,7 @@ internal fun StorageScreen(
                         )
 
                         BaekyoungButton(
-                            text = R.string.complete,
+                            text = stringResource(R.string.complete),
                             textColor = BaekyoungTheme.colors.white,
                             buttonColor = BaekyoungTheme.colors.red,
                             onButtonClick = { deleteChattingRoom(selectedRoomId) },

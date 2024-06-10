@@ -116,7 +116,7 @@ internal fun ConsultingScreen(
                             )
 
                             BaekyoungButton(
-                                text = R.string.navigate_to_consulting,
+                                text = stringResource(R.string.navigate_to_consulting),
                                 onButtonClick = { navigateToChatting() },
                                 buttonColor = BaekyoungTheme.colors.black,
                                 modifier = Modifier

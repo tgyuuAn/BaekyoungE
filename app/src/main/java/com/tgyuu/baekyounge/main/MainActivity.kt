@@ -36,6 +36,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.compose.ui.window.Dialog
@@ -117,7 +118,7 @@ class MainActivity : ComponentActivity() {
                                             .padding(top = 20.dp),
                                     ) {
                                         BaekyoungButton(
-                                            text = R.string.cancel,
+                                            text = stringResource(R.string.cancel),
                                             buttonColor = BaekyoungTheme.colors.grayF2,
                                             textColor = BaekyoungTheme.colors.black,
                                             onButtonClick = { },
@@ -125,7 +126,7 @@ class MainActivity : ComponentActivity() {
                                         )
 
                                         BaekyoungButton(
-                                            text = R.string.complete,
+                                            text = stringResource(R.string.complete),
                                             textColor = BaekyoungTheme.colors.white,
                                             buttonColor = BaekyoungTheme.colors.red,
                                             onButtonClick = { },

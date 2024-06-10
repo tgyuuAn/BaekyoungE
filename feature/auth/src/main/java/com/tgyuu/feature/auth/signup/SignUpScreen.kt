@@ -279,7 +279,7 @@ internal fun SignUpScreen(
                     }
 
                     BaekyoungButton(
-                        text = R.string.confirm,
+                        text = stringResource(R.string.confirm),
                         onButtonClick = {
                             if (!showBottomSheet) {
                                 signUp()

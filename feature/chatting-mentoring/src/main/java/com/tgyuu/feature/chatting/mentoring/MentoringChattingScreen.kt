@@ -185,7 +185,7 @@ internal fun MentoringChattingScreen(
                                             .padding(top = 20.dp),
                                     ) {
                                         BaekyoungButton(
-                                            text = string.cancel,
+                                            text = stringResource(string.cancel),
                                             buttonColor = BaekyoungTheme.colors.grayF2,
                                             textColor = BaekyoungTheme.colors.black,
                                             onButtonClick = { setExitChattingRoomDialog(false) },
@@ -193,7 +193,7 @@ internal fun MentoringChattingScreen(
                                         )
 
                                         BaekyoungButton(
-                                            text = string.exit,
+                                            text = stringResource(string.exit),
                                             textColor = BaekyoungTheme.colors.white,
                                             buttonColor = BaekyoungTheme.colors.red,
                                             onButtonClick = { setExitChattingRoomDialog(false) },
