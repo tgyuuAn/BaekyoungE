@@ -48,11 +48,6 @@ internal fun HomeRoute(viewModel: HomeViewModel = hiltViewModel()) {
 internal fun HomeScreen() {
     val focusManager = LocalFocusManager.current
     val localConfiguration = LocalConfiguration.current
-    var showTopBar by remember { mutableStateOf(false) }
-
-    LaunchedEffect(true) {
-        showTopBar = true
-    }
 
     val backgroundColor = Brush.verticalGradient(
         listOf(
@@ -87,57 +82,6 @@ internal fun HomeScreen() {
                 .align(Alignment.TopCenter)
                 .offset(y = localConfiguration.screenHeightDp.dp + -SEA_IMAGE_HEIGHT.dp - 43.dp),
         )
-
-        AnimatedVisibility(
-            visible = showTopBar,
-            enter = fadeIn() + slideInVertically(),
-            exit = fadeOut() + slideOutVertically(),
-        ) {
-            Box(
-                modifier = Modifier
-                    .padding(start = 16.dp, end = 16.dp, top = 16.dp)
-                    .fillMaxWidth()
-                    .clip(RoundedCornerShape(10.dp))
-                    .background(BaekyoungTheme.colors.white.copy(alpha = 0.4f)),
-            ) {
-                Row(
-                    verticalAlignment = Alignment.CenterVertically,
-                    horizontalArrangement = Arrangement.spacedBy(5.dp),
-                    modifier = Modifier
-                        .align(Alignment.CenterStart)
-                        .padding(10.dp),
-                ) {
-                    Image(
-                        painterResource(id = R.drawable.ic_fish),
-                        contentDescription = stringResource(id = R.string.fish_description),
-                    )
-
-                    Text(
-                        text = "50",
-                        style = BaekyoungTheme.typography.contentBold,
-                        color = BaekyoungTheme.colors.white,
-                    )
-                }
-
-                Row(
-                    verticalAlignment = Alignment.CenterVertically,
-                    horizontalArrangement = Arrangement.spacedBy(10.dp),
-                    modifier = Modifier
-                        .align(Alignment.CenterEnd)
-                        .padding(10.dp),
-                ) {
-                    Image(
-                        painterResource(id = R.drawable.ic_chat),
-                        contentDescription = stringResource(id = R.string.chat_description),
-                    )
-
-                    Image(
-                        painterResource(id = R.drawable.ic_setting),
-                        contentDescription = stringResource(id = R.string.setting_description),
-                    )
-                }
-            }
-        }
     }
 }
 
