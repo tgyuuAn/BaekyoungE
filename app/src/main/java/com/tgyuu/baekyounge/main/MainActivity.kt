@@ -1,7 +1,8 @@
 package com.tgyuu.baekyounge.main
 
+import android.content.Intent
 import android.os.Bundle
-import android.util.Log
+import android.provider.Settings.ACTION_WIFI_SETTINGS
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
@@ -76,23 +77,21 @@ class MainActivity : ComponentActivity() {
                 val navController = rememberNavController()
 
                 logScreenView(navController, firebaseAnalytics)
+
                 val networkState by networkObserver.networkState.collectAsStateWithLifecycle()
 
-                when (networkState) {
-                    NetworkState.CONNECTED -> Log.d("test", "Network가 연결되었습니다.")
-
-                    NetworkState.NOT_CONNECTED ->
-                        BaekyoungDialog(
-                            onDismissRequest = {},
-                            title = "네트워크 상태를 확인 해주세요.",
-                            description = "네트워크 연결에 실패하였습니다. 다시 시도하시겠어요?",
-                            leftButtonText = stringResource(R.string.cancel),
-                            rightButtonText = stringResource(R.string.complete),
-                            onLeftButtonClick = {},
-                            onRightButtonClick = {},
-                        )
-
-                    else -> {}
+                if (networkState == NetworkState.NOT_CONNECTED) {
+                    BaekyoungDialog(
+                        title = "네트워크 상태를 확인 해주세요.",
+                        description = "네트워크 연결에 실패하였습니다. 다시 시도하시겠어요?",
+                        leftButtonText = stringResource(R.string.cancel),
+                        rightButtonText = "설정",
+                        onLeftButtonClick = { finish() },
+                        onRightButtonClick = {
+                            val intent = Intent(ACTION_WIFI_SETTINGS)
+                            startActivity(intent)
+                        },
+                    )
                 }
 
                 Scaffold(
@@ -209,20 +208,16 @@ internal fun BaekyoungBottomBar(
                     return@forEach
                 }
 
-                val isSelect = currentRoute == destination.route
-                val unselectedContentColor =
-                    if (currentRoute == com.tgyuu.feature.home.navigation.homeNavigationRoute) {
-                        BaekyoungTheme.colors.blueFB
-                    } else {
-                        BaekyoungTheme.colors.gray95
-                    }
-
                 BottomNavigationItem(
-                    selected = isSelect,
+                    selected = (currentRoute == destination.route),
                     modifier = Modifier.background(Color.Transparent),
                     onClick = { onNavigateToDestination(destination) },
                     selectedContentColor = BaekyoungTheme.colors.black,
-                    unselectedContentColor = unselectedContentColor,
+                    unselectedContentColor = if (currentRoute == com.tgyuu.feature.home.navigation.homeNavigationRoute) {
+                        BaekyoungTheme.colors.blueFB
+                    } else {
+                        BaekyoungTheme.colors.gray95
+                    },
                     icon = {
                         Icon(
                             painter = painterResource(id = destination.selectedIcon),
