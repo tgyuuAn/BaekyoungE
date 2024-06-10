@@ -11,35 +11,25 @@ import androidx.compose.animation.fadeOut
 import androidx.compose.animation.slideInVertically
 import androidx.compose.animation.slideOutVertically
 import androidx.compose.foundation.background
-import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.WindowInsets
-import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.navigationBars
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.windowInsetsPadding
-import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.BottomNavigation
 import androidx.compose.material.BottomNavigationItem
 import androidx.compose.material.Icon
-import androidx.compose.material3.Card
 import androidx.compose.material3.Scaffold
-import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
-import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
-import androidx.compose.ui.unit.sp
-import androidx.compose.ui.window.Dialog
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.navigation.NavController
 import androidx.navigation.NavGraph.Companion.findStartDestination
@@ -53,7 +43,7 @@ import com.google.firebase.analytics.analytics
 import com.tgyuu.baekyounge.main.navigation.BaekyoungNavHost
 import com.tgyuu.baekyounge.main.navigation.TopLevelDestination
 import com.tgyuu.chatting.ai.navigation.aiChattingNavigationRoute
-import com.tgyuu.designsystem.component.BaekyoungButton
+import com.tgyuu.designsystem.component.BaekyoungDialog
 import com.tgyuu.designsystem.theme.BaekyoungTheme
 import com.tgyuu.feature.auth.navigation.authNavigationRoute
 import com.tgyuu.feature.auth.signup.navigation.signUpNavigationRoute
@@ -90,53 +80,17 @@ class MainActivity : ComponentActivity() {
 
                 when (networkState) {
                     NetworkState.CONNECTED -> Log.d("test", "Network가 연결되었습니다.")
-                    NetworkState.NOT_CONNECTED -> {
-                        Dialog(onDismissRequest = { }) {
-                            Card(shape = RoundedCornerShape(10.dp)) {
-                                Column(
-                                    horizontalAlignment = Alignment.CenterHorizontally,
-                                    modifier = Modifier
-                                        .background(BaekyoungTheme.colors.white)
-                                        .padding(vertical = 16.dp, horizontal = 20.dp),
-                                ) {
-                                    Text(
-                                        text = "네트워크 상태를 확인 해주세요.",
-                                        style = BaekyoungTheme.typography.labelBold.copy(fontSize = 14.sp),
-                                        modifier = Modifier.padding(bottom = 2.dp),
-                                    )
 
-                                    Text(
-                                        text = "네트워크 연결에 실패하였습니다. 다시 시도하시겠어요?",
-                                        style = BaekyoungTheme.typography.labelRegular.copy(fontSize = 10.sp),
-                                        color = BaekyoungTheme.colors.red,
-                                    )
-
-                                    Row(
-                                        horizontalArrangement = Arrangement.spacedBy(12.dp),
-                                        modifier = Modifier
-                                            .fillMaxWidth()
-                                            .padding(top = 20.dp),
-                                    ) {
-                                        BaekyoungButton(
-                                            text = stringResource(R.string.cancel),
-                                            buttonColor = BaekyoungTheme.colors.grayF2,
-                                            textColor = BaekyoungTheme.colors.black,
-                                            onButtonClick = { },
-                                            modifier = Modifier.weight(1f),
-                                        )
-
-                                        BaekyoungButton(
-                                            text = stringResource(R.string.complete),
-                                            textColor = BaekyoungTheme.colors.white,
-                                            buttonColor = BaekyoungTheme.colors.red,
-                                            onButtonClick = { },
-                                            modifier = Modifier.weight(1f),
-                                        )
-                                    }
-                                }
-                            }
-                        }
-                    }
+                    NetworkState.NOT_CONNECTED ->
+                        BaekyoungDialog(
+                            onDismissRequest = {},
+                            title = "네트워크 상태를 확인 해주세요.",
+                            description = "네트워크 연결에 실패하였습니다. 다시 시도하시겠어요?",
+                            leftButtonText = stringResource(R.string.cancel),
+                            rightButtonText = stringResource(R.string.complete),
+                            onLeftButtonClick = {},
+                            onRightButtonClick = {},
+                        )
 
                     else -> {}
                 }

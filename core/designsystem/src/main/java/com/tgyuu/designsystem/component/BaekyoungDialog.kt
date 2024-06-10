@@ -25,14 +25,14 @@ fun BaekyoungDialog(
     descriptionColor: Color = BaekyoungTheme.colors.red,
     leftButtonText: String,
     leftButtonTextColor: Color = BaekyoungTheme.colors.black,
-    leftButtonColor: Color,
+    leftButtonColor: Color = BaekyoungTheme.colors.grayF2,
     rightButtonText: String,
     rightButtonTextColor: Color = BaekyoungTheme.colors.white,
-    rightButtonColor: Color,
-    modifier: Modifier = Modifier,
+    rightButtonColor: Color = BaekyoungTheme.colors.red,
     onDismissRequest: () -> Unit = {},
     onLeftButtonClick: () -> Unit,
     onRightButtonClick: () -> Unit,
+    modifier: Modifier = Modifier,
 ) {
     Dialog(onDismissRequest = onDismissRequest) {
         Card(shape = RoundedCornerShape(10.dp)) {
