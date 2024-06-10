@@ -1,6 +1,5 @@
 package com.tgyuu.feature.chatting.mentoring
 
-import android.util.Log
 import androidx.compose.foundation.Canvas
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
@@ -10,7 +9,6 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
-import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.WindowInsets
 import androidx.compose.foundation.layout.fillMaxSize
@@ -21,8 +19,6 @@ import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.lazy.rememberLazyListState
-import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material3.Card
 import androidx.compose.material3.DrawerValue
 import androidx.compose.material3.ModalNavigationDrawer
 import androidx.compose.material3.Scaffold
@@ -50,16 +46,14 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.LayoutDirection
 import androidx.compose.ui.unit.dp
-import androidx.compose.ui.unit.sp
-import androidx.compose.ui.window.Dialog
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.tgyuu.common.util.UiState
 import com.tgyuu.common.util.addFocusCleaner
 import com.tgyuu.designsystem.R.string
-import com.tgyuu.designsystem.component.BaekyoungButton
 import com.tgyuu.designsystem.component.BaekyoungCenterTopBar
 import com.tgyuu.designsystem.component.BaekyoungChatTextField
+import com.tgyuu.designsystem.component.BaekyoungDialog
 import com.tgyuu.designsystem.component.BaekyoungRow
 import com.tgyuu.designsystem.component.BaekyoungSpeechBubble
 import com.tgyuu.designsystem.component.ChattingLoader
@@ -159,51 +153,16 @@ internal fun MentoringChattingScreen(
             drawerContent = {
                 if (showExitChattingRoomDialog) {
                     CompositionLocalProvider(LocalLayoutDirection provides LayoutDirection.Ltr) {
-                        Dialog(onDismissRequest = { setExitChattingRoomDialog(false) }) {
-                            Card(shape = RoundedCornerShape(10.dp)) {
-                                Column(
-                                    horizontalAlignment = Alignment.CenterHorizontally,
-                                    modifier = Modifier
-                                        .background(BaekyoungTheme.colors.white)
-                                        .padding(vertical = 16.dp, horizontal = 20.dp),
-                                ) {
-                                    Text(
-                                        text = stringResource(id = R.string.exit_chattingroom_dialog_title),
-                                        style = BaekyoungTheme.typography.labelBold.copy(fontSize = 14.sp),
-                                        modifier = Modifier.padding(bottom = 2.dp),
-                                    )
-
-                                    Text(
-                                        text = stringResource(id = R.string.exit_chattingroom_dialog_description),
-                                        style = BaekyoungTheme.typography.labelRegular.copy(fontSize = 10.sp),
-                                        color = BaekyoungTheme.colors.red,
-                                    )
-
-                                    Row(
-                                        horizontalArrangement = Arrangement.spacedBy(12.dp),
-                                        modifier = Modifier
-                                            .fillMaxWidth()
-                                            .padding(top = 20.dp),
-                                    ) {
-                                        BaekyoungButton(
-                                            text = string.cancel,
-                                            buttonColor = BaekyoungTheme.colors.grayF2,
-                                            textColor = BaekyoungTheme.colors.black,
-                                            onButtonClick = { setExitChattingRoomDialog(false) },
-                                            modifier = Modifier.weight(1f),
-                                        )
-
-                                        BaekyoungButton(
-                                            text = string.exit,
-                                            textColor = BaekyoungTheme.colors.white,
-                                            buttonColor = BaekyoungTheme.colors.red,
-                                            onButtonClick = { setExitChattingRoomDialog(false) },
-                                            modifier = Modifier.weight(1f),
-                                        )
-                                    }
-                                }
-                            }
-                        }
+                        BaekyoungDialog(
+                            onDismissRequest = { setExitChattingRoomDialog(false) },
+                            title = stringResource(id = R.string.exit_chattingroom_dialog_title),
+                            description = stringResource(id = R.string.exit_chattingroom_dialog_description),
+                            leftButtonText = stringResource(string.cancel),
+                            rightButtonText = stringResource(string.exit),
+                            rightButtonColor = BaekyoungTheme.colors.black,
+                            onLeftButtonClick = { setExitChattingRoomDialog(false) },
+                            onRightButtonClick = { setExitChattingRoomDialog(false) },
+                        )
                     }
                 }
 

@@ -164,11 +164,6 @@ fun ProfileScreen(
                 }
 
                 Spacer(modifier = Modifier.weight(1f))
-
-                HorizontalDivider(
-                    color = BaekyoungTheme.colors.grayDC,
-                    modifier = Modifier.padding(bottom = 60.dp),
-                )
             }
 
             is UiState.Error -> {

@@ -5,7 +5,6 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.WindowInsets
 import androidx.compose.foundation.layout.fillMaxSize
@@ -16,7 +15,6 @@ import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
-import androidx.compose.material3.Card
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Scaffold
@@ -42,20 +40,19 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import androidx.compose.ui.window.Dialog
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.sd.lib.compose.wheel_picker.FVerticalWheelPicker
 import com.sd.lib.compose.wheel_picker.FWheelPickerState
 import com.sd.lib.compose.wheel_picker.rememberFWheelPickerState
 import com.tgyuu.common.util.UiState
-import com.tgyuu.designsystem.component.BaekyoungButton
 import com.tgyuu.designsystem.component.BaekyoungCenterTopBar
+import com.tgyuu.designsystem.component.BaekyoungDialog
+import com.tgyuu.designsystem.component.BaekyoungModalBottomSheet
+import com.tgyuu.designsystem.component.BaekyoungRow
 import com.tgyuu.designsystem.component.Loader
 import com.tgyuu.designsystem.theme.BaekyoungTheme
 import com.tgyuu.feature.profile.R
-import com.tgyuu.designsystem.component.BaekyoungModalBottomSheet
-import com.tgyuu.designsystem.component.BaekyoungRow
 import com.tgyuu.feature.profile.setting.component.SettingTextField
 import com.tgyuu.model.auth.UserInformation
 import kotlinx.coroutines.flow.SharedFlow
@@ -172,91 +169,27 @@ fun SettingScreen(
                 }
 
                 if (showLogoutDialog) {
-                    Dialog(onDismissRequest = { showLogoutDialog = false }) {
-                        Card(shape = RoundedCornerShape(10.dp)) {
-                            Column(
-                                verticalArrangement = Arrangement.spacedBy(20.dp),
-                                horizontalAlignment = Alignment.CenterHorizontally,
-                                modifier = Modifier
-                                    .background(BaekyoungTheme.colors.white)
-                                    .padding(vertical = 16.dp, horizontal = 20.dp),
-                            ) {
-                                Text(
-                                    text = stringResource(id = R.string.logout_dialog_title),
-                                    style = BaekyoungTheme.typography.labelBold.copy(fontSize = 14.sp),
-                                )
-
-                                Row(
-                                    horizontalArrangement = Arrangement.spacedBy(12.dp),
-                                    modifier = Modifier.fillMaxWidth(),
-                                ) {
-                                    BaekyoungButton(
-                                        text = R.string.cancel,
-                                        buttonColor = BaekyoungTheme.colors.grayF2,
-                                        textColor = BaekyoungTheme.colors.black,
-                                        onButtonClick = { showLogoutDialog = false },
-                                        modifier = Modifier.weight(1f),
-                                    )
-
-                                    BaekyoungButton(
-                                        text = R.string.logout,
-                                        textColor = BaekyoungTheme.colors.white,
-                                        buttonColor = BaekyoungTheme.colors.black,
-                                        onButtonClick = { logoutKakao() },
-                                        modifier = Modifier.weight(1f),
-                                    )
-                                }
-                            }
-                        }
-                    }
+                    BaekyoungDialog(
+                        onDismissRequest = { showLogoutDialog = false },
+                        title = stringResource(id = R.string.logout_dialog_title),
+                        leftButtonText = stringResource(R.string.cancel),
+                        rightButtonText = stringResource(R.string.logout),
+                        rightButtonColor = BaekyoungTheme.colors.black,
+                        onLeftButtonClick = { showLogoutDialog = false },
+                        onRightButtonClick = { logoutKakao() },
+                    )
                 }
 
                 if (showWithdrawalDialog) {
-                    Dialog(onDismissRequest = { showWithdrawalDialog = false }) {
-                        Card(shape = RoundedCornerShape(10.dp)) {
-                            Column(
-                                horizontalAlignment = Alignment.CenterHorizontally,
-                                modifier = Modifier
-                                    .background(BaekyoungTheme.colors.white)
-                                    .padding(vertical = 16.dp, horizontal = 20.dp),
-                            ) {
-                                Text(
-                                    text = stringResource(id = R.string.withdrawal_dialog_title),
-                                    style = BaekyoungTheme.typography.labelBold.copy(fontSize = 14.sp),
-                                    modifier = Modifier.padding(bottom = 2.dp),
-                                )
-
-                                Text(
-                                    text = stringResource(id = R.string.withdrawal_dialog_description),
-                                    style = BaekyoungTheme.typography.labelRegular.copy(fontSize = 10.sp),
-                                    color = BaekyoungTheme.colors.red,
-                                )
-
-                                Row(
-                                    horizontalArrangement = Arrangement.spacedBy(12.dp),
-                                    modifier = Modifier
-                                        .fillMaxWidth()
-                                        .padding(top = 20.dp),
-                                ) {
-                                    BaekyoungButton(
-                                        text = R.string.cancel,
-                                        buttonColor = BaekyoungTheme.colors.grayF2,
-                                        textColor = BaekyoungTheme.colors.black,
-                                        onButtonClick = { showWithdrawalDialog = false },
-                                        modifier = Modifier.weight(1f),
-                                    )
-
-                                    BaekyoungButton(
-                                        text = R.string.withdrawal2,
-                                        textColor = BaekyoungTheme.colors.white,
-                                        buttonColor = BaekyoungTheme.colors.red,
-                                        onButtonClick = { withdrawalKakao() },
-                                        modifier = Modifier.weight(1f),
-                                    )
-                                }
-                            }
-                        }
-                    }
+                    BaekyoungDialog(
+                        onDismissRequest = { showWithdrawalDialog = false },
+                        title = stringResource(id = R.string.withdrawal_dialog_title),
+                        description = stringResource(id = R.string.withdrawal_dialog_description),
+                        leftButtonText = stringResource(R.string.cancel),
+                        rightButtonText = stringResource(R.string.withdrawal2),
+                        onLeftButtonClick = { showWithdrawalDialog = false },
+                        onRightButtonClick = { withdrawalKakao() },
+                    )
                 }
 
                 Scaffold(

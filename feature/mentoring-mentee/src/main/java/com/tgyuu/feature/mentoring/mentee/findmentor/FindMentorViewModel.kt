@@ -1,6 +1,5 @@
 package com.tgyuu.feature.mentoring.mentee.findmentor
 
-import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.tgyuu.common.util.UiState

@@ -1,6 +1,8 @@
 package com.tgyuu.baekyounge.main
 
+import android.content.Intent
 import android.os.Bundle
+import android.provider.Settings.ACTION_WIFI_SETTINGS
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
@@ -27,7 +29,9 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.navigation.NavController
 import androidx.navigation.NavGraph.Companion.findStartDestination
 import androidx.navigation.compose.currentBackStackEntryAsState
@@ -37,9 +41,11 @@ import com.google.firebase.analytics.FirebaseAnalytics
 import com.google.firebase.analytics.FirebaseAnalytics.Event.SCREEN_VIEW
 import com.google.firebase.analytics.FirebaseAnalytics.Param.SCREEN_NAME
 import com.google.firebase.analytics.analytics
+import com.tgyuu.baekyounge.R.string
 import com.tgyuu.baekyounge.main.navigation.BaekyoungNavHost
 import com.tgyuu.baekyounge.main.navigation.TopLevelDestination
 import com.tgyuu.chatting.ai.navigation.aiChattingNavigationRoute
+import com.tgyuu.designsystem.component.BaekyoungDialog
 import com.tgyuu.designsystem.theme.BaekyoungTheme
 import com.tgyuu.feature.auth.navigation.authNavigationRoute
 import com.tgyuu.feature.auth.signup.navigation.signUpNavigationRoute
@@ -50,11 +56,16 @@ import com.tgyuu.feature.mentoring.mentor.navigation.mentoringMentorNavigationRo
 import com.tgyuu.feature.profile.setting.navigation.settingNavigationRoute
 import com.tgyuu.feature.shop.navigation.shopNavigationRoute
 import com.tgyuu.feature.splash.navigation.splashNavigationRoute
+import com.tgyuu.feature.storage.R
 import dagger.hilt.android.AndroidEntryPoint
+import javax.inject.Inject
 
 @AndroidEntryPoint
 class MainActivity : ComponentActivity() {
     lateinit var firebaseAnalytics: FirebaseAnalytics
+
+    @Inject
+    lateinit var networkObserver: NetworkObserver
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -67,6 +78,22 @@ class MainActivity : ComponentActivity() {
                 val navController = rememberNavController()
 
                 logScreenView(navController, firebaseAnalytics)
+
+                val networkState by networkObserver.networkState.collectAsStateWithLifecycle()
+
+                if (networkState == NetworkState.NOT_CONNECTED) {
+                    BaekyoungDialog(
+                        title = stringResource(id = string.network_dialog_title),
+                        description = stringResource(id = string.network_dialog_description),
+                        leftButtonText = stringResource(R.string.cancel),
+                        rightButtonText = stringResource(id = string.setting),
+                        onLeftButtonClick = { finish() },
+                        onRightButtonClick = {
+                            val intent = Intent(ACTION_WIFI_SETTINGS)
+                            startActivity(intent)
+                        },
+                    )
+                }
 
                 Scaffold(
                     bottomBar = {
@@ -102,6 +129,16 @@ class MainActivity : ComponentActivity() {
                 }
             }
         }
+    }
+
+    override fun onResume() {
+        super.onResume()
+        networkObserver.checkNetworkState()
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        networkObserver.unsubscribeNetworkCallback()
     }
 }
 
@@ -177,20 +214,16 @@ internal fun BaekyoungBottomBar(
                     return@forEach
                 }
 
-                val isSelect = currentRoute == destination.route
-                val unselectedContentColor =
-                    if (currentRoute == com.tgyuu.feature.home.navigation.homeNavigationRoute) {
-                        BaekyoungTheme.colors.blueFB
-                    } else {
-                        BaekyoungTheme.colors.gray95
-                    }
-
                 BottomNavigationItem(
-                    selected = isSelect,
+                    selected = (currentRoute == destination.route),
                     modifier = Modifier.background(Color.Transparent),
                     onClick = { onNavigateToDestination(destination) },
                     selectedContentColor = BaekyoungTheme.colors.black,
-                    unselectedContentColor = unselectedContentColor,
+                    unselectedContentColor = if (currentRoute == com.tgyuu.feature.home.navigation.homeNavigationRoute) {
+                        BaekyoungTheme.colors.blueFB
+                    } else {
+                        BaekyoungTheme.colors.gray95
+                    },
                     icon = {
                         Icon(
                             painter = painterResource(id = destination.selectedIcon),

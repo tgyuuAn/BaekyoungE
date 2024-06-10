@@ -17,7 +17,6 @@ import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
-import androidx.compose.material3.Card
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Scaffold
@@ -41,14 +40,13 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import androidx.compose.ui.window.Dialog
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.sd.lib.compose.wheel_picker.FVerticalWheelPicker
 import com.sd.lib.compose.wheel_picker.FWheelPickerState
 import com.sd.lib.compose.wheel_picker.rememberFWheelPickerState
 import com.tgyuu.designsystem.R.drawable
-import com.tgyuu.designsystem.component.BaekyoungButton
+import com.tgyuu.designsystem.component.BaekyoungDialog
 import com.tgyuu.designsystem.component.BaekyoungModalBottomSheet
 import com.tgyuu.designsystem.component.BaekyoungTopBar
 import com.tgyuu.designsystem.theme.BaekyoungTheme
@@ -107,51 +105,15 @@ internal fun StorageScreen(
     var selectedRoomId by remember { mutableStateOf("") }
 
     if (showChatLogDeleteDialog) {
-        Dialog(onDismissRequest = { setChatLogDeleteDialog(false) }) {
-            Card(shape = RoundedCornerShape(10.dp)) {
-                Column(
-                    horizontalAlignment = Alignment.CenterHorizontally,
-                    modifier = Modifier
-                        .background(BaekyoungTheme.colors.white)
-                        .padding(vertical = 16.dp, horizontal = 20.dp),
-                ) {
-                    Text(
-                        text = stringResource(id = R.string.delete_chatlog_dialog_title),
-                        style = BaekyoungTheme.typography.labelBold.copy(fontSize = 14.sp),
-                        modifier = Modifier.padding(bottom = 2.dp),
-                    )
-
-                    Text(
-                        text = stringResource(id = R.string.delete_chatlog_dialog_description),
-                        style = BaekyoungTheme.typography.labelRegular.copy(fontSize = 10.sp),
-                        color = BaekyoungTheme.colors.red,
-                    )
-
-                    Row(
-                        horizontalArrangement = Arrangement.spacedBy(12.dp),
-                        modifier = Modifier
-                            .fillMaxWidth()
-                            .padding(top = 20.dp),
-                    ) {
-                        BaekyoungButton(
-                            text = R.string.cancel,
-                            buttonColor = BaekyoungTheme.colors.grayF2,
-                            textColor = BaekyoungTheme.colors.black,
-                            onButtonClick = { setChatLogDeleteDialog(false) },
-                            modifier = Modifier.weight(1f),
-                        )
-
-                        BaekyoungButton(
-                            text = R.string.complete,
-                            textColor = BaekyoungTheme.colors.white,
-                            buttonColor = BaekyoungTheme.colors.red,
-                            onButtonClick = { deleteChattingRoom(selectedRoomId) },
-                            modifier = Modifier.weight(1f),
-                        )
-                    }
-                }
-            }
-        }
+        BaekyoungDialog(
+            onDismissRequest = { setChatLogDeleteDialog(false) },
+            title = stringResource(id = R.string.delete_chatlog_dialog_title),
+            description = stringResource(id = R.string.delete_chatlog_dialog_description),
+            leftButtonText = stringResource(R.string.cancel),
+            rightButtonText = stringResource(R.string.complete),
+            onLeftButtonClick = { setChatLogDeleteDialog(false) },
+            onRightButtonClick = { deleteChattingRoom(selectedRoomId) },
+        )
     }
 
     Scaffold(
