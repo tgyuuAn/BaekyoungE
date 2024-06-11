@@ -2,7 +2,7 @@ package com.tgyuu.baekyounge.main.di
 
 import android.content.Context
 import com.tgyuu.baekyounge.main.NetworkObserver
-import com.tgyuu.baekyounge.main.NotificationHandler
+import com.tgyuu.baekyounge.main.NotificationService
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -24,5 +24,5 @@ object AppModule {
     @Singleton
     fun provideNotificationHandler(
         @ApplicationContext context: Context,
-    ): NotificationHandler = NotificationHandler(context)
+    ): NotificationService = NotificationService(context)
 }

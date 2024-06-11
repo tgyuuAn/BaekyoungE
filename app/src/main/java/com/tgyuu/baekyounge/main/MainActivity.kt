@@ -81,9 +81,6 @@ class MainActivity : ComponentActivity() {
     @Inject
     lateinit var networkObserver: NetworkObserver
 
-    @Inject
-    lateinit var notificationHandler: NotificationHandler
-
     private var showPermissionDeniedSnackbar by mutableStateOf(false)
 
     private val requestPermissionLauncher = registerForActivityResult(
@@ -112,43 +109,43 @@ class MainActivity : ComponentActivity() {
         askNotificationPermission()
 
         setContent {
-            BaekyoungTheme {
-                val navController = rememberNavController()
-                val snackbarHostState = remember { SnackbarHostState() }
-                val coroutineScope = rememberCoroutineScope()
+            val navController = rememberNavController()
+            val snackbarHostState = remember { SnackbarHostState() }
+            val coroutineScope = rememberCoroutineScope()
 
-                logScreenView(navController, firebaseAnalytics)
+            logScreenView(navController, firebaseAnalytics)
 
-                val networkState by networkObserver.networkState.collectAsStateWithLifecycle()
-                if (networkState == NetworkState.NOT_CONNECTED) {
-                    BaekyoungDialog(
-                        title = stringResource(id = string.network_dialog_title),
-                        description = stringResource(id = string.network_dialog_description),
-                        leftButtonText = stringResource(R.string.cancel),
-                        rightButtonText = stringResource(id = string.setting),
-                        onLeftButtonClick = { finish() },
-                        onRightButtonClick = { startActivity(Intent(ACTION_WIFI_SETTINGS)) },
+            val networkState by networkObserver.networkState.collectAsStateWithLifecycle()
+            if (networkState == NetworkState.NOT_CONNECTED) {
+                BaekyoungDialog(
+                    title = stringResource(id = string.network_dialog_title),
+                    description = stringResource(id = string.network_dialog_description),
+                    leftButtonText = stringResource(R.string.cancel),
+                    rightButtonText = stringResource(id = string.setting),
+                    onLeftButtonClick = { finish() },
+                    onRightButtonClick = { startActivity(Intent(ACTION_WIFI_SETTINGS)) },
+                )
+            }
+
+            if (showPermissionDeniedSnackbar) {
+                coroutineScope.launch {
+                    val result = snackbarHostState.showSnackbar(
+                        message = "더 나은 서비스를 위해 알림 권한을 설정해 주세요.",
+                        actionLabel = "설정",
+                        duration = SnackbarDuration.Short,
                     )
-                }
 
-                if (showPermissionDeniedSnackbar) {
-                    coroutineScope.launch {
-                        val result = snackbarHostState.showSnackbar(
-                            message = "더 나은 서비스를 위해 알림 권한을 설정해 주세요.",
-                            actionLabel = "설정",
-                            duration = SnackbarDuration.Short,
+                    if (result == SnackbarResult.ActionPerformed) {
+                        startActivity(
+                            Intent(ACTION_APP_NOTIFICATION_SETTINGS)
+                                .putExtra(Settings.EXTRA_APP_PACKAGE, packageName)
+                                .setFlags(Intent.FLAG_ACTIVITY_NEW_TASK),
                         )
-
-                        if (result == SnackbarResult.ActionPerformed) {
-                            startActivity(
-                                Intent(ACTION_APP_NOTIFICATION_SETTINGS)
-                                    .putExtra(Settings.EXTRA_APP_PACKAGE, packageName)
-                                    .setFlags(Intent.FLAG_ACTIVITY_NEW_TASK),
-                            )
-                        }
                     }
                 }
+            }
 
+            BaekyoungTheme {
                 Scaffold(
                     snackbarHost = { SnackbarHost(snackbarHostState) },
                     bottomBar = {

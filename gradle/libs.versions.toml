@@ -25,9 +25,10 @@ androidx-compose-material = "1.6.5"
 androidx_compose_bom = "2024.04.00"
 compose-compiler = "1.5.11"
 
-google-firebase = "32.8.0"
-google-services-plugin = "4.4.1"
-google-crashlytics-plguin = "2.9.9"
+google-firebase = "33.1.0"
+google-services-plugin = "4.4.2"
+google-crashlytics-plguin = "3.0.1"
+google-messaging = "23.2.1"
 
 kakao = "2.20.1"
 
@@ -96,8 +97,8 @@ firebase-crashlytics-gradle = { module = "com.google.firebase:firebase-crashlyti
 firebase-bom = { module = "com.google.firebase:firebase-bom", version.ref = "google-firebase" }
 firebase-analytics = { module = "com.google.firebase:firebase-analytics" }
 firebase-crashlytics = { module = "com.google.firebase:firebase-crashlytics" }
-firebase-auth = { module = "com.google.firebase:firebase-auth" }
 firebase-firestore = { module = "com.google.firebase:firebase-firestore" }
+firebase-messaging = { module = "com.google.firebase:firebase-messaging", version.ref = "google-messaging" }
 
 hilt = { module = "com.google.dagger:hilt-android", version.ref = "hilt" }
 hilt-ksp = { module = "com.google.dagger:hilt-compiler", version.ref = "hilt" }
