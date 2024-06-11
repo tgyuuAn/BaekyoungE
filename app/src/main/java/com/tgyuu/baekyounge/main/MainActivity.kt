@@ -8,6 +8,8 @@ import android.os.Bundle
 import android.provider.Settings
 import android.provider.Settings.ACTION_APP_NOTIFICATION_SETTINGS
 import android.provider.Settings.ACTION_WIFI_SETTINGS
+import android.util.Log
+import android.widget.Toast
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
@@ -49,11 +51,13 @@ import androidx.navigation.NavController
 import androidx.navigation.NavGraph.Companion.findStartDestination
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
+import com.google.android.gms.tasks.OnCompleteListener
 import com.google.firebase.Firebase
 import com.google.firebase.analytics.FirebaseAnalytics
 import com.google.firebase.analytics.FirebaseAnalytics.Event.SCREEN_VIEW
 import com.google.firebase.analytics.FirebaseAnalytics.Param.SCREEN_NAME
 import com.google.firebase.analytics.analytics
+import com.google.firebase.messaging.FirebaseMessaging
 import com.tgyuu.baekyounge.R.string
 import com.tgyuu.baekyounge.main.navigation.BaekyoungNavHost
 import com.tgyuu.baekyounge.main.navigation.TopLevelDestination
@@ -107,6 +111,16 @@ class MainActivity : ComponentActivity() {
 
         setSystemBarTransParent()
         askNotificationPermission()
+
+        FirebaseMessaging.getInstance().token.addOnCompleteListener(OnCompleteListener { task ->
+            if (!task.isSuccessful) {
+                Log.w("test", "Fetching FCM registration token failed", task.exception)
+                return@OnCompleteListener
+            }
+
+            val token = task.result
+            Log.d("test", "token : $token")
+        })
 
         setContent {
             val navController = rememberNavController()
