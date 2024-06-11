@@ -67,7 +67,7 @@ internal fun AiChattingRoute(
     AiChattingScreen(
         chatText = chatText,
         searchText = searchText,
-        chatLog = chatLog,
+        chatLog = if (chatLog.size > 2) chatLog else listOf(),
         chatState = chatState,
         onChatTextChanged = viewModel::setChatText,
         onSearchTextChanged = viewModel::setSearchText,

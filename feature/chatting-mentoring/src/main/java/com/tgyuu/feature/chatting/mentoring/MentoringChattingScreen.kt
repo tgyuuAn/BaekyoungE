@@ -142,7 +142,7 @@ internal fun MentoringChattingScreen(
     }
 
     LaunchedEffect(listState.firstVisibleItemIndex) {
-        if (listState.firstVisibleItemIndex <= 3 && !isFirstPage) {
+        if (listState.firstVisibleItemIndex <= 7 && !isFirstPage) {
             getPreviousMessages()
         }
     }

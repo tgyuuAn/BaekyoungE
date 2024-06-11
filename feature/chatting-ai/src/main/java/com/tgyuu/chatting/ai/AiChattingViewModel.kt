@@ -8,10 +8,12 @@ import androidx.lifecycle.viewModelScope
 import com.tgyuu.common.util.UiState
 import com.tgyuu.common.util.generateNowDateTime
 import com.tgyuu.common.util.toISOLocalDateTimeString
+import com.tgyuu.domain.usecase.auth.GetUserInformationUseCase
 import com.tgyuu.domain.usecase.chatting.GetAiAllChattingRoomMessagesUseCase
 import com.tgyuu.domain.usecase.chatting.PostAiMessageUseCase
-import com.tgyuu.model.chatting.ChattingRole
+import com.tgyuu.model.auth.UserInformation
 import com.tgyuu.model.chatting.AiMessage
+import com.tgyuu.model.chatting.ChattingRole
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
@@ -21,6 +23,7 @@ import javax.inject.Inject
 @HiltViewModel
 class AiChattingViewModel @Inject constructor(
     private val postAiMessageUseCase: PostAiMessageUseCase,
+    private val getUserInformationUseCase: GetUserInformationUseCase,
     private val getAiAllChattingRoomMessagesUseCase: GetAiAllChattingRoomMessagesUseCase,
 ) : ViewModel() {
     private val _chatText: MutableStateFlow<String> = MutableStateFlow("")
@@ -28,6 +31,9 @@ class AiChattingViewModel @Inject constructor(
 
     private val _searchText: MutableStateFlow<String> = MutableStateFlow("")
     val searchText get() = _searchText.asStateFlow()
+
+    private val _userInformation = MutableStateFlow(UserInformation())
+    val userInformation = _userInformation.asStateFlow()
 
     val chatLog: SnapshotStateList<AiMessage> = mutableStateListOf(
         AiMessage(
@@ -56,6 +62,10 @@ class AiChattingViewModel @Inject constructor(
 
     val _chatState: MutableStateFlow<UiState<Unit>> = MutableStateFlow(UiState.Success(Unit))
     val chatState = _chatState.asStateFlow()
+
+    init {
+        getUserInformation()
+    }
 
     private val _roomId: MutableStateFlow<String> =
         MutableStateFlow(generateNowDateTime().toISOLocalDateTimeString())
@@ -87,11 +97,24 @@ class AiChattingViewModel @Inject constructor(
         }
     }
 
-    fun postUserChatting() = viewModelScope.launch {
-        if (_chatText.value.isEmpty()) {
-            return@launch
-        }
+    private fun getUserInformation() = viewModelScope.launch {
+        getUserInformationUseCase("-1")
+            .onSuccess {
+                _userInformation.value = it
+                chatLog.add(
+                    AiMessage(
+                        content = "안녕하세요. 저는 ${_userInformation.value.major} ${_userInformation.value.grade}학년 " +
+                            "${userInformation.value.gender} 학생 입니다. 진로 상담 해주세요.",
+                        role = ChattingRole.USER,
+                    ),
+                )
 
+                postUserChatting()
+            }
+            .onFailure { }
+    }
+
+    fun postUserChatting() = viewModelScope.launch {
         chatLog.add(
             AiMessage(
                 content = _chatText.value,
