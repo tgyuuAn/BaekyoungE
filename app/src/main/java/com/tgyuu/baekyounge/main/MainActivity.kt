@@ -9,7 +9,6 @@ import android.provider.Settings
 import android.provider.Settings.ACTION_APP_NOTIFICATION_SETTINGS
 import android.provider.Settings.ACTION_WIFI_SETTINGS
 import android.util.Log
-import android.widget.Toast
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
@@ -112,15 +111,17 @@ class MainActivity : ComponentActivity() {
         setSystemBarTransParent()
         askNotificationPermission()
 
-        FirebaseMessaging.getInstance().token.addOnCompleteListener(OnCompleteListener { task ->
-            if (!task.isSuccessful) {
-                Log.w("test", "Fetching FCM registration token failed", task.exception)
-                return@OnCompleteListener
-            }
+        FirebaseMessaging.getInstance().token.addOnCompleteListener(
+            OnCompleteListener { task ->
+                if (!task.isSuccessful) {
+                    Log.w("test", "Fetching FCM registration token failed", task.exception)
+                    return@OnCompleteListener
+                }
 
-            val token = task.result
-            Log.d("test", "token : $token")
-        })
+                val token = task.result
+                Log.d("test", "token : $token")
+            },
+        )
 
         setContent {
             val navController = rememberNavController()

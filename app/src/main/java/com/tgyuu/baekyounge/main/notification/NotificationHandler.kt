@@ -5,8 +5,9 @@ import android.app.NotificationManager
 import android.app.PendingIntent
 import android.content.Context
 import android.content.Intent
-import android.graphics.BitmapFactory
+import android.util.Log
 import androidx.core.app.NotificationCompat
+import androidx.core.content.ContextCompat
 import com.tgyuu.baekyounge.R
 import com.tgyuu.baekyounge.main.MainActivity
 import javax.inject.Inject
@@ -31,8 +32,8 @@ class NotificationHandler @Inject constructor(private val context: Context) {
     }
 
     fun deliverNotification(title: String, body: String) {
-        val bitmap =
-            BitmapFactory.decodeResource(context.resources, R.drawable.ic_notification_large)
+        Log.d("test", "noti 호출")
+
         val intent = Intent(context, MainActivity::class.java)
 
         val pendingIntent = PendingIntent.getActivity(
@@ -43,8 +44,7 @@ class NotificationHandler @Inject constructor(private val context: Context) {
         )
 
         val builder = NotificationCompat.Builder(context, CHANNEL_ID)
-            .setSmallIcon(R.drawable.ic_notification_small)
-            .setLargeIcon(bitmap)
+            .setSmallIcon(R.drawable.ic_notification_logo)
             .setContentTitle(title)
             .setContentText(body)
             .setContentIntent(pendingIntent)
