@@ -9,7 +9,9 @@ import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.BasicTextField
@@ -56,21 +58,22 @@ fun BaekyoungCenterTopBar(
     Box(
         modifier = modifier
             .fillMaxWidth()
+            .height(60.dp)
             .background(Color.Transparent),
     ) {
         if (showBackButton) {
-            val arrow_left_res = if (textColor == BaekyoungTheme.colors.black) {
-                R.drawable.ic_arrow_left_black
-            } else {
-                R.drawable.ic_arrow_left_white
-            }
-
             Image(
-                painter = painterResource(id = arrow_left_res),
+                painter = painterResource(
+                    id = if (textColor == BaekyoungTheme.colors.black) {
+                        R.drawable.ic_arrow_left_black
+                    } else {
+                        R.drawable.ic_arrow_left_white
+                    },
+                ),
                 contentDescription = null,
                 modifier = Modifier
                     .align(Alignment.CenterStart)
-                    .padding(20.dp)
+                    .padding(horizontal = 20.dp)
                     .clickable(
                         interactionSource = remember { MutableInteractionSource() },
                         indication = null,
@@ -86,9 +89,7 @@ fun BaekyoungCenterTopBar(
 
         AnimatedContent(targetState = showSearchBar) { showSearchBar ->
             Box(
-                modifier = modifier
-                    .fillMaxWidth()
-                    .padding(vertical = 20.dp),
+                modifier = modifier.fillMaxSize(),
             ) {
                 if (showSearchBar) {
                     BasicTextField(
@@ -105,7 +106,9 @@ fun BaekyoungCenterTopBar(
                         keyboardActions = KeyboardActions(onDone = { keyboardController?.hide() }),
                         modifier = Modifier
                             .fillMaxWidth()
+                            .height(30.dp)
                             .padding(start = 50.dp, end = 20.dp)
+                            .align(Alignment.Center)
                             .background(
                                 color = BaekyoungTheme.colors.white.copy(alpha = 0.4f),
                                 shape = RoundedCornerShape(10.dp),
@@ -123,8 +126,8 @@ fun BaekyoungCenterTopBar(
 
                             Box(
                                 modifier = Modifier
-                                    .align(Alignment.CenterStart)
-                                    .fillMaxWidth(),
+                                    .align(Alignment.Center)
+                                    .fillMaxSize(),
                             ) {
                                 innerTextField()
 
