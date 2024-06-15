@@ -122,7 +122,7 @@ internal fun AiChattingScreen(
                 titleTextId = string.consulting,
                 textColor = BaekyoungTheme.colors.white,
                 showSearchButton = true,
-                searchText = searchText,
+                onSearchExcuted = {},
                 onSearchTextChanged = onSearchTextChanged,
                 clearSearchText = { onSearchTextChanged("") },
                 onClickBackButton = popBackStack,

@@ -10,8 +10,9 @@ import com.tgyuu.common.util.generateNowDateTime
 import com.tgyuu.common.util.toISOLocalDateTimeString
 import com.tgyuu.domain.usecase.chatting.GetAiAllChattingRoomMessagesUseCase
 import com.tgyuu.domain.usecase.chatting.PostAiMessageUseCase
-import com.tgyuu.model.chatting.ChattingRole
+import com.tgyuu.domain.usecase.chatting.SearchStringInListUseCase
 import com.tgyuu.model.chatting.AiMessage
+import com.tgyuu.model.chatting.ChattingRole
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
@@ -22,6 +23,7 @@ import javax.inject.Inject
 class AiChattingViewModel @Inject constructor(
     private val postAiMessageUseCase: PostAiMessageUseCase,
     private val getAiAllChattingRoomMessagesUseCase: GetAiAllChattingRoomMessagesUseCase,
+    private val searchStringInListUseCase: SearchStringInListUseCase,
 ) : ViewModel() {
     private val _chatText: MutableStateFlow<String> = MutableStateFlow("")
     val chatText get() = _chatText.asStateFlow()

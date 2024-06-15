@@ -295,6 +295,7 @@ internal fun MentoringChattingScreen(
                             showSearchButton = true,
                             showDrawerButton = true,
                             searchText = searchText,
+                            onSearchExcuted = { },
                             onSearchTextChanged = onSearchTextChanged,
                             onClickDrawerButton = {
                                 coroutineScope.launch {

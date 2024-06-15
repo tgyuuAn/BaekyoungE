@@ -40,7 +40,7 @@ import com.tgyuu.designsystem.theme.BaekyoungTheme
 @Composable
 fun BaekyoungCenterTopBar(
     @StringRes titleTextId: Int,
-    searchText: String = "a",
+    searchText: String = "",
     showBackButton: Boolean = true,
     showSearchButton: Boolean = false,
     showDrawerButton: Boolean = false,
@@ -49,6 +49,7 @@ fun BaekyoungCenterTopBar(
     onClickDrawerButton: () -> Unit = {},
     onSearchTextChanged: (String) -> Unit = {},
     clearSearchText: () -> Unit = {},
+    onSearchExcuted: () -> Unit = {},
     modifier: Modifier = Modifier,
 ) {
     var showSearchBar by remember { mutableStateOf(false) }
@@ -95,15 +96,16 @@ fun BaekyoungCenterTopBar(
                     BasicTextField(
                         value = searchText,
                         onValueChange = onSearchTextChanged,
-                        textStyle = BaekyoungTheme.typography.contentRegular.copy(
-                            color = textColor,
-                        ),
+                        textStyle = BaekyoungTheme.typography.contentRegular.copy(color = textColor),
                         singleLine = true,
-                        keyboardOptions = KeyboardOptions(
-                            imeAction = ImeAction.Done,
-                        ),
+                        keyboardOptions = KeyboardOptions(imeAction = ImeAction.Done),
                         cursorBrush = SolidColor(BaekyoungTheme.colors.white),
-                        keyboardActions = KeyboardActions(onDone = { keyboardController?.hide() }),
+                        keyboardActions = KeyboardActions(
+                            onDone = {
+                                onSearchExcuted()
+                                keyboardController?.hide()
+                            },
+                        ),
                         modifier = Modifier
                             .fillMaxWidth()
                             .height(30.dp)
@@ -117,18 +119,14 @@ fun BaekyoungCenterTopBar(
                         Box(modifier = Modifier.padding(vertical = 4.dp, horizontal = 12.dp)) {
                             if (searchText.isEmpty()) {
                                 Text(
-                                    text = "대화 내용 검색",
+                                    text = stringResource(R.string.search_chat_context),
                                     color = BaekyoungTheme.colors.grayAC,
                                     style = BaekyoungTheme.typography.contentRegular,
                                     modifier = Modifier.align(Alignment.CenterStart),
                                 )
                             }
 
-                            Box(
-                                modifier = Modifier
-                                    .align(Alignment.Center)
-                                    .fillMaxSize(),
-                            ) {
+                            Box(modifier = Modifier.fillMaxSize()) {
                                 innerTextField()
 
                                 if (searchText.isNotEmpty()) {
