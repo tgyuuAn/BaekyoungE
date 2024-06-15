@@ -130,18 +130,6 @@ class MainActivity : ComponentActivity() {
 
             logScreenView(navController, firebaseAnalytics)
 
-            val networkState by networkObserver.networkState.collectAsStateWithLifecycle()
-            if (networkState == NetworkState.NOT_CONNECTED) {
-                BaekyoungDialog(
-                    title = stringResource(id = string.network_dialog_title),
-                    description = stringResource(id = string.network_dialog_description),
-                    leftButtonText = stringResource(R.string.cancel),
-                    rightButtonText = stringResource(id = string.setting),
-                    onLeftButtonClick = { finish() },
-                    onRightButtonClick = { startActivity(Intent(ACTION_WIFI_SETTINGS)) },
-                )
-            }
-
             if (showPermissionDeniedSnackbar) {
                 coroutineScope.launch {
                     val result = snackbarHostState.showSnackbar(
@@ -161,6 +149,18 @@ class MainActivity : ComponentActivity() {
             }
 
             BaekyoungTheme {
+                val networkState by networkObserver.networkState.collectAsStateWithLifecycle()
+                if (networkState == NetworkState.NOT_CONNECTED) {
+                    BaekyoungDialog(
+                        title = stringResource(id = string.network_dialog_title),
+                        description = stringResource(id = string.network_dialog_description),
+                        leftButtonText = stringResource(R.string.cancel),
+                        rightButtonText = stringResource(id = string.setting),
+                        onLeftButtonClick = { finish() },
+                        onRightButtonClick = { startActivity(Intent(ACTION_WIFI_SETTINGS)) },
+                    )
+                }
+
                 Scaffold(
                     snackbarHost = { SnackbarHost(snackbarHostState) },
                     bottomBar = {
