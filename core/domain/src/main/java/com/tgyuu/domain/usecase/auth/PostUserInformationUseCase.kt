@@ -12,11 +12,13 @@ class PostUserInformationUseCase @Inject constructor(
         gender: String,
         major: String,
         grade: Int,
+        fcmToken: String,
     ): Result<Unit> = authRepository.postUserInformation(
         userId = userId,
         nickName = nickName,
         gender = gender,
         major = major,
         grade = grade,
+        fcmToken = fcmToken,
     )
 }

@@ -12,6 +12,7 @@ class UpdateUserInformationUseCase @Inject constructor(
         gender: String,
         major: String,
         grade: Int,
+        fcmToken: String,
         registrationDate: String,
     ): Result<Unit> = authRepository.updateUserInformation(
         userId = userId,
@@ -19,6 +20,7 @@ class UpdateUserInformationUseCase @Inject constructor(
         gender = gender,
         major = major,
         grade = grade,
+        fcmToken = fcmToken,
         registrationDate = registrationDate,
     )
 }

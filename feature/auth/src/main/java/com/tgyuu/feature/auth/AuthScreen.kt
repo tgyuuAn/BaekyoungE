@@ -57,10 +57,9 @@ internal fun AuthRoute(
     LaunchedEffect(true) {
         viewModel.eventFlow.collectLatest { event ->
             when (event) {
-                is AuthViewModel.AuthEvent.VerifySuccess -> navigateToHome()
-                is AuthViewModel.AuthEvent.VerifyFailed -> navigateToSignUp(event.userId)
-                is AuthViewModel.AuthEvent.Error ->
-                    snackbarHostState.showSnackbar(event.throwable.toString())
+                is AuthEvent.VerifySuccess -> navigateToHome()
+                is AuthEvent.VerifyFailed -> navigateToSignUp(event.userId)
+                is AuthEvent.Error -> snackbarHostState.showSnackbar(event.throwable.toString())
             }
         }
     }

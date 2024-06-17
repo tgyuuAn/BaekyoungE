@@ -13,6 +13,7 @@ interface AuthRepository {
         gender: String,
         major: String,
         grade: Int,
+        fcmToken: String,
     ): Result<Unit>
 
     suspend fun updateUserInformation(
@@ -21,6 +22,7 @@ interface AuthRepository {
         gender: String,
         major: String,
         grade: Int,
+        fcmToken: String,
         registrationDate: String,
     ): Result<Unit>
 

@@ -91,6 +91,7 @@ class SettingViewModel @Inject constructor(
             gender = updatedUserInformation.gender,
             grade = updatedUserInformation.grade,
             major = updatedUserInformation.major,
+            fcmToken = updatedUserInformation.fcmToken,
             registrationDate = updatedUserInformation.registrationDate,
         ).onSuccess {
             event(SettingEvent.UpdateSuccess)

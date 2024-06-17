@@ -3,6 +3,7 @@ package com.tgyuu.feature.auth.signup
 import androidx.core.text.isDigitsOnly
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.tgyuu.common.util.getFCMToken
 import com.tgyuu.domain.usecase.auth.PostUserInformationUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.delay
@@ -21,7 +22,6 @@ class SignUpViewModel @Inject constructor(
     val signUpEventFlow = _signUpEventFlow.asSharedFlow()
 
     private val _userId = MutableStateFlow("")
-    val userId = _userId.asStateFlow()
 
     private val _nickname = MutableStateFlow("")
     val nickname = _nickname.asStateFlow()
@@ -60,6 +60,7 @@ class SignUpViewModel @Inject constructor(
             gender = _gender.value.displayName,
             major = _major.value,
             grade = _grade.value.toInt(),
+            fcmToken = getFCMToken(),
         ).onSuccess {
             _isSignUpSuccess.value = true
             delay(4500L)

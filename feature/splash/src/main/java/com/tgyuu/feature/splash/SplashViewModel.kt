@@ -5,7 +5,9 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.kakao.sdk.auth.AuthApiClient
 import com.kakao.sdk.user.UserApiClient
+import com.tgyuu.common.util.getFCMToken
 import com.tgyuu.domain.usecase.auth.GetUserInformationUseCase
+import com.tgyuu.domain.usecase.auth.UpdateUserInformationUseCase
 import com.tgyuu.domain.usecase.auth.VerifyMemberIdUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.delay
@@ -19,6 +21,7 @@ import javax.inject.Inject
 @HiltViewModel
 class SplashViewModel @Inject constructor(
     private val verifyMemberIdUseCase: VerifyMemberIdUseCase,
+    private val updateUserInformationUseCase: UpdateUserInformationUseCase,
     private val getUserInformationUseCase: GetUserInformationUseCase,
 ) : ViewModel() {
     private val _eventFlow = MutableSharedFlow<SplashEvent>()
@@ -56,10 +59,20 @@ class SplashViewModel @Inject constructor(
     fun verifyMemberId(userId: String) = viewModelScope.launch {
         verifyMemberIdUseCase(userId)
             .onSuccess {
-                getUserInformationUseCase(userId).onSuccess { event(SplashEvent.NavigateToHome) }
-                    .onFailure {
-                        Log.d("test", it.toString())
+                getUserInformationUseCase(userId)
+                    .onSuccess {
+                        updateUserInformationUseCase(
+                            userId = it.userId,
+                            nickName = it.nickName,
+                            gender = it.gender,
+                            major = it.major,
+                            grade = it.grade,
+                            registrationDate = it.registrationDate,
+                            fcmToken = getFCMToken(),
+                        )
+                        event(SplashEvent.NavigateToHome)
                     }
+                    .onFailure { Log.d("test", it.toString()) }
             }
             .onFailure { event(SplashEvent.NavigateToAuth) }
     }

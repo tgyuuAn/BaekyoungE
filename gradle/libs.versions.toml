@@ -1,5 +1,6 @@
 [versions]
 compileSdk = "34"
+kotlinxCoroutinesPlayServices = "1.7.3"
 minSdk = "26"
 targetSdk = "34"
 versionName = "1.0"
@@ -53,6 +54,7 @@ androidx-room = "2.6.1"
 android-build = { module = "com.android.tools.build:gradle", version.ref = "gradleplugin" }
 kotlin-gradle = { group = "org.jetbrains.kotlin", name = "kotlin-gradle-plugin", version.ref = "kotlin" }
 hilt-gradle = { group = "com.google.dagger", name = "hilt-android-gradle-plugin", version.ref = "hilt" }
+kotlinx-coroutines-play-services = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-play-services", version.ref = "kotlinxCoroutinesPlayServices" }
 ksp-gradle = { group = "com.google.devtools.ksp", name = "com.google.devtools.ksp.gradle.plugin", version.ref = "ksp" }
 android-desugarjdklibs = { group = "com.android.tools", name = "desugar_jdk_libs", version.ref = "android-desugar-jdk" }
 kotlin = { group = "org.jetbrains.kotlin", name = "kotlin-stdlib", version.ref = "kotlin" }
