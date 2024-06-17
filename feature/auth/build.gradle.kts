@@ -27,8 +27,8 @@ dependencies {
     implementation(project(":core:model"))
     implementation(project(":core:designsystem"))
     implementation(project(":core:common"))
-    implementation(libs.kakao.user)
 
+    implementation(libs.kakao.user)
     implementation(libs.bundles.androidx)
     implementation(libs.material)
 

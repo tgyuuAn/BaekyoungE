@@ -6,5 +6,6 @@ data class UserInformationRequest(
     val gender: String,
     val major: String,
     val grade: Int,
+    val fcmToken: String,
     val registrationDate: String,
 )

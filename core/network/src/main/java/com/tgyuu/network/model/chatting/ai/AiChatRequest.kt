@@ -7,4 +7,5 @@ import kotlinx.serialization.Serializable
 data class AiChatRequest(
     val model: String = "ft:gpt-3.5-turbo-0125:personal::9VGdbeCe:ckpt-step-94",
     @SerialName("messages") val messageDTO: List<MessageDTO>,
+    val temperature: Float = 0.5f,
 )

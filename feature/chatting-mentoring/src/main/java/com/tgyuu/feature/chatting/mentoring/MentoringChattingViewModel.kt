@@ -81,9 +81,17 @@ class MentoringChattingViewModel @Inject constructor(
 
         _chatState.value = UiState.Loading
 
+        val userId = userInformation.value.userId
+        val opponentId = if (_roomId.value.split("-")[0] == userId) {
+            _roomId.value.split("-")[1]
+        } else {
+            _roomId.value.split("-")[0]
+        }
+
         postMentoringMessageUseCase(
             roomId = _roomId.value,
-            userId = userInformation.value.userId,
+            fromUserId = userId,
+            toUserId = opponentId,
             content = _chatText.value,
         )
             .onSuccess { _chatText.value = "" }

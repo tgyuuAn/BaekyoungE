@@ -26,6 +26,7 @@ class AuthRepositoryImpl @Inject constructor(
                     gender = it.gender,
                     major = it.major,
                     grade = it.grade,
+                    fcmToken = it.fcmToken,
                     registrationDate = it.registrationDate,
                 )
             } ?: authDataSource.getUserInformation(userId).map {
@@ -35,6 +36,7 @@ class AuthRepositoryImpl @Inject constructor(
                     gender = it.gender,
                     major = it.major,
                     grade = it.grade,
+                    fcmToken = it.fcmToken,
                     registrationDate = it.registrationDate,
                 )
             }.onSuccess {
@@ -45,6 +47,7 @@ class AuthRepositoryImpl @Inject constructor(
                         gender = it.gender,
                         major = it.major,
                         grade = it.grade,
+                        fcmToken = it.fcmToken,
                         registrationDate = it.registrationDate,
                     ),
                 )
@@ -57,6 +60,7 @@ class AuthRepositoryImpl @Inject constructor(
         gender: String,
         major: String,
         grade: Int,
+        fcmToken: String,
     ): Result<Unit> = authDataSource.postUserInformation(
         UserInformationRequest(
             userId = userId,
@@ -64,6 +68,7 @@ class AuthRepositoryImpl @Inject constructor(
             gender = gender,
             major = major,
             grade = grade,
+            fcmToken = fcmToken,
             registrationDate = generateNowDateTime().toISOLocalDateTimeString(),
         ),
     ).onSuccess {
@@ -74,6 +79,7 @@ class AuthRepositoryImpl @Inject constructor(
                 gender = gender,
                 major = major,
                 grade = grade,
+                fcmToken = fcmToken,
                 registrationDate = generateNowDateTime().toISOLocalDateTimeString(),
             ),
         )
@@ -85,6 +91,7 @@ class AuthRepositoryImpl @Inject constructor(
         gender: String,
         major: String,
         grade: Int,
+        fcmToken: String,
         registrationDate: String,
     ): Result<Unit> = authDataSource.postUserInformation(
         UserInformationRequest(
@@ -93,6 +100,7 @@ class AuthRepositoryImpl @Inject constructor(
             gender = gender,
             major = major,
             grade = grade,
+            fcmToken = fcmToken,
             registrationDate = registrationDate,
         ),
     ).onSuccess {
@@ -103,6 +111,7 @@ class AuthRepositoryImpl @Inject constructor(
                 gender = gender,
                 major = major,
                 grade = grade,
+                fcmToken = fcmToken,
                 registrationDate = registrationDate,
             ),
         )

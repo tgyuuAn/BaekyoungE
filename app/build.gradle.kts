@@ -66,6 +66,7 @@ dependencies {
     implementation(project(":feature:profile"))
 
     implementation(libs.firebase.analytics)
+    implementation(libs.firebase.messaging)
     implementation(platform(libs.firebase.bom))
     implementation(libs.kakao.user)
 

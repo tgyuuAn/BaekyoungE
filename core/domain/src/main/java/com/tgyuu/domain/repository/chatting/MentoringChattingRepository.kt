@@ -7,7 +7,8 @@ import kotlinx.coroutines.flow.Flow
 interface MentoringChattingRepository {
     suspend fun postMentoringChatMessage(
         roomId: String,
-        userId: String,
+        fromUserId: String,
+        toUserId: String,
         content: String,
         createdAt: String,
     ): Result<Unit>

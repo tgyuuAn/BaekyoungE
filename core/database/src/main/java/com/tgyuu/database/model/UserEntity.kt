@@ -13,6 +13,8 @@ data class UserEntity(
     val gender: String,
     val major: String,
     val grade: Int,
+    @ColumnInfo(name = "fcm_token")
+    val fcmToken: String,
     @ColumnInfo(name = "registration_date")
     val registrationDate: String,
 )

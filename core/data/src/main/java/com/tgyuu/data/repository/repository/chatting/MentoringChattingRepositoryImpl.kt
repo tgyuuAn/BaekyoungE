@@ -20,13 +20,15 @@ class MentoringChattingRepositoryImpl @Inject constructor(
 ) : MentoringChattingRepository {
     override suspend fun postMentoringChatMessage(
         roomId: String,
-        userId: String,
+        fromUserId: String,
+        toUserId: String,
         content: String,
         createdAt: String,
     ): Result<Unit> = chattingDataSource.postMentoringMessage(
         MentoringChatRequest(
             roomId = roomId,
-            userId = userId,
+            fromUserId = fromUserId,
+            toUserId = toUserId,
             content = content,
             createdAt = createdAt,
             isChecked = false,
@@ -44,7 +46,8 @@ class MentoringChattingRepositoryImpl @Inject constructor(
         chattingDataSource.subscribeMessages(roomId).map {
             MentoringMessage(
                 roomId = it.roomId,
-                userId = it.userId,
+                fromUserId = it.fromUserId,
+                toUserId = it.toUserId,
                 content = it.content,
                 createdAt = it.createdAt,
                 isChecked = it.isChecked,
@@ -59,7 +62,8 @@ class MentoringChattingRepositoryImpl @Inject constructor(
             it.map {
                 MentoringMessage(
                     roomId = it.roomId,
-                    userId = it.userId,
+                    fromUserId = it.fromUserId,
+                    toUserId = it.toUserId,
                     content = it.content,
                     createdAt = it.createdAt,
                     isChecked = it.isChecked,
