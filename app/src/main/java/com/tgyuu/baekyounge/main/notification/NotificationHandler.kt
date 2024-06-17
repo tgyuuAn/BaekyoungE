@@ -5,9 +5,7 @@ import android.app.NotificationManager
 import android.app.PendingIntent
 import android.content.Context
 import android.content.Intent
-import android.util.Log
 import androidx.core.app.NotificationCompat
-import androidx.core.content.ContextCompat
 import com.tgyuu.baekyounge.R
 import com.tgyuu.baekyounge.main.MainActivity
 import javax.inject.Inject
@@ -32,8 +30,6 @@ class NotificationHandler @Inject constructor(private val context: Context) {
     }
 
     fun deliverNotification(title: String, body: String) {
-        Log.d("test", "noti 호출")
-
         val intent = Intent(context, MainActivity::class.java)
 
         val pendingIntent = PendingIntent.getActivity(
