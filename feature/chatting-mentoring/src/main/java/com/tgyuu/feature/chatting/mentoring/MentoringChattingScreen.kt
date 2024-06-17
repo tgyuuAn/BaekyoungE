@@ -374,7 +374,7 @@ internal fun MentoringChattingScreen(
                         ) {
                             items(items = chatLog) { message ->
                                 val speechBubbleType =
-                                    if (message.userId == userInformation.userId) {
+                                    if (message.fromUserId == userInformation.userId) {
                                         SpeechBubbleType.MENTOR_MENTI_USER
                                     } else {
                                         SpeechBubbleType.MENTOR_MENTI_OPPONENT
