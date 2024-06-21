@@ -20,7 +20,6 @@ import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
-import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -47,7 +46,6 @@ import com.tgyuu.designsystem.theme.BaekyoungTheme
 import com.tgyuu.feature.chatting.ai.R
 import com.tgyuu.model.chatting.AiMessage
 import com.tgyuu.model.chatting.ChattingRole
-import kotlinx.coroutines.launch
 
 @Composable
 internal fun AiChattingRoute(
@@ -59,6 +57,8 @@ internal fun AiChattingRoute(
     val chatLog = viewModel.chatLog.toList()
     val searchText by viewModel.searchText.collectAsStateWithLifecycle()
     val chatState by viewModel.chatState.collectAsStateWithLifecycle()
+    val searchResult by viewModel.searchResult.collectAsStateWithLifecycle()
+    val searchMode by viewModel.searchMode.collectAsStateWithLifecycle()
 
     LaunchedEffect(true) {
         viewModel.setRoomId(roomId)
@@ -69,9 +69,13 @@ internal fun AiChattingRoute(
         searchText = searchText,
         chatLog = chatLog,
         chatState = chatState,
+        searchResult = searchResult,
+        searchMode = searchMode,
         onChatTextChanged = viewModel::setChatText,
         onSearchTextChanged = viewModel::setSearchText,
+        onSearchExcuted = viewModel::onSearchExcuted,
         postUserChatting = viewModel::postUserChatting,
+        setSearchMode = viewModel::setSearchMode,
         popBackStack = popBackStack,
     )
 }
@@ -82,8 +86,12 @@ internal fun AiChattingScreen(
     searchText: String,
     chatLog: List<AiMessage>,
     chatState: UiState<Unit>,
+    searchResult: Triple<Int?, Int?, Int?>,
+    searchMode: Boolean,
+    setSearchMode: (Boolean) -> Unit,
     onChatTextChanged: (String) -> Unit,
     onSearchTextChanged: (String) -> Unit,
+    onSearchExcuted: (Int?) -> Unit,
     postUserChatting: () -> Unit,
     popBackStack: () -> Unit,
 ) {
@@ -92,7 +100,9 @@ internal fun AiChattingScreen(
     val focusManager = LocalFocusManager.current
     val listState = rememberLazyListState()
     var previousChatSize by remember { mutableStateOf(1) }
-    val coroutineScope = rememberCoroutineScope()
+    var previousSearchResult: Triple<Int?, Int?, Int?>? by remember {
+        mutableStateOf(Triple(null, null, null))
+    }
     val backgroundColor = Brush.verticalGradient(
         listOf(
             BaekyoungTheme.colors.blue4E,
@@ -100,11 +110,16 @@ internal fun AiChattingScreen(
         ),
     )
 
-    LaunchedEffect(previousChatSize != chatLog.size) {
-        coroutineScope.launch {
-            listState.animateScrollToItem(chatLog.size)
+    LaunchedEffect(searchResult) {
+        if (searchResult.first != null) {
+            listState.scrollToItem(searchResult.first ?: (chatLog.size - 1))
+            previousSearchResult = searchResult
+            return@LaunchedEffect
         }
+    }
 
+    LaunchedEffect(previousChatSize != chatLog.size) {
+        listState.animateScrollToItem(chatLog.size)
         previousChatSize = chatLog.size
     }
 
@@ -122,7 +137,14 @@ internal fun AiChattingScreen(
                 titleTextId = string.consulting,
                 textColor = BaekyoungTheme.colors.white,
                 showSearchButton = true,
-                onSearchExcuted = {},
+                onSearchExcuted = { it -> onSearchExcuted(it) },
+                setSearchMode = {
+                    setSearchMode(!searchMode)
+                    if (searchMode) {
+                        previousSearchResult = null
+                    }
+                },
+                searchText = searchText,
                 onSearchTextChanged = onSearchTextChanged,
                 clearSearchText = { onSearchTextChanged("") },
                 onClickBackButton = popBackStack,
@@ -192,6 +214,9 @@ internal fun AiChattingScreen(
                 onTextChanged = onChatTextChanged,
                 sendMessage = postUserChatting,
                 textColor = BaekyoungTheme.colors.black,
+                searchMode = searchMode,
+                searchResult = searchResult,
+                onSearchExcuted = { index -> onSearchExcuted(index) },
                 modifier = Modifier
                     .align(Alignment.BottomCenter)
                     .padding(start = 8.dp, end = 8.dp, bottom = 8.dp)

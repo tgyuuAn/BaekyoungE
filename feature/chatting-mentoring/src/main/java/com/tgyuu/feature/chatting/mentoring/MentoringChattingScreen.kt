@@ -142,7 +142,7 @@ internal fun MentoringChattingScreen(
     }
 
     LaunchedEffect(listState.firstVisibleItemIndex) {
-        if (listState.firstVisibleItemIndex <= 3 && !isFirstPage) {
+        if (listState.firstVisibleItemIndex <= 7 && !isFirstPage) {
             getPreviousMessages()
         }
     }
@@ -315,29 +315,6 @@ internal fun MentoringChattingScreen(
                             },
                         )
 
-                        LazyColumn(
-                            state = listState,
-                            verticalArrangement = Arrangement.spacedBy(20.dp),
-                            contentPadding = PaddingValues(horizontal = 25.dp),
-                            modifier = Modifier
-                                .fillMaxSize()
-                                .padding(top = topBarHeight, bottom = textFieldHeight + 20.dp),
-                        ) {
-                            items(items = chatLog) { message ->
-                                val speechBubbleType =
-                                    if (message.userId == userInformation.userId) {
-                                        SpeechBubbleType.MENTOR_MENTI_USER
-                                    } else {
-                                        SpeechBubbleType.MENTOR_MENTI_OPPONENT
-                                    }
-
-                                BaekyoungSpeechBubble(
-                                    type = speechBubbleType,
-                                    text = message.content,
-                                )
-                            }
-                        }
-
                         when (chatState) {
                             is UiState.Loading -> ChattingLoader(
                                 modifier = Modifier
@@ -385,6 +362,29 @@ internal fun MentoringChattingScreen(
                                         )
                                     }
                                 }
+                            }
+                        }
+
+                        LazyColumn(
+                            state = listState,
+                            verticalArrangement = Arrangement.spacedBy(20.dp),
+                            contentPadding = PaddingValues(horizontal = 25.dp),
+                            modifier = Modifier
+                                .fillMaxSize()
+                                .padding(top = topBarHeight, bottom = textFieldHeight + 20.dp),
+                        ) {
+                            items(items = chatLog) { message ->
+                                val speechBubbleType =
+                                    if (message.fromUserId == userInformation.userId) {
+                                        SpeechBubbleType.MENTOR_MENTI_USER
+                                    } else {
+                                        SpeechBubbleType.MENTOR_MENTI_OPPONENT
+                                    }
+
+                                BaekyoungSpeechBubble(
+                                    type = speechBubbleType,
+                                    text = message.content,
+                                )
                             }
                         }
 

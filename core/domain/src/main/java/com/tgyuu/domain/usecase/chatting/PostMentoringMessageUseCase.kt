@@ -8,11 +8,13 @@ class PostMentoringMessageUseCase @Inject constructor(
 ) {
     suspend operator fun invoke(
         roomId: String,
-        userId: String,
+        fromUserId: String,
+        toUserId: String,
         content: String,
     ): Result<Unit> = mentoringChattingRepository.postMentoringChatMessage(
         roomId = roomId,
-        userId = userId,
+        fromUserId = fromUserId,
+        toUserId = toUserId,
         content = content,
         createdAt = generateNowDateTime().toISOLocalDateTimeString(),
     )

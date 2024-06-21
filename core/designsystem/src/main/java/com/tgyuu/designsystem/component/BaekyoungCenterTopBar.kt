@@ -1,5 +1,6 @@
 package com.tgyuu.designsystem.component
 
+import android.util.Log
 import androidx.annotation.StringRes
 import androidx.compose.animation.AnimatedContent
 import androidx.compose.foundation.Image
@@ -49,11 +50,15 @@ fun BaekyoungCenterTopBar(
     onClickDrawerButton: () -> Unit = {},
     onSearchTextChanged: (String) -> Unit = {},
     clearSearchText: () -> Unit = {},
-    onSearchExcuted: () -> Unit = {},
+    onSearchExcuted: (Int?) -> Unit = {},
+    setSearchMode: () -> Unit = {},
     modifier: Modifier = Modifier,
 ) {
     var showSearchBar by remember { mutableStateOf(false) }
-    val onShowSearchBarChanged = { showSearchBar = !showSearchBar }
+    val onShowSearchBarChanged = {
+        showSearchBar = !showSearchBar
+        setSearchMode()
+    }
     val keyboardController = LocalSoftwareKeyboardController.current
 
     Box(
@@ -81,6 +86,7 @@ fun BaekyoungCenterTopBar(
                     ) {
                         if (showSearchBar) {
                             onShowSearchBarChanged()
+                            clearSearchText()
                         } else {
                             onClickBackButton()
                         }
@@ -102,7 +108,8 @@ fun BaekyoungCenterTopBar(
                         cursorBrush = SolidColor(BaekyoungTheme.colors.white),
                         keyboardActions = KeyboardActions(
                             onDone = {
-                                onSearchExcuted()
+                                Log.d("test", "텍스트필드 Action On Done 호출")
+                                onSearchExcuted(null)
                                 keyboardController?.hide()
                             },
                         ),

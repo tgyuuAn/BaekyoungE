@@ -248,7 +248,7 @@ internal fun SignUpScreen(
                             )
 
                             Image(
-                                painter = painterResource(id = R.drawable.ic_arrow_down),
+                                painter = painterResource(id = R.drawable.ic_arrow_down_auth),
                                 contentDescription = null,
                                 modifier = Modifier
                                     .align(Alignment.CenterEnd)

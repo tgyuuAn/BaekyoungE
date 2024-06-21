@@ -11,6 +11,7 @@ data class UserInformation(
     val gender: String = "",
     val major: String = "",
     val grade: Int = -1,
+    val fcmToken: String = "",
     val registrationDate: String = "",
 ) {
     fun calculateTimeSinceRegistration(): Duration {

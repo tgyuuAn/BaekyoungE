@@ -1,6 +1,7 @@
 package com.tgyuu.network.di
 
 import com.jakewharton.retrofit2.converter.kotlinx.serialization.asConverterFactory
+import com.tgyuu.network.BuildConfig
 import com.tgyuu.network.constant.OPEN_AI_BASE_URL
 import com.tgyuu.network.model.chatting.ai.AiChatRequest
 import com.tgyuu.network.model.chatting.ai.AiChatResponse
@@ -8,7 +9,6 @@ import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.components.SingletonComponent
-import io.grpc.android.BuildConfig
 import kotlinx.serialization.json.Json
 import okhttp3.Interceptor
 import okhttp3.MediaType.Companion.toMediaType
