@@ -67,7 +67,7 @@
 
 ## 🔧 사용 기술
 
-- **UI** : Compose + Lottie + Material
+- **UI** : Compose + Lottie
 
 - **DI** : hilt
 
@@ -75,4 +75,9 @@
 
 - **Remote** : Retrofit2 + OkHttp3 + Kotlinx Serialization
 
-- **Firebase** : Analytics + Crashlytics + Authentication + FireStore
+- **Firebase** : Analytics + Crashlytics + FireStore + Cloud Messaging + Cloud Functions
+
+<br><br><br>
+
+## 🌟 트러블 슈팅
+[링크](https://www.notion.so/d87793ef77d54b0f82c74efb2cc344ca?v=b18b874b00d6457d8702754deb603e04)
