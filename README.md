@@ -49,6 +49,11 @@
 <a href="https://www.figma.com/file/z7dilPOmXYdRUc8KhICWnw/%EC%B1%97%EB%B4%87%EC%96%B4%ED%94%8C-%EB%B0%B1%EA%B2%BD%EC%9D%B4?type=design&node-id=0%3A1&mode=design&t=QXZRcBkarEtVyH9d-1">Figma Link</a>
 
 <br><br><br>
+## 🏗️ 시스템 아키텍처
+
+![시스템 아키텍처](https://github.com/tgyuuAn/BaekyoungE/assets/116813010/a97ff786-9b2b-496a-87ff-f2be887ba345)
+
+<br><br><br>
 ## 🏗️ Android 앱 아키텍처
 
 - **MVVM**
