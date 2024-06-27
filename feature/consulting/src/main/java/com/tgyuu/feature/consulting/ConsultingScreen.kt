@@ -9,6 +9,7 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
+import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -73,22 +74,27 @@ internal fun ConsultingScreen(
 
                 Scaffold(
                     topBar = {
-                        BaekyoungTopBar(
-                            titleTextId = string.consulting,
-                            titleImageId = R.drawable.ic_consulting_note,
-                            contentDescriptionId = string.consulting,
-                        )
+                        Column {
+                            BaekyoungTopBar(
+                                titleTextId = string.consulting,
+                                titleImageId = R.drawable.ic_consulting_note,
+                                contentDescriptionId = string.consulting,
+                            )
+
+                            HorizontalDivider(color = BaekyoungTheme.colors.grayDC)
+                        }
                     },
                     containerColor = BaekyoungTheme.colors.grayF5,
                 ) { paddingValues ->
                     Box(
                         modifier = Modifier
                             .fillMaxSize()
-                            .padding(paddingValues),
+                            .padding(paddingValues)
+                            .padding(top = 20.dp),
                     ) {
                         Text(
                             text = generateUserNameSpan(userInformation.nickName),
-                            style = BaekyoungTheme.typography.labelRegular.copy(fontSize = 9.sp),
+                            style = BaekyoungTheme.typography.labelRegular,
                             color = BaekyoungTheme.colors.gray95,
                             modifier = Modifier
                                 .align(Alignment.TopStart)
@@ -127,6 +133,7 @@ internal fun ConsultingScreen(
                     }
                 }
             }
+
             is UiState.Error -> Log.d("test", userInformationState.message)
         }
     }
@@ -138,7 +145,7 @@ private fun generateUserNameSpan(userName: String): AnnotatedString = buildAnnot
         style = SpanStyle(
             color = BaekyoungTheme.colors.black,
             fontWeight = FontWeight.Bold,
-            fontSize = 13.sp,
+            fontSize = 16.sp,
         ),
     ) {
         append(userName, " ")
