@@ -19,6 +19,7 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.offset
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Card
 import androidx.compose.material3.Scaffold
@@ -31,6 +32,7 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
+import androidx.compose.runtime.snapshotFlow
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.shadow
@@ -41,11 +43,13 @@ import androidx.compose.ui.platform.LocalConfiguration
 import androidx.compose.ui.platform.LocalFocusManager
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import androidx.compose.ui.window.Dialog
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import com.sd.lib.compose.wheel_picker.FVerticalWheelPicker
+import com.sd.lib.compose.wheel_picker.rememberFWheelPickerState
 import com.tgyuu.common.util.addFocusCleaner
 import com.tgyuu.designsystem.R.drawable
 import com.tgyuu.designsystem.R.string
@@ -121,6 +125,9 @@ internal fun SignUpScreen(
     val focusManager = LocalFocusManager.current
     val localConfiguration = LocalConfiguration.current
     var showGenderDialog by remember { mutableStateOf(false) }
+    var showGradeDialog by remember { mutableStateOf(false) }
+    var nowGrade by remember { mutableStateOf(1) }
+    val gradePickerState = rememberFWheelPickerState()
     val animateOffset by animateDpAsState(
         targetValue = if (!isSignUpSuccess) 0.dp else -ANIMATION_OFFSET.dp,
         animationSpec = tween(
@@ -136,6 +143,11 @@ internal fun SignUpScreen(
             BaekyoungTheme.colors.white,
         ),
     )
+
+    LaunchedEffect(gradePickerState) {
+        snapshotFlow { gradePickerState.currentIndex }
+            .collect { grade -> nowGrade = grade+1 }
+    }
 
     if (showGenderDialog) {
         Dialog(onDismissRequest = { showGenderDialog = false }) {
@@ -169,6 +181,50 @@ internal fun SignUpScreen(
                             onGenderChanged(Gender.FEMALE)
                             showGenderDialog = false
                         },
+                    )
+                }
+            }
+        }
+    }
+
+    if (showGradeDialog) {
+        Dialog(onDismissRequest = { showGradeDialog = false }) {
+            Card(shape = RoundedCornerShape(10.dp)) {
+                Column(
+                    horizontalAlignment = Alignment.CenterHorizontally,
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .background(BaekyoungTheme.colors.white)
+                        .padding(20.dp),
+                ) {
+                    Text(
+                        text = "당신은 몇 학년 인가요?",
+                        style = BaekyoungTheme.typography.labelBold.copy(fontSize = 15.sp),
+                        color = BaekyoungTheme.colors.black,
+                        modifier = Modifier.padding(bottom = 10.dp),
+                    )
+
+                    FVerticalWheelPicker(
+                        modifier = Modifier.width(50.dp),
+                        count = 4,
+                        state = gradePickerState,
+                    ) { grade ->
+                        Text(
+                            text = "${grade + 1} 학년",
+                            style = BaekyoungTheme.typography.labelBold.copy(
+                                fontSize = 14.sp,
+                            ),
+                            color = BaekyoungTheme.colors.black,
+                        )
+                    }
+
+                    BaekyoungButton(
+                        text = stringResource(R.string.confirm),
+                        onButtonClick = {
+                            onGradeChanged(nowGrade.toString())
+                            showGradeDialog = false
+                        },
+                        modifier = Modifier.fillMaxWidth(),
                     )
                 }
             }
@@ -308,16 +364,48 @@ internal fun SignUpScreen(
                             .padding(top = 20.dp),
                     )
 
-                    SignUpTextField(
-                        title = R.string.grade,
-                        hint = R.string.grade_hint,
-                        value = grade,
-                        onValueChange = onGradeChanged,
-                        keyboardType = KeyboardType.Number,
+                    Text(
+                        text = stringResource(id = R.string.grade),
+                        style = BaekyoungTheme.typography.contentBold,
+                        color = BaekyoungTheme.colors.black,
+                        modifier = Modifier.padding(start = 5.dp, top = 20.dp, bottom = 4.dp),
+                    )
+
+                    Box(
                         modifier = Modifier
                             .fillMaxWidth()
-                            .padding(top = 20.dp),
-                    )
+                            .shadow(elevation = 2.dp, shape = RoundedCornerShape(10.dp))
+                            .background(
+                                color = BaekyoungTheme.colors.white,
+                                shape = RoundedCornerShape(10.dp),
+                            )
+                            .border(
+                                width = 1.dp,
+                                color = BaekyoungTheme.colors.grayD0,
+                                shape = RoundedCornerShape(10.dp),
+                            )
+                            .clickable(
+                                interactionSource = remember { MutableInteractionSource() },
+                                indication = null,
+                            ) { showGradeDialog = true },
+                    ) {
+                        Text(
+                            text = "${grade} 학년",
+                            style = BaekyoungTheme.typography.labelRegular,
+                            color = BaekyoungTheme.colors.black56,
+                            modifier = Modifier
+                                .align(Alignment.CenterStart)
+                                .padding(horizontal = 12.dp, vertical = 10.dp),
+                        )
+
+                        Image(
+                            painter = painterResource(id = R.drawable.ic_arrow_down_auth),
+                            contentDescription = null,
+                            modifier = Modifier
+                                .align(Alignment.CenterEnd)
+                                .padding(horizontal = 12.dp, vertical = 6.dp),
+                        )
+                    }
 
                     BaekyoungButton(
                         text = stringResource(R.string.confirm),
