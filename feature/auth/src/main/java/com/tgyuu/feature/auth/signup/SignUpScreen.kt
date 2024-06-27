@@ -11,6 +11,7 @@ import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.WindowInsets
@@ -187,100 +188,96 @@ internal fun SignUpScreen(
                 visible = !isSignUpSuccess,
                 exit = fadeOut(tween(HIDE_SIGN_UP_UI_DURATION_MILLIS)),
             ) {
-                Box(
+                Column(
+                    verticalArrangement = Arrangement.Center,
                     modifier = Modifier
                         .fillMaxSize()
-                        .background(BaekyoungTheme.colors.white),
+                        .background(BaekyoungTheme.colors.white)
+                        .padding(start = 24.dp, end = 24.dp),
                 ) {
-                    Column(
+                    Text(
+                        text = stringResource(id = R.string.welcome_message),
+                        style = BaekyoungTheme.typography.titleBold,
+                        color = BaekyoungTheme.colors.black,
+                    )
+
+                    Text(
+                        text = stringResource(id = R.string.please_input_nickname_and_gender),
+                        style = BaekyoungTheme.typography.labelBold,
+                        color = BaekyoungTheme.colors.black,
+                        modifier = Modifier.padding(top = 10.dp),
+                    )
+
+                    SignUpTextField(
+                        title = R.string.nickname,
+                        hint = R.string.nickname_hint,
+                        value = nickname,
+                        onValueChange = onNicknameChanged,
                         modifier = Modifier
-                            .fillMaxSize()
-                            .padding(start = 24.dp, end = 24.dp, top = 30.dp),
+                            .fillMaxWidth()
+                            .padding(top = 75.dp),
+                    )
+
+                    Text(
+                        text = stringResource(id = R.string.gender),
+                        style = BaekyoungTheme.typography.contentBold,
+                        color = BaekyoungTheme.colors.black,
+                        modifier = Modifier.padding(start = 5.dp, top = 20.dp, bottom = 4.dp),
+                    )
+
+                    Box(
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .shadow(elevation = 2.dp, shape = RoundedCornerShape(10.dp))
+                            .background(
+                                color = BaekyoungTheme.colors.white,
+                                shape = RoundedCornerShape(10.dp),
+                            )
+                            .border(
+                                width = 1.dp,
+                                color = BaekyoungTheme.colors.grayD0,
+                                shape = RoundedCornerShape(10.dp),
+                            )
+                            .clickable { showBottomSheet = !showBottomSheet },
                     ) {
                         Text(
-                            text = stringResource(id = R.string.welcome_message),
-                            style = BaekyoungTheme.typography.titleBold,
+                            text = gender.displayName,
+                            style = BaekyoungTheme.typography.labelRegular,
                             color = BaekyoungTheme.colors.black56,
-                            modifier = Modifier.padding(start = 5.dp, top = 16.dp),
-                        )
-
-                        Text(
-                            text = stringResource(id = R.string.please_input_nickname_and_gender),
-                            style = BaekyoungTheme.typography.labelBold,
-                            color = BaekyoungTheme.colors.black56,
-                            modifier = Modifier.padding(start = 5.dp, top = 16.dp),
-                        )
-
-                        SignUpTextField(
-                            title = R.string.nickname,
-                            hint = R.string.nickname_hint,
-                            value = nickname,
-                            onValueChange = onNicknameChanged,
                             modifier = Modifier
-                                .fillMaxWidth()
-                                .padding(top = 75.dp),
+                                .align(Alignment.CenterStart)
+                                .padding(horizontal = 12.dp, vertical = 10.dp),
                         )
 
-                        Text(
-                            text = stringResource(id = R.string.gender),
-                            style = BaekyoungTheme.typography.contentBold,
-                            color = BaekyoungTheme.colors.black56,
-                            modifier = Modifier.padding(start = 5.dp, top = 16.dp),
-                        )
-
-                        Box(
+                        Image(
+                            painter = painterResource(id = R.drawable.ic_arrow_down_auth),
+                            contentDescription = null,
                             modifier = Modifier
-                                .fillMaxWidth()
-                                .background(
-                                    color = BaekyoungTheme.colors.white,
-                                    shape = RoundedCornerShape(10.dp),
-                                )
-                                .border(
-                                    width = 1.dp,
-                                    color = BaekyoungTheme.colors.grayD0,
-                                    shape = RoundedCornerShape(10.dp),
-                                )
-                                .clickable { showBottomSheet = !showBottomSheet },
-                        ) {
-                            Text(
-                                text = gender.displayName,
-                                style = BaekyoungTheme.typography.labelRegular,
-                                color = BaekyoungTheme.colors.black56,
-                                modifier = Modifier
-                                    .align(Alignment.CenterStart)
-                                    .padding(horizontal = 12.dp, vertical = 10.dp),
-                            )
-
-                            Image(
-                                painter = painterResource(id = R.drawable.ic_arrow_down_auth),
-                                contentDescription = null,
-                                modifier = Modifier
-                                    .align(Alignment.CenterEnd)
-                                    .padding(horizontal = 12.dp, vertical = 6.dp),
-                            )
-                        }
-
-                        SignUpTextField(
-                            title = R.string.major,
-                            hint = R.string.major_hint,
-                            value = major,
-                            onValueChange = onMajorChanged,
-                            modifier = Modifier
-                                .fillMaxWidth()
-                                .padding(top = 16.dp),
-                        )
-
-                        SignUpTextField(
-                            title = R.string.grade,
-                            hint = R.string.grade_hint,
-                            value = grade,
-                            onValueChange = onGradeChanged,
-                            keyboardType = KeyboardType.Number,
-                            modifier = Modifier
-                                .fillMaxWidth()
-                                .padding(top = 16.dp),
+                                .align(Alignment.CenterEnd)
+                                .padding(horizontal = 12.dp, vertical = 6.dp),
                         )
                     }
+
+                    SignUpTextField(
+                        title = R.string.major,
+                        hint = R.string.major_hint,
+                        value = major,
+                        onValueChange = onMajorChanged,
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .padding(top = 20.dp),
+                    )
+
+                    SignUpTextField(
+                        title = R.string.grade,
+                        hint = R.string.grade_hint,
+                        value = grade,
+                        onValueChange = onGradeChanged,
+                        keyboardType = KeyboardType.Number,
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .padding(top = 20.dp),
+                    )
 
                     BaekyoungButton(
                         text = stringResource(R.string.confirm),
@@ -290,9 +287,8 @@ internal fun SignUpScreen(
                             }
                         },
                         modifier = Modifier
-                            .align(Alignment.BottomCenter)
                             .fillMaxWidth()
-                            .padding(horizontal = 24.dp, vertical = 40.dp),
+                            .padding(top = 70.dp),
                     )
                 }
             }
