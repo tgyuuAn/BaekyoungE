@@ -33,7 +33,9 @@ import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.tgyuu.common.R.drawable
+import com.tgyuu.common.util.UiState
 import com.tgyuu.designsystem.component.BaekyoungCenterTopBar
+import com.tgyuu.designsystem.component.Loader
 import com.tgyuu.designsystem.theme.BaekyoungTheme
 import com.tgyuu.model.chatting.JoinChat
 
@@ -59,7 +61,7 @@ internal fun MentoringMentorRoute(
 @Composable
 fun MentoringMentorScreen(
     checked: Boolean,
-    chattingRooms: List<JoinChat>,
+    chattingRooms: UiState<List<JoinChat>>,
     registerMentorInfo: () -> Unit,
     deleteMentorInfo: () -> Unit,
     navigateToMentoringChatting: (String, String) -> Unit,
@@ -70,136 +72,146 @@ fun MentoringMentorScreen(
         containerColor = BaekyoungTheme.colors.grayF5,
         modifier = Modifier.fillMaxSize(),
     ) { paddingValues ->
-        LazyColumn(
-            verticalArrangement = Arrangement.spacedBy(10.dp),
-            modifier = Modifier
-                .fillMaxSize()
-                .padding(paddingValues)
-                .background(BaekyoungTheme.colors.white),
-        ) {
-            item {
-                BaekyoungCenterTopBar(
-                    titleTextId = R.string.chatting_room,
-                    showBackButton = true,
-                    onClickBackButton = popBackStack,
-                )
+        when (chattingRooms) {
+            UiState.Loading -> Loader(modifier = Modifier.fillMaxSize())
+
+            is UiState.Error -> {
+            // Todo
             }
 
-            item {
-                Row(
-                    verticalAlignment = Alignment.CenterVertically,
-                    horizontalArrangement = Arrangement.spacedBy(10.dp),
+            is UiState.Success -> {
+                LazyColumn(
+                    verticalArrangement = Arrangement.spacedBy(10.dp),
                     modifier = Modifier
-                        .fillMaxWidth()
-                        .padding(20.dp),
+                        .fillMaxSize()
+                        .padding(paddingValues)
+                        .background(BaekyoungTheme.colors.white),
                 ) {
-                    Spacer(modifier = Modifier.weight(1f))
+                    item {
+                        BaekyoungCenterTopBar(
+                            titleTextId = R.string.chatting_room,
+                            showBackButton = true,
+                            onClickBackButton = popBackStack,
+                        )
+                    }
 
-                    AnimatedContent(targetState = checked) {
-                        if (it) {
-                            Text(
-                                text = "멘티 요청 받는 중",
-                                style = BaekyoungTheme.typography.contentBold,
-                            )
-                        } else {
-                            Text(
-                                text = "멘티 요청 받지 않는 중",
-                                style = BaekyoungTheme.typography.contentBold,
+                    item {
+                        Row(
+                            verticalAlignment = Alignment.CenterVertically,
+                            horizontalArrangement = Arrangement.spacedBy(10.dp),
+                            modifier = Modifier
+                                .fillMaxWidth()
+                                .padding(20.dp),
+                        ) {
+                            Spacer(modifier = Modifier.weight(1f))
+
+                            AnimatedContent(targetState = checked) {
+                                if (it) {
+                                    Text(
+                                        text = "멘티 요청 받는 중",
+                                        style = BaekyoungTheme.typography.contentBold,
+                                    )
+                                } else {
+                                    Text(
+                                        text = "멘티 요청 받지 않는 중",
+                                        style = BaekyoungTheme.typography.contentBold,
+                                    )
+                                }
+                            }
+
+                            Switch(
+                                checked = checked,
+                                onCheckedChange = {
+                                    when (checked) {
+                                        false -> registerMentorInfo()
+                                        true -> deleteMentorInfo()
+                                    }
+                                },
+                                colors = SwitchDefaults.colors(
+                                    checkedThumbColor = BaekyoungTheme.colors.blueFF,
+                                    checkedTrackColor = BaekyoungTheme.colors.blue5FF,
+                                    uncheckedThumbColor = BaekyoungTheme.colors.white,
+                                    uncheckedTrackColor = BaekyoungTheme.colors.blue5FF,
+                                    uncheckedBorderColor = Color.Transparent,
+                                ),
                             )
                         }
                     }
 
-                    Switch(
-                        checked = checked,
-                        onCheckedChange = {
-                            when (checked) {
-                                false -> registerMentorInfo()
-                                true -> deleteMentorInfo()
-                            }
-                        },
-                        colors = SwitchDefaults.colors(
-                            checkedThumbColor = BaekyoungTheme.colors.blueFF,
-                            checkedTrackColor = BaekyoungTheme.colors.blue5FF,
-                            uncheckedThumbColor = BaekyoungTheme.colors.white,
-                            uncheckedTrackColor = BaekyoungTheme.colors.blue5FF,
-                            uncheckedBorderColor = Color.Transparent,
-                        ),
-                    )
-                }
-            }
-
-            item {
-                Text(
-                    text = "진행 중인 채팅방",
-                    style = BaekyoungTheme.typography.contentBold,
-                    modifier = Modifier.padding(horizontal = 20.dp),
-                )
-            }
-
-            items(chattingRooms) {
-                Card(
-                    shape = RoundedCornerShape(10.dp),
-                    colors = CardDefaults.cardColors(containerColor = BaekyoungTheme.colors.white),
-                    onClick = { navigateToMentoringChatting(it.mentorId, it.roomId) },
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .padding(horizontal = 20.dp)
-                        .border(
-                            width = 1.dp,
-                            shape = RoundedCornerShape(10.dp),
-                            color = BaekyoungTheme.colors.grayDC,
-                        ),
-                ) {
-                    Row(
-                        verticalAlignment = Alignment.CenterVertically,
-                        modifier = Modifier
-                            .fillMaxWidth()
-                            .padding(horizontal = 10.dp, vertical = 15.dp),
-                    ) {
-                        Image(
-                            painter = painterResource(id = drawable.ic_user_default),
-                            contentDescription = null,
-                            modifier = Modifier.size(40.dp),
+                    item {
+                        Text(
+                            text = "진행 중인 채팅방",
+                            style = BaekyoungTheme.typography.contentBold,
+                            modifier = Modifier.padding(horizontal = 20.dp),
                         )
+                    }
 
-                        Column(
-                            verticalArrangement = Arrangement.spacedBy(4.dp),
-                            modifier = Modifier.padding(start = 10.dp),
+                    items(chattingRooms.data) {
+                        Card(
+                            shape = RoundedCornerShape(10.dp),
+                            colors = CardDefaults.cardColors(containerColor = BaekyoungTheme.colors.white),
+                            onClick = { navigateToMentoringChatting(it.mentorId, it.roomId) },
+                            modifier = Modifier
+                                .fillMaxWidth()
+                                .padding(horizontal = 20.dp)
+                                .border(
+                                    width = 1.dp,
+                                    shape = RoundedCornerShape(10.dp),
+                                    color = BaekyoungTheme.colors.grayDC,
+                                ),
                         ) {
                             Row(
                                 verticalAlignment = Alignment.CenterVertically,
-                                modifier = Modifier.fillMaxWidth(),
+                                modifier = Modifier
+                                    .fillMaxWidth()
+                                    .padding(horizontal = 10.dp, vertical = 15.dp),
                             ) {
-                                Text(
-                                    text = it.menteeNickName,
-                                    style = BaekyoungTheme.typography.contentBold,
-                                    color = BaekyoungTheme.colors.black,
+                                Image(
+                                    painter = painterResource(id = drawable.ic_user_default),
+                                    contentDescription = null,
+                                    modifier = Modifier.size(40.dp),
                                 )
 
-                                Text(
-                                    text = "멘티",
-                                    style = BaekyoungTheme.typography.labelRegular,
-                                    color = BaekyoungTheme.colors.gray95,
-                                    modifier = Modifier.padding(start = 5.dp),
-                                )
+                                Column(
+                                    verticalArrangement = Arrangement.spacedBy(4.dp),
+                                    modifier = Modifier.padding(start = 10.dp),
+                                ) {
+                                    Row(
+                                        verticalAlignment = Alignment.CenterVertically,
+                                        modifier = Modifier.fillMaxWidth(),
+                                    ) {
+                                        Text(
+                                            text = it.menteeNickName,
+                                            style = BaekyoungTheme.typography.contentBold,
+                                            color = BaekyoungTheme.colors.black,
+                                        )
 
-                                Spacer(modifier = Modifier.weight(1f))
+                                        Text(
+                                            text = "멘티",
+                                            style = BaekyoungTheme.typography.labelRegular,
+                                            color = BaekyoungTheme.colors.gray95,
+                                            modifier = Modifier.padding(start = 5.dp),
+                                        )
 
-                                Text(
-                                    text = it.getFormattedLastSentTime(),
-                                    style = BaekyoungTheme.typography.labelRegular.copy(
-                                        fontSize = 10.sp,
-                                    ),
-                                    color = BaekyoungTheme.colors.gray95,
-                                    modifier = Modifier.align(Alignment.Top),
-                                )
+                                        Spacer(modifier = Modifier.weight(1f))
+
+                                        Text(
+                                            text = it.getFormattedLastSentTime(),
+                                            style = BaekyoungTheme.typography.labelRegular.copy(
+                                                fontSize = 10.sp,
+                                            ),
+                                            color = BaekyoungTheme.colors.gray95,
+                                            modifier = Modifier.align(Alignment.Top),
+                                        )
+                                    }
+
+                                    Text(
+                                        text = it.lastChatting,
+                                        style = BaekyoungTheme.typography.labelRegular,
+                                        color = BaekyoungTheme.colors.gray95,
+                                    )
+                                }
                             }
-
-                            Text(
-                                text = it.lastChatting,
-                                style = BaekyoungTheme.typography.labelRegular,
-                                color = BaekyoungTheme.colors.gray95,
-                            )
                         }
                     }
                 }

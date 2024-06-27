@@ -2,6 +2,7 @@ package com.tgyuu.feature.mentoring.mentor
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.tgyuu.common.util.UiState
 import com.tgyuu.common.util.generateNowDateTime
 import com.tgyuu.common.util.toISOLocalDateTimeString
 import com.tgyuu.domain.usecase.auth.GetUserInformationUseCase
@@ -30,7 +31,7 @@ class MentoringMentorViewModel @Inject constructor(
     private val _checked = MutableStateFlow<Boolean>(false)
     val checked = _checked.asStateFlow()
 
-    private val _chattingRooms = MutableStateFlow<List<JoinChat>>(listOf())
+    private val _chattingRooms = MutableStateFlow<UiState<List<JoinChat>>>(UiState.Loading)
     val chattingRooms = _chattingRooms.asStateFlow()
 
     init {
@@ -47,16 +48,16 @@ class MentoringMentorViewModel @Inject constructor(
             .onFailure { }
     }
 
-    fun getMentorInfo() = viewModelScope.launch {
+    private fun getMentorInfo() = viewModelScope.launch {
         getMentorInfoUseCase(userId = _userInformation.value.userId)
             .onSuccess { setChecked(true) }
             .onFailure { setChecked(false) }
     }
 
-    fun getAllChattingRoom() = viewModelScope.launch {
+    private fun getAllChattingRoom() = viewModelScope.launch {
         getMentorChattingRoomUseCase(userId = _userInformation.value.userId)
-            .onSuccess { _chattingRooms.value = it }
-            .onFailure { }
+            .onSuccess { _chattingRooms.value = UiState.Success(it) }
+            .onFailure { _chattingRooms.value = UiState.Error(it.message ?: "알 수 없는 요청입니다.") }
     }
 
     fun registerMentorInfo() = viewModelScope.launch {
