@@ -37,12 +37,8 @@ class AiChattingViewModel @Inject constructor(
 
     private val _userInformation = MutableStateFlow(UserInformation())
 
-    val chatLog: SnapshotStateList<AiMessage> = mutableStateListOf(
-        AiMessage(
-            content = INIT_MESSAGE,
-            role = ChattingRole.SYSTEM,
-        ),
-    )
+    val chatLog: SnapshotStateList<AiMessage> =
+        mutableStateListOf(AiMessage(content = INIT_MESSAGE, role = ChattingRole.SYSTEM))
 
     private val _chatState: MutableStateFlow<UiState<Unit>> =
         MutableStateFlow(UiState.Success(Unit))
@@ -104,12 +100,30 @@ class AiChattingViewModel @Inject constructor(
     }
 
     private fun getUserInformation() = viewModelScope.launch {
+        _chatState.value = UiState.Loading
+
         getUserInformationUseCase("-1")
-            .onSuccess { _userInformation.value = it }
+            .onSuccess {
+                _userInformation.value = it
+
+                chatLog.add(
+                    AiMessage(
+                        content = "안녕하세요. 저는 ${it.major} ${it.grade}학년 ${it.gender} 학생입니다. 진로 상담 해주세요.",
+                        role = ChattingRole.USER,
+                    ),
+                )
+
+                postAiMessageUseCase(chatLog = chatLog.toList(), roomId = _roomId.value)
+                    .onSuccess { chatLog.addAll(it.aiMessages) }
+                    .onFailure { Log.d("test", "onFailure : " + it.toString()) }
+                    .also { _chatState.value = UiState.Success(Unit) }
+            }
             .onFailure { }
     }
 
     fun postUserChatting() = viewModelScope.launch {
+        _chatState.value = UiState.Loading
+
         chatLog.add(
             AiMessage(
                 content = _chatText.value,
@@ -118,7 +132,6 @@ class AiChattingViewModel @Inject constructor(
         )
 
         _chatText.value = ""
-        _chatState.value = UiState.Loading
 
         postAiMessageUseCase(chatLog = chatLog.toList(), roomId = _roomId.value)
             .onSuccess { chatLog.addAll(it.aiMessages) }
@@ -133,9 +146,9 @@ class AiChattingViewModel @Inject constructor(
             "정체: 고래\n" +
             "성격: 친절함\n" +
             "‘백경이' 는 항상 한국어 존댓말로 답변해.\n" +
-            "아래 정보는 유저가 우리대학(부경대학교)에서 진로 및 취업이나 공모전 관련해서 도움받을 수 있나고 질문할때만 참고해. 일반적인 대화상황에서는 참고하지마.\n" +
+            "아래 정보는 유저가 우리대학(부경대학교)에서 진로 및 취업이나 공모전 관련해서 도움받을 수 있나고 질문할때만 참고해. 일반적인 대화상황에서는 아래 내용은 참고하지마.\n" +
             "■ \"부경대학교 학생역량개발과\": 부경대학교 진로관련 부서\n" +
-            "■ \"웨일비\"사이트: 부경대학교의 비교과 통합 플랫폼으로써 공모전과 같은 대외활동 정보를 얻을 수 있다.\n" +
-            "■ \"부경대학교 진로취업길라잡이\"사이트: 진로·취업 상담을 신청할 수 있다. 입사서류·면접 컨설팅을 신청할 수 있다. 다양한 취업 및 채용 정보를 볼 수 있다. 다양한 진로 취업 프로그램들을 알아볼 수 있다. 워크넷 공채, 사람인 공채, 잡코리아 공채 확인 가능하다."
+            "■ \"웨일비\"사이트: 부경대학교의 비교과 통합 플랫폼으로써 공모전과 같은 대외활동 정보를 얻을 수 있음\n" +
+            "■ \"부경대학교 진로취업길라잡이\"사이트: 진로·취업 상담 신청 가능, 입사서류·면접 컨설팅 신청 가능, 다양한 취업 및 채용 정보를 볼 수 있음, 다양한 진로 취업 프로그램들을 알아볼 수 있음, 워크넷 공채, 사람인 공채, 잡코리아 공채 확인 가능"
     }
 }

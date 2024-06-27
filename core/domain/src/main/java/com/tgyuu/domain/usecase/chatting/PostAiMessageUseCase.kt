@@ -18,13 +18,13 @@ class PostAiMessageUseCase @Inject constructor(
             chattingRoomId = roomId,
             messageFrom = ChattingRole.USER.name,
             messageTo = ChattingRole.ASSISTANT.name,
-            content = chatLog.get(chatLog.size - 1).content,
+            content = chatLog[chatLog.size - 1].content,
             createdAt = generateNowDateTime().toISOLocalDateTimeString(),
         )
 
         aiChattingRepository.insertChattingRoom(
             id = roomId,
-            lastChatting = chatLog.get(chatLog.size - 1).content,
+            lastChatting = chatLog[chatLog.size - 1].content,
             updatedAt = generateNowDateTime().toISOLocalDateTimeString(),
         )
 
@@ -35,13 +35,13 @@ class PostAiMessageUseCase @Inject constructor(
                     chattingRoomId = roomId,
                     messageFrom = ChattingRole.ASSISTANT.name,
                     messageTo = ChattingRole.USER.name,
-                    content = it.aiMessages.get(it.aiMessages.size - 1).content,
+                    content = it.aiMessages[it.aiMessages.size - 1].content,
                     createdAt = generateNowDateTime().plusSeconds(1).toISOLocalDateTimeString(),
                 )
 
                 aiChattingRepository.insertChattingRoom(
                     id = roomId,
-                    lastChatting = it.aiMessages.get(it.aiMessages.size - 1).content,
+                    lastChatting = it.aiMessages[it.aiMessages.size - 1].content,
                     updatedAt = generateNowDateTime().toISOLocalDateTimeString(),
                 )
             }

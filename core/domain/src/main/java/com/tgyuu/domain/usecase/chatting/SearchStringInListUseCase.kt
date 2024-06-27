@@ -49,7 +49,7 @@ class SearchStringInListUseCase @Inject constructor() {
         if (isUp) {
             for (index in (startIndex - 1) downTo 0) {
                 if (messages[index] is AiMessage && shouldSkipMessage(messages[index] as AiMessage)) continue
-
+                if (messages[index] is AiMessage && index == 1) continue
                 if (Regex(searchText).containsMatchIn(messages[index].content)) {
                     return index
                 }
@@ -57,7 +57,7 @@ class SearchStringInListUseCase @Inject constructor() {
         } else {
             for (index in (startIndex + 1) until messages.size) {
                 if (messages[index] is AiMessage && shouldSkipMessage(messages[index] as AiMessage)) continue
-
+                if (messages[index] is AiMessage && index == 1) continue
                 if (Regex(searchText).containsMatchIn(messages[index].content)) {
                     return index
                 }
@@ -69,7 +69,7 @@ class SearchStringInListUseCase @Inject constructor() {
     private fun findFirstSearch(messages: List<MessageContentProvider>, searchText: String): Int? {
         for (index in messages.indices.reversed()) {
             if (messages[index] is AiMessage && shouldSkipMessage(messages[index] as AiMessage)) continue
-
+            if (messages[index] is AiMessage && index == 1) continue
             if (Regex(searchText).containsMatchIn(messages[index].content)) {
                 return index
             }

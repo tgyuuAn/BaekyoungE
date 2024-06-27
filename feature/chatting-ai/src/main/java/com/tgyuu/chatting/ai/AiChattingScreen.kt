@@ -3,7 +3,6 @@ package com.tgyuu.chatting.ai
 import androidx.compose.foundation.Canvas
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
-import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.WindowInsets
@@ -182,13 +181,14 @@ internal fun AiChattingScreen(
 
             LazyColumn(
                 state = listState,
-                verticalArrangement = Arrangement.spacedBy(20.dp),
                 contentPadding = PaddingValues(horizontal = 25.dp),
                 modifier = Modifier
                     .fillMaxSize()
                     .padding(top = topBarHeight, bottom = textFieldHeight + 20.dp),
             ) {
                 itemsIndexed(items = chatLog) { idx, message ->
+                    if (idx == 1) { return@itemsIndexed }
+
                     val speechBubbleType = when (message.role) {
                         ChattingRole.USER -> SpeechBubbleType.AI_USER
                         ChattingRole.ASSISTANT -> SpeechBubbleType.AI_CHAT
@@ -204,6 +204,7 @@ internal fun AiChattingScreen(
                     BaekyoungSpeechBubble(
                         type = speechBubbleType,
                         text = styledText,
+                        modifier = Modifier.padding(bottom = if(idx < chatLog.size-1) 20.dp else 0.dp),
                     )
                 }
             }

@@ -3,6 +3,7 @@ package com.tgyuu.feature.profile.setting
 import android.content.Context
 import android.content.Intent
 import android.net.Uri
+import android.util.Log
 import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.result.PickVisualMediaRequest
 import androidx.activity.result.contract.ActivityResultContracts
@@ -47,6 +48,7 @@ import androidx.compose.ui.focus.focusRequester
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
@@ -152,7 +154,10 @@ fun SettingScreen(
 
                 val singlePhotoPickerLauncher = rememberLauncherForActivityResult(
                     contract = ActivityResultContracts.PickVisualMedia(),
-                    onResult = { uri -> selectedImageUri = uri },
+                    onResult = { uri ->
+                        selectedImageUri = uri
+                        Log.d("test", uri.toString())
+                    },
                 )
 
                 LaunchedEffect(true) {
@@ -447,6 +452,7 @@ fun SettingScreen(
                             model = selectedImageUri ?: R.drawable.ic_user_default,
                             contentDescription = null,
                             contentScale = ContentScale.Crop,
+                            placeholder = painterResource(R.drawable.ic_user_default),
                             modifier = Modifier
                                 .padding(top = 10.dp)
                                 .size(80.dp)
