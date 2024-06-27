@@ -12,7 +12,7 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.offset
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
-import androidx.compose.foundation.lazy.items
+import androidx.compose.foundation.lazy.itemsIndexed
 import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.Composable
@@ -43,6 +43,7 @@ import com.tgyuu.designsystem.component.BaekyoungSpeechBubble
 import com.tgyuu.designsystem.component.ChattingLoader
 import com.tgyuu.designsystem.component.SpeechBubbleType
 import com.tgyuu.designsystem.theme.BaekyoungTheme
+import com.tgyuu.domain.usecase.chatting.SearchResult
 import com.tgyuu.feature.chatting.ai.R
 import com.tgyuu.model.chatting.AiMessage
 import com.tgyuu.model.chatting.ChattingRole
@@ -73,7 +74,7 @@ internal fun AiChattingRoute(
         searchMode = searchMode,
         onChatTextChanged = viewModel::setChatText,
         onSearchTextChanged = viewModel::setSearchText,
-        onSearchExcuted = viewModel::onSearchExcuted,
+        onSearchExecuted = viewModel::onSearchExecuted,
         postUserChatting = viewModel::postUserChatting,
         setSearchMode = viewModel::setSearchMode,
         popBackStack = popBackStack,
@@ -86,12 +87,12 @@ internal fun AiChattingScreen(
     searchText: String,
     chatLog: List<AiMessage>,
     chatState: UiState<Unit>,
-    searchResult: Triple<Int?, Int?, Int?>,
+    searchResult: SearchResult,
     searchMode: Boolean,
     setSearchMode: (Boolean) -> Unit,
     onChatTextChanged: (String) -> Unit,
     onSearchTextChanged: (String) -> Unit,
-    onSearchExcuted: (Int?) -> Unit,
+    onSearchExecuted: (Int?) -> Unit,
     postUserChatting: () -> Unit,
     popBackStack: () -> Unit,
 ) {
@@ -100,9 +101,7 @@ internal fun AiChattingScreen(
     val focusManager = LocalFocusManager.current
     val listState = rememberLazyListState()
     var previousChatSize by remember { mutableStateOf(1) }
-    var previousSearchResult: Triple<Int?, Int?, Int?>? by remember {
-        mutableStateOf(Triple(null, null, null))
-    }
+    var previousSearchResult: SearchResult by remember { mutableStateOf(SearchResult()) }
     val backgroundColor = Brush.verticalGradient(
         listOf(
             BaekyoungTheme.colors.blue4E,
@@ -111,8 +110,8 @@ internal fun AiChattingScreen(
     )
 
     LaunchedEffect(searchResult) {
-        if (searchResult.first != null) {
-            listState.scrollToItem(searchResult.first ?: (chatLog.size - 1))
+        if (searchResult.initialMatch != null) {
+            listState.scrollToItem(searchResult.initialMatch?.first ?: (chatLog.size - 1))
             previousSearchResult = searchResult
             return@LaunchedEffect
         }
@@ -137,11 +136,11 @@ internal fun AiChattingScreen(
                 titleTextId = string.consulting,
                 textColor = BaekyoungTheme.colors.white,
                 showSearchButton = true,
-                onSearchExcuted = { it -> onSearchExcuted(it) },
+                onSearchExcuted = { onSearchExecuted(it) },
                 setSearchMode = {
                     setSearchMode(!searchMode)
                     if (searchMode) {
-                        previousSearchResult = null
+                        previousSearchResult = SearchResult()
                     }
                 },
                 searchText = searchText,
@@ -185,11 +184,11 @@ internal fun AiChattingScreen(
                     .fillMaxSize()
                     .padding(top = topBarHeight, bottom = textFieldHeight + 20.dp),
             ) {
-                items(items = chatLog) { message ->
+                itemsIndexed(items = chatLog) { idx, message ->
                     val speechBubbleType = when (message.role) {
                         ChattingRole.USER -> SpeechBubbleType.AI_USER
                         ChattingRole.ASSISTANT -> SpeechBubbleType.AI_CHAT
-                        ChattingRole.SYSTEM, ChattingRole.FUNCTION -> return@items
+                        ChattingRole.SYSTEM, ChattingRole.FUNCTION -> return@itemsIndexed
                     }
 
                     BaekyoungSpeechBubble(
@@ -216,7 +215,7 @@ internal fun AiChattingScreen(
                 textColor = BaekyoungTheme.colors.black,
                 searchMode = searchMode,
                 searchResult = searchResult,
-                onSearchExcuted = { index -> onSearchExcuted(index) },
+                onSearchExcuted = { index -> onSearchExecuted(index) },
                 modifier = Modifier
                     .align(Alignment.BottomCenter)
                     .padding(start = 8.dp, end = 8.dp, bottom = 8.dp)

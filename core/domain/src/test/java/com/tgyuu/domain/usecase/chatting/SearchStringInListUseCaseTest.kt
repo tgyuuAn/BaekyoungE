@@ -1,8 +1,8 @@
 package com.tgyuu.domain.usecase.chatting
 
-import com.google.common.truth.Truth.assertThat
 import com.tgyuu.model.chatting.AiMessage
 import com.tgyuu.model.chatting.ChattingRole
+import org.junit.Assert.assertEquals
 import org.junit.Test
 
 class SearchStringInListUseCaseTest {
@@ -11,58 +11,37 @@ class SearchStringInListUseCaseTest {
     @Test
     fun `일치하는 텍스트가 없을 경우 인덱스를 반환하지 않는다`() {
         // given
-        val nowIndex = 2
         val chatList = listOf(
             AiMessage("", ChattingRole.USER),
             AiMessage("", ChattingRole.USER),
-            AiMessage("", ChattingRole.USER),
+            AiMessage("", ChattingRole.USER)
         )
         val text = "가나"
 
         // when
+        val actual = searchStringInListUseCase(null, chatList, text)
 
         // then
-        val actual = searchStringInListUseCase(nowIndex, chatList, text)
-        val expected = null to null
-        assertThat(actual).isEqualTo(expected)
-    }
-
-    @Test
-    fun `현재 인덱스는 검사하지 않는다`() {
-        // given
-        val nowIndex = 2
-        val chatList = listOf(
-            AiMessage("", ChattingRole.USER),
-            AiMessage("", ChattingRole.USER),
-            AiMessage("가나", ChattingRole.USER),
-        )
-        val text = "가나"
-
-        // when
-
-        // then
-        val actual = searchStringInListUseCase(nowIndex, chatList, text)
-        val expected = null to null
-        assertThat(actual).isEqualTo(expected)
+        val expected = SearchResult(null, null, null)
+        assertEquals(expected, actual)
     }
 
     @Test
     fun `위쪽 메시지에서만 일치하는 텍스트가 있을 경우 위로가는 인덱스만 반환한다`() {
         // given
-        val nowIndex = 2
         val chatList = listOf(
             AiMessage("안녕하세요", ChattingRole.USER),
-            AiMessage("", ChattingRole.USER),
-            AiMessage("", ChattingRole.USER),
+            AiMessage("안녕", ChattingRole.USER),
+            AiMessage("", ChattingRole.USER)
         )
         val text = "안녕"
 
         // when
+        val actual = searchStringInListUseCase(null, chatList, text)
 
         // then
-        val actual = searchStringInListUseCase(nowIndex, chatList, text)
-        val expected = 0 to null
-        assertThat(actual).isEqualTo(expected)
+        val expected = SearchResult(Pair(1, listOf(0..1)), 0, null)
+        assertEquals(expected, actual)
     }
 
     @Test
@@ -71,17 +50,17 @@ class SearchStringInListUseCaseTest {
         val nowIndex = 1
         val chatList = listOf(
             AiMessage("", ChattingRole.USER),
-            AiMessage("", ChattingRole.USER),
             AiMessage("가나", ChattingRole.USER),
+            AiMessage("가나", ChattingRole.USER)
         )
         val text = "가나"
 
         // when
+        val actual = searchStringInListUseCase(nowIndex, chatList, text)
 
         // then
-        val actual = searchStringInListUseCase(nowIndex, chatList, text)
-        val expected = null to 2
-        assertThat(actual).isEqualTo(expected)
+        val expected = SearchResult(Pair(1, listOf(0..1)), null, 2)
+        assertEquals(expected, actual)
     }
 
     @Test
@@ -90,17 +69,17 @@ class SearchStringInListUseCaseTest {
         val nowIndex = 1
         val chatList = listOf(
             AiMessage("가나", ChattingRole.USER),
-            AiMessage("", ChattingRole.USER),
             AiMessage("가나", ChattingRole.USER),
+            AiMessage("가나", ChattingRole.USER)
         )
         val text = "가나"
 
         // when
+        val actual = searchStringInListUseCase(nowIndex, chatList, text)
 
         // then
-        val actual = searchStringInListUseCase(nowIndex, chatList, text)
-        val expected = 0 to 2
-        assertThat(actual).isEqualTo(expected)
+        val expected = SearchResult(Pair(1, listOf(0..1)), 0, 2)
+        assertEquals(expected, actual)
     }
 
     @Test
@@ -110,15 +89,15 @@ class SearchStringInListUseCaseTest {
         val chatList = listOf(
             AiMessage("가나", ChattingRole.USER),
             AiMessage("", ChattingRole.USER),
-            AiMessage("가나", ChattingRole.USER),
+            AiMessage("가나", ChattingRole.USER)
         )
         val text = "가나"
 
         // when
+        val actual = searchStringInListUseCase(nowIndex, chatList, text)
 
         // then
-        val actual = searchStringInListUseCase(nowIndex, chatList, text)
-        val expected = null to 2
-        assertThat(actual).isEqualTo(expected)
+        val expected = SearchResult(Pair(0, listOf(0..1)), null, 2)
+        assertEquals(expected, actual)
     }
 }

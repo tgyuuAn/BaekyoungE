@@ -24,12 +24,13 @@ import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.unit.dp
 import com.tgyuu.designsystem.R
 import com.tgyuu.designsystem.theme.BaekyoungTheme
+import com.tgyuu.domain.usecase.chatting.SearchResult
 
 @Composable
 fun BaekyoungChatTextField(
     chatText: String,
     searchMode: Boolean = false,
-    searchResult: Triple<Int?, Int?, Int?> = Triple(null, null, null),
+    searchResult: SearchResult = SearchResult(),
     onTextChanged: (String) -> Unit,
     onSearchExcuted: (Int?) -> Unit = {},
     sendMessage: () -> Unit,
@@ -82,22 +83,22 @@ fun BaekyoungChatTextField(
                     Row(modifier = Modifier.align(Alignment.CenterEnd)) {
                         Image(
                             painter = painterResource(id = R.drawable.ic_arrow_up),
-                            alpha = if (searchResult.second != null) 1f else 0.4f,
+                            alpha = if (searchResult.previousMatchIndex != null) 1f else 0.4f,
                             contentDescription = null,
                             modifier = Modifier
                                 .clickable(
                                     interactionSource = remember { MutableInteractionSource() },
                                     indication = null,
                                 ) {
-                                    if (searchResult.second != null) {
-                                        onSearchExcuted(searchResult.second)
+                                    if (searchResult.previousMatchIndex != null) {
+                                        onSearchExcuted(searchResult.previousMatchIndex)
                                     }
                                 },
                         )
 
                         Image(
                             painter = painterResource(id = R.drawable.ic_arrow_down),
-                            alpha = if (searchResult.third != null) 1f else 0.4f,
+                            alpha = if (searchResult.nextMatchIndex != null) 1f else 0.4f,
                             contentDescription = null,
                             modifier = Modifier
                                 .padding(start = 10.dp)
@@ -105,8 +106,8 @@ fun BaekyoungChatTextField(
                                     interactionSource = remember { MutableInteractionSource() },
                                     indication = null,
                                 ) {
-                                    if (searchResult.third != null) {
-                                        onSearchExcuted(searchResult.third)
+                                    if (searchResult.nextMatchIndex != null) {
+                                        onSearchExcuted(searchResult.nextMatchIndex)
                                     }
                                 },
                         )

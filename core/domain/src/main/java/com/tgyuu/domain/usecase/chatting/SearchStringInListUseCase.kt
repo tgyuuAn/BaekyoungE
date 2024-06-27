@@ -1,59 +1,82 @@
 package com.tgyuu.domain.usecase.chatting
 
-import android.util.Log
 import com.tgyuu.model.chatting.AiMessage
+import com.tgyuu.model.chatting.ChattingRole.FUNCTION
+import com.tgyuu.model.chatting.ChattingRole.SYSTEM
 import javax.inject.Inject
+
+data class SearchResult(
+    val initialMatch: Pair<Int, List<IntRange>>? = null,
+    val previousMatchIndex: Int? = null,
+    val nextMatchIndex: Int? = null,
+)
 
 class SearchStringInListUseCase @Inject constructor() {
     operator fun invoke(
         nowIndex: Int?,
         chatList: List<AiMessage>,
         text: String,
-    ): Triple<Int?, Int?, Int?> {
-        val searchIndex = nowIndex ?: findFirstSearch(nowIndex, chatList, text)
+    ): SearchResult {
+        val searchIndex = nowIndex ?: findFirstSearch(chatList, text)
+
+        if (searchIndex == null) {
+            return SearchResult(null, null, null)
+        }
+
+        val searchPositions = findTextPositions(chatList[searchIndex].content, text)
 
         // 위로 탐색
-        var upperIndex: Int? = null
-        if ((searchIndex - 1) >= 0) {
-            for (idx in ((searchIndex - 1) downTo 0)) {
-                if (chatList.get(idx).content.contains(text)) {
-                    upperIndex = idx
-                    break
-                }
-            }
-        }
+        val upperIndex: Int? = findDirectionalSearch(chatList, searchIndex, text, true)
 
         // 아래로 탐색
-        var underIndex: Int? = null
-        if ((searchIndex + 1) < chatList.size) {
-            for (idx in ((searchIndex + 1) until chatList.size)) {
-                if (chatList.get(idx).content.contains(text)) {
-                    underIndex = idx
-                    break
-                }
-            }
-        }
+        val underIndex: Int? = findDirectionalSearch(chatList, searchIndex, text, false)
 
-        Log.d("test", "검색 결과 : ${Triple(searchIndex, upperIndex, underIndex)}}")
-        return Triple(searchIndex, upperIndex, underIndex)
+        return SearchResult(Pair(searchIndex, searchPositions), upperIndex, underIndex)
     }
 
-    private fun findFirstSearch(
-        nowIndex: Int?,
+    private fun findTextPositions(textContent: String, searchText: String): List<IntRange> {
+        val matches = Regex(searchText).findAll(textContent)
+        return matches.map { it.range }.toList()
+    }
+
+    private fun findDirectionalSearch(
         chatList: List<AiMessage>,
-        text: String,
-    ): Int {
-        val searchIndex = nowIndex ?: (chatList.size)
-        var upperIndex: Int? = null
-        if ((searchIndex - 1) >= 0) {
-            for (idx in ((searchIndex - 1) downTo 0)) {
-                if (chatList.get(idx).content.contains(text)) {
-                    upperIndex = idx
-                    break
+        startIndex: Int,
+        searchText: String,
+        isUp: Boolean,
+    ): Int? {
+        if (isUp) {
+            for (index in (startIndex - 1) downTo 0) {
+                if (shouldSkipMessage(chatList[index])) continue
+
+                if (Regex(searchText).containsMatchIn(chatList[index].content)) {
+                    return index
+                }
+            }
+        } else {
+            for (index in (startIndex + 1) until chatList.size) {
+                if (shouldSkipMessage(chatList[index])) continue
+
+                if (Regex(searchText).containsMatchIn(chatList[index].content)) {
+                    return index
                 }
             }
         }
+        return null
+    }
 
-        return upperIndex ?: chatList.size
+    private fun findFirstSearch(chatList: List<AiMessage>, searchText: String): Int? {
+        for (index in chatList.indices.reversed()) {
+            if (shouldSkipMessage(chatList[index])) continue
+
+            if (Regex(searchText).containsMatchIn(chatList[index].content)) {
+                return index
+            }
+        }
+        return null
+    }
+
+    private fun shouldSkipMessage(message: AiMessage): Boolean {
+        return message.role == SYSTEM || message.role == FUNCTION
     }
 }
