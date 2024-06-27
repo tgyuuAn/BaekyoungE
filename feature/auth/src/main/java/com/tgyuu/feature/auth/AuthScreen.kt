@@ -3,16 +3,13 @@ package com.tgyuu.feature.auth
 import android.content.Context
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
-import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.WindowInsets
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.layout.wrapContentHeight
 import androidx.compose.foundation.shape.RoundedCornerShape
@@ -41,7 +38,6 @@ import com.kakao.sdk.common.model.ClientError
 import com.kakao.sdk.common.model.ClientErrorCause
 import com.kakao.sdk.user.UserApiClient
 import com.tgyuu.designsystem.theme.BaekyoungTheme
-import com.tgyuu.feature.auth.component.ButtonWithShadow
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
@@ -126,35 +122,16 @@ fun AuthScreen(
                     text = stringResource(id = R.string.sign_up),
                     style = BaekyoungTheme.typography.contentRegular.copy(fontSize = 20.sp),
                     color = BaekyoungTheme.colors.blueF8,
-                    modifier = Modifier.padding(top = 15.dp),
+                    modifier = Modifier.padding(top = 20.dp),
                 )
 
-                Row(
-                    horizontalArrangement = Arrangement.Center,
-                    verticalAlignment = Alignment.CenterVertically,
-                    modifier = Modifier.padding(vertical = 27.dp),
-                ) {
-                    ButtonWithShadow(
-                        drawableId = R.drawable.ic_naver,
-                        contentDescription = R.string.naver_description,
-                    )
-
-                    Spacer(modifier = Modifier.size(49.dp))
-
-                    ButtonWithShadow(
-                        drawableId = R.drawable.ic_google,
-                        contentDescription = R.string.google_description,
-                    )
-                }
-
-                Row(
-                    horizontalArrangement = Arrangement.Center,
-                    verticalAlignment = Alignment.CenterVertically,
-                ) {
-                    ButtonWithShadow(
-                        drawableId = R.drawable.ic_kakao,
-                        contentDescription = R.string.kakao_description,
-                        onClickButton = {
+                Image(
+                    painter = painterResource(id = R.drawable.ic_kakao_login),
+                    contentDescription = stringResource(id = R.string.kakao_description),
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(vertical = 20.dp, horizontal = 40.dp)
+                        .clickable {
                             loginKakao(
                                 coroutineScope = coroutineScope,
                                 snackbarHostState = snackbarHostState,
@@ -162,26 +139,11 @@ fun AuthScreen(
                                 verifyMemberId = verifyMemberId,
                             )
                         },
-                    )
-
-                    Spacer(modifier = Modifier.size(49.dp))
-
-                    ButtonWithShadow(
-                        drawableId = R.drawable.ic_facebook,
-                        contentDescription = R.string.facebook_description,
-                    )
-
-                    Spacer(modifier = Modifier.size(49.dp))
-
-                    ButtonWithShadow(
-                        drawableId = R.drawable.ic_apple,
-                        contentDescription = R.string.apple_description,
-                    )
-                }
+                )
 
                 HorizontalDivider(
                     modifier = Modifier
-                        .padding(top = 60.dp, bottom = 15.dp)
+                        .padding(bottom = 15.dp)
                         .width(150.dp)
                         .clip(RoundedCornerShape(10.dp)),
                     thickness = 5.dp,
