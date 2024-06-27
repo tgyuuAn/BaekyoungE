@@ -1,5 +1,6 @@
 package com.tgyuu.designsystem.component
 
+import android.util.Log
 import androidx.annotation.StringRes
 import androidx.compose.animation.AnimatedContent
 import androidx.compose.foundation.Image
@@ -9,7 +10,9 @@ import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.BasicTextField
@@ -38,7 +41,7 @@ import com.tgyuu.designsystem.theme.BaekyoungTheme
 @Composable
 fun BaekyoungCenterTopBar(
     @StringRes titleTextId: Int,
-    searchText: String = "a",
+    searchText: String = "",
     showBackButton: Boolean = true,
     showSearchButton: Boolean = false,
     showDrawerButton: Boolean = false,
@@ -47,36 +50,43 @@ fun BaekyoungCenterTopBar(
     onClickDrawerButton: () -> Unit = {},
     onSearchTextChanged: (String) -> Unit = {},
     clearSearchText: () -> Unit = {},
+    onSearchExcuted: (Int?) -> Unit = {},
+    setSearchMode: () -> Unit = {},
     modifier: Modifier = Modifier,
 ) {
     var showSearchBar by remember { mutableStateOf(false) }
-    val onShowSearchBarChanged = { showSearchBar = !showSearchBar }
+    val onShowSearchBarChanged = {
+        showSearchBar = !showSearchBar
+        setSearchMode()
+    }
     val keyboardController = LocalSoftwareKeyboardController.current
 
     Box(
         modifier = modifier
             .fillMaxWidth()
+            .height(60.dp)
             .background(Color.Transparent),
     ) {
         if (showBackButton) {
-            val arrow_left_res = if (textColor == BaekyoungTheme.colors.black) {
-                R.drawable.ic_arrow_left_black
-            } else {
-                R.drawable.ic_arrow_left_white
-            }
-
             Image(
-                painter = painterResource(id = arrow_left_res),
+                painter = painterResource(
+                    id = if (textColor == BaekyoungTheme.colors.black) {
+                        R.drawable.ic_arrow_left_black
+                    } else {
+                        R.drawable.ic_arrow_left_white
+                    },
+                ),
                 contentDescription = null,
                 modifier = Modifier
                     .align(Alignment.CenterStart)
-                    .padding(20.dp)
+                    .padding(horizontal = 20.dp)
                     .clickable(
                         interactionSource = remember { MutableInteractionSource() },
                         indication = null,
                     ) {
                         if (showSearchBar) {
                             onShowSearchBarChanged()
+                            clearSearchText()
                         } else {
                             onClickBackButton()
                         }
@@ -86,26 +96,28 @@ fun BaekyoungCenterTopBar(
 
         AnimatedContent(targetState = showSearchBar) { showSearchBar ->
             Box(
-                modifier = modifier
-                    .fillMaxWidth()
-                    .padding(vertical = 20.dp),
+                modifier = modifier.fillMaxSize(),
             ) {
                 if (showSearchBar) {
                     BasicTextField(
                         value = searchText,
                         onValueChange = onSearchTextChanged,
-                        textStyle = BaekyoungTheme.typography.contentRegular.copy(
-                            color = textColor,
-                        ),
+                        textStyle = BaekyoungTheme.typography.contentRegular.copy(color = textColor),
                         singleLine = true,
-                        keyboardOptions = KeyboardOptions(
-                            imeAction = ImeAction.Done,
-                        ),
+                        keyboardOptions = KeyboardOptions(imeAction = ImeAction.Done),
                         cursorBrush = SolidColor(BaekyoungTheme.colors.white),
-                        keyboardActions = KeyboardActions(onDone = { keyboardController?.hide() }),
+                        keyboardActions = KeyboardActions(
+                            onDone = {
+                                Log.d("test", "텍스트필드 Action On Done 호출")
+                                onSearchExcuted(null)
+                                keyboardController?.hide()
+                            },
+                        ),
                         modifier = Modifier
                             .fillMaxWidth()
+                            .height(30.dp)
                             .padding(start = 50.dp, end = 20.dp)
+                            .align(Alignment.Center)
                             .background(
                                 color = BaekyoungTheme.colors.white.copy(alpha = 0.4f),
                                 shape = RoundedCornerShape(10.dp),
@@ -114,18 +126,14 @@ fun BaekyoungCenterTopBar(
                         Box(modifier = Modifier.padding(vertical = 4.dp, horizontal = 12.dp)) {
                             if (searchText.isEmpty()) {
                                 Text(
-                                    text = "대화 내용 검색",
+                                    text = stringResource(R.string.search_chat_context),
                                     color = BaekyoungTheme.colors.grayAC,
                                     style = BaekyoungTheme.typography.contentRegular,
                                     modifier = Modifier.align(Alignment.CenterStart),
                                 )
                             }
 
-                            Box(
-                                modifier = Modifier
-                                    .align(Alignment.CenterStart)
-                                    .fillMaxWidth(),
-                            ) {
+                            Box(modifier = Modifier.fillMaxSize()) {
                                 innerTextField()
 
                                 if (searchText.isNotEmpty()) {

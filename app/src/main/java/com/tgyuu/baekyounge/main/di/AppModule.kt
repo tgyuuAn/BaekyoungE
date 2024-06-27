@@ -4,7 +4,6 @@ import android.content.Context
 import com.google.firebase.Firebase
 import com.google.firebase.analytics.FirebaseAnalytics
 import com.google.firebase.analytics.analytics
-import com.google.firebase.messaging.FirebaseMessaging
 import com.tgyuu.baekyounge.main.NetworkObserver
 import com.tgyuu.baekyounge.main.notification.NotificationHandler
 import dagger.Module

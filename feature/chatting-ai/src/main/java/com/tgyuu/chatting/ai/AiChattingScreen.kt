@@ -12,7 +12,7 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.offset
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
-import androidx.compose.foundation.lazy.items
+import androidx.compose.foundation.lazy.itemsIndexed
 import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.Composable
@@ -20,7 +20,6 @@ import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
-import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -32,6 +31,10 @@ import androidx.compose.ui.layout.layout
 import androidx.compose.ui.platform.LocalConfiguration
 import androidx.compose.ui.platform.LocalFocusManager
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.text.AnnotatedString
+import androidx.compose.ui.text.SpanStyle
+import androidx.compose.ui.text.buildAnnotatedString
+import androidx.compose.ui.text.withStyle
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
@@ -44,10 +47,10 @@ import com.tgyuu.designsystem.component.BaekyoungSpeechBubble
 import com.tgyuu.designsystem.component.ChattingLoader
 import com.tgyuu.designsystem.component.SpeechBubbleType
 import com.tgyuu.designsystem.theme.BaekyoungTheme
+import com.tgyuu.domain.usecase.chatting.SearchResult
 import com.tgyuu.feature.chatting.ai.R
 import com.tgyuu.model.chatting.AiMessage
 import com.tgyuu.model.chatting.ChattingRole
-import kotlinx.coroutines.launch
 
 @Composable
 internal fun AiChattingRoute(
@@ -59,6 +62,8 @@ internal fun AiChattingRoute(
     val chatLog = viewModel.chatLog.toList()
     val searchText by viewModel.searchText.collectAsStateWithLifecycle()
     val chatState by viewModel.chatState.collectAsStateWithLifecycle()
+    val searchResult by viewModel.searchResult.collectAsStateWithLifecycle()
+    val searchMode by viewModel.searchMode.collectAsStateWithLifecycle()
 
     LaunchedEffect(true) {
         viewModel.setRoomId(roomId)
@@ -69,9 +74,13 @@ internal fun AiChattingRoute(
         searchText = searchText,
         chatLog = chatLog,
         chatState = chatState,
+        searchResult = searchResult,
+        searchMode = searchMode,
         onChatTextChanged = viewModel::setChatText,
         onSearchTextChanged = viewModel::setSearchText,
         postUserChatting = viewModel::postUserChatting,
+        onSearchExecuted = viewModel::onSearchExecuted,
+        setSearchMode = viewModel::setSearchMode,
         popBackStack = popBackStack,
     )
 }
@@ -82,8 +91,12 @@ internal fun AiChattingScreen(
     searchText: String,
     chatLog: List<AiMessage>,
     chatState: UiState<Unit>,
+    searchResult: SearchResult,
+    searchMode: Boolean,
     onChatTextChanged: (String) -> Unit,
     onSearchTextChanged: (String) -> Unit,
+    onSearchExecuted: (Int?) -> Unit,
+    setSearchMode: (Boolean) -> Unit,
     postUserChatting: () -> Unit,
     popBackStack: () -> Unit,
 ) {
@@ -92,7 +105,7 @@ internal fun AiChattingScreen(
     val focusManager = LocalFocusManager.current
     val listState = rememberLazyListState()
     var previousChatSize by remember { mutableStateOf(1) }
-    val coroutineScope = rememberCoroutineScope()
+    var previousSearchResult: SearchResult by remember { mutableStateOf(SearchResult()) }
     val backgroundColor = Brush.verticalGradient(
         listOf(
             BaekyoungTheme.colors.blue4E,
@@ -100,11 +113,16 @@ internal fun AiChattingScreen(
         ),
     )
 
-    LaunchedEffect(previousChatSize != chatLog.size) {
-        coroutineScope.launch {
-            listState.animateScrollToItem(chatLog.size)
+    LaunchedEffect(searchResult) {
+        if (searchResult.initialMatch != null) {
+            listState.scrollToItem(searchResult.initialMatch?.first ?: (chatLog.size - 1))
+            previousSearchResult = searchResult
+            return@LaunchedEffect
         }
+    }
 
+    LaunchedEffect(previousChatSize != chatLog.size) {
+        listState.animateScrollToItem(chatLog.size)
         previousChatSize = chatLog.size
     }
 
@@ -122,6 +140,13 @@ internal fun AiChattingScreen(
                 titleTextId = string.consulting,
                 textColor = BaekyoungTheme.colors.white,
                 showSearchButton = true,
+                onSearchExcuted = { onSearchExecuted(it) },
+                setSearchMode = {
+                    setSearchMode(!searchMode)
+                    if (searchMode) {
+                        previousSearchResult = SearchResult()
+                    }
+                },
                 searchText = searchText,
                 onSearchTextChanged = onSearchTextChanged,
                 clearSearchText = { onSearchTextChanged("") },
@@ -163,16 +188,22 @@ internal fun AiChattingScreen(
                     .fillMaxSize()
                     .padding(top = topBarHeight, bottom = textFieldHeight + 20.dp),
             ) {
-                items(items = chatLog) { message ->
+                itemsIndexed(items = chatLog) { idx, message ->
                     val speechBubbleType = when (message.role) {
                         ChattingRole.USER -> SpeechBubbleType.AI_USER
                         ChattingRole.ASSISTANT -> SpeechBubbleType.AI_CHAT
-                        ChattingRole.SYSTEM, ChattingRole.FUNCTION -> return@items
+                        ChattingRole.SYSTEM, ChattingRole.FUNCTION -> return@itemsIndexed
+                    }
+
+                    val styledText = if (searchResult.initialMatch?.first == idx) {
+                        highlightSearchResults(message.content, searchResult.initialMatch!!.second)
+                    } else {
+                        AnnotatedString(message.content)
                     }
 
                     BaekyoungSpeechBubble(
                         type = speechBubbleType,
-                        text = message.content,
+                        text = styledText,
                     )
                 }
             }
@@ -192,6 +223,9 @@ internal fun AiChattingScreen(
                 onTextChanged = onChatTextChanged,
                 sendMessage = postUserChatting,
                 textColor = BaekyoungTheme.colors.black,
+                searchMode = searchMode,
+                searchResult = searchResult,
+                onSearchExecuted = { index -> onSearchExecuted(index) },
                 modifier = Modifier
                     .align(Alignment.BottomCenter)
                     .padding(start = 8.dp, end = 8.dp, bottom = 8.dp)
@@ -205,6 +239,18 @@ internal fun AiChattingScreen(
                         }
                     },
             )
+        }
+    }
+}
+
+fun highlightSearchResults(text: String, ranges: List<IntRange>): AnnotatedString {
+    return buildAnnotatedString {
+        ranges.forEach { range ->
+            append(text.substring(0, range.first))
+            withStyle(style = SpanStyle(background = Color.Black, color = Color.White)) {
+                append(text.substring(range.first, range.last + 1))
+            }
+            append(text.substring(range.last + 1))
         }
     }
 }

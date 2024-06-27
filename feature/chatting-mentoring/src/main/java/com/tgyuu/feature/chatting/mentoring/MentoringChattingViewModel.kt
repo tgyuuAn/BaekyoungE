@@ -11,6 +11,8 @@ import com.tgyuu.common.util.toISOLocalDateTimeString
 import com.tgyuu.domain.usecase.auth.GetUserInformationUseCase
 import com.tgyuu.domain.usecase.chatting.GetPreviousMentoringMessagesUseCase
 import com.tgyuu.domain.usecase.chatting.PostMentoringMessageUseCase
+import com.tgyuu.domain.usecase.chatting.SearchResult
+import com.tgyuu.domain.usecase.chatting.SearchStringInListUseCase
 import com.tgyuu.domain.usecase.chatting.SubscribeMentoringMessagesUseCase
 import com.tgyuu.model.auth.UserInformation
 import com.tgyuu.model.chatting.MentoringMessage
@@ -27,12 +29,16 @@ class MentoringChattingViewModel @Inject constructor(
     private val postMentoringMessageUseCase: PostMentoringMessageUseCase,
     private val getPreviousMentoringMessagesUseCase: GetPreviousMentoringMessagesUseCase,
     private val subscribeMentoringMessagesUseCase: SubscribeMentoringMessagesUseCase,
+    private val searchStringInListUseCase: SearchStringInListUseCase,
 ) : ViewModel() {
     private val _chatText: MutableStateFlow<String> = MutableStateFlow("")
     val chatText get() = _chatText.asStateFlow()
 
     private val _searchText: MutableStateFlow<String> = MutableStateFlow("")
     val searchText get() = _searchText.asStateFlow()
+
+    private val _searchResult = MutableStateFlow(SearchResult())
+    val searchResult = _searchResult.asStateFlow()
 
     val chatLog: SnapshotStateList<MentoringMessage> = mutableStateListOf()
 
@@ -48,7 +54,10 @@ class MentoringChattingViewModel @Inject constructor(
     private val _isFirstPage = MutableStateFlow(false)
     val isFirstPage = _isFirstPage.asStateFlow()
 
-    val _pagingTimeStamp = MutableStateFlow(generateNowDateTime().toISOLocalDateTimeString())
+    private val _searchMode = MutableStateFlow<Boolean>(false)
+    val searchMode = _searchMode.asStateFlow()
+
+    private val _pagingTimeStamp = MutableStateFlow(generateNowDateTime().toISOLocalDateTimeString())
 
     val isLoading = AtomicBoolean(false)
 
@@ -66,6 +75,20 @@ class MentoringChattingViewModel @Inject constructor(
 
     fun setSearchText(searchText: String) {
         _searchText.value = searchText
+        _searchResult.value = SearchResult()
+    }
+
+    fun setSearchMode(searchMode: Boolean) {
+        _searchMode.value = searchMode
+    }
+
+    fun onSearchExecuted(searchIndex: Int? = null) = viewModelScope.launch {
+        val searchResult = searchStringInListUseCase(
+            searchIndex ?: _searchResult.value.initialMatch?.first,
+            chatLog,
+            _searchText.value,
+        )
+        _searchResult.value = searchResult
     }
 
     fun getUserInformation(userId: Long) = viewModelScope.launch {

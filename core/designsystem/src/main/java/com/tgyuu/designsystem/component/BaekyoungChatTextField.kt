@@ -5,6 +5,7 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.shape.RoundedCornerShape
@@ -23,11 +24,15 @@ import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.unit.dp
 import com.tgyuu.designsystem.R
 import com.tgyuu.designsystem.theme.BaekyoungTheme
+import com.tgyuu.domain.usecase.chatting.SearchResult
 
 @Composable
 fun BaekyoungChatTextField(
     chatText: String,
+    searchMode: Boolean = false,
+    searchResult: SearchResult = SearchResult(),
     onTextChanged: (String) -> Unit,
+    onSearchExecuted: (Int?) -> Unit = {},
     sendMessage: () -> Unit,
     textColor: Color = BaekyoungTheme.colors.black,
     modifier: Modifier = Modifier,
@@ -40,6 +45,7 @@ fun BaekyoungChatTextField(
         textStyle = BaekyoungTheme.typography.contentRegular.copy(
             color = textColor,
         ),
+        readOnly = searchMode,
         singleLine = true,
         keyboardOptions = KeyboardOptions(
             imeAction = ImeAction.Done,
@@ -49,7 +55,7 @@ fun BaekyoungChatTextField(
         modifier = modifier
             .fillMaxWidth()
             .background(
-                color = BaekyoungTheme.colors.white.copy(alpha = 0.93f),
+                color = BaekyoungTheme.colors.white.copy(alpha = if (searchMode) 0.4f else 0.93f),
                 shape = RoundedCornerShape(3.dp),
             ),
     ) { innerTextField ->
@@ -61,17 +67,52 @@ fun BaekyoungChatTextField(
             ) {
                 innerTextField()
 
-                Image(
-                    painter = painterResource(id = R.drawable.ic_send_message),
-                    contentDescription = null,
-                    modifier = Modifier
-                        .align(Alignment.CenterEnd)
-                        .padding(start = 10.dp)
-                        .clickable(
-                            interactionSource = remember { MutableInteractionSource() },
-                            indication = null,
-                        ) { sendMessage() },
-                )
+                if (!searchMode) {
+                    Image(
+                        painter = painterResource(id = R.drawable.ic_send_message),
+                        contentDescription = null,
+                        modifier = Modifier
+                            .align(Alignment.CenterEnd)
+                            .padding(start = 10.dp)
+                            .clickable(
+                                interactionSource = remember { MutableInteractionSource() },
+                                indication = null,
+                            ) { sendMessage() },
+                    )
+                } else {
+                    Row(modifier = Modifier.align(Alignment.CenterEnd)) {
+                        Image(
+                            painter = painterResource(id = R.drawable.ic_arrow_up),
+                            alpha = if (searchResult.previousMatchIndex != null) 1f else 0.4f,
+                            contentDescription = null,
+                            modifier = Modifier
+                                .clickable(
+                                    interactionSource = remember { MutableInteractionSource() },
+                                    indication = null,
+                                ) {
+                                    if (searchResult.previousMatchIndex != null) {
+                                        onSearchExecuted(searchResult.previousMatchIndex)
+                                    }
+                                },
+                        )
+
+                        Image(
+                            painter = painterResource(id = R.drawable.ic_arrow_down),
+                            alpha = if (searchResult.nextMatchIndex != null) 1f else 0.4f,
+                            contentDescription = null,
+                            modifier = Modifier
+                                .padding(start = 10.dp)
+                                .clickable(
+                                    interactionSource = remember { MutableInteractionSource() },
+                                    indication = null,
+                                ) {
+                                    if (searchResult.nextMatchIndex != null) {
+                                        onSearchExecuted(searchResult.nextMatchIndex)
+                                    }
+                                },
+                        )
+                    }
+                }
             }
         }
     }
