@@ -15,7 +15,6 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.platform.LocalConfiguration
 import androidx.compose.ui.text.AnnotatedString
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.tgyuu.designsystem.theme.BaekyoungTheme
 
@@ -50,7 +49,7 @@ fun BaekyoungSpeechBubble(
         ) {
             Text(
                 text = text,
-                style = BaekyoungTheme.typography.contentBold,
+                style = BaekyoungTheme.typography.contentRegular,
                 modifier = Modifier.padding(vertical = 5.dp, horizontal = 10.dp),
             )
         }

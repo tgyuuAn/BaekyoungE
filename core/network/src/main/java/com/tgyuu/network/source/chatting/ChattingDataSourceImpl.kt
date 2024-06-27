@@ -53,8 +53,6 @@ class ChattingDataSourceImpl @Inject constructor(
                 .whereGreaterThan("createdAt", generateNowDateTime().toISOLocalDateTimeString())
                 .orderBy("createdAt", Query.Direction.ASCENDING)
                 .addSnapshotListener { value, error ->
-                    Log.d("test", "subscribeMessage 작동")
-
                     if (error != null) {
                         logAnalytics(error.stackTraceToString())
                         return@addSnapshotListener
@@ -84,8 +82,6 @@ class ChattingDataSourceImpl @Inject constructor(
         lastTime: String,
     ): Result<List<MentoringChatResponse>> =
         runCatching {
-            Log.d("test", "PreviousMessage 호출")
-
             val documents = firebaseFirestore.collection(MESSAGE_COLLECTION)
                 .whereEqualTo("roomId", roomId)
                 .whereLessThan("createdAt", lastTime)

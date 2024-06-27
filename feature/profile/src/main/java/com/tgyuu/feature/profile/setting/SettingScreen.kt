@@ -2,8 +2,13 @@ package com.tgyuu.feature.profile.setting
 
 import android.content.Context
 import android.content.Intent
-import androidx.compose.foundation.Image
+import android.net.Uri
+import androidx.activity.compose.rememberLauncherForActivityResult
+import androidx.activity.result.PickVisualMediaRequest
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
+import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -13,7 +18,9 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
@@ -34,11 +41,12 @@ import androidx.compose.runtime.setValue
 import androidx.compose.runtime.snapshotFlow
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
 import androidx.compose.ui.focus.FocusRequester
 import androidx.compose.ui.focus.focusRequester
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
-import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
@@ -47,6 +55,7 @@ import androidx.core.content.ContextCompat.startActivity
 import androidx.core.net.toUri
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import coil.compose.AsyncImage
 import com.sd.lib.compose.wheel_picker.FVerticalWheelPicker
 import com.sd.lib.compose.wheel_picker.FWheelPickerState
 import com.sd.lib.compose.wheel_picker.rememberFWheelPickerState
@@ -139,6 +148,12 @@ fun SettingScreen(
                 val snackBarCoroutineScope = rememberCoroutineScope()
                 var showLogoutDialog by remember { mutableStateOf(false) }
                 var showWithdrawalDialog by remember { mutableStateOf(false) }
+                var selectedImageUri by remember { mutableStateOf<Uri?>(null) }
+
+                val singlePhotoPickerLauncher = rememberLauncherForActivityResult(
+                    contract = ActivityResultContracts.PickVisualMedia(),
+                    onResult = { uri -> selectedImageUri = uri },
+                )
 
                 LaunchedEffect(true) {
                     eventFlow.collectLatest { event ->
@@ -428,27 +443,27 @@ fun SettingScreen(
                             onClickBackButton = popBackStack,
                         )
 
-                        Box(modifier = Modifier.padding(top = 25.dp)) {
-                            Image(
-                                painter = painterResource(id = R.drawable.ic_user_default),
-                                contentDescription = null,
-                                modifier = Modifier.align(Alignment.TopCenter),
-                            )
-
-                            Image(
-                                painter = painterResource(id = R.drawable.ic_camera),
-                                contentDescription = null,
-                                modifier = Modifier
-                                    .align(Alignment.TopEnd)
-                                    .padding(end = 3.dp, top = 32.dp),
-                            )
-                        }
-
-                        Spacer(
+                        AsyncImage(
+                            model = selectedImageUri ?: R.drawable.ic_user_default,
+                            contentDescription = null,
+                            contentScale = ContentScale.Crop,
                             modifier = Modifier
-                                .fillMaxWidth()
-                                .height(20.dp),
+                                .padding(top = 10.dp)
+                                .size(80.dp)
+                                .clip(CircleShape)
+                                .clickable(
+                                    interactionSource = remember { MutableInteractionSource() },
+                                    indication = null,
+                                ) {
+                                    singlePhotoPickerLauncher.launch(
+                                        PickVisualMediaRequest(
+                                            ActivityResultContracts.PickVisualMedia.ImageOnly,
+                                        ),
+                                    )
+                                },
                         )
+
+                        Spacer(modifier = Modifier.height(40.dp))
 
                         BaekyoungRow(
                             titleTextId = R.string.change_nickname,
