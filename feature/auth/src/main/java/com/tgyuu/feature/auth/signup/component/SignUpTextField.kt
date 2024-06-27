@@ -15,6 +15,7 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.platform.LocalSoftwareKeyboardController
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.input.ImeAction
@@ -39,7 +40,7 @@ internal fun SignUpTextField(
         Text(
             text = stringResource(id = title),
             style = BaekyoungTheme.typography.contentBold,
-            color = BaekyoungTheme.colors.black56,
+            color = BaekyoungTheme.colors.black,
             modifier = Modifier.padding(start = 5.dp, bottom = 4.dp),
         )
 
@@ -57,6 +58,7 @@ internal fun SignUpTextField(
             keyboardActions = KeyboardActions(onDone = { keyboardController?.hide() }),
             modifier = Modifier
                 .fillMaxWidth()
+                .shadow(elevation = 2.dp, shape = RoundedCornerShape(10.dp))
                 .background(color = BaekyoungTheme.colors.white, shape = RoundedCornerShape(10.dp))
                 .border(
                     width = 1.dp,
@@ -64,7 +66,9 @@ internal fun SignUpTextField(
                     shape = RoundedCornerShape(10.dp),
                 ),
         ) { innerTextField ->
-            Box(modifier = Modifier.padding(vertical = 10.dp, horizontal = 12.dp)) {
+            Box(
+                modifier = Modifier.padding(vertical = 10.dp, horizontal = 12.dp),
+            ) {
                 if (value.isEmpty()) {
                     Text(
                         text = stringResource(id = hint),

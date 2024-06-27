@@ -26,13 +26,13 @@ class SignUpViewModel @Inject constructor(
     private val _nickname = MutableStateFlow("")
     val nickname = _nickname.asStateFlow()
 
-    private val _gender = MutableStateFlow(Gender.MALE)
+    private val _gender = MutableStateFlow(Gender.NONE)
     val gender = _gender.asStateFlow()
 
     private val _major = MutableStateFlow("")
     val major = _major.asStateFlow()
 
-    private val _grade = MutableStateFlow("")
+    private val _grade = MutableStateFlow("1")
     val grade = _grade.asStateFlow()
 
     private val _isSignUpSuccess = MutableStateFlow(false)
@@ -40,17 +40,22 @@ class SignUpViewModel @Inject constructor(
 
     fun signUp() = viewModelScope.launch {
         if (_nickname.value.isEmpty()) {
-            _signUpEventFlow.emit(SignUpEvent.SignUpFailed("별명을 입력해주세요."))
+            _signUpEventFlow.emit(SignUpEvent.SignUpFailed("별명을 입력 해주세요."))
             return@launch
         }
 
         if (_major.value.isEmpty()) {
-            _signUpEventFlow.emit(SignUpEvent.SignUpFailed("학과를 입력해주세요."))
+            _signUpEventFlow.emit(SignUpEvent.SignUpFailed("학과를 입력 해주세요."))
             return@launch
         }
 
         if (_grade.value.isEmpty()) {
-            _signUpEventFlow.emit(SignUpEvent.SignUpFailed("학년을 입력해주세요."))
+            _signUpEventFlow.emit(SignUpEvent.SignUpFailed("학년을 입력 해주세요."))
+            return@launch
+        }
+
+        if (_gender.value == Gender.NONE) {
+            _signUpEventFlow.emit(SignUpEvent.SignUpFailed("성별을 선택 해주세요."))
             return@launch
         }
 
@@ -98,6 +103,6 @@ class SignUpViewModel @Inject constructor(
     }
 
     enum class Gender(val displayName: String) {
-        MALE("남성"), FEMALE("여성")
+        NONE("성별을 선택해주세요."), MALE("남자"), FEMALE("여자")
     }
 }
