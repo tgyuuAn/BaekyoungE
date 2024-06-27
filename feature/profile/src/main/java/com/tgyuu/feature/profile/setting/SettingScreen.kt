@@ -559,10 +559,10 @@ fun SettingScreen(
     }
 }
 
-private fun navigateToUri(context: Context, url: String) =
+internal fun navigateToUri(context: Context, url: String) =
     startActivity(context, generateUriIntent(url), null)
 
-private fun generateUriIntent(url: String) = Intent(Intent.ACTION_VIEW, url.toUri())
+internal fun generateUriIntent(url: String) = Intent(Intent.ACTION_VIEW, url.toUri())
 
 enum class BottomSheetType {
     INIT, CHANGE_NICKNAME, CHANGE_MAJOR, CHANGE_GRADE

@@ -18,6 +18,7 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.AnnotatedString
@@ -36,6 +37,8 @@ import com.tgyuu.designsystem.component.Loader
 import com.tgyuu.designsystem.theme.BaekyoungTheme
 import com.tgyuu.feature.profile.R.drawable
 import com.tgyuu.feature.profile.R.string
+import com.tgyuu.feature.profile.setting.SUGGESTION_BOX_URL
+import com.tgyuu.feature.profile.setting.navigateToUri
 import com.tgyuu.model.auth.UserInformation
 import com.tgyuu.model.storage.ChattingRoom
 
@@ -60,6 +63,8 @@ fun ProfileScreen(
     chattingRooms: List<ChattingRoom>,
     navigateToSetting: () -> Unit,
 ) {
+    val context = LocalContext.current
+
     Column(
         modifier = Modifier
             .fillMaxSize()
@@ -148,7 +153,11 @@ fun ProfileScreen(
                     horizontalAlignment = Alignment.CenterHorizontally,
                     modifier = Modifier
                         .fillMaxWidth()
-                        .padding(vertical = 40.dp),
+                        .padding(vertical = 40.dp)
+                        .clickable(
+                            interactionSource = remember { MutableInteractionSource() },
+                            indication = null,
+                        ) { navigateToUri(context, SUGGESTION_BOX_URL) },
                 ) {
                     Image(
                         painter = painterResource(id = drawable.ic_suggestion_box),
