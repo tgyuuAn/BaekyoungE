@@ -38,7 +38,6 @@ import com.tgyuu.feature.profile.navigation.profileScreen
 import com.tgyuu.feature.profile.setting.navigation.navigateToSetting
 import com.tgyuu.feature.profile.setting.navigation.settingNavigationRoute
 import com.tgyuu.feature.profile.setting.navigation.settingScreen
-import com.tgyuu.feature.shop.navigation.shopScreen
 import com.tgyuu.feature.splash.navigation.splashNavigationRoute
 import com.tgyuu.feature.splash.navigation.splashScreen
 import com.tgyuu.feature.storage.navigation.storageNavigationRoute
@@ -114,7 +113,6 @@ fun BaekyoungNavHost(
             },
         )
         homeScreen()
-        shopScreen()
         storageScreen(
             navigateToChatting = {
                 navController.navigateToAiChatting(

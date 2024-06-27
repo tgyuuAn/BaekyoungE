@@ -3,10 +3,9 @@ package com.tgyuu.baekyounge.main.navigation
 import androidx.annotation.DrawableRes
 import androidx.annotation.StringRes
 import com.tgyuu.baekyounge.R
-import com.tgyuu.feature.mentoring.navigation.mentoringNavigationRoute
 import com.tgyuu.feature.consulting.consultinginformation.navigation.consultingNavigationRoute
+import com.tgyuu.feature.mentoring.navigation.mentoringNavigationRoute
 import com.tgyuu.feature.profile.navigation.profileNavigationRoute
-import com.tgyuu.feature.shop.navigation.shopNavigationRoute
 import com.tgyuu.feature.storage.navigation.storageNavigationRoute
 
 enum class TopLevelDestination(
@@ -32,14 +31,6 @@ enum class TopLevelDestination(
         unselectedIcon = R.drawable.ic_storage,
         iconTextId = R.string.storage,
         titleTextId = R.string.storage,
-    ),
-    SHOP(
-        route = shopNavigationRoute,
-        homeIcon = R.drawable.ic_selected_shop,
-        selectedIcon = R.drawable.ic_selected_shop,
-        unselectedIcon = R.drawable.ic_selected_shop,
-        iconTextId = R.string.shop,
-        titleTextId = R.string.shop,
     ),
     HOME(
         route = com.tgyuu.feature.home.navigation.homeNavigationRoute,

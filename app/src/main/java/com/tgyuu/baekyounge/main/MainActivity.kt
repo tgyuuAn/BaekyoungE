@@ -65,7 +65,6 @@ import com.tgyuu.feature.mentee.navigation.findMentorNavigationRoute
 import com.tgyuu.feature.mentoring.mentee.navigation.mentoringMenteeNavigationRoute
 import com.tgyuu.feature.mentoring.mentor.navigation.mentoringMentorNavigationRoute
 import com.tgyuu.feature.profile.setting.navigation.settingNavigationRoute
-import com.tgyuu.feature.shop.navigation.shopNavigationRoute
 import com.tgyuu.feature.splash.navigation.splashNavigationRoute
 import com.tgyuu.feature.storage.R
 import dagger.hilt.android.AndroidEntryPoint
@@ -252,23 +251,16 @@ internal fun BaekyoungBottomBar(
             modifier = modifier,
         ) {
             TopLevelDestination.entries.forEach { destination ->
-                if ((currentRoute == com.tgyuu.feature.home.navigation.homeNavigationRoute) &&
-                    (destination.route == com.tgyuu.feature.home.navigation.homeNavigationRoute)
-                ) {
-                    return@forEach
-                }
-
-                if ((currentRoute != com.tgyuu.feature.home.navigation.homeNavigationRoute) &&
-                    (destination.route == shopNavigationRoute)
-                ) {
-                    return@forEach
-                }
 
                 BottomNavigationItem(
                     selected = (currentRoute == destination.route),
                     modifier = Modifier.background(Color.Transparent),
                     onClick = { onNavigateToDestination(destination) },
-                    selectedContentColor = BaekyoungTheme.colors.black,
+                    selectedContentColor = if (currentRoute == com.tgyuu.feature.home.navigation.homeNavigationRoute) {
+                        BaekyoungTheme.colors.blueFB
+                    } else {
+                        BaekyoungTheme.colors.black
+                    },
                     unselectedContentColor = if (currentRoute == com.tgyuu.feature.home.navigation.homeNavigationRoute) {
                         BaekyoungTheme.colors.blueFB
                     } else {
