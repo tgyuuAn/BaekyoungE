@@ -1,5 +1,7 @@
 package com.tgyuu.feature.profile.setting
 
+import android.content.Context
+import android.content.Intent
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
@@ -35,11 +37,14 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.focus.FocusRequester
 import androidx.compose.ui.focus.focusRequester
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.core.content.ContextCompat.startActivity
+import androidx.core.net.toUri
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.sd.lib.compose.wheel_picker.FVerticalWheelPicker
@@ -120,6 +125,8 @@ fun SettingScreen(
     withdrawalKakao: () -> Unit,
     navigateToAuth: () -> Unit,
 ) {
+    val context = LocalContext.current
+
     Box(modifier = Modifier.fillMaxSize()) {
         when (userInformationState) {
             is UiState.Loading -> Loader(modifier = Modifier.fillMaxSize())
@@ -490,17 +497,17 @@ fun SettingScreen(
                         )
 
                         BaekyoungRow(
-                            titleTextId = R.string.open_source_license,
+                            titleTextId = R.string.terms_and_conditions,
                             showContentText = false,
                             showRightArrow = true,
-                            onClick = { },
+                            onClick = { navigateToUri(context, TERMS_AND_CONDITIONS_URL) },
                         )
 
                         BaekyoungRow(
                             titleTextId = R.string.privacy_policy,
                             showContentText = false,
                             showRightArrow = true,
-                            onClick = { },
+                            onClick = { navigateToUri(context, PRIVACY_POLICY_URL) },
                         )
 
                         HorizontalDivider(
@@ -530,6 +537,11 @@ fun SettingScreen(
         }
     }
 }
+
+private fun navigateToUri(context: Context, url: String) =
+    startActivity(context, generateUriIntent(url), null)
+
+private fun generateUriIntent(url: String) = Intent(Intent.ACTION_VIEW, url.toUri())
 
 enum class BottomSheetType {
     INIT, CHANGE_NICKNAME, CHANGE_MAJOR, CHANGE_GRADE
