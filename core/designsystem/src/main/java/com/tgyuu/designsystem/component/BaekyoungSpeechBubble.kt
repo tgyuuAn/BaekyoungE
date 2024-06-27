@@ -14,6 +14,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.platform.LocalConfiguration
+import androidx.compose.ui.text.AnnotatedString
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.tgyuu.designsystem.theme.BaekyoungTheme
@@ -21,7 +22,7 @@ import com.tgyuu.designsystem.theme.BaekyoungTheme
 @Composable
 fun BaekyoungSpeechBubble(
     type: SpeechBubbleType,
-    text: String,
+    text: AnnotatedString,
     modifier: Modifier = Modifier,
 ) {
     val localConfiguration = LocalConfiguration.current
@@ -51,65 +52,6 @@ fun BaekyoungSpeechBubble(
                 text = text,
                 style = BaekyoungTheme.typography.contentBold,
                 modifier = Modifier.padding(vertical = 5.dp, horizontal = 10.dp),
-            )
-        }
-    }
-}
-
-@Preview
-@Composable
-private fun PreviewAiChat() {
-    BaekyoungTheme {
-        Surface(color = BaekyoungTheme.colors.black) {
-            BaekyoungSpeechBubble(
-                type = SpeechBubbleType.AI_CHAT,
-                text = "잘 찾아오셨어요!\n" +
-                    "궁금한 점이 있나요?",
-                modifier = Modifier.padding(horizontal = 40.dp, vertical = 10.dp),
-            )
-        }
-    }
-}
-
-@Preview
-@Composable
-private fun PreviewAiUserChat() {
-    BaekyoungTheme {
-        Surface(color = BaekyoungTheme.colors.black) {
-            BaekyoungSpeechBubble(
-                type = SpeechBubbleType.AI_USER,
-                text = "잘 찾아오셨어요!\n" +
-                    "궁금한 점이 있나요?",
-                modifier = Modifier.padding(horizontal = 40.dp, vertical = 10.dp),
-            )
-        }
-    }
-}
-
-@Preview
-@Composable
-private fun PreviewMentoMentiOpponentChat() {
-    BaekyoungTheme {
-        Surface(color = BaekyoungTheme.colors.black) {
-            BaekyoungSpeechBubble(
-                type = SpeechBubbleType.MENTOR_MENTI_OPPONENT,
-                text = "긴 텍스트 테스트 가나다라마바사 아자차카타파하 가나다라마바사 아자차카타파하",
-                modifier = Modifier.padding(horizontal = 40.dp, vertical = 10.dp),
-            )
-        }
-    }
-}
-
-@Preview
-@Composable
-private fun PreviewMentoMentiUserChat() {
-    BaekyoungTheme {
-        Surface(color = BaekyoungTheme.colors.black) {
-            BaekyoungSpeechBubble(
-                type = SpeechBubbleType.MENTOR_MENTI_USER,
-                text = "잘 찾아오셨어요!\n" +
-                    "궁금한 점이 있나요?",
-                modifier = Modifier.padding(horizontal = 40.dp, vertical = 10.dp),
             )
         }
     }

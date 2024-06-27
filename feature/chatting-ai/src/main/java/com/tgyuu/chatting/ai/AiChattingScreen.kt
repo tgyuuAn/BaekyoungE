@@ -31,6 +31,10 @@ import androidx.compose.ui.layout.layout
 import androidx.compose.ui.platform.LocalConfiguration
 import androidx.compose.ui.platform.LocalFocusManager
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.text.AnnotatedString
+import androidx.compose.ui.text.SpanStyle
+import androidx.compose.ui.text.buildAnnotatedString
+import androidx.compose.ui.text.withStyle
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
@@ -191,9 +195,15 @@ internal fun AiChattingScreen(
                         ChattingRole.SYSTEM, ChattingRole.FUNCTION -> return@itemsIndexed
                     }
 
+                    val styledText = if (searchResult.initialMatch?.first == idx) {
+                        highlightSearchResults(message.content, searchResult.initialMatch!!.second)
+                    } else {
+                        AnnotatedString(message.content)
+                    }
+
                     BaekyoungSpeechBubble(
                         type = speechBubbleType,
-                        text = message.content,
+                        text = styledText,
                     )
                 }
             }
@@ -229,6 +239,18 @@ internal fun AiChattingScreen(
                         }
                     },
             )
+        }
+    }
+}
+
+fun highlightSearchResults(text: String, ranges: List<IntRange>): AnnotatedString {
+    return buildAnnotatedString {
+        ranges.forEach { range ->
+            append(text.substring(0, range.first))
+            withStyle(style = SpanStyle(background = Color.Black, color = Color.White)) {
+                append(text.substring(range.first, range.last + 1))
+            }
+            append(text.substring(range.last + 1))
         }
     }
 }
