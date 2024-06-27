@@ -46,8 +46,6 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
-import com.tgyuu.feature.auth.signup.SignUpViewModel.Gender
-import com.tgyuu.feature.auth.signup.component.SignUpTextField
 import com.tgyuu.common.util.addFocusCleaner
 import com.tgyuu.designsystem.R.drawable
 import com.tgyuu.designsystem.R.string
@@ -55,6 +53,8 @@ import com.tgyuu.designsystem.component.BaekgyoungClouds
 import com.tgyuu.designsystem.component.BaekyoungButton
 import com.tgyuu.designsystem.theme.BaekyoungTheme
 import com.tgyuu.feature.auth.R
+import com.tgyuu.feature.auth.signup.SignUpViewModel.Gender
+import com.tgyuu.feature.auth.signup.component.SignUpTextField
 import kotlinx.coroutines.flow.collectLatest
 
 @Composable
@@ -161,7 +161,7 @@ internal fun SignUpScreen(
                     .fillMaxWidth()
                     .offset(
                         y = localConfiguration.screenHeightDp.dp +
-                            ANIMATION_OFFSET.dp - SEA_IMAGE_HEIGHT.dp,
+                                ANIMATION_OFFSET.dp - SEA_IMAGE_HEIGHT.dp,
                     )
                     .graphicsLayer {
                         this.translationY = animateOffset.toPx()
@@ -176,7 +176,7 @@ internal fun SignUpScreen(
                     .align(Alignment.TopCenter)
                     .offset(
                         y = localConfiguration.screenHeightDp.dp +
-                            ANIMATION_OFFSET.dp - SEA_IMAGE_HEIGHT.dp - 43.dp,
+                                ANIMATION_OFFSET.dp - SEA_IMAGE_HEIGHT.dp - 43.dp,
                     )
                     .graphicsLayer {
                         this.translationY = animateOffset.toPx()
@@ -187,7 +187,11 @@ internal fun SignUpScreen(
                 visible = !isSignUpSuccess,
                 exit = fadeOut(tween(HIDE_SIGN_UP_UI_DURATION_MILLIS)),
             ) {
-                Box(modifier = Modifier.fillMaxSize()) {
+                Box(
+                    modifier = Modifier
+                        .fillMaxSize()
+                        .background(BaekyoungTheme.colors.white),
+                ) {
                     Column(
                         modifier = Modifier
                             .fillMaxSize()

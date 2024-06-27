@@ -72,7 +72,7 @@ class SplashViewModel @Inject constructor(
                         )
                         event(SplashEvent.NavigateToHome)
                     }
-                    .onFailure { Log.d("test", it.toString()) }
+                    .onFailure { event(SplashEvent.NavigateToAuth) }
             }
             .onFailure { event(SplashEvent.NavigateToAuth) }
     }
