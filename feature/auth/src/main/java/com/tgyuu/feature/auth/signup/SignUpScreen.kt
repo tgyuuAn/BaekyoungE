@@ -4,23 +4,23 @@ import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.core.CubicBezierEasing
 import androidx.compose.animation.core.animateDpAsState
 import androidx.compose.animation.core.tween
-import androidx.compose.animation.expandVertically
 import androidx.compose.animation.fadeOut
-import androidx.compose.animation.shrinkVertically
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
+import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.WindowInsets
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.offset
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material3.HorizontalDivider
+import androidx.compose.material3.Card
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.SnackbarHost
 import androidx.compose.material3.SnackbarHostState
@@ -33,7 +33,6 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.draw.clip
 import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.graphicsLayer
@@ -43,8 +42,8 @@ import androidx.compose.ui.platform.LocalFocusManager
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.input.KeyboardType
-import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.window.Dialog
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.tgyuu.common.util.addFocusCleaner
@@ -121,7 +120,7 @@ internal fun SignUpScreen(
 ) {
     val focusManager = LocalFocusManager.current
     val localConfiguration = LocalConfiguration.current
-    var showBottomSheet by remember { mutableStateOf(false) }
+    var showGenderDialog by remember { mutableStateOf(false) }
     val animateOffset by animateDpAsState(
         targetValue = if (!isSignUpSuccess) 0.dp else -ANIMATION_OFFSET.dp,
         animationSpec = tween(
@@ -138,6 +137,44 @@ internal fun SignUpScreen(
         ),
     )
 
+    if (showGenderDialog) {
+        Dialog(onDismissRequest = { showGenderDialog = false }) {
+            Card(shape = RoundedCornerShape(10.dp)) {
+                Row(
+                    horizontalArrangement = Arrangement.spacedBy(30.dp),
+                    verticalAlignment = Alignment.CenterVertically,
+                    modifier = Modifier
+                        .background(BaekyoungTheme.colors.white)
+                        .padding(30.dp),
+                ) {
+                    Image(
+                        painter = painterResource(id = R.drawable.ic_male),
+                        contentDescription = null,
+                        modifier = Modifier.clickable(
+                            interactionSource = remember { MutableInteractionSource() },
+                            indication = null,
+                        ) {
+                            onGenderChanged(Gender.MALE)
+                            showGenderDialog = false
+                        },
+                    )
+
+                    Image(
+                        painter = painterResource(id = R.drawable.ic_female),
+                        contentDescription = null,
+                        modifier = Modifier.clickable(
+                            interactionSource = remember { MutableInteractionSource() },
+                            indication = null,
+                        ) {
+                            onGenderChanged(Gender.FEMALE)
+                            showGenderDialog = false
+                        },
+                    )
+                }
+            }
+        }
+    }
+
     Scaffold(
         contentWindowInsets = WindowInsets(0.dp),
         snackbarHost = { SnackbarHost(snackbarHostState) },
@@ -149,7 +186,7 @@ internal fun SignUpScreen(
                 .background(backgroundColor)
                 .addFocusCleaner(
                     focusManager = focusManager,
-                    doOnClear = { showBottomSheet = false },
+                    doOnClear = { showGenderDialog = false },
                 ),
         ) {
             BaekgyoungClouds(animateOffset = animateOffset)
@@ -238,7 +275,10 @@ internal fun SignUpScreen(
                                 color = BaekyoungTheme.colors.grayD0,
                                 shape = RoundedCornerShape(10.dp),
                             )
-                            .clickable { showBottomSheet = !showBottomSheet },
+                            .clickable(
+                                interactionSource = remember { MutableInteractionSource() },
+                                indication = null,
+                            ) { showGenderDialog = true },
                     ) {
                         Text(
                             text = gender.displayName,
@@ -281,61 +321,10 @@ internal fun SignUpScreen(
 
                     BaekyoungButton(
                         text = stringResource(R.string.confirm),
-                        onButtonClick = {
-                            if (!showBottomSheet) {
-                                signUp()
-                            }
-                        },
+                        onButtonClick = { signUp() },
                         modifier = Modifier
                             .fillMaxWidth()
                             .padding(top = 70.dp),
-                    )
-                }
-            }
-
-            AnimatedVisibility(
-                visible = showBottomSheet,
-                modifier = Modifier.align(Alignment.BottomCenter),
-                enter = expandVertically(),
-                exit = shrinkVertically(),
-            ) {
-                Column(
-                    horizontalAlignment = Alignment.CenterHorizontally,
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .shadow(
-                            elevation = 20.dp,
-                            shape = RoundedCornerShape(topStart = 10.dp, topEnd = 10.dp),
-                        )
-                        .clip(RoundedCornerShape(topStart = 10.dp, topEnd = 10.dp))
-                        .background(BaekyoungTheme.colors.white),
-                ) {
-                    Text(
-                        text = stringResource(id = R.string.male),
-                        style = BaekyoungTheme.typography.labelRegular,
-                        textAlign = TextAlign.Center,
-                        modifier = Modifier
-                            .fillMaxWidth()
-                            .padding(vertical = 15.dp)
-                            .clickable {
-                                onGenderChanged(Gender.MALE)
-                                showBottomSheet = !showBottomSheet
-                            },
-                    )
-
-                    HorizontalDivider(color = BaekyoungTheme.colors.grayD0)
-
-                    Text(
-                        text = stringResource(id = R.string.female),
-                        style = BaekyoungTheme.typography.labelRegular,
-                        textAlign = TextAlign.Center,
-                        modifier = Modifier
-                            .fillMaxWidth()
-                            .padding(vertical = 15.dp)
-                            .clickable {
-                                onGenderChanged(Gender.FEMALE)
-                                showBottomSheet = !showBottomSheet
-                            },
                     )
                 }
             }
