@@ -78,8 +78,8 @@ internal fun AiChattingRoute(
         searchMode = searchMode,
         onChatTextChanged = viewModel::setChatText,
         onSearchTextChanged = viewModel::setSearchText,
-        onSearchExecuted = viewModel::onSearchExecuted,
         postUserChatting = viewModel::postUserChatting,
+        onSearchExecuted = viewModel::onSearchExecuted,
         setSearchMode = viewModel::setSearchMode,
         popBackStack = popBackStack,
     )
@@ -93,10 +93,10 @@ internal fun AiChattingScreen(
     chatState: UiState<Unit>,
     searchResult: SearchResult,
     searchMode: Boolean,
-    setSearchMode: (Boolean) -> Unit,
     onChatTextChanged: (String) -> Unit,
     onSearchTextChanged: (String) -> Unit,
     onSearchExecuted: (Int?) -> Unit,
+    setSearchMode: (Boolean) -> Unit,
     postUserChatting: () -> Unit,
     popBackStack: () -> Unit,
 ) {
@@ -225,7 +225,7 @@ internal fun AiChattingScreen(
                 textColor = BaekyoungTheme.colors.black,
                 searchMode = searchMode,
                 searchResult = searchResult,
-                onSearchExcuted = { index -> onSearchExecuted(index) },
+                onSearchExecuted = { index -> onSearchExecuted(index) },
                 modifier = Modifier
                     .align(Alignment.BottomCenter)
                     .padding(start = 8.dp, end = 8.dp, bottom = 8.dp)

@@ -5,9 +5,9 @@ data class AiMessages(
 )
 
 data class AiMessage(
-    val content: String,
-    val role: ChattingRole,
-)
+    override val content: String,
+    val role: ChattingRole
+) : MessageContentProvider
 
 enum class ChattingRole {
     USER, ASSISTANT, SYSTEM, FUNCTION

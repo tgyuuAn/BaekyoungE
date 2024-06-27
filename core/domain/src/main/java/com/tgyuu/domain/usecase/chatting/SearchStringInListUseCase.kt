@@ -3,6 +3,7 @@ package com.tgyuu.domain.usecase.chatting
 import com.tgyuu.model.chatting.AiMessage
 import com.tgyuu.model.chatting.ChattingRole.FUNCTION
 import com.tgyuu.model.chatting.ChattingRole.SYSTEM
+import com.tgyuu.model.chatting.MessageContentProvider
 import javax.inject.Inject
 
 data class SearchResult(
@@ -14,22 +15,22 @@ data class SearchResult(
 class SearchStringInListUseCase @Inject constructor() {
     operator fun invoke(
         nowIndex: Int?,
-        chatList: List<AiMessage>,
-        text: String,
+        messages: List<MessageContentProvider>,
+        text: String
     ): SearchResult {
-        val searchIndex = nowIndex ?: findFirstSearch(chatList, text)
+        val searchIndex = nowIndex ?: findFirstSearch(messages, text)
 
         if (searchIndex == null) {
             return SearchResult(null, null, null)
         }
 
-        val searchPositions = findTextPositions(chatList[searchIndex].content, text)
+        val searchPositions = findTextPositions(messages[searchIndex].content, text)
 
         // 위로 탐색
-        val upperIndex: Int? = findDirectionalSearch(chatList, searchIndex, text, true)
+        val upperIndex = findDirectionalSearch(messages, searchIndex, text, true)
 
         // 아래로 탐색
-        val underIndex: Int? = findDirectionalSearch(chatList, searchIndex, text, false)
+        val underIndex = findDirectionalSearch(messages, searchIndex, text, false)
 
         return SearchResult(Pair(searchIndex, searchPositions), upperIndex, underIndex)
     }
@@ -40,24 +41,24 @@ class SearchStringInListUseCase @Inject constructor() {
     }
 
     private fun findDirectionalSearch(
-        chatList: List<AiMessage>,
+        messages: List<MessageContentProvider>,
         startIndex: Int,
         searchText: String,
-        isUp: Boolean,
+        isUp: Boolean
     ): Int? {
         if (isUp) {
             for (index in (startIndex - 1) downTo 0) {
-                if (shouldSkipMessage(chatList[index])) continue
+                if (messages[index] is AiMessage && shouldSkipMessage(messages[index] as AiMessage)) continue
 
-                if (Regex(searchText).containsMatchIn(chatList[index].content)) {
+                if (Regex(searchText).containsMatchIn(messages[index].content)) {
                     return index
                 }
             }
         } else {
-            for (index in (startIndex + 1) until chatList.size) {
-                if (shouldSkipMessage(chatList[index])) continue
+            for (index in (startIndex + 1) until messages.size) {
+                if (messages[index] is AiMessage && shouldSkipMessage(messages[index] as AiMessage)) continue
 
-                if (Regex(searchText).containsMatchIn(chatList[index].content)) {
+                if (Regex(searchText).containsMatchIn(messages[index].content)) {
                     return index
                 }
             }
@@ -65,11 +66,11 @@ class SearchStringInListUseCase @Inject constructor() {
         return null
     }
 
-    private fun findFirstSearch(chatList: List<AiMessage>, searchText: String): Int? {
-        for (index in chatList.indices.reversed()) {
-            if (shouldSkipMessage(chatList[index])) continue
+    private fun findFirstSearch(messages: List<MessageContentProvider>, searchText: String): Int? {
+        for (index in messages.indices.reversed()) {
+            if (messages[index] is AiMessage && shouldSkipMessage(messages[index] as AiMessage)) continue
 
-            if (Regex(searchText).containsMatchIn(chatList[index].content)) {
+            if (Regex(searchText).containsMatchIn(messages[index].content)) {
                 return index
             }
         }

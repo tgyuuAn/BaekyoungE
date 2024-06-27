@@ -32,7 +32,7 @@ fun BaekyoungChatTextField(
     searchMode: Boolean = false,
     searchResult: SearchResult = SearchResult(),
     onTextChanged: (String) -> Unit,
-    onSearchExcuted: (Int?) -> Unit = {},
+    onSearchExecuted: (Int?) -> Unit = {},
     sendMessage: () -> Unit,
     textColor: Color = BaekyoungTheme.colors.black,
     modifier: Modifier = Modifier,
@@ -91,7 +91,7 @@ fun BaekyoungChatTextField(
                                     indication = null,
                                 ) {
                                     if (searchResult.previousMatchIndex != null) {
-                                        onSearchExcuted(searchResult.previousMatchIndex)
+                                        onSearchExecuted(searchResult.previousMatchIndex)
                                     }
                                 },
                         )
@@ -107,7 +107,7 @@ fun BaekyoungChatTextField(
                                     indication = null,
                                 ) {
                                     if (searchResult.nextMatchIndex != null) {
-                                        onSearchExcuted(searchResult.nextMatchIndex)
+                                        onSearchExecuted(searchResult.nextMatchIndex)
                                     }
                                 },
                         )

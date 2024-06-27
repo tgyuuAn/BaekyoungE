@@ -1,5 +1,6 @@
 package com.tgyuu.feature.chatting.mentoring
 
+import android.util.Log
 import androidx.compose.foundation.Canvas
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
@@ -17,7 +18,7 @@ import androidx.compose.foundation.layout.offset
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyColumn
-import androidx.compose.foundation.lazy.items
+import androidx.compose.foundation.lazy.itemsIndexed
 import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.material3.DrawerValue
 import androidx.compose.material3.ModalNavigationDrawer
@@ -45,6 +46,9 @@ import androidx.compose.ui.platform.LocalLayoutDirection
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.AnnotatedString
+import androidx.compose.ui.text.SpanStyle
+import androidx.compose.ui.text.buildAnnotatedString
+import androidx.compose.ui.text.withStyle
 import androidx.compose.ui.unit.LayoutDirection
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
@@ -60,6 +64,7 @@ import com.tgyuu.designsystem.component.BaekyoungSpeechBubble
 import com.tgyuu.designsystem.component.ChattingLoader
 import com.tgyuu.designsystem.component.SpeechBubbleType
 import com.tgyuu.designsystem.theme.BaekyoungTheme
+import com.tgyuu.domain.usecase.chatting.SearchResult
 import com.tgyuu.model.auth.UserInformation
 import com.tgyuu.model.chatting.MentoringMessage
 import kotlinx.coroutines.launch
@@ -78,6 +83,8 @@ internal fun MentoringChattingRoute(
     val (showExitChattingRoomDialog, setExitChattingRoomDialog) = remember { mutableStateOf(false) }
     val userInformation by viewModel.userInformation.collectAsStateWithLifecycle()
     val isFirstPage by viewModel.isFirstPage.collectAsStateWithLifecycle()
+    val searchResult by viewModel.searchResult.collectAsStateWithLifecycle()
+    val searchMode by viewModel.searchMode.collectAsStateWithLifecycle()
 
     LaunchedEffect(true) {
         viewModel.apply {
@@ -94,11 +101,15 @@ internal fun MentoringChattingRoute(
         userInformation = userInformation,
         isMentor = (userId == roomId.split("-")[0]),
         isFirstPage = isFirstPage,
+        searchResult = searchResult,
+        searchMode = searchMode,
         showExitChattingRoomDialog = showExitChattingRoomDialog,
         setExitChattingRoomDialog = setExitChattingRoomDialog,
         getPreviousMessages = viewModel::getPreviousMessages,
         onChatTextChanged = viewModel::setChatText,
         onSearchTextChanged = viewModel::setSearchText,
+        onSearchExecuted = viewModel::onSearchExecuted,
+        setSearchMode = viewModel::setSearchMode,
         sendMessage = viewModel::sendMessage,
         popBackStack = popBackStack,
     )
@@ -114,10 +125,14 @@ internal fun MentoringChattingScreen(
     isMentor: Boolean,
     isFirstPage: Boolean,
     showExitChattingRoomDialog: Boolean,
+    searchResult: SearchResult,
+    searchMode: Boolean,
     setExitChattingRoomDialog: (Boolean) -> Unit,
     getPreviousMessages: () -> Unit,
     onChatTextChanged: (String) -> Unit,
     onSearchTextChanged: (String) -> Unit,
+    onSearchExecuted: (Int?) -> Unit,
+    setSearchMode: (Boolean) -> Unit,
     sendMessage: () -> Unit,
     popBackStack: () -> Unit,
 ) {
@@ -128,10 +143,16 @@ internal fun MentoringChattingScreen(
     var topBarHeight by remember { mutableStateOf(0.dp) }
     val focusManager = LocalFocusManager.current
     val listState = rememberLazyListState()
-    val backgroundColor = Brush.verticalGradient(
-        listOf(Color(0xFF0E1B45), Color(0xFF7C849F)),
-    )
     var previousChatTime by remember { mutableStateOf("") }
+    var previousSearchResult: SearchResult by remember { mutableStateOf(SearchResult()) }
+
+    LaunchedEffect(searchResult) {
+        if (searchResult.initialMatch != null) {
+            listState.scrollToItem(searchResult.initialMatch?.first ?: (chatLog.size - 1))
+            previousSearchResult = searchResult
+            return@LaunchedEffect
+        }
+    }
 
     LaunchedEffect(chatLog.size) {
         if (previousChatTime != (chatLog.lastOrNull()?.createdAt ?: "")) {
@@ -241,7 +262,11 @@ internal fun MentoringChattingScreen(
                         modifier = Modifier
                             .fillMaxSize()
                             .padding(paddingValues)
-                            .background(backgroundColor)
+                            .background(
+                                Brush.verticalGradient(
+                                    listOf(Color(0xFF0E1B45), Color(0xFF7C849F)),
+                                ),
+                            )
                             .addFocusCleaner(focusManager),
                     ) {
                         ConsultingChattingBackground()
@@ -296,7 +321,13 @@ internal fun MentoringChattingScreen(
                             showSearchButton = true,
                             showDrawerButton = true,
                             searchText = searchText,
-                            onSearchExcuted = { },
+                            onSearchExcuted = { onSearchExecuted(it) },
+                            setSearchMode = {
+                                setSearchMode(!searchMode)
+                                if (searchMode) {
+                                    previousSearchResult = SearchResult()
+                                }
+                            },
                             onSearchTextChanged = onSearchTextChanged,
                             onClickDrawerButton = {
                                 coroutineScope.launch {
@@ -330,10 +361,10 @@ internal fun MentoringChattingScreen(
                                         verticalArrangement = Arrangement.spacedBy(6.dp),
                                         modifier = Modifier
                                             .align(Alignment.BottomCenter)
-                                            .padding(bottom = 125.dp),
+                                            .padding(bottom = 128.dp),
                                     ) {
                                         Text(
-                                            text = "무엇이 궁금한가요?",
+                                            text = "도와주세요 !",
                                             style = BaekyoungTheme.typography.labelRegular,
                                             color = BaekyoungTheme.colors.white,
                                         )
@@ -349,10 +380,10 @@ internal fun MentoringChattingScreen(
                                         verticalArrangement = Arrangement.spacedBy(6.dp),
                                         modifier = Modifier
                                             .align(Alignment.BottomCenter)
-                                            .padding(bottom = 128.dp),
+                                            .padding(bottom = 125.dp),
                                     ) {
                                         Text(
-                                            text = "도와주세요 !",
+                                            text = "무엇이 궁금한가요?",
                                             style = BaekyoungTheme.typography.labelRegular,
                                             color = BaekyoungTheme.colors.white,
                                         )
@@ -374,7 +405,7 @@ internal fun MentoringChattingScreen(
                                 .fillMaxSize()
                                 .padding(top = topBarHeight, bottom = textFieldHeight + 20.dp),
                         ) {
-                            items(items = chatLog) { message ->
+                            itemsIndexed(items = chatLog) { idx, message ->
                                 val speechBubbleType =
                                     if (message.fromUserId == userInformation.userId) {
                                         SpeechBubbleType.MENTOR_MENTI_USER
@@ -382,9 +413,15 @@ internal fun MentoringChattingScreen(
                                         SpeechBubbleType.MENTOR_MENTI_OPPONENT
                                     }
 
+                                val styledText = if (searchResult.initialMatch?.first == idx) {
+                                    highlightSearchResults(message.content, searchResult.initialMatch!!.second)
+                                } else {
+                                    AnnotatedString(message.content)
+                                }
+
                                 BaekyoungSpeechBubble(
                                     type = speechBubbleType,
-                                    text = AnnotatedString(message.content),
+                                    text = styledText,
                                 )
                             }
                         }
@@ -393,6 +430,9 @@ internal fun MentoringChattingScreen(
                             chatText = chatText,
                             onTextChanged = onChatTextChanged,
                             sendMessage = { sendMessage() },
+                            searchMode = searchMode,
+                            searchResult = searchResult,
+                            onSearchExecuted = { index -> onSearchExecuted(index) },
                             textColor = BaekyoungTheme.colors.black,
                             modifier = Modifier
                                 .align(Alignment.BottomCenter)
@@ -410,6 +450,18 @@ internal fun MentoringChattingScreen(
                     }
                 }
             }
+        }
+    }
+}
+
+fun highlightSearchResults(text: String, ranges: List<IntRange>): AnnotatedString {
+    return buildAnnotatedString {
+        ranges.forEach { range ->
+            append(text.substring(0, range.first))
+            withStyle(style = SpanStyle(background = Color.Black, color = Color.White)) {
+                append(text.substring(range.first, range.last + 1))
+            }
+            append(text.substring(range.last + 1))
         }
     }
 }

@@ -71,14 +71,12 @@ class AiChattingViewModel @Inject constructor(
     }
 
     fun onSearchExecuted(searchIndex: Int? = null) = viewModelScope.launch {
-        Log.d("test", "검색 호출")
         val searchResult = searchStringInListUseCase(
             searchIndex ?: _searchResult.value.initialMatch?.first,
             chatLog,
             _searchText.value,
         )
         _searchResult.value = searchResult
-        Log.d("test", "검색 결과 : ${_searchResult.value}")
     }
 
 
