@@ -490,7 +490,7 @@ fun SettingScreen(
                         )
 
                         BaekyoungRow(
-                            titleTextId = R.string.open_source_license,
+                            titleTextId = R.string.terms_and_conditions,
                             showContentText = false,
                             showRightArrow = true,
                             onClick = { },
