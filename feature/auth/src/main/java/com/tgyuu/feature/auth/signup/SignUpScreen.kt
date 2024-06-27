@@ -146,7 +146,7 @@ internal fun SignUpScreen(
 
     LaunchedEffect(gradePickerState) {
         snapshotFlow { gradePickerState.currentIndex }
-            .collect { grade -> nowGrade = grade+1 }
+            .collect { grade -> nowGrade = grade + 1 }
     }
 
     if (showGenderDialog) {
@@ -198,7 +198,7 @@ internal fun SignUpScreen(
                         .padding(20.dp),
                 ) {
                     Text(
-                        text = "당신은 몇 학년 인가요?",
+                        text = "학년을 선택 해주세요.",
                         style = BaekyoungTheme.typography.labelBold.copy(fontSize = 15.sp),
                         color = BaekyoungTheme.colors.black,
                         modifier = Modifier.padding(bottom = 10.dp),
@@ -339,7 +339,8 @@ internal fun SignUpScreen(
                         Text(
                             text = gender.displayName,
                             style = BaekyoungTheme.typography.labelRegular,
-                            color = BaekyoungTheme.colors.black56,
+                            color = if (gender == Gender.NONE) BaekyoungTheme.colors.grayAC
+                            else BaekyoungTheme.colors.black,
                             modifier = Modifier
                                 .align(Alignment.CenterStart)
                                 .padding(horizontal = 12.dp, vertical = 10.dp),
@@ -392,7 +393,7 @@ internal fun SignUpScreen(
                         Text(
                             text = "${grade} 학년",
                             style = BaekyoungTheme.typography.labelRegular,
-                            color = BaekyoungTheme.colors.black56,
+                            color = BaekyoungTheme.colors.black,
                             modifier = Modifier
                                 .align(Alignment.CenterStart)
                                 .padding(horizontal = 12.dp, vertical = 10.dp),

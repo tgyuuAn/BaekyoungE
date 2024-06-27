@@ -103,6 +103,6 @@ class SignUpViewModel @Inject constructor(
     }
 
     enum class Gender(val displayName: String) {
-        NONE(""), MALE("남자"), FEMALE("여자")
+        NONE("성별을 선택해주세요."), MALE("남자"), FEMALE("여자")
     }
 }
