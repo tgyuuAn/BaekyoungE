@@ -62,6 +62,7 @@ import com.sd.lib.compose.wheel_picker.FVerticalWheelPicker
 import com.sd.lib.compose.wheel_picker.FWheelPickerState
 import com.sd.lib.compose.wheel_picker.rememberFWheelPickerState
 import com.tgyuu.common.util.UiState
+import com.tgyuu.common.util.navigateToUri
 import com.tgyuu.designsystem.component.BaekyoungCenterTopBar
 import com.tgyuu.designsystem.component.BaekyoungDialog
 import com.tgyuu.designsystem.component.BaekyoungModalBottomSheet
@@ -558,11 +559,6 @@ fun SettingScreen(
         }
     }
 }
-
-internal fun navigateToUri(context: Context, url: String) =
-    startActivity(context, generateUriIntent(url), null)
-
-internal fun generateUriIntent(url: String) = Intent(Intent.ACTION_VIEW, url.toUri())
 
 enum class BottomSheetType {
     INIT, CHANGE_NICKNAME, CHANGE_MAJOR, CHANGE_GRADE

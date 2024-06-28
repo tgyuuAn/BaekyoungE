@@ -28,8 +28,8 @@ class MentoringMentorViewModel @Inject constructor(
 ) : ViewModel() {
     private val _userInformation = MutableStateFlow(UserInformation())
 
-    private val _checked = MutableStateFlow<Boolean>(false)
-    val checked = _checked.asStateFlow()
+    private val _isRegistered = MutableStateFlow<Boolean>(false)
+    val isRegistered = _isRegistered.asStateFlow()
 
     private val _chattingRooms = MutableStateFlow<UiState<List<JoinChat>>>(UiState.Loading)
     val chattingRooms = _chattingRooms.asStateFlow()
@@ -43,15 +43,20 @@ class MentoringMentorViewModel @Inject constructor(
             .onSuccess {
                 _userInformation.value = it
                 getMentorInfo()
-                getAllChattingRoom()
             }
             .onFailure { }
     }
 
     private fun getMentorInfo() = viewModelScope.launch {
         getMentorInfoUseCase(userId = _userInformation.value.userId)
-            .onSuccess { setChecked(true) }
-            .onFailure { setChecked(false) }
+            .onSuccess {
+                _isRegistered.value = true
+                getAllChattingRoom()
+            }
+            .onFailure {
+                _chattingRooms.value = UiState.Success(listOf())
+                _isRegistered.value = false
+            }
     }
 
     private fun getAllChattingRoom() = viewModelScope.launch {
@@ -65,17 +70,17 @@ class MentoringMentorViewModel @Inject constructor(
             userId = _userInformation.value.userId,
             nickName = _userInformation.value.nickName,
             registrationDate = generateNowDateTime().toISOLocalDateTimeString(),
-        ).onSuccess { setChecked(true) }
-            .onFailure { setChecked(false) }
+        ).onSuccess { setRegistered(true) }
+            .onFailure { setRegistered(false) }
     }
 
     fun deleteMentorInfo() = viewModelScope.launch {
         deleteMentorInfoUseCase(userId = _userInformation.value.userId)
-            .onSuccess { setChecked(false) }
-            .onFailure { setChecked(true) }
+            .onSuccess { setRegistered(false) }
+            .onFailure { setRegistered(true) }
     }
 
-    private fun setChecked(boolean: Boolean) {
-        _checked.value = boolean
+    private fun setRegistered(boolean: Boolean) {
+        _isRegistered.value = boolean
     }
 }

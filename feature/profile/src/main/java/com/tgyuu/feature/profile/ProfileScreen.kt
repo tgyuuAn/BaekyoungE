@@ -32,13 +32,13 @@ import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.tgyuu.common.util.UiState
+import com.tgyuu.common.util.navigateToUri
 import com.tgyuu.designsystem.R
 import com.tgyuu.designsystem.component.Loader
 import com.tgyuu.designsystem.theme.BaekyoungTheme
 import com.tgyuu.feature.profile.R.drawable
 import com.tgyuu.feature.profile.R.string
 import com.tgyuu.feature.profile.setting.SUGGESTION_BOX_URL
-import com.tgyuu.feature.profile.setting.navigateToUri
 import com.tgyuu.model.auth.UserInformation
 import com.tgyuu.model.storage.ChattingRoom
 
