@@ -23,13 +23,16 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import com.tgyuu.common.MENTOR_REGISTRATION_URL
 import com.tgyuu.common.R.drawable
 import com.tgyuu.common.util.UiState
+import com.tgyuu.common.util.navigateToUri
 import com.tgyuu.designsystem.component.BaekyoungButton
 import com.tgyuu.designsystem.component.BaekyoungCenterTopBar
 import com.tgyuu.designsystem.component.Loader
@@ -48,8 +51,6 @@ internal fun MentoringMentorRoute(
     MentoringMentorScreen(
         isRegistered = isRegistered,
         chattingRooms = chattingRooms,
-        registerMentorInfo = viewModel::registerMentorInfo,
-        deleteMentorInfo = viewModel::deleteMentorInfo,
         navigateToMentoringChatting = navigateToMentoringChatting,
         popBackStack = popBackStack,
     )
@@ -59,11 +60,11 @@ internal fun MentoringMentorRoute(
 fun MentoringMentorScreen(
     isRegistered: Boolean,
     chattingRooms: UiState<List<JoinChat>>,
-    registerMentorInfo: () -> Unit,
-    deleteMentorInfo: () -> Unit,
     navigateToMentoringChatting: (String, String) -> Unit,
     popBackStack: () -> Unit,
 ) {
+    val context = LocalContext.current
+
     Scaffold(
         contentWindowInsets = WindowInsets(0.dp),
         containerColor = BaekyoungTheme.colors.grayF5,
@@ -77,22 +78,21 @@ fun MentoringMentorScreen(
             }
 
             is UiState.Success -> {
-                LazyColumn(
-                    verticalArrangement = Arrangement.spacedBy(10.dp),
-                    modifier = Modifier
-                        .fillMaxSize()
-                        .padding(paddingValues)
-                        .background(BaekyoungTheme.colors.white),
-                ) {
-                    item {
-                        BaekyoungCenterTopBar(
-                            titleTextId = R.string.chatting_room,
-                            showBackButton = true,
-                            onClickBackButton = popBackStack,
-                        )
-                    }
-
-                    if (isRegistered) {
+                if (isRegistered) {
+                    LazyColumn(
+                        verticalArrangement = Arrangement.spacedBy(10.dp),
+                        modifier = Modifier
+                            .fillMaxSize()
+                            .padding(paddingValues)
+                            .background(BaekyoungTheme.colors.white),
+                    ) {
+                        item {
+                            BaekyoungCenterTopBar(
+                                titleTextId = R.string.chatting_room,
+                                showBackButton = true,
+                                onClickBackButton = popBackStack,
+                            )
+                        }
                         item {
                             Text(
                                 text = "진행 중인 채팅방",
@@ -174,28 +174,47 @@ fun MentoringMentorScreen(
                                 }
                             }
                         }
-                    } else {
-                        item {
-                            Column(
-                                verticalArrangement = Arrangement.Center,
-                                horizontalAlignment = Alignment.CenterHorizontally,
-                                modifier = Modifier.fillMaxSize(),
-                            ) {
-                                Text(
-                                    text = "멘토 정보가 등록 되어있지 않아요.\n" +
-                                        "멘토 정보를 등록하고 멘토 활동을\n" +
-                                        "시작 해보세요! ",
-                                    style = BaekyoungTheme.typography.contentRegular,
-                                    color = BaekyoungTheme.colors.gray95,
-                                    modifier = Modifier.padding(bottom = 20.dp),
-                                )
 
-                                BaekyoungButton(
-                                    text = "멘토 등록 하러가기",
-                                    onButtonClick = { /*TODO*/ },
-                                )
-                            }
-                        }
+                    }
+                } else {
+                    Column(
+                        horizontalAlignment = Alignment.CenterHorizontally,
+                        modifier = Modifier
+                            .fillMaxSize()
+                            .background(BaekyoungTheme.colors.grayF5),
+                    ) {
+                        BaekyoungCenterTopBar(
+                            titleTextId = R.string.chatting_room,
+                            showBackButton = true,
+                            onClickBackButton = popBackStack,
+                        )
+
+                        Spacer(modifier = Modifier.weight(0.7f))
+
+                        Image(
+                            painter = painterResource(id = R.drawable.ic_mentor_background),
+                            contentDescription = null,
+                        )
+
+                        Text(
+                            text = "멘토 정보가 등록 되어있지 않아요. \n" +
+                                "멘토 정보를 등록하고 멘토 활동을 시작 해보세요!",
+                            style = BaekyoungTheme.typography.contentRegular,
+                            color = BaekyoungTheme.colors.black56,
+                            modifier = Modifier.padding(vertical = 30.dp),
+                        )
+
+                        BaekyoungButton(
+                            text = "멘토 등록 하러가기",
+                            buttonColor = BaekyoungTheme.colors.black,
+                            onButtonClick =
+                            { navigateToUri(context, MENTOR_REGISTRATION_URL) },
+                            modifier = Modifier
+                                .fillMaxWidth()
+                                .padding(horizontal = 20.dp),
+                        )
+
+                        Spacer(modifier = Modifier.weight(1f))
                     }
                 }
             }

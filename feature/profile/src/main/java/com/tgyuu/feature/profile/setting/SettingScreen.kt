@@ -1,7 +1,5 @@
 package com.tgyuu.feature.profile.setting
 
-import android.content.Context
-import android.content.Intent
 import android.net.Uri
 import android.util.Log
 import androidx.activity.compose.rememberLauncherForActivityResult
@@ -53,14 +51,14 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import androidx.core.content.ContextCompat.startActivity
-import androidx.core.net.toUri
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import coil.compose.AsyncImage
 import com.sd.lib.compose.wheel_picker.FVerticalWheelPicker
 import com.sd.lib.compose.wheel_picker.FWheelPickerState
 import com.sd.lib.compose.wheel_picker.rememberFWheelPickerState
+import com.tgyuu.common.PRIVACY_POLICY_URL
+import com.tgyuu.common.TERMS_AND_CONDITIONS_URL
 import com.tgyuu.common.util.UiState
 import com.tgyuu.common.util.navigateToUri
 import com.tgyuu.designsystem.component.BaekyoungCenterTopBar

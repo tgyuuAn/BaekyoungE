@@ -38,7 +38,7 @@ import com.tgyuu.designsystem.component.Loader
 import com.tgyuu.designsystem.theme.BaekyoungTheme
 import com.tgyuu.feature.profile.R.drawable
 import com.tgyuu.feature.profile.R.string
-import com.tgyuu.feature.profile.setting.SUGGESTION_BOX_URL
+import com.tgyuu.common.SUGGESTION_BOX_URL
 import com.tgyuu.model.auth.UserInformation
 import com.tgyuu.model.storage.ChattingRoom
 

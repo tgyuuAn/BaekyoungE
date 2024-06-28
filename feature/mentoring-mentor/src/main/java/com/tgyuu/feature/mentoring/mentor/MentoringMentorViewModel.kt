@@ -21,8 +21,6 @@ import javax.inject.Inject
 @HiltViewModel
 class MentoringMentorViewModel @Inject constructor(
     private val getUserInformationUseCase: GetUserInformationUseCase,
-    private val postMentorInfoUseCase: PostMentorInfoUseCase,
-    private val deleteMentorInfoUseCase: DeleteMentorInfoUseCase,
     private val getMentorInfoUseCase: GetMentorInfoUseCase,
     private val getMentorChattingRoomUseCase: GetMentorChattingRoomUseCase,
 ) : ViewModel() {
@@ -63,24 +61,5 @@ class MentoringMentorViewModel @Inject constructor(
         getMentorChattingRoomUseCase(userId = _userInformation.value.userId)
             .onSuccess { _chattingRooms.value = UiState.Success(it) }
             .onFailure { _chattingRooms.value = UiState.Error(it.message ?: "알 수 없는 요청입니다.") }
-    }
-
-    fun registerMentorInfo() = viewModelScope.launch {
-        postMentorInfoUseCase(
-            userId = _userInformation.value.userId,
-            nickName = _userInformation.value.nickName,
-            registrationDate = generateNowDateTime().toISOLocalDateTimeString(),
-        ).onSuccess { setRegistered(true) }
-            .onFailure { setRegistered(false) }
-    }
-
-    fun deleteMentorInfo() = viewModelScope.launch {
-        deleteMentorInfoUseCase(userId = _userInformation.value.userId)
-            .onSuccess { setRegistered(false) }
-            .onFailure { setRegistered(true) }
-    }
-
-    private fun setRegistered(boolean: Boolean) {
-        _isRegistered.value = boolean
     }
 }

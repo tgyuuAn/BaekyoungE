@@ -104,7 +104,7 @@ internal fun ConsultingScreen(
                         Column(
                             modifier = Modifier
                                 .align(Alignment.Center)
-                                .padding(horizontal = 40.dp),
+                                .padding(horizontal = 20.dp),
                         ) {
                             Image(
                                 painter = painterResource(id = R.drawable.ic_consulting_baekgyoung_main),
