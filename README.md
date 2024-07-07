@@ -1,6 +1,12 @@
 ## 🐋 백경이
 
-<img src="https://github.com/tgyuuAn/BaekyoungE/assets/116813010/c54ff068-acb7-405f-a17b-d98ec1752249" width="300"/>
+
+<img src="https://github.com/tgyuuAn/BaekyoungE/assets/116813010/d6ccde2d-fd85-4569-b75c-06b79fa44caa" width="900"/>
+<img src="https://github.com/tgyuuAn/BaekyoungE/assets/116813010/97c2895a-2abd-4d02-b1ca-ad90d0334e79" width="300"/>
+<img src="https://github.com/tgyuuAn/BaekyoungE/assets/116813010/e0e973e9-0aea-493a-b612-2764a6d441a4" width="300"/>
+<img src="https://github.com/tgyuuAn/BaekyoungE/assets/116813010/7428e737-bfda-43fb-a8cf-f9bbb0969616" width="300"/>
+<img src="https://github.com/tgyuuAn/BaekyoungE/assets/116813010/1a51e082-5959-4a09-8188-e5af9058db5e" width="300"/>
+<img src="https://github.com/tgyuuAn/BaekyoungE/assets/116813010/044c9b2f-0b53-4a43-b6a8-06d7b494909a" width="300"/>
 
 <br><br><br>
 
@@ -29,7 +35,15 @@
 
 <br><br>
 
-<img src="https://github.com/tgyuuAn/Baekyoung-i/assets/116813010/141fefed-4b15-4458-a6bf-b8aea454e608" width=500/>
+<img src="https://github.com/tgyuuAn/Baekyoung-i/assets/116813010/141fefed-4b15-4458-a6bf-b8aea454e608" width=400/>
+
+<br><br>
+
+- 부경대학교 정보통신공학과 캡스톤디자인 최우수상 <sub>(2024.07.01 )</sub>
+
+<br><br>
+
+<img src="https://github.com/tgyuuAn/BaekyoungE/assets/116813010/e8984fbf-009e-4577-8f58-3013de7fef21" width=800/>
 
 <br><br>
 
