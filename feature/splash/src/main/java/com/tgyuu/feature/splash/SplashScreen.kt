@@ -160,7 +160,16 @@ internal fun SplashScreen(
             )
         }
 
-        ShootingStar(animatedOffset = animateOffset)
+        Image(
+            painter = painterResource(id = R.drawable.ic_shooting_star),
+            contentDescription = stringResource(id = R.string.shooting_star_description),
+            modifier = Modifier
+                .offset((localConfiguration.screenWidthDp.dp - 78.dp), -47.dp)
+                .graphicsLayer {
+                    this.translationX = animateOffset.x
+                    this.translationY = animateOffset.y
+                },
+        )
     }
 }
 
@@ -199,25 +208,6 @@ private fun SplashBackground() {
             alpha = 0.4F,
         )
     }
-}
-
-@Composable
-private fun ShootingStar(
-    animatedOffset: Offset,
-    modifier: Modifier = Modifier,
-) {
-    val localConfiguration = LocalConfiguration.current
-
-    Image(
-        painter = painterResource(id = R.drawable.ic_shooting_star),
-        contentDescription = stringResource(id = R.string.shooting_star_description),
-        modifier = modifier
-            .offset((localConfiguration.screenWidthDp.dp - 78.dp), -47.dp)
-            .graphicsLayer {
-                this.translationX = animatedOffset.x
-                this.translationY = animatedOffset.y
-            },
-    )
 }
 
 val SHOOTING_STAR_ANIMATION_DURAION = 3000

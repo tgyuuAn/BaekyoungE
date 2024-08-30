@@ -1,6 +1,7 @@
 package com.tgyuu.feature.auth
 
 import android.content.Context
+import android.util.Log
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
@@ -162,21 +163,17 @@ private fun loginKakao(
 ) {
     val callback: (OAuthToken?, Throwable?) -> Unit = { token, error ->
         if (error != null) {
+            Log.d("test", "여기1")
             if (!(error is ClientError && error.reason == ClientErrorCause.Cancelled)) {
                 coroutineScope.launch { snackbarHostState.showSnackbar(error.toString()) }
             }
         } else if (token != null) {
+            Log.d("test", "여기2")
             coroutineScope.launch {
                 verifyMemberId()
             }
         }
-    }
-
-    if (!UserApiClient.instance.isKakaoTalkLoginAvailable(context)) {
-        coroutineScope.launch {
-            snackbarHostState.showSnackbar("카카오톡을 실행할 수 없습니다.")
-        }
-        return
+        Log.d("test", "여기3")
     }
 
     UserApiClient.instance.loginWithKakaoTalk(context) { token, error ->
@@ -199,5 +196,10 @@ private fun loginKakao(
 
             verifyMemberId()
         }
+    }
+
+    if (!UserApiClient.instance.isKakaoTalkLoginAvailable(context)) {
+        UserApiClient.instance.loginWithKakaoAccount(context, callback = callback)
+        return
     }
 }

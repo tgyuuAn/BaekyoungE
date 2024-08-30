@@ -15,7 +15,7 @@ android {
 
     defaultConfig {
         val properties = Properties()
-        properties.load(project.rootProject.file("/local.properties").bufferedReader())
+        properties.load(project.rootProject.file("./local.properties").bufferedReader())
         buildConfigField(
             "String",
             "OPEN_AI_API_KEY",
