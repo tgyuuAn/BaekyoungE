@@ -12,22 +12,11 @@
 
 ## 🌟 주요 기능
 
-<details>
-<summary><h4>1차 개발 (2023-11-01 ~2023-12-26)</h4></summary>
-
-![ezgif com-crop (5)](https://github.com/tgyuuAn/Baekyoung-i/assets/116813010/60f9c954-cc59-4616-8d01-7a1db2b8ab3c)
-
-![ezgif com-video-to-gif-converter](https://github.com/tgyuuAn/Baekyoung-i/assets/116813010/23ae4842-9ec2-4278-9001-a5ce672e1764)
-
-</details>
-
-<br><br><br><br><br><br>
-
-**2차 개발** _(2024-03-01 ~ ing)_
-
 <img src="https://github.com/tgyuuAn/BaekyoungE/assets/116813010/54bc3a0f-7a76-4aae-b580-c10a862f7358" width="300"/>
 
-<img src="https://github.com/tgyuuAn/BaekyoungE/assets/116813010/c222155f-232a-4b57-8d11-03e1192dceda" width="300"/>
+| AI 채팅 | 멘토-멘티 채팅 |
+| --- | --- |
+| <video src="https://github.com/user-attachments/assets/3faaab0a-2966-4d7a-8302-05c37245d29b" width="300" controls></video> | <video src="https://github.com/user-attachments/assets/ad04189f-290f-4520-800b-adf556e838a3" width="300" controls></video> |
 
 <details>
 <summary><h3>🎖️Award</h3></summary>
